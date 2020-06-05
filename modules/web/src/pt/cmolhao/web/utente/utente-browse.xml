@@ -228,7 +228,7 @@
                                 property="profissao"
                                 id="profissaoField"
                                 optionsContainer="profissaosDc"
-                                icon="font-icon:USERS" caption="Profissão: "/>
+                                icon="font-icon:USERS" caption="Profissão: " />
 
 
                         <lookupField id="linhasUtente"
