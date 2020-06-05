@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.localizacoes">
+    <data>
+        <instance id="localizacoesDc"
+                  class="pt.cmolhao.entity.Localizacoes"
+                  view="localizacoes-view">
+            <loader/>
+        </instance>
+
+        <instance id="valencias_Dc"
+                  class="pt.cmolhao.entity.Valencias"
+                  view="_local"/>
+
+        <collection id="valenciasDc"
+                    class="pt.cmolhao.entity.Valencias"
+                    view="_local">
+            <loader id="customersLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Valencias e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="localizacoesDc">
+            <column width="250px">
+                <textField id="coordField" property="coord" caption="Coordenadas: " icon="MAP_MARKER"/>
+
+                <lookupField id="idvalenciaField"
+                             property="idvalencia"
+                             optionsContainer="valenciasDc"
+                             inputPrompt="(Seleccione a Descrição da Valência)"
+                            caption="Valencia: "
+                            icon="SIMPLYBUILT"/>
+
+                <button id="click_map" caption="Localizacao pelo gps" icon="MAP_PIN"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

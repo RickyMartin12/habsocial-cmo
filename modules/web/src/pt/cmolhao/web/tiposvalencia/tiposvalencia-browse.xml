@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="tiposvalenciasTable"
+        messagesPack="pt.cmolhao.web.tiposvalencia">
+    <data readOnly="true">
+        <collection id="tiposvalenciasDc"
+                    class="pt.cmolhao.entity.Tiposvalencia"
+                    view="_local">
+            <loader id="tiposvalenciasDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Tiposvalencia e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="tiposvalenciasTable"
+            spacing="true">
+        <!--<filter id="filter"
+                applyTo="tiposvalenciasTable"
+                dataLoader="tiposvalenciasDl">
+            <properties include=".*"/>
+        </filter>-->
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <hbox spacing="true">
+
+                <lookupField id="linhasTiposValencias"
+                             caption="Mostrar Numero de Linhas"
+                             inputPrompt="(seleccione o numero de linhas)"
+                             icon="ARROWS_V"/>
+
+            </hbox>
+
+        </groupBox>
+        <table id="tiposvalenciasTable"
+               width="100%"
+               dataContainer="tiposvalenciasDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela de tipo de valencia."/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela de tipo de valencia?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel" />
+            </actions>
+            <columns>
+                <column id="nome" caption="Descrição da Valencia"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="tiposvalenciasTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="tiposvalenciasTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="tiposvalenciasTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button action="tiposvalenciasTable.excel" stylename="friendly"/>
+            </buttonsPanel>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="tipologiaFamiliarsTable"
+        messagesPack="pt.cmolhao.web.tipologiafamiliar">
+    <data readOnly="true">
+        <collection id="tipologiaFamiliarsDc"
+                    class="pt.cmolhao.entity.TipologiaFamiliar"
+                    view="_local">
+            <loader id="tipologiaFamiliarsDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipologiaFamiliar e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="tipologiaFamiliarsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="tipologiaFamiliarsTable"
+                dataLoader="tipologiaFamiliarsDl">
+            <properties include=".*"/>
+        </filter>
+        <table id="tipologiaFamiliarsTable"
+               width="100%"
+               dataContainer="tipologiaFamiliarsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="tipologiaFamiliar"/>
+                <column id="tipologiaFamiliarEspecifica"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="tipologiaFamiliarsTable.create"/>
+                <button id="editBtn" action="tipologiaFamiliarsTable.edit"/>
+                <button id="removeBtn" action="tipologiaFamiliarsTable.remove"/>
+            </buttonsPanel>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

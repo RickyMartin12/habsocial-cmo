@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.screens.valencias">
+    <data>
+        <instance id="valenciasDc"
+                  class="pt.cmolhao.entity.Valencias"
+                  view="valencias-view">
+            <loader/>
+        </instance>
+        <instance id="valencias_Dc"
+                  class="pt.cmolhao.entity.Valencias"
+                  view="valencias-view"/>
+
+
+        <collection id="InstituicaoDc"
+                    class="pt.cmolhao.entity.Instituicoes"
+                    view="_local">
+            <loader id="ins_Loader">
+                <query>
+                    <![CDATA[select e from cmolhao_Instituicoes e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+        <collection id="TipoValenciaDc"
+                    class="pt.cmolhao.entity.Tiposvalencia"
+                    view="_local">
+            <loader id="tipo_valencia_Loader">
+                <query>
+                    <![CDATA[select e from cmolhao_Tiposvalencia e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
+            <form id="form" dataContainer="valenciasDc">
+                <column width="250px">
+
+                    <textField id="descricaotecnicaField" property="descricaotecnica" caption="Descrição Técnica: " icon="FILE_TEXT"/>
+
+                    <lookupField property="idinstituicao" id="idinstituicaoField" optionsContainer="InstituicaoDc"
+                                 caption="Designação da Instituição da valencia:"
+                                 inputPrompt="(Seleccione a designação da instituição da valência)"
+                                 icon="font-icon:BUILDING"/>
+
+                    <lookupField property="idtipovalencia" id="idtipovalenciaField" optionsContainer="TipoValenciaDc"
+                                caption="Tipo de Valência: "
+                                inputPrompt="(Seleccione o tipo de valência)"
+                                icon="SIMPLYBUILT"/>
+
+
+                    <textField id="moradaField" property="morada" caption="Morada: "
+                               icon="font-icon:HOME"/>
+
+                    <textField id="nregsegsocialField"
+                               property="nregsegsocial"
+                               caption="Numero de Segurança Social: "
+                               icon="KEY"/>
+                    <textField id="contactodirectortecnicoField" property="contactodirectortecnico"
+                               caption="Contacto Directorio Técnico: " icon="PHONE"/>
+
+                    <textField id="emalField" property="emal"
+                               caption="Email: " icon="ENVELOPE"/>
+                    <textField id="faxField" property="fax"
+                               caption="Fax: " icon="FAX"/>
+
+                    <textField id="acordocapacidadeField" property="acordocapacidade"
+                               caption="Capacidade de Pessoas: " icon="USERS"/>
+
+
+                    <textField id="acordocomparticipacaoField" property="acordocomparticipacao"
+                               caption="Comparticipação de Pessoas: " icon="USERS"/>
+
+                    <dateField id="acordodatacelebracaoField" property="acordodatacelebracao"
+                               caption="Celebração de Pessoas: " dateFormat="dd/MM/yyyy" icon="CALENDAR"/>
+
+
+                    <textField id="acordolistaesperaField" property="acordolistaespera"
+                               caption="Lista de Espera: " icon="LIST_ALT"/>
+
+                    <textField id="acordoutentesextrafemininoField" property="acordoutentesextrafeminino"
+                               caption="Utentes extra no sexo feminino: " icon="USERS"/>
+
+
+                    <textField id="acordoutentesextramasculinoField" property="acordoutentesextramasculino"
+                               caption="Utentes extra no sexo masculino: " icon="USERS"/>
+
+                    <textField id="acordoutentesfemininoField" property="acordoutentesfeminino"
+                               caption="Utentes no sexo feminino: " icon="USERS"/>
+
+
+
+
+                    <textField id="acordoutentesmasculinoField" property="acordoutentesmasculino"
+                               caption="Utentes no sexo masculino: " icon="USERS"/>
+
+                    <textField id="utentesfuzetaField" property="utentesfuzeta"
+                               caption="Utentes na Fuzeta: " icon="USERS"/>
+                    <textField id="utentesmoncarapachoField" property="utentesmoncarapacho"
+                               caption="Utentes no Moncarapacho: " icon="USERS"/>
+
+                    <textField id="utentesolhaoField" property="utentesolhao"
+                               caption="Utentes de Olhão: " icon="USERS"/>
+                    <textField id="utentespechaoField" property="utentespechao"
+                               caption="Utentes de Pechão: " icon="USERS"/>
+
+                    <textField id="utentesquelfesField" property="utentesquelfes"
+                               caption="Utentes de Quelfes: " icon="USERS"/>
+
+
+                    <textField id="acordovagasfemininoField" property="acordovagasfeminino"
+                               caption="Vagas no Feminino:" icon="STREET_VIEW"/>
+
+                    <textField id="acordovagasmasculinoField" property="acordovagasmasculino"
+                               caption="Vagas no Masculino:" icon="STREET_VIEW"/>
+
+
+
+                    <checkBox id="actividadesculturalField" property="actividadescultural"
+                                caption="Actividades Culturais: " icon="UNIVERSITY"/>
+
+                    <checkBox id="actividadesdesportivaField" property="actividadesdesportiva"
+                                caption="Actividades Desportivas: " icon="FUTBOL_O"/>
+
+
+                    <checkBox id="actividadeslazerField" property="actividadeslazer"
+                                caption="Actividades de Lazer: " icon="GAMEPAD"/>
+
+                    <textField id="actividadesoutrasField" property="actividadesoutras"
+                                caption="Outro tipo de Actividades: " icon="FONT_AWESOME"/>
+                    <checkBox id="actividadesrecreativasField" property="actividadesrecreativas"
+                                caption="Actividades Recreativas: " icon="PUZZLE_PIECE"/>
+
+                    <checkBox id="actividadessocialField" property="actividadessocial"
+                                caption="Activiadades Sociais: " icon="GROUP"/>
+                    <checkBox id="certauditoriaexternacursoField" property="certauditoriaexternacurso"
+                                caption="Certidão de Auditoria Externa: " icon="CERTIFICATE"/>
+
+                    <checkBox id="certauditoriasinternascursoField" property="certauditoriasinternascurso"
+                                caption="Certidão de Auditorias Internas: " icon="CERTIFICATE"/>
+                    <dateField id="certdatainicioField" property="certdatainicio"
+                                caption="Certidão Data de Inicio: " dateFormat="dd/MM/yyyy" icon="CALENDAR"/>
+
+                    <dateField id="certdataprevistaField" property="certdataprevista" dateFormat="dd/MM/yyyy" icon="CALENDAR" caption="Certidão Data Prevista: "/>
+                    <checkBox id="certificacaoqualidadeField" property="certificacaoqualidade" icon="CERTIFICATE" caption="Certificação de Qualidade: "/>
+
+                    <textField id="directortecnicoField" property="directortecnico"
+                                caption="Directorio Técnico: " icon="USER_MD"/>
+                    <checkBox id="contratacaoexternajardinagemField" property="contratacaoexternajardinagem"
+                                caption="Contratação de Jardinagem Externa: " icon="LEAF"/>
+
+
+                    <checkBox id="contratacaoexternalimpezaField" property="contratacaoexternalimpeza"
+                                caption="Contratação de Limpeza Externa: " icon="PAINT_BRUSH"/>
+                    <textField id="contratacaoexternaoutrasField" property="contratacaoexternaoutras"
+                                caption="Outros Contratação Externos: " icon="OBJECT_GROUP"/>
+
+                    <checkBox id="contratacaoexternarefeicoesField" property="contratacaoexternarefeicoes"
+                                caption="Contratação de Refeições Externas: " icon="CUTLERY"/>
+                    <textField id="coordenadagpsField" property="coordenadagps"
+                    icon="MAP_MARKER" caption="Coordenadas de GPS: "/>
+
+                    <textField id="formacaopreviaField" property="formacaoprevia"
+                    caption="Formação Previa: " icon="FOLDER_OPEN"/>
+                    <timeField id="horariofimsemanainiciomanhaField" property="horariofimsemanainiciomanha"
+                                caption="Horario de Fim de Semana no Inicio da Manha: " icon="CLOCK_O"/>
+
+                    <timeField id="horariofimsemanafimmanhaField" property="horariofimsemanafimmanha"
+                               caption="Horario de Fim de Semana no Fim da Manhã: " icon="CLOCK_O"/>
+
+
+                    <timeField id="horariofimsemanainiciotardeField" property="horariofimsemanainiciotarde"
+                    caption="Horario do Fim de Semana no Inicio da Tarde: " icon="CLOCK_O"/>
+
+                    <timeField id="horariofimsemanafimtardeField" property="horariofimsemanafimtarde"
+                    caption="Horario no Fim de Semana no Fim da Tarde: " icon="CLOCK_O"/>
+
+
+                    <timeField id="horariosemanainiciomanhaField" property="horariosemanainiciomanha"
+                    caption="Horario da Semana no Inicio da Manha: " icon="CLOCK_O"/>
+
+                    <timeField id="horariosemanafimmanhaField" property="horariosemanafimmanha"
+                    caption="Horario da Semana no Fim da Manhã: " icon="CLOCK_O"/>
+
+
+                    <timeField id="horariosemanainiciotardeField" property="horariosemanainiciotarde"
+                    caption="Horario da Semana no Inicio da Tarde: " icon="CLOCK_O"/>
+
+
+                    <timeField id="horariosemanafimtardeField" property="horariosemanafimtarde"
+                    caption="Horario da Semana no Fim da Tarde: " icon="CLOCK_O"/>
+
+
+                    <textField id="recursostecnicoscomplementaresField" property="recursostecnicoscomplementares"
+                    caption="Recursos Técnicos Complementares: " icon="FILES_O"/>
+
+                    <textField id="servicosespecializadosField" property="servicosespecializados"
+                    caption="Serviços Especializados: " icon="COGS"/>
+
+                    <textField id="telefoneField" property="telefone"
+                    caption="Telefone: " icon="PHONE"/>
+
+                    <textField id="tipoacordosegsocialField" property="tipoacordosegsocial"
+                    caption="Tipo de Acordo de Segurança Social: " icon="GROUP"/>
+
+                    <checkBox id="transporteField" property="transporte"
+                    caption="Transporte: " icon="BUS"/>
+
+                    <textField id="transportecapacidadeField" property="transportecapacidade"
+                    caption="Transporte da Capacidade: " icon="CAR"/>
+
+                    <checkBox id="transporteproprioField" property="transporteproprio"
+                    caption="Transporte Próprio: " icon="CAR"/>
+
+                    <textField id="urlField" property="url"
+                    caption="URL: " icon="LINK"/>
+                    <textField id="versionField" property="version" visible="false"/>
+
+
+                </column>
+            </form>
+        </scrollBox>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE" />
+        </hbox>
+    </layout>
+</window>

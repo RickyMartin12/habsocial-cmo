@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.fotosvalencia">
+    <data>
+        <instance id="fotosValenciaDc"
+                  class="pt.cmolhao.entity.FotosValencia"
+                  view="fotosValencia-view">
+            <loader/>
+        </instance>
+
+        <collection id="valenciasDc"
+                    class="pt.cmolhao.entity.Valencias"
+                    view="_local">
+            <loader id="customersLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Valencias e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="fotosValenciaDc">
+            <column width="300px">
+                <!--<textField id="idField" property="id" />-->
+                <checkBox id="daequipacolaboradoresField" property="daequipacolaboradores" caption="Equipa de Colaboradores: " icon="USERS"/>
+                <textField id="descricaoField" property="descricao" caption="Descrição da Foto: " icon="font-icon:FILE_TEXT"/>
+                <checkBox id="doequipamentoField" property="doequipamento" caption="Equipamento: " icon="WRENCH"/>
+                <lookupField id="idvalenciaField"
+                             property="idvalencia"
+                             optionsContainer="valenciasDc"
+                             inputPrompt="(Seleccione a Descrição da Valência)"
+                             caption="Descrição técnica da valência: "
+                             icon="SIMPLYBUILT"/>
+                <upload id="imageField"
+                        property="image"
+                        fileStoragePutMode="IMMEDIATE"
+                        accept=".jpg,.jpeg,.png,.gif"
+                        showFileName="true"
+                        icon="PHOTO"
+                        caption="Foto/Imagem: "
+                />
+            </column>
+        </form>
+
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

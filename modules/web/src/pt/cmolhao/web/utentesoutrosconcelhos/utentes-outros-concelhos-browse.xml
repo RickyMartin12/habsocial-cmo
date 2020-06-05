@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="utentesOutrosConcelhosesTable"
+        messagesPack="pt.cmolhao.web.utentesoutrosconcelhos">
+    <data readOnly="true">
+        <collection id="utentesOutrosConcelhosesDc"
+                    class="pt.cmolhao.entity.UtentesOutrosConcelhos"
+                    view="utentesOutrosConcelhos-view">
+            <loader id="utentesOutrosConcelhosesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_UtentesOutrosConcelhos e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idValencia i</c:join>
+                                <c:where>i.id = :idValencia</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.freguesia = :freguesia</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.concelho = :concelho</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="valenciasDc"
+                    class="pt.cmolhao.entity.Valencias"
+                    view="_local">
+            <loader id="customersLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Valencias e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <keyValueCollection id="utentes_outros_concelhos_freguesia_id">
+            <properties>
+                <property name="freguesia" datatype="string" />
+            </properties>
+            <loader id="utentes_outros_concelhos_freguesia_id_loader">
+                <query>
+                    <![CDATA[select o.freguesia as freguesia from cmolhao_UtentesOutrosConcelhos o where o.freguesia is not null group by o.freguesia]]>
+                </query>
+            </loader>
+        </keyValueCollection>
+
+        <keyValueCollection id="utentes_outros_concelhos_localidade_id">
+            <properties>
+                <property name="concelho" datatype="string" />
+            </properties>
+            <loader id="utentes_outros_concelhos_localidade_id_loader">
+                <query>
+                    <![CDATA[select o.concelho as concelho from cmolhao_UtentesOutrosConcelhos o where o.concelho is not null group by o.concelho]]>
+                </query>
+            </loader>
+        </keyValueCollection>
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="utentesOutrosConcelhosesTable"
+            spacing="true">
+
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <hbox spacing="true">
+
+                <lookupField id="idValenciaField"
+                             optionsContainer="valenciasDc"
+                             property="idValencia"
+                             inputPrompt="(Seleccione a Descrição da Valência)"
+                             caption="Valencia: "
+                             icon="SIMPLYBUILT"/>
+
+                <lookupField id="utentes_conc_freguesia_id"
+                             optionsContainer="utentes_outros_concelhos_freguesia_id"
+                             caption="Freguesia:"
+                             inputPrompt="(seleccione a freguesia do utente)"
+                             icon="font-icon:INSTITUTION"
+                />
+                <lookupField id="utentes_conc_concelho_id"
+                             optionsContainer="utentes_outros_concelhos_localidade_id"
+                             caption="Concelho:"
+                             inputPrompt="(seleccione o concelho do utente)"
+                             icon="font-icon:MAP"
+                />
+
+            </hbox>
+
+            <hbox spacing="true">
+
+                <lookupField id="linhasUtentesOutrosConcelhos"
+                             caption="Mostrar Numero de Linhas"
+                             inputPrompt="(seleccione o numero de linhas)"
+                             icon="ARROWS_V"/>
+
+            </hbox>
+
+            <hbox spacing="true">
+                <button id="search_utentes_outros_concelhos" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                <button id="reset_utentes_outros_concelhos" icon="ERASER" caption="Limpar" />
+            </hbox>
+        </groupBox>
+
+        <groupTable id="utentesOutrosConcelhosesTable"
+                    width="100%"
+                    dataContainer="utentesOutrosConcelhosesDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela dos 'utentes outros concelhos'."/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela dos 'utentes outros concelhos'?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="concelho" caption="Concelho"/>
+                <column id="freguesia" caption="Freguesia"/>
+                <column id="idValencia" caption="Descrição da Valencia" generator="generateValenciasDescricao"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="utentesOutrosConcelhosesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="utentesOutrosConcelhosesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="utentesOutrosConcelhosesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button action="utentesOutrosConcelhosesTable.excel" stylename="friendly"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

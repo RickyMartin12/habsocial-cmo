@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
+
+
+    <view entity="cmolhao_Valencias" name="valencias-view" extends="_local">
+        <property name="idtipovalencia" view="_minimal">
+            <property name="nome"/>
+        </property>
+        <property name="idinstituicao" view="_minimal">
+            <property name="descricao"/>
+        </property>
+    </view>
+
+
+    <view entity="cmolhao_FotosValencia" name="fotosValencia-view" extends="_local">
+        <property name="image" view="_base" />
+        <property name="idvalencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+    <view entity="cmolhao_AjudasTecnicas" name="ajudasTecnicas-view" extends="_local">
+        <property name="idValencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+    <view entity="cmolhao_Localizacoes" name="localizacoes-view" extends="_local">
+        <property name="idvalencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+    <view entity="cmolhao_ProjectosIntervencao" name="projectosIntervencao-view" extends="_local">
+        <property name="idinstituicao" view="_minimal">
+            <property name="descricao"/>
+        </property>
+    </view>
+    <view entity="cmolhao_PessoalAuxiliar" name="pessoalAuxiliar-view" extends="_local">
+        <property name="idValencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+    <view entity="cmolhao_PessoalTecnico" name="pessoalTecnico-view" extends="_local">
+        <property name="idValencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+    <view entity="cmolhao_Login" name="login-view" extends="_local">
+        <property name="instituicao" view="_minimal">
+            <property name="descricao"/>
+        </property>
+    </view>
+    <view entity="cmolhao_ProjectosEmAprovacao" name="projectosEmAprovacao-view" extends="_local">
+        <property name="idprojectosintervencao" view="_minimal">
+            <property name="idinstituicao" view="_minimal">
+                <property name="descricao"/>
+            </property>
+        </property>
+    </view>
+    <view entity="sec$UserRole" name="userRole-view" extends="_local">
+        <property name="user" view="_local">
+        </property>
+    </view>
+    <view entity="cmolhao_UtentesOutrosConcelhos" name="utentesOutrosConcelhos-view" extends="_local">
+        <property name="idValencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+
+
+    <view entity="cmolhao_HabitacaoSocial" name="habitacaoSocial-view" extends="_local">
+        <property name="bloc" view="_minimal">
+            <property name="designacao"/>
+        </property>
+        <property name="idUtente" view="_minimal">
+            <property name="nome" />
+            <property name="numContribuinte" />
+        </property>
+    </view>
+    <view entity="cmolhao_Utente" name="utente-view" extends="_local">
+        <property name="grauEscolaridade" view="_minimal">
+            <property name="descricao" />
+        </property>
+        <property name="idTipoCivil" view="_minimal">
+            <property name="tipo" />
+        </property>
+        <property name="idTipologiaFamiliar" view="_minimal">
+            <property name="tipologiaFamiliar" />
+            <property name="tipologiaFamiliarEspecifica" />
+        </property>
+        <property name="profissao" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="habilitacoes" view="_minimal">
+            <property name="descricao" />
+        </property>
+    </view>
+    <view entity="cmolhao_Tecnico" name="tecnico-view" extends="_local">
+        <property name="idInstituicao" view="_minimal">
+            <property name="descricao"/>
+        </property>
+    </view>
+    <view entity="cmolhao_Moradores" name="moradores-view" extends="_local">
+        <property name="habitacaoSocial" view="_minimal">
+            <property name="bloc" view="_minimal">
+                <property name="designacao"/>
+            </property>
+        </property>
+        <property name="utente" view="_minimal">
+            <property name="nome" />
+            <property name="numContribuinte" />
+        </property>
+    </view>
+    <view entity="cmolhao_UtentesSituacaoProfissional" name="utentesSituacaoProfissional-view" extends="_local">
+        <property name="utente" view="_minimal">
+            <property name="nome" />
+            <property name="numContribuinte" />
+        </property>
+    </view>
+    <view entity="cmolhao_Atendimento" name="atendimento-view" extends="_local">
+        <property name="idUtente" view="_minimal">
+            <property name="nome" />
+            <property name="numContribuinte" />
+        </property>
+        <property name="idTecnico" view="_minimal">
+            <property name="nome" />
+            <property name="email" />
+        </property>
+        <property name="idTipoAtendimento" view="_minimal">
+            <property name="tipoAtendimento" />
+        </property>
+        <property name="idAtendimentoObjetivo" view="_minimal">
+            <property name="atendimentoObjetivoGeral" />
+            <property name="atendimemtoObjetivoEspecifico" />
+        </property>
+        <property name="idAtendimentoEncaminhamento" view="_minimal">
+            <property name="atendimentoEncaminhamento" />
+        </property>
+    </view>
+    <view entity="cmolhao_UtentesRelacionados" name="utentesRelacionados-view" extends="_local">
+        <property name="idTipoRelUtentes" view="_minimal">
+            <property name="tipoRelacionamento" />
+            <property name="tipoRelacionamentoInv" />
+        </property>
+        <property name="idUtenteRel1" view="_minimal">
+            <property name="nome" />
+            <property name="numContribuinte" />
+        </property>
+        <property name="idUtenteRel2" view="_minimal">
+            <property name="nome" />
+            <property name="numContribuinte" />
+        </property>
+    </view>
+    <view entity="cmolhao_RendimentosUtente" name="rendimentosUtente-view" extends="_local">
+        <property name="idUtente" view="_minimal">
+            <property name="nome" />
+            <property name="numContribuinte" />
+        </property>
+        <property name="idTipoRendimento" view="_minimal">
+            <property name="tipoRendimento" />
+        </property>
+    </view>
+    <view entity="cmolhao_SituacaoUtente" name="situacaoUtente-view" extends="_local">
+        <property name="idUtente" view="_minimal">
+            <property name="nome" />
+            <property name="numContribuinte" />
+        </property>
+        <property name="idTiposSituacaoUtentes" view="_minimal">
+            <property name="descricaoSituacao" />
+        </property>
+    </view>
+    <view entity="cmolhao_Apoios" name="apoios-view" extends="_local">
+        <property name="idUtente" view="_minimal">
+            <property name="nome" />
+            <property name="numContribuinte" />
+        </property>
+        <property name="idInstituicao" view="_minimal">
+            <property name="descricao"/>
+        </property>
+        <property name="idTipoapoio" view="_minimal">
+            <property name="descricaoTipoAjuda" />
+        </property>
+        <property name="idEquipamento" view="_minimal">
+            <property name="descricao" />
+        </property>
+        <property name="idEstado" view="_minimal">
+            <property name="estadosProcessos" />
+        </property>
+    </view>
+
+
+</views>

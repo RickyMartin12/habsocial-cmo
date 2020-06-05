@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="Criar/Editar Ajudas Tecnicas"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.ajudastecnicas">
+    <data>
+        <instance id="ajudasTecnicasDc"
+                  class="pt.cmolhao.entity.AjudasTecnicas"
+                  view="ajudasTecnicas-view">
+            <loader/>
+        </instance>
+
+        <instance id="ajudas_Tecnicas_Dc"
+                  class="pt.cmolhao.entity.AjudasTecnicas"
+                  view="ajudasTecnicas-view" />
+
+
+
+        <collection id="valenciasDc"
+                    class="pt.cmolhao.entity.Valencias"
+                    view="_local">
+            <loader id="ValenciasLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Valencias e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="ajudasTecnicasDc">
+            <column width="250px">
+                <dateField id="datadisponivelField" property="datadisponivel" dateFormat="dd/MM/yyyy" resolution="DAY"
+                           caption="Data Disponível: "
+                           icon="CALENDAR" />
+
+                <lookupField id="idValenciaField"
+                             property="idValencia"
+                             optionsContainer="valenciasDc"
+                             inputPrompt="(Seleccione a Descrição da Valência)"
+                             caption="Descrição técnica da valência: "
+                             icon="SIMPLYBUILT"/>
+
+                <textField id="localizacaoField" property="localizacao" icon="MAP" caption="Localização: "/>
+                <textField id="tipoajudaField" property="tipoajuda" icon="WRENCH" caption="Tipo de Ajuda: "/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

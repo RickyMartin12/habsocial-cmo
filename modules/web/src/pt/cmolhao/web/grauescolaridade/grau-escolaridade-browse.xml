@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="grauEscolaridadesTable"
+        messagesPack="pt.cmolhao.web.grauescolaridade">
+    <data readOnly="true">
+        <collection id="grauEscolaridadesDc"
+                    class="pt.cmolhao.entity.GrauEscolaridade"
+                    view="_local">
+            <loader id="grauEscolaridadesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_GrauEscolaridade e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="grauEscolaridadesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="grauEscolaridadesTable"
+                dataLoader="grauEscolaridadesDl">
+            <properties include=".*"/>
+        </filter>
+        <table id="grauEscolaridadesTable"
+               width="100%"
+               dataContainer="grauEscolaridadesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="descricao"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="grauEscolaridadesTable.create"/>
+                <button id="editBtn" action="grauEscolaridadesTable.edit"/>
+                <button id="removeBtn" action="grauEscolaridadesTable.remove"/>
+            </buttonsPanel>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

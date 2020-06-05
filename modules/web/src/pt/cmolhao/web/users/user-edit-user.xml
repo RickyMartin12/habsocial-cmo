@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.users">
+    <data>
+        <instance id="userDc"
+                  class="com.haulmont.cuba.security.entity.User"
+                  view="user.edit">
+            <loader/>
+            <collection id="userRolesDc" property="userRoles"/>
+            <collection id="substitutionsDc" property="substitutions"/>
+        </instance>
+        <collection id="GroupUsersDc"
+                    class="com.haulmont.cuba.security.entity.Group"
+                    view="_local">
+            <loader id="GroupUserLoader">
+                <query>
+                    <![CDATA[select e from sec$Group e]]>
+                </query>
+            </loader>
+        </collection>
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
+            <form id="form" dataContainer="userDc">
+                <column width="250px">
+                    <label id="idUser" property="id" visible="false"  />
+                    <textField id="loginField" property="login" icon="USER" caption="Nome do Utilizador: " required="true" requiredMessage="Preencher o campo 'Nome do utilizador'"/>
+                    <textField id="nameField" property="name" icon="font-icon:ADDRESS_CARD_O" caption="Nome: "/>
+                    <textField id="firstNameField" property="firstName" icon="font-icon:ADDRESS_CARD_O" caption="Primeiro Nome: "/>
+                    <textField id="lastNameField" property="lastName" icon="font-icon:ADDRESS_CARD_O" caption="Ultimo Nome: " />
+                    <textField id="middleNameField" property="middleName" icon="font-icon:ADDRESS_CARD_O" caption="Meio Nome: " />
+                    <textField id="positionField" property="position" caption="Função: " icon="WRENCH"/>
+                    <textField id="emailField" property="email" caption="Email: " icon="ENVELOPE">
+                        <validator class="com.haulmont.cuba.gui.components.validators.EmailValidator"
+                                   message="Email Invalido"/>
+                    </textField>
+                    <checkBox id="activeField" property="active" caption="Utilizador Activo: " icon="font-icon:CHECK"/>
+                    <lookupField id="groupField"
+                                 required="true"
+                                 requiredMessage="Preencher o campo 'Nome do Grupo do Utilizador' "
+                                 property="group"
+                                 optionsContainer="GroupUsersDc"
+                                 inputPrompt="(Seleccione o grupo do utilizador)"
+                                 caption="Grupo do Utilizador: "
+                                 icon="GROUP"/>
+                    <textField id="groupNamesField" property="groupNames" caption="Nome do Grupo: " icon="OBJECT_GROUP"/>
+                </column>
+            </form>
+            <groupBox id="userRolesBox" caption="Permissões do Utilizador">
+                <table id="userRolesTable" dataContainer="userRolesDc" width="100%" height="200px">
+                    <actions>
+                        <action id="create" type="create"/>
+                        <action id="edit" type="edit"/>
+                        <action id="remove" type="remove"/>
+                        <action id="excel" type="excel"/>
+                    </actions>
+                    <columns>
+                        <column id="user" caption="Nome do Utilizador"/>
+                        <column id="roleName" generator="generateRoleName" caption="Papel do Utilizador"/>
+                    </columns>
+                    <buttonsPanel>
+                        <button action="userRolesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                        <button action="userRolesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                        <button action="userRolesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                        <button action="userRolesTable.excel" stylename="friendly"/>
+                    </buttonsPanel>
+                </table>
+            </groupBox>
+        </scrollBox>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

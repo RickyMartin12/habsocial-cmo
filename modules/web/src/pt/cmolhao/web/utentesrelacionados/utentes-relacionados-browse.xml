@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="utentesRelacionadosesTable"
+        messagesPack="pt.cmolhao.web.utentesrelacionados">
+    <data readOnly="true">
+        <collection id="utentesRelacionadosesDc"
+                    class="pt.cmolhao.entity.UtentesRelacionados"
+                    view="utentesRelacionados-view">
+            <loader id="utentesRelacionadosesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_UtentesRelacionados e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="utentesRelacionadosesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="utentesRelacionadosesTable"
+                dataLoader="utentesRelacionadosesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="utentesRelacionadosesTable"
+                    width="100%"
+                    dataContainer="utentesRelacionadosesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="idTipoRelUtentes"/>
+                <column id="idUtenteRel1"/>
+                <column id="idUtenteRel2"/>
+                <column id="membroAgregado"/>
+                <column id="obsConf"/>
+                <column id="obsGerais"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="utentesRelacionadosesTable.create"/>
+                <button id="editBtn" action="utentesRelacionadosesTable.edit"/>
+                <button id="removeBtn" action="utentesRelacionadosesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

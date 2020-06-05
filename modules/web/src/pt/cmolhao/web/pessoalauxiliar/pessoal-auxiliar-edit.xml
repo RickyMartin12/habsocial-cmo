@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.pessoalauxiliar">
+    <data>
+        <instance id="pessoalAuxiliarDc"
+                  class="pt.cmolhao.entity.PessoalAuxiliar"
+                  view="pessoalAuxiliar-view">
+            <loader/>
+        </instance>
+
+        <collection id="valenciasDc"
+                    class="pt.cmolhao.entity.Valencias"
+                    view="_local">
+            <loader id="customersLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Valencias e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="pessoalAuxiliarDc">
+            <column width="250px">
+                <textField id="anosservicoinstituicaoField" property="anosservicoinstituicao"
+                           maxLength="2"
+                           caption="Anos de Serviço da Instituição: "
+                           icon="CALENDAR_TIMES_O"
+                />
+                <textField id="categoriaprofissionalField"
+                             caption="Categoria Profissional: "
+                             icon="ADDRESS_BOOK"
+                             property="categoriaprofissional"/>
+                <checkBox id="formacaoprofissionalField"
+                          caption="Formação Profissional: "
+                          icon="GRADUATION_CAP"
+                          property="formacaoprofissional"/>
+                <lookupField id="habilitacoesliterariasField" property="habilitacoesliterarias"
+                             caption="Habilitações Literarias: "
+                             icon="UNIVERSITY"
+                             inputPrompt="(Seleccione uma das Habilitações Literárias)"/>
+                <lookupField id="idValenciaField"
+                             property="idValencia"
+                             optionsContainer="valenciasDc"
+                             inputPrompt="(Seleccione a Descrição da Valência)"
+                             caption="Descrição técnica da valência: "
+                             icon="SIMPLYBUILT"/>
+                <textField id="idadeField"
+                           caption="Idade: "
+                           icon="ADDRESS_CARD"
+                           property="idade"/>
+                <checkBox id="sexomasculinoField"
+                          caption="Sexo Masculino: "
+                          icon="font-icon:USER_O"
+                          property="sexomasculino"/>
+                <textField id="tipovinculoField"
+                           caption="Tipo Vinculo: "
+                           icon="ARCHIVE"
+                           property="tipovinculo"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

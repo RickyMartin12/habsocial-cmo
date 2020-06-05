@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment
+        caption="Dashboard"
+        xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd"
+
+        xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+
+
+    <data>
+        <keyValueCollection id="valencia_dc">
+            <properties>
+                <property name="Customer" class="pt.cmolhao.entity.Valencias" />
+                <property datatype="decimal" name="TotalTurnover"/>
+
+            </properties>
+            <loader id="valencia_sum_values">
+                <query>
+                    <![CDATA[select o.idtipovalencia as Customer, sum(o.acordocapacidade) as TotalTurnover from cmolhao_Valencias o group by o.idtipovalencia]]>
+                </query>
+            </loader>
+        </keyValueCollection>
+
+
+        <keyValueCollection id="idinstituicao_valencia_dc">
+            <properties>
+                <property name="Instituicao" class="pt.cmolhao.entity.Valencias" />
+                <property datatype="decimal" name="TotalCapacidade"/>
+            </properties>
+
+            <loader id="instituicao_sum_values">
+                <query>
+                    <![CDATA[select o.idinstituicao as Instituicao, sum(o.acordocapacidade) as TotalCapacidade from cmolhao_Valencias o group by o.idinstituicao]]>
+                </query>
+            </loader>
+
+        </keyValueCollection>
+
+        <!--<collection id="valencia_dc"
+                    class="pt.cmolhao.entity.Valencias"
+                    view="valencias-view">
+            <loader id="valenciaLoaderImporter">
+                <query>
+                    <![CDATA[select e from cmolhao_Valencias e  order by e.idtipovalencia]]>
+                </query>
+            </loader>
+        </collection>-->
+    </data>
+
+    <layout>
+        <label id="htmlLabel"
+               htmlEnabled="true" stylename="title_graphic"/>
+
+
+        <label id="htmlLabel_Instituicao"
+               htmlEnabled="true" stylename="title_graphic_ins"/>
+
+        <chart:pieChart id="pie3dChart"
+                        stylename="pie_chart"
+                        angle="30"
+                        balloonText="[[title]]&lt;br&gt;&lt;span style='font-size:14px'&gt;
+                        &lt;strong&gt;[[value]]&lt;/strong&gt; ([[percents]]%)&lt;/span&gt;"
+                        dataContainer="idinstituicao_valencia_dc"
+                        depth3D="15"
+                        height="100%"
+                        outlineAlpha="0.4"
+                        titleField="Instituicao"
+                        valueField="TotalCapacidade"
+                        width="100%">
+            <chart:legend autoMargins="false"
+                          marginRight="80"
+                          markerType="CIRCLE"
+                          position="RIGHT"/>
+            <chart:export/>
+        </chart:pieChart>
+
+            <!--<hbox spacing="true" >
+                <table id="valenciases_Table"
+                       width="100%"
+                       dataContainer="valencia_dc">
+                    <columns>
+                        <column id="Customer" caption="Nome Valencia"/>
+                        <column id="TotalTurnover" caption="Total Capacidade"/>
+                    </columns>
+                    <rowsCount/>
+                </table>
+
+            </hbox>-->
+
+
+        <label id="htmlLabel_Valencia"
+               htmlEnabled="true" stylename="title_graphic_val"/>
+
+        <chart:serialChart id="column3d"
+                           stylename="graphics_chart"
+                           angle="30"
+                           categoryField="Customer"
+                           dataContainer="valencia_dc"
+                           depth3D="60"
+                           height="100%"
+                           plotAreaFillAlphas="0.1"
+                           startDuration="1"
+                           autoMarginOffset="20"
+                           marginRight="40"
+                           marginLeft="40"
+                           theme="LIGHT"
+                           width="100%">
+            <chart:categoryAxis gridPosition="START"/>
+            <chart:valueAxes>
+                <chart:axis position="LEFT"
+                            stackType="BOX_3D"
+                            title="Total de Capacidade de valencias"
+                            unit=" pessoas"/>
+                <chart:axis stackType="BOX_3D"
+                            position="BOTTOM"
+                            title="Nome das Valencias"/>
+            </chart:valueAxes>
+
+            <chart:graphs>
+                <chart:graph balloonText="Total de capacidade de valencias: &lt;strong&gt;[[value]]&lt;/strong&gt;"
+                             fillAlphas="0.9"
+                             lineAlpha="0.2"
+                             title="Total de Capacidade"
+                             type="COLUMN"
+                             valueField="TotalTurnover"/>
+            </chart:graphs>
+
+            <chart:export/>
+        </chart:serialChart>
+    </layout>
+</fragment>

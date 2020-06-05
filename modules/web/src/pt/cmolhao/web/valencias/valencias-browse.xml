@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="valenciasesTable"
+        messagesPack="pt.cmolhao.web.screens.valencias">
+    <data readOnly="true">
+        <collection id="valenciasesDc"
+                    class="pt.cmolhao.entity.Valencias"
+                    view="valencias-view">
+            <loader id="valenciasesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Valencias e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idinstituicao i</c:join>
+                                <c:where>i.id = :idinstituicao</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idtipovalencia j</c:join>
+                                <c:where>j.id = :idtipovalencia</c:where>
+                            </c:jpql>
+                        </and>
+
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="InstituicaoDc"
+                    class="pt.cmolhao.entity.Instituicoes"
+                    view="_local">
+            <loader id="ins_Loader">
+                <query>
+                    <![CDATA[select e from cmolhao_Instituicoes e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+        <collection id="TipoValenciaDc"
+                    class="pt.cmolhao.entity.Tiposvalencia"
+                    view="_local">
+            <loader id="tipo_valencia_Loader">
+                <query>
+                    <![CDATA[select e from cmolhao_Tiposvalencia e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="valenciasesTable"
+            spacing="true">
+
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <hbox spacing="true">
+                <lookupField
+                        inputPrompt="(Seleccione a designação da instituição da valência)"
+                        property="idinstituicao"
+                        id="idinstituicaoField"
+                        optionsContainer="InstituicaoDc"
+                        icon="font-icon:BUILDING" caption="Designação da Instituição da valencia: "/>
+
+                <lookupField
+                        inputPrompt="(Seleccione o tipo de valência)"
+                        property="idtipovalencia"
+                        id="idtipovalenciaField"
+                        optionsContainer="TipoValenciaDc"
+                        icon="SIMPLYBUILT" caption="Tipo de Valencia: " />
+
+                <lookupField id="linhasValencias"
+                             caption="Mostrar Numero de Linhas"
+                             inputPrompt="(seleccione o numero de linhas)"
+                             icon="ARROWS_V"/>
+
+            </hbox>
+
+            <hbox spacing="true">
+                <button id="reset_valencia" icon="ERASER" caption="Limpar" />
+                <button id="search_valencia" caption="Pesquisar" icon="SEARCH" stylename="info" />
+            </hbox>
+
+        </groupBox>
+
+
+       <!--<filter id="filter"
+                applyTo="valenciasesTable"
+                dataLoader="valenciasesDl">
+        </filter>-->
+
+        <groupTable id="valenciasesTable"
+                    width="100%"
+                    dataContainer="valenciasesDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela de valencia."/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela da tabela valencia?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="descricaotecnica" caption="Descrição Técnica"/>
+                <column id="idinstituicao" caption="Nome da Instituição"/>
+                <column id="idtipovalencia" caption="Descrição da Valencia"/>
+                <column id="morada" caption="Morada"/>
+                <column id="nregsegsocial" caption="Numero de Segurânça Social"/>
+                <column id="directortecnico" caption="Director Técnico"/>
+                <column id="emal" caption="Email"/>
+                <column id="fax" caption="Fax"/>
+                <column id="acordocapacidade" caption="Acordo de Capacidade"/>
+                <column id="acordocomparticipacao" caption="Acordo de Comparticipação"/>
+                <column id="acordodatacelebracao" caption="Acordo de Data de Celebracao"/>
+                <column id="acordolistaespera" caption="Acordo de Lista de Espera"/>
+                <column id="acordoutentesextrafeminino" caption="Acordo de Utentes extra feminino"/>
+                <column id="acordoutentesextramasculino" caption="Acordo de Utentes extra masculino"/>
+                <column id="acordoutentesfeminino" caption="Acordo de Utentes no feminino"/>
+                <column id="acordoutentesmasculino" caption="Acordo de Utentes no masculino"/>
+                <column id="utentesfuzeta" caption="Utentes na Fuzeta"/>
+                <column id="utentesmoncarapacho" caption="Utentes no Moncarapacho"/>
+                <column id="utentesolhao" caption="Utentes de Olhão"/>
+                <column id="utentespechao" caption="Utentes de Pechão"/>
+                <column id="utentesquelfes" caption="Utentes de Quelfes"/>
+                <column id="acordovagasfeminino" caption="Acordo de Vagas no Feminino"/>
+                <column id="acordovagasmasculino" caption="Acordo de Vagas no Masculino"/>
+                <column id="actividadescultural" caption="Actividade Cultural"/>
+                <column id="actividadesdesportiva" caption="Actividade Desportiva"/>
+                <column id="actividadeslazer" caption="Actividade de Lazer"/>
+                <column id="actividadesoutras" caption="Outras Actividades"/>
+                <column id="actividadesrecreativas" caption="Actividades Recreativas"/>
+                <column id="actividadessocial" caption="Actividade Social"/>
+                <column id="certauditoriaexternacurso" caption="Certificação de Auditoria do curso externo"/>
+                <column id="certauditoriasinternascurso" caption="Certificação de Auditoria do curso interno"/>
+                <column id="certdatainicio" caption="Certificação de Data de Inicio"/>
+                <column id="certdataprevista" caption="Certificação de Data de Previsto"/>
+                <column id="certificacaoqualidade" caption="Certificação de Qualidade"/>
+                <column id="contactodirectortecnico" caption="Contacto do Director Técnico"/>
+                <column id="contratacaoexternajardinagem" caption="Contratacao de Jardinagem externa"/>
+                <column id="contratacaoexternalimpeza" caption="Contratacao de Limpeza externa"/>
+                <column id="contratacaoexternaoutras" caption="Outras Contratações externas"/>
+                <column id="contratacaoexternarefeicoes" caption="Contratação de Refeições externas"/>
+                <column id="coordenadagps" caption="Coordenada de GPS"/>
+                <column id="formacaoprevia" caption="Formação Prévia"/>
+                <column id="horariofimsemanainiciomanha" caption="Horario de Fim de Semana no Inicio da Manhã"/>
+                <column id="horariofimsemanafimmanha" caption="Horario de Fim de Semana no Fim da Manhã"/>
+                <column id="horariofimsemanainiciotarde" caption="Horario de Fim de Semana no Inicio da Tarde"/>
+                <column id="horariofimsemanafimtarde" caption="Horario de Fim de Semana no Fim da Tarde"/>
+                <column id="horariosemanainiciomanha" caption="Horario da Semana no Inicio da Manhã"/>
+                <column id="horariosemanafimmanha" caption="Horario da Semana no Fim da Manhã"/>
+                <column id="horariosemanainiciotarde" caption="Horario da Semana no Inicio da Tarde"/>
+                <column id="horariosemanafimtarde" caption="Horario da Semana no Fim do Tarde"/>
+                <column id="recursostecnicoscomplementares" caption="Recursos Teécnicos Complementares"/>
+                <column id="servicosespecializados" caption="Serviços Especializados"/>
+                <column id="telefone" caption="Telefone"/>
+                <column id="tipoacordosegsocial" caption="Tipo de Acordo na Segurânça Social"/>
+                <column id="transporte" caption="Transporte"/>
+                <column id="transportecapacidade" caption="Transporte de Capacidade"/>
+                <column id="transporteproprio" caption="Transporte Próprio"/>
+                <column id="url" caption="URL"/>
+                <column id="version" visible="false"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="valenciasesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="valenciasesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="valenciasesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button action="valenciasesTable.excel" stylename="friendly"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

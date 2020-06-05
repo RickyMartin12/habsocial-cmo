@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.projectosemaprovacao">
+    <data>
+        <instance id="projectosEmAprovacaoDc"
+                  class="pt.cmolhao.entity.ProjectosEmAprovacao"
+                  view="projectosEmAprovacao-view">
+            <loader/>
+        </instance>
+        <collection id="ProjectosIntervencaoDc"
+                    class="pt.cmolhao.entity.ProjectosIntervencao"
+                    view="projectosIntervencao-view">
+            <loader id="customersLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_ProjectosIntervencao e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="projectosEmAprovacaoDc">
+            <column width="250px">
+                <lookupField id="etapaprocessoField"
+                             caption="Etapa de Processo: "
+                             icon="CHECK_CIRCLE"
+                             property="etapaprocesso"
+                             inputPrompt="(Seleccione uma das Etapas de Processo)"
+                />
+                <lookupField id="idprojectosintervencaoField"
+                             property="idprojectosintervencao"
+                             optionsContainer="ProjectosIntervencaoDc"
+                             inputPrompt="(Seleccione o ID do projecto de intervenção)"
+                             caption="Projecto de Intervenção: "
+                             contextHelpText="Projecto de Intervenção --> (ID do Projecto em Aprovação - Descrição da Instituição)"
+                             required="true"
+                             requiredMessage="Preenche o Projecto de Intervenção"
+                             icon="SIMPLYBUILT"/>
+                <textField id="tipologiaField" property="tipologia"
+                            caption="Tipologia: "
+                            icon="CERTIFICATE"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

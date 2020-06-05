@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.situacaoutente">
+    <data>
+        <instance id="situacaoUtenteDc"
+                  class="pt.cmolhao.entity.SituacaoUtente"
+                  view="situacaoUtente-view">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="situacaoUtenteDc">
+            <column width="250px">
+                <dateField id="dataFimField" property="dataFim"/>
+                <dateField id="dataInicioField" property="dataInicio"/>
+                <pickerField id="idTiposSituacaoUtentesField" property="idTiposSituacaoUtentes">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                        <action id="clear" type="picker_clear"/>
+                    </actions>
+                </pickerField>
+                <pickerField id="idUtenteField" property="idUtente">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                        <action id="clear" type="picker_clear"/>
+                    </actions>
+                </pickerField>
+                <textField id="obsGeraisField" property="obsGerais"/>
+                <textField id="obserConfField" property="obserConf"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

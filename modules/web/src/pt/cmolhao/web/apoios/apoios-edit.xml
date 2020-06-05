@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.apoios">
+    <data>
+        <instance id="apoiosDc"
+                  class="pt.cmolhao.entity.Apoios"
+                  view="apoios-view">
+            <loader/>
+        </instance>
+
+        <collection id="equipamentoesDc"
+                    class="pt.cmolhao.entity.Equipamento"
+                    view="_local">
+            <loader id="equipamentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Equipamento e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="InstituicaoDc"
+                    class="pt.cmolhao.entity.Instituicoes"
+                    view="_local">
+            <loader id="ins_Loader">
+                <query>
+                    <![CDATA[select e from cmolhao_Instituicoes e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoAjudasDc"
+                    class="pt.cmolhao.entity.TipoAjuda"
+                    view="_local">
+            <loader id="tipoAjudasDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoAjuda e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="UtentesDC"
+                    class="pt.cmolhao.entity.Utente"
+                    view="_local">
+            <loader id="utentesLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Utente e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="estadosesDc"
+                    class="pt.cmolhao.entity.Estados"
+                    view="_local">
+            <loader id="estadosesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Estados e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
+            <form id="form" dataContainer="apoiosDc">
+                <column width="250px">
+                    <dateField id="dataAtribuicaoField" property="dataAtribuicao" caption="Data de Atribuição: " icon="CALENDAR"/>
+                    <dateField id="dataFimField" property="dataFim" icon="CALENDAR" caption="Data de Fim: "/>
+                    <dateField id="dataPedidoField" property="dataPedido" caption="Data do Pedido: " icon="CALENDAR"/>
+                    <dateField id="dataRenovacaoField" property="dataRenovacao" icon="CALENDAR" caption="Data de Renovação: "/>
+
+                    <lookupField id="idEstadosField"
+                                 property="idEstado"
+                                 optionsContainer="estadosesDc"
+                                 inputPrompt="(Seleccione os estados dos equipamentos)"
+                                 caption="Estado do Equipamento:"
+                                 icon="REFRESH_ACTION" />
+
+
+                    <lookupField id="idEquipamentoField"
+                                 property="idEquipamento"
+                                 optionsContainer="equipamentoesDc"
+                                 inputPrompt="(Seleccione a descrição do equipamento)"
+                                 caption="Descrição do equipamento: "
+                                 icon="WRENCH"/>
+
+                    <lookupField property="idInstituicao" id="idInstituicaoField" optionsContainer="InstituicaoDc"
+                                 caption="Designação da Instituição da valencia:"
+                                 inputPrompt="(Seleccione a designação da instituição da valência)"
+                                 icon="font-icon:BUILDING"/>
+
+
+                    <lookupField property="idTipoapoio" id="idTipoapoioField" optionsContainer="tipoAjudasDc"
+                                 caption="Descrição do tipo de Ajuda:"
+                                 inputPrompt="(Seleccione o tipo de ajuda)"
+                                 icon="font-icon:QUESTION"/>
+
+                    <lookupField
+                            property="idUtente"
+                            id="utenteField"
+                            optionsContainer="UtentesDC"
+                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente"
+                            inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+
+                    <textField id="numProcessoField" property="numProcesso" caption="Numero Processo: " icon="ID_CARD"/>
+                    <textField id="observacaoEstadoField" property="observacaoEstado" caption="Estado de Observação: " icon="EYE"/>
+                    <textField id="observacoesConfField" property="observacoesConf" caption="Observações Confirmações: " icon="CHECK"/>
+                    <textField id="observacoesGeraisField" property="observacoesGerais" caption="Observações Gerais: " icon="FILE_TEXT_O"/>
+                    <textField id="valorApoioField" property="valorApoio" caption="Valor de Apoio: " icon="EURO"/>
+                </column>
+            </form>
+        </scrollBox>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button caption="Fechar" action="windowClose" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

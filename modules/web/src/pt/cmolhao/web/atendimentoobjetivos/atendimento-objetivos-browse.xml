@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="atendimentoObjetivosesTable"
+        messagesPack="pt.cmolhao.web.atendimentoobjetivos">
+    <data readOnly="true">
+        <collection id="atendimentoObjetivosesDc"
+                    class="pt.cmolhao.entity.AtendimentoObjetivos"
+                    view="_local">
+            <loader id="atendimentoObjetivosesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_AtendimentoObjetivos e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="atendimentoObjetivosesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="atendimentoObjetivosesTable"
+                dataLoader="atendimentoObjetivosesDl">
+            <properties include=".*"/>
+        </filter>
+        <table id="atendimentoObjetivosesTable"
+               width="100%"
+               dataContainer="atendimentoObjetivosesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="atendimemtoObjetivoEspecifico"/>
+                <column id="atendimentoObjetivoGeral"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="atendimentoObjetivosesTable.create"/>
+                <button id="editBtn" action="atendimentoObjetivosesTable.edit"/>
+                <button id="removeBtn" action="atendimentoObjetivosesTable.remove"/>
+            </buttonsPanel>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

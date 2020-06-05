@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.tipoajuda">
+    <data>
+        <instance id="tipoAjudaDc"
+                  class="pt.cmolhao.entity.TipoAjuda"
+                  view="_local">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="tipoAjudaDc">
+            <column width="250px">
+                <textField id="descricaoTipoAjudaField" property="descricaoTipoAjuda"
+                           caption="Descrição de Tipo de Ajuda: "
+                           icon="ADDRESS_CARD"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button caption="Fechar" action="windowClose" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

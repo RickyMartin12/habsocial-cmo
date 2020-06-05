@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="tipoCivilsTable"
+        messagesPack="pt.cmolhao.web.tipocivil">
+    <data readOnly="true">
+        <collection id="tipoCivilsDc"
+                    class="pt.cmolhao.entity.TipoCivil"
+                    view="_local">
+            <loader id="tipoCivilsDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoCivil e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="tipoCivilsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="tipoCivilsTable"
+                dataLoader="tipoCivilsDl">
+            <properties include=".*"/>
+        </filter>
+        <table id="tipoCivilsTable"
+               width="100%"
+               dataContainer="tipoCivilsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="tipo"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="tipoCivilsTable.create"/>
+                <button id="editBtn" action="tipoCivilsTable.edit"/>
+                <button id="removeBtn" action="tipoCivilsTable.remove"/>
+            </buttonsPanel>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

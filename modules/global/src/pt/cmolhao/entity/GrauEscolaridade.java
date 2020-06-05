@@ -1,0 +1,27 @@
+package pt.cmolhao.entity;
+
+import com.haulmont.chile.core.annotations.NamePattern;
+import com.haulmont.cuba.core.entity.BaseIntegerIdEntity;
+import com.haulmont.cuba.core.global.DesignSupport;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@DesignSupport("{'imported':true}")
+@NamePattern("%s|descricao")
+@Table(name = "grau_escolaridade")
+@Entity(name = "cmolhao_GrauEscolaridade")
+public class GrauEscolaridade extends BaseIntegerIdEntity {
+    private static final long serialVersionUID = -5993192271886307283L;
+    @Column(name = "descricao")
+    protected String descricao;
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+}

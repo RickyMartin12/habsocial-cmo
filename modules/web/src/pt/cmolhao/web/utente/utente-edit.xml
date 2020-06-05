@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.utente">
+    <data>
+        <instance id="utenteDc"
+                  class="pt.cmolhao.entity.Utente"
+                  view="utente-view">
+            <loader/>
+        </instance>
+
+        <collection id="grauEscolaridadesDc"
+                    class="pt.cmolhao.entity.GrauEscolaridade"
+                    view="_local">
+            <loader id="grauEscolaridadesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_GrauEscolaridade e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="habilitacoesLiterariasesDc"
+                    class="pt.cmolhao.entity.HabilitacoesLiterarias"
+                    view="_local">
+            <loader id="habilitacoesLiterariasesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_HabilitacoesLiterarias e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoCivilsDc"
+                    class="pt.cmolhao.entity.TipoCivil"
+                    view="_local">
+            <loader id="tipoCivilsDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoCivil e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipologiaFamiliarsDc"
+                    class="pt.cmolhao.entity.TipologiaFamiliar"
+                    view="_local">
+            <loader id="tipologiaFamiliarsDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipologiaFamiliar e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
+            <form id="form" dataContainer="utenteDc">
+                <column width="250px">
+                    <textField id="certUniaoEuropeiaField" property="certUniaoEuropeia" caption="Ceridão da União Europeia: " icon="CREDIT_CARD"/>
+                    <dateField id="dataNascField" property="dataNasc" caption="Data de Nascimento: " icon="CALENDAR"/>
+                    <checkBox id="deficienteField" property="deficiente" caption="Deficiente: " icon="WHEELCHAIR"/>
+                    <checkBox id="dependenteField" property="dependente"/>
+                    <textField id="emailField" property="email" caption="Email: " icon="ENVELOPE">
+                        <validator class="com.haulmont.cuba.gui.components.validators.EmailValidator"
+                                   message="Email Invalido"/>
+                    </textField>
+                    <lookupField
+                            inputPrompt="(Seleccione o grau de escolaridade)"
+                            property="grauEscolaridade"
+                            id="grauEscolaridadeField"
+                            optionsContainer="grauEscolaridadesDc"
+                            icon="font-icon:GRADUATION_CAP" caption="Grau de Escolaridade: "/>
+                    <lookupField
+                            inputPrompt="(Seleccione a habilitação literária)"
+                            property="habilitacoes"
+                            id="habilitacoesField"
+                            optionsContainer="habilitacoesLiterariasesDc"
+                            icon="font-icon:BOOK" caption="Habilitações Literarias: "/>
+                    <lookupField
+                            inputPrompt="(Seleccione o tipo de civil)"
+                            property="idTipoCivil"
+                            id="idTipoCivilField"
+                            optionsContainer="tipoCivilsDc"
+                            icon="font-icon:ADDRESS_CARD_O" caption="Tipo de Civil: "/>
+                    <lookupField
+                            inputPrompt="(Seleccione a topologia familiar)"
+                            property="idTipologiaFamiliar"
+                            id="idTipologiaFamiliarField"
+                            optionsContainer="tipologiaFamiliarsDc"
+                            icon="font-icon:USERS" caption="Topologia Familiar: "/>
+                    <textField id="nissField" property="niss" caption="Numero de Segurança Social: " icon="font-icon:ID_CARD"
+                               maxLength="11"/>
+                    <textField id="nomeField" property="nome" caption="Nome: " icon="ADDRESS_CARD"/>
+                    <textField id="numContribuinteField" property="numContribuinte" caption="Numero Contribuinte: "
+                               icon="font-icon:ID_CARD" maxLength="9"/>
+                    <textField id="numIdCivilField" property="numIdCivil" caption="Numero ID Civil: " icon="CREDIT_CARD_ALT"/>
+                    <textArea id="obsConfField" property="obsConf" icon="FILE_TEXT" caption="Observações Confiramento: "/>
+                    <textField id="obsGeraisField" property="obsGerais" icon="FILE_TEXT" caption="Observações Gerais: "/>
+                    <pickerField id="profissaoField" property="profissao">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                            <action id="clear" type="picker_clear"/>
+                        </actions>
+                    </pickerField>
+                    <textArea id="telefoneField" property="telefone" rows="5"/>
+                    <textArea id="telem_velField" property="telem_vel" rows="5"/>
+                </column>
+            </form>
+        </scrollBox>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

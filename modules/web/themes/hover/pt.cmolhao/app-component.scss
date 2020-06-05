@@ -1,0 +1,14 @@
+@import "hover-ext";
+
+@mixin pt_cmolhao {
+  @include pt_cmolhao-hover-ext;
+
+  .v-checkbox>.v-icon
+      {
+          display: none;
+      }
+
+
+
+
+}

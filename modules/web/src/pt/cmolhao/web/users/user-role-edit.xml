@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.users">
+    <data>
+        <instance id="userRoleDc"
+                  class="com.haulmont.cuba.security.entity.UserRole"
+                  view="userRole-view">
+            <loader/>
+        </instance>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="userRoleDc">
+            <column width="250px">
+                <textField id="label_user" property="user" visible="false" />
+                <lookupField id="roleField"
+                             dataContainer="userRoleDc"
+                             property="roleName"
+                             caption="Numero de Renda:"
+                             inputPrompt="(seleccione o numero de renda)"
+                             icon="font-icon:SORT_NUMERIC_ASC"
+                />
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

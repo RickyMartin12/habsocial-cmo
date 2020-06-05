@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="pessoalTecnicoesTable"
+        messagesPack="pt.cmolhao.web.pessoaltecnico">
+    <data readOnly="true">
+        <collection id="pessoalTecnicoesDc"
+                    class="pt.cmolhao.entity.PessoalTecnico"
+                    view="pessoalTecnico-view">
+            <loader id="pessoalTecnicoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_PessoalTecnico e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idValencia i</c:join>
+                                <c:where>i.id = :idValencia</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.sexomasculino = :sexomasculino</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.formacaoprofissional = :formacaoprofissional</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.categoriaprofissional = :categoriaprofissional</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.habilitacoesliterarias = :habilitacoesliterarias</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="valenciasDc"
+                    class="pt.cmolhao.entity.Valencias"
+                    view="_local">
+            <loader id="customersLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Valencias e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <!-- Categoria Profissional -->
+
+        <keyValueCollection id="categoria_profissional_pessoal_auxiliar_id">
+            <properties>
+                <property name="categoriaprofissional" datatype="string" />
+            </properties>
+            <loader id="categoria_profissional_pessoal_auxiliar_id_loader">
+                <query>
+                    <![CDATA[select o.categoriaprofissional as categoriaprofissional from cmolhao_PessoalTecnico o where o.categoriaprofissional is not null group by o.categoriaprofissional]]>
+                </query>
+            </loader>
+        </keyValueCollection>
+
+        <!-- Habilitacoes Literarias -->
+
+        <keyValueCollection id="habilitacoes_literarias_pessoal_auxiliar_id">
+            <properties>
+                <property name="habilitacoesliterarias" datatype="string" />
+            </properties>
+            <loader id="habilitacoes_literarias_pessoal_auxiliar_id_loader">
+                <query>
+                    <![CDATA[select o.habilitacoesliterarias as habilitacoesliterarias from cmolhao_PessoalTecnico o where o.habilitacoesliterarias is not null group by o.habilitacoesliterarias]]>
+                </query>
+            </loader>
+        </keyValueCollection>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="pessoalTecnicoesTable"
+            spacing="true">
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <hbox spacing="true">
+                <lookupField id="idvalenciaField"
+                             property="idValencia"
+                             optionsContainer="valenciasDc"
+                             inputPrompt="(Seleccione a Descrição da Valência)"
+                             caption="Descrição técnica da valência: "
+                             icon="SIMPLYBUILT"/>
+
+                <lookupField id="categoria_profissional_id"
+                             optionsContainer="categoria_profissional_pessoal_auxiliar_id"
+                             caption="Categoria Profissional:"
+                             inputPrompt="(seleccione as categorias profissionais criadas)"
+                             icon="font-icon:ADDRESS_BOOK"
+                />
+
+                <!--<lookupField id="habilitacoes_literarias_id"
+                             optionsContainer="habilitacoes_literarias_pessoal_auxiliar_id"
+                             caption="Habilitações Literárias:"
+                             inputPrompt="(seleccione as habilitações literarias criadas)"
+                             icon="font-icon:UNIVERSITY"
+                />-->
+
+                <lookupField id="habilitacoes_literarias_id"
+                             caption="Habilitações Literárias:"
+                             inputPrompt="(seleccione as habilitações literarias criadas)"
+                             icon="font-icon:UNIVERSITY"
+                />
+
+
+
+            </hbox>
+            <hbox spacing="true">
+                <label id="text_sexo_masculino" icon="font-icon:USER_O" />
+                <checkBox id="sexomasculinoField" property="sexomasculino" />
+
+
+                <label id="text_formacao_profissional" icon="GRADUATION_CAP"/>
+                <checkBox id="formacaoprofissionalField" property="formacaoprofissional" />
+
+                <lookupField id="linhasPessoalTecnica"
+                             caption="Mostrar Numero de Linhas"
+                             inputPrompt="(seleccione o numero de linhas)"
+                             icon="ARROWS_V"/>
+
+
+            </hbox>
+            <hbox spacing="true">
+                <button id="search_pessoal_tecnico" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                <button id="reset_search_pessoal_tecnico" icon="ERASER" caption="Limpar" />
+            </hbox>
+
+        </groupBox>
+
+
+        <groupTable id="pessoalTecnicoesTable"
+                    width="100%"
+                    dataContainer="pessoalTecnicoesDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela do Pessoal Técnino."/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela do Pessoal Técnino?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel" />
+            </actions>
+            <columns>
+                <column id="anosservicoinstituicao" caption="Anos de Serviço da Instituição"/>
+                <column id="categoriaprofissional" caption="Categoria Profissional"/>
+                <column id="formacaoprofissional" caption="Formação Profissional"/>
+                <column id="habilitacoesliterarias" caption="Habilitações Literarias"/>
+                <column id="idValencia" caption="Descrição da Valência"/>
+                <column id="idade" caption="Idade"/>
+                <column id="sexomasculino" caption="Sexo Masculino"/>
+                <column id="tipovinculo" caption="Tipo Vinculo"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="pessoalTecnicoesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="pessoalTecnicoesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="pessoalTecnicoesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button action="pessoalTecnicoesTable.excel" stylename="friendly"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

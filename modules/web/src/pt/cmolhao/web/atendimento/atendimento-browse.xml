@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="atendimentoesTable"
+        messagesPack="pt.cmolhao.web.atendimento">
+    <data readOnly="true">
+        <collection id="atendimentoesDc"
+                    class="pt.cmolhao.entity.Atendimento"
+                    view="atendimento-view">
+            <loader id="atendimentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Atendimento e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="atendimentoesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="atendimentoesTable"
+                dataLoader="atendimentoesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="atendimentoesTable"
+                    width="100%"
+                    dataContainer="atendimentoesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="contactosEfetuados"/>
+                <column id="dataAtendimento"/>
+                <column id="idAtendimentoEncaminhamento"/>
+                <column id="idAtendimentoObjetivo"/>
+                <column id="idTecnico"/>
+                <column id="idTipoAtendimento"/>
+                <column id="idUtente"/>
+                <column id="objetivoOutros"/>
+                <column id="obsConf"/>
+                <column id="obsGerais"/>
+                <column id="outrosEncaminhamentos"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="atendimentoesTable.create"/>
+                <button id="editBtn" action="atendimentoesTable.edit"/>
+                <button id="removeBtn" action="atendimentoesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

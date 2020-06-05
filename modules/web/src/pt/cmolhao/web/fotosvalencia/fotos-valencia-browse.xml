@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="fotosValenciasTable"
+        messagesPack="pt.cmolhao.web.fotosvalencia">
+    <data readOnly="true">
+
+
+        <collection id="fotosValenciasDc"
+                    class="pt.cmolhao.entity.FotosValencia"
+                    view="fotosValencia-view">
+            <loader id="fotosValenciasDl">
+                <query>
+                    <![CDATA[select e from cmolhao_FotosValencia e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idvalencia i</c:join>
+                                <c:where>i.id = :idvalencia</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.daequipacolaboradores = :daequipacolaboradores</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.doequipamento = :doequipamento</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="valenciasDc"
+                    class="pt.cmolhao.entity.Valencias"
+                    view="_local">
+            <loader id="customersLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Valencias e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="fotosValenciasTable"
+            spacing="true">
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+        <hbox spacing="true">
+
+
+            <lookupField id="idvalenciaField"
+                     property="idvalencia"
+                     optionsContainer="valenciasDc"
+                     inputPrompt="(Seleccione a Descrição da Valência)"
+                     caption="Descrição técnica da valência: "
+                     icon="SIMPLYBUILT"/>
+
+
+            <label id="text_eq_colaboradores" icon="font-icon:USERS" />
+            <checkBox id="daequipacolaboradoresField" property="daequipacolaboradores" />
+
+
+            <label id="text_do_equipamento" icon="WRENCH"/>
+            <checkBox id="doequipamentoField" property="doequipamento" />
+
+            <lookupField id="linhasFotValencias"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+
+
+
+        </hbox>
+
+            <hbox spacing="true">
+                <button id="search_foto_valencia" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                <button id="reset_search_foto_valencia" icon="ERASER" caption="Limpar" />
+            </hbox>
+
+
+        </groupBox>
+
+
+        <groupTable id="fotosValenciasTable"
+                    width="100%"
+                    dataContainer="fotosValenciasDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela da foto de valência."/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela da foto de valência?"/>
+
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <!--<column id="id" />-->
+                <column id="daequipacolaboradores" caption="Equipa de Colaboradores"/>
+                <column id="descricao" caption="Descrição da Foto"/>
+                <column id="doequipamento" caption="Equipamentos"/>
+                <column id="image" caption="Foto/Imagem" />
+                <column id="idvalencia" caption="Descrição da Valencia" generator="generateValenciasDescricao"/>
+
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+
+                <button id="createBtn" action="fotosValenciasTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="fotosValenciasTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="fotosValenciasTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button action="fotosValenciasTable.excel" stylename="friendly"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

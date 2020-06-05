@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="habilitacoesLiterariasesTable"
+        messagesPack="pt.cmolhao.web.habilitacoesliterarias">
+    <data readOnly="true">
+        <collection id="habilitacoesLiterariasesDc"
+                    class="pt.cmolhao.entity.HabilitacoesLiterarias"
+                    view="_local">
+            <loader id="habilitacoesLiterariasesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_HabilitacoesLiterarias e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="habilitacoesLiterariasesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="habilitacoesLiterariasesTable"
+                dataLoader="habilitacoesLiterariasesDl">
+            <properties include=".*"/>
+        </filter>
+        <table id="habilitacoesLiterariasesTable"
+               width="100%"
+               dataContainer="habilitacoesLiterariasesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="descricao"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="habilitacoesLiterariasesTable.create"/>
+                <button id="editBtn" action="habilitacoesLiterariasesTable.edit"/>
+                <button id="removeBtn" action="habilitacoesLiterariasesTable.remove"/>
+            </buttonsPanel>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

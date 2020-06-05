@@ -1,0 +1,262 @@
+/* Define your theme modifications inside next mixin */
+@mixin pt_cmolhao-hover-ext {
+
+    @include halo;
+
+    .v-slot.v-slot-c-login-form {
+        position: relative;
+        margin: 0 auto;
+        width: 60%;
+    }
+
+    .v-checkbox>.v-icon
+    {
+        display: none;
+    }
+
+    .c-login-username {
+        border-bottom-width: 1px!important;
+     }
+
+     .v-button.v-widget.icon.info.v-button-info {
+            color: #fff;
+            background: #17a2b8;
+            border-color: #17a2b8;
+     }
+
+     .v-button.v-widget.icon.info.v-button-info:hover {
+         color: #fff;
+         background: #138496;
+         border-color: #117a8b;
+     }
+
+
+     .responsive-container {
+         &[width-range~="0-900px"] {
+           .group-panel {
+             width: 100% !important;
+           }
+         }
+
+         &[width-range~="901px-"] {
+           .group-panel {
+             width: 50% !important;
+           }
+         }
+       }
+
+
+       /* Responsive styling */
+       .responsive-container {
+       	/* Hide logo, menu, register button and username on smallest screens */
+           &[width-range~="0-500px"] {
+             .navPanel {
+       		display: none !important;
+             }
+       	  .headerUser {
+       		display: none !important;
+       	  }
+       	  .headerRegisterIncident {
+       		display: none !important;
+       	  }
+       	  .base27Logo {
+       		display: none !important;
+       	  }
+           }
+       	/* Hide logo, menu and register button small screens */
+           &[width-range~="501-650px"] {
+             .navPanel {
+       		display: none !important;
+             }
+       	  .headerRegisterIncident {
+       		display: none !important;
+       	  }
+       	  .base27Logo {
+       		display: none !important;
+       	  }
+           }
+       	/* Hide logo and menu on medium screens */
+           &[width-range~="651-900px"] {
+             .navPanel {
+               display: none !important;
+             }
+       	  .headerRegisterIncident {
+       		margin-left: 15px !important;
+       	  }
+       	  .base27Logo {
+       		display: none !important;
+       	  }
+           }
+       	/* Hide menu button on larger screens (and give search field a bot more spacing) */
+           &[width-range~="901px-"] {
+       	  .menuShow {
+       		display: none !important;
+       	  }
+       	  .searchField {
+       		margin-left: 15px;
+       	  }
+           }
+         }
+
+
+        .v-slot.v-slot-c-login-remember-locales
+        {
+            display:none;
+        }
+
+        a[href='http://www.amcharts.com']{ display: none!important; }
+
+        .v-slot.v-slot-title_graphic {
+            height: 5%!important;
+            text-align: center;
+        }
+
+        .v-slot.v-slot-graphics_chart {
+            height: 100%!important;
+        }
+
+        .v-slot.v-slot-pie_chart {
+              height: 100%!important;
+        }
+
+        .v-slot.v-slot-title_graphic_val
+        {
+            height: 5%!important;
+            text-align: center;
+        }
+
+        .v-slot.v-slot-title_graphic_ins
+         {
+             height: 5%!important;
+             text-align: center;
+         }
+
+
+         .googlemap.v-widget.v-has-width {
+             position: absolute!important;
+             float: left;
+             top: 0;
+             left: 0;
+             width: 1750px;
+             height: 100%;
+         }
+
+         .v-button.v-widget.friendly.v-button-friendly.c-primary-action.v-button-c-primary-action.icon {
+             color: #fff;
+             background: #28a745;
+             border-color: #28a745;
+         }
+
+         .v-button.v-widget.friendly.v-button-friendly.c-primary-action.v-button-c-primary-action.icon:hover {
+             color: #fff;
+             background: #218838;
+             border-color: #1e7e34;
+         }
+
+         .v-label.v-widget.title_maps.v-label-title_maps.v-has-width {
+             text-align: center;
+             margin: 0 auto;
+             width: 100%!important;
+             margin-top: 10px;
+         }
+
+         .c-image-avatar-icon-small {
+             border: 3px solid #333;
+             border-radius: 60px;
+             background: white;
+           }
+
+           .c-image-avatar-icon-large {
+             border: 6px solid #333;
+             border-radius: 60px;
+             background: white;
+           }
+
+           /* Settings da Pagina de Administração */
+
+                 /*.v-button.v-widget.c-settings-button.v-button-c-settings-button.v-button-empty-caption.icon {
+                     display: none!important;
+                 }*/
+
+
+                 .c-fglayout.v-widget.inline-caption.c-fglayout-inline-caption {
+                     width: 100%!important;
+                 }
+
+
+
+                .c-fglayout-slot.c-full-height-widget.inline {
+                    padding-left: 350px!important;
+                }
+
+
+                .v-filterselect.v-widget.icon.v-filterselect-icon.v-has-width, .v-filterselect.v-widget.icon.v-filterselect-icon {
+                    width: 350px!important;
+                }
+
+                .v-caption.v-caption-icon {
+                    margin-right: 7px;
+                    line-height: 28px;
+                    vertical-align: middle;
+                    overflow: hidden;
+                    width: 320px;
+                }
+
+                .v-captiontext.c-captiontext-preformatted
+                {
+                     width: 320px!important;
+                }
+
+                .uppercase-field {
+                    text-transform: uppercase;
+                  }
+
+                  .v-textfield.icon.v-textfield-icon {
+                      width: 350px!important;
+                  }
+
+                  .v-datefield.v-datefield-popupcalendar.v-widget.c-datefield.v-datefield-c-datefield.v-datefield-day {
+                      width: 120px!important;
+                  }
+
+                  .v-slot-c-login-submit-button {
+                      display: block!important;
+                      margin: 0 auto;
+                      margin-right: 350px!important;
+                      width: 350px;
+                  }
+
+                  .v-widget.data_atribuicao_text.v-textfield-data_atribuicao_text,
+                  .v-widget.data_fim_text.v-textfield-data_fim_text,
+                  .v-widget.data_pedido_text.v-textfield-data_pedido_text,
+                  .v-widget.data_renovacao_text.v-textfield-data_renovacao_text,
+                  .v-widget.ano_cost_text.v-textfield-ano_cost_text,
+                   .v-widget.ano_nasc_text.v-textfield-ano_nasc_text{
+                      width: 150px!important;
+                  }
+
+                  .v-caption-data_fim_text,
+                  .v-caption-data_atribuicao_text,
+                  .v-caption-data_pedido_text,
+                  .v-caption-data_renovacao_text,
+                  .v-caption-ano_nasc_text
+                   {
+                      width: 150px!important;
+                  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

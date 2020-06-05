@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd"
+        caption="msg://caption"
+        messagesPack="pt.cmolhao.web.localizacoes">
+    <layout>
+
+        <form >
+            <column width="300px">
+                <textField id="messageLabel" caption="Coordenadas: " icon="MAP_MARKER" editable="false" />
+                <textField id="latitudeField" caption="Latitude:" icon="MAP_MARKER" visible="false" />
+                <label id="htmlMaps"
+                       htmlEnabled="true" stylename="title_maps"/>
+                <chart:mapViewer id="map"
+                                 height="400px"
+                                 width="100%"/>
+            </column>
+            <column width="300px">
+                <button id="closeBtn" caption="Submeter Dados da Coordenada" icon="MAP_PIN"/>
+                <textField id="longuitudeField" caption="Longuitude:" icon="MAP_MARKER" visible="false"/>
+            </column>
+        </form>
+
+
+    </layout>
+</window>

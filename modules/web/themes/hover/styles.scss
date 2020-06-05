@@ -1,0 +1,11 @@
+@import "hover-defaults";
+@import "pt.cmolhao/hover-ext-defaults";
+@import "app-components";
+@import "pt.cmolhao/hover-ext";
+
+.hover {
+  // include auto-generated app components SCSS
+  @include app_components;
+
+  @include pt_cmolhao-hover-ext;
+}

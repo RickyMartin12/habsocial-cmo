@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.tiposvalencia">
+    <data>
+        <instance id="tiposvalenciaDc"
+                  class="pt.cmolhao.entity.Tiposvalencia"
+                  view="_local">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="tiposvalenciaDc">
+            <column width="250px">
+                <textArea id="nomeField" property="nome" rows="12" cols="12" caption="Descrição da Valência" icon="SIMPLYBUILT"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

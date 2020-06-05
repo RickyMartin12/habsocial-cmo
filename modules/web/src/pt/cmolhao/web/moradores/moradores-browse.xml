@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="moradoresesTable"
+        messagesPack="pt.cmolhao.web.moradores">
+    <data readOnly="true">
+        <collection id="moradoresesDc"
+                    class="pt.cmolhao.entity.Moradores"
+                    view="moradores-view">
+            <loader id="moradoresesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Moradores e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="moradoresesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="moradoresesTable"
+                dataLoader="moradoresesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="moradoresesTable"
+                    width="100%"
+                    dataContainer="moradoresesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="dataFim"/>
+                <column id="dataInicio"/>
+                <column id="habitacaoSocial"/>
+                <column id="moradaSocial"/>
+                <column id="obsConf"/>
+                <column id="obsGerais"/>
+                <column id="utente"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="moradoresesTable.create"/>
+                <button id="editBtn" action="moradoresesTable.edit"/>
+                <button id="removeBtn" action="moradoresesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

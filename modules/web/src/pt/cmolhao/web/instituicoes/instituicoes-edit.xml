@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.instituicoes">
+    <data>
+        <instance id="instituicoesDc"
+                  class="pt.cmolhao.entity.Instituicoes"
+                  view="_local">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
+            <form id="form" dataContainer="instituicoesDc">
+                <column width="250px">
+                    <textField id="caeField" property="cae" icon="font-icon:MONEY" caption="Classificação Actividades Economicas: "/>
+                    <checkBox id="clasolhaoField" property="clasolhao" caption="Olhão Classificado: " icon="font-icon:LOCATION_ARROW" />
+                    <textField id="contactopresidentedireccaoField" property="contactopresidentedireccao" icon="PHONE" caption="Contacto do Presidente/Direcção: "/>
+                    <textField id="contactoresponsavelservicoField" property="contactoresponsavelservico" icon="PHONE" caption="Contacto pelo Serviço Responsável: "/>
+                    <textField id="coordenadasgpsField" property="coordenadasgps" icon="MAP_MARKER" caption="Coordenadas GPS: "/>
+                    <checkBox id="cpcjField" property="cpcj" icon="font-icon:BANK" caption="Centro de Protecção de Crianças e Jovens: "/>
+                    <textField id="descricaoField" property="descricao" icon="FILE_TEXT" caption="Descrição: "/>
+                    <textField id="emailField" property="email" caption="Email: " icon="ENVELOPE"/>
+                    <textField id="faxField" property="fax" icon="FAX" caption="Fax: "/>
+                    <textField id="moradacompletaField" property="moradacompleta" icon="font-icon:HOME" caption="Morada: "/>
+                    <textField id="naturezajuridicaField" property="naturezajuridica" icon="LEAF" caption="Natureza Jurídica: "/>
+                    <textField id="nissField" property="niss" caption="Numero de Identificação da Segurança Social: " icon="KEY"/>
+                    <textField id="nrregistosegsocialField" property="nrregistosegsocial" caption="Número de Segurânça Social: " icon="KEY"/>
+                    <checkBox id="outraredelocalField" property="outraredelocal" icon="font-icon:COMPRESS" caption="Outra Rede Local: "/>
+                    <checkBox id="plataformatematicaField" property="plataformatematica" icon="DESKTOP" caption="Plataforma de Informática: "/>
+                    <textField id="presidentedireccaoField" property="presidentedireccao" icon="USER_CIRCLE" caption="Presidente da Direcção"/>
+                    <checkBox id="projectoscomunitariosField" property="projectoscomunitarios" caption="Projectos Comunitários: " icon="font-icon:PASTE"/>
+                    <textField id="quaisprojectoscomunitariosField" property="quaisprojectoscomunitarios" icon="QUESTION_CIRCLE" caption="Identificação dos Projectos Comunitários: "/>
+                    <textField id="qualoutraredelocalField" property="qualoutraredelocal" caption="Identificação outra local de rede: " icon="QUESTION_CIRCLE"/>
+                    <textField id="responsavelservicoField" property="responsavelservico" caption="Serviço Responsável: " icon="USER_CIRCLE"/>
+                    <checkBox id="rsiField" property="rsi" caption="Rendimento Social de Inserção: " icon="font-icon:LINE_CHART"/>
+                    <textField id="telefoneField" property="telefone" icon="PHONE" caption="Telefone: "/>
+                    <textField id="urlField" property="url" caption="URL: " icon="font-icon:LINK"/>
+                </column>
+            </form>
+        </scrollBox>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button caption="Fechar" action="windowClose" icon="CLOSE" />
+        </hbox>
+    </layout>
+</window>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="userRolesTable"
+        messagesPack="pt.cmolhao.web.users">
+    <data readOnly="true">
+        <collection id="userRolesDc"
+                    class="com.haulmont.cuba.security.entity.UserRole"
+                    view="_local">
+            <loader id="userRolesDl">
+                <query>
+                    <![CDATA[select e from sec$UserRole e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="userRolesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="userRolesTable"
+                dataLoader="userRolesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="userRolesTable"
+                    width="100%"
+                    dataContainer="userRolesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="roleName" caption="Tipo de Acesso:"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="userRolesTable.create"/>
+                <button id="editBtn" action="userRolesTable.edit"/>
+                <button id="removeBtn" action="userRolesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

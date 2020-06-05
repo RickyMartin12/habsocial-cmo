@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+    <persistence-unit name="habsocial-cmo" transaction-type="RESOURCE_LOCAL">
+
+        <class>pt.cmolhao.entity.Tiposvalencia</class>
+        <class>pt.cmolhao.entity.BlocosHabitacaoSocial</class>
+        <class>pt.cmolhao.entity.ProjectosIntervencao</class>
+        <class>pt.cmolhao.entity.Login</class>
+        <class>pt.cmolhao.entity.Instituicoes</class>
+        <class>pt.cmolhao.entity.Valencias</class>
+        <class>pt.cmolhao.entity.ProjectosEmAprovacao</class>
+        <class>pt.cmolhao.entity.FotosValencia</class>
+        <class>pt.cmolhao.entity.AjudasTecnicas</class>
+        <class>pt.cmolhao.entity.Localizacoes</class>
+        <class>pt.cmolhao.entity.PessoalAuxiliar</class>
+        <class>pt.cmolhao.entity.PessoalTecnico</class>
+        <class>pt.cmolhao.entity.UtentesOutrosConcelhos</class>
+        <class>pt.cmolhao.entity.TipoRendimento</class>
+        <class>pt.cmolhao.entity.Utente</class>
+        <class>pt.cmolhao.entity.Moradores</class>
+        <class>pt.cmolhao.entity.RendimentosUtente</class>
+        <class>pt.cmolhao.entity.TipoAjuda</class>
+        <class>pt.cmolhao.entity.TipoRelacionamentoUtentes</class>
+        <class>pt.cmolhao.entity.UtentesSituacaoProfissional</class>
+        <class>pt.cmolhao.entity.TipoAtendimento</class>
+        <class>pt.cmolhao.entity.TipoCivil</class>
+        <class>pt.cmolhao.entity.TiposSituacoesUtentes</class>
+        <class>pt.cmolhao.entity.AtendimentoEncaminhamento</class>
+        <class>pt.cmolhao.entity.GrauEscolaridade</class>
+        <class>pt.cmolhao.entity.HabitacaoSocial</class>
+        <class>pt.cmolhao.entity.Profissao</class>
+        <class>pt.cmolhao.entity.Atendimento</class>
+        <class>pt.cmolhao.entity.Tecnico</class>
+        <class>pt.cmolhao.entity.AtendimentoObjetivos</class>
+        <class>pt.cmolhao.entity.Estados</class>
+        <class>pt.cmolhao.entity.SituacaoUtente</class>
+        <class>pt.cmolhao.entity.Equipamento</class>
+        <class>pt.cmolhao.entity.UtentesRelacionados</class>
+        <class>pt.cmolhao.entity.TipologiaFamiliar</class>
+        <class>pt.cmolhao.entity.HabilitacoesLiterarias</class>
+        <class>pt.cmolhao.entity.Apoios</class>
+    </persistence-unit>
+</persistence>

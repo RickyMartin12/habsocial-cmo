@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="utentesTable"
+        messagesPack="pt.cmolhao.web.utente">
+    <data readOnly="true">
+        <collection id="utentesDc"
+                    class="pt.cmolhao.entity.Utente"
+                    view="utente-view">
+            <loader id="utentesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Utente e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.grauEscolaridade i</c:join>
+                                <c:where>i.id = :grauEscolaridade</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.habilitacoes j</c:join>
+                                <c:where>j.id = :habilitacoes</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idTipologiaFamiliar k</c:join>
+                                <c:where>k.id = :idTipologiaFamiliar</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idTipoCivil l</c:join>
+                                <c:where>l.id = :idTipoCivil</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>extract(year from e.dataNasc) = :anoNasc</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.deficiente = :deficiente</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.dependente = :dependente</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.niss = :niss</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.numContribuinte = :numContribuinte</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.nome like :nome</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.email = :email</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="grauEscolaridadesDc"
+                    class="pt.cmolhao.entity.GrauEscolaridade"
+                    view="_local">
+            <loader id="grauEscolaridadesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_GrauEscolaridade e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="habilitacoesLiterariasesDc"
+                    class="pt.cmolhao.entity.HabilitacoesLiterarias"
+                    view="_local">
+            <loader id="habilitacoesLiterariasesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_HabilitacoesLiterarias e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoCivilsDc"
+                    class="pt.cmolhao.entity.TipoCivil"
+                    view="_local">
+            <loader id="tipoCivilsDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoCivil e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipologiaFamiliarsDc"
+                    class="pt.cmolhao.entity.TipologiaFamiliar"
+                    view="_local">
+            <loader id="tipologiaFamiliarsDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipologiaFamiliar e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="profissaosDc"
+                    class="pt.cmolhao.entity.Profissao"
+                    view="_local">
+            <loader id="profissaosDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Profissao e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <keyValueCollection id="email_utente_id">
+        <properties>
+            <property name="email" datatype="string" />
+        </properties>
+        <loader id="email_utente_id_loader">
+            <query>
+                <![CDATA[select o.email as email from cmolhao_Utente o where o.email is not null group by o.email]]>
+            </query>
+        </loader>
+    </keyValueCollection>
+
+        <keyValueCollection id="niss_utente_id">
+            <properties>
+                <property name="niss" datatype="string" />
+            </properties>
+            <loader id="niss_utente_id_loader">
+                <query>
+                    <![CDATA[select o.niss as niss from cmolhao_Utente o where o.niss is not null group by o.niss]]>
+                </query>
+            </loader>
+        </keyValueCollection>
+
+        <keyValueCollection id="num_comtribuinte_utente_id">
+            <properties>
+                <property name="numContribuinte" datatype="string" />
+            </properties>
+            <loader id="num_comtribuinte_utente_id_loader">
+                <query>
+                    <![CDATA[select o.numContribuinte as numContribuinte from cmolhao_Utente o where o.numContribuinte is not null group by o.numContribuinte]]>
+                </query>
+            </loader>
+        </keyValueCollection>
+
+
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="utentesTable"
+            spacing="true">
+
+            <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+                <scrollBox spacing="true">
+                    <hbox spacing="true">
+                        <lookupField
+                                inputPrompt="(Seleccione o grau de escolaridade)"
+                                property="grauEscolaridade"
+                                id="grauEscolaridadeField"
+                                optionsContainer="grauEscolaridadesDc"
+                                icon="font-icon:GRADUATION_CAP" caption="Grau de Escolaridade: "/>
+                        <lookupField
+                                inputPrompt="(Seleccione a habilitação literária)"
+                                property="habilitacoes"
+                                id="habilitacoesField"
+                                optionsContainer="habilitacoesLiterariasesDc"
+                                icon="font-icon:BOOK" caption="Habilitações Literarias: "/>
+                        <lookupField
+                                inputPrompt="(Seleccione a topologia familiar)"
+                                property="idTipologiaFamiliar"
+                                id="idTipologiaFamiliarField"
+                                optionsContainer="tipologiaFamiliarsDc"
+                                icon="font-icon:USERS" caption="Topologia Familiar: "/>
+
+                    </hbox>
+
+                    <hbox spacing="true">
+                        <lookupField
+                                inputPrompt="(Seleccione o tipo de civil)"
+                                property="idTipoCivil"
+                                id="idTipoCivilField"
+                                optionsContainer="tipoCivilsDc"
+                                icon="font-icon:ADDRESS_CARD_O" caption="Tipo de Civil: "/>
+
+                        <textField id="anoNascField" property="anoNasc" maxLength="4" caption="Ano de Nascimento: "
+                                   icon="font-icon:CALENDAR_CHECK_O"
+                                   inputPrompt="Insere o ano"
+                                   stylename="ano_nasc_text"/>
+
+                        <label id="text_deficiente" icon="font-icon:WHEELCHAIR" />
+                        <checkBox id="deficienteField" property="deficiente" />
+
+
+                        <label id="text_dependente" icon="GROUP"/>
+                        <checkBox id="dependenteField" property="dependente" />
+
+                    </hbox>
+                    <hbox spacing="true">
+                        <lookupField id="niss_utn_id"
+                                     optionsContainer="niss_utente_id"
+                                     caption="Utente do Utente:"
+                                     inputPrompt="(seleccione o utente do Utente)"
+                                     icon="font-icon:ID_CARD"
+                        />
+                        <textField id="nomeField" property="nome" caption="Nome do Utente: "
+                                   icon="ADDRESS_CARD"
+                                   inputPrompt="(Indique o nome do utente)" />
+                        <lookupField id="num_cont_utente_id"
+                                     optionsContainer="num_comtribuinte_utente_id"
+                                     caption="Numero Contribuinte do Utente:"
+                                     inputPrompt="(seleccione o numero contribuinte do Utente)"
+                                     icon="font-icon:ID_CARD"
+                        />
+                    </hbox>
+                    <hbox spacing="true">
+                        <lookupField id="email_uten_id"
+                                     optionsContainer="email_utente_id"
+                                     caption="Email do Utente:"
+                                     inputPrompt="(seleccione o email do Utente)"
+                                     icon="font-icon:ENVELOPE"
+                        />
+
+                        <lookupField
+                                inputPrompt="(Seleccione a Profissão)"
+                                property="profissao"
+                                id="profissaoField"
+                                optionsContainer="profissaosDc"
+                                icon="font-icon:USERS" caption="Profissão: "/>
+
+
+                        <lookupField id="linhasUtente"
+                                     caption="Mostrar Numero de Linhas"
+                                     inputPrompt="(seleccione o numero de linhas)"
+                                     icon="ARROWS_V"/>
+                    </hbox>
+                    <hbox spacing="true">
+                        <button id="reset_utente" icon="ERASER" caption="Limpar" />
+                        <button id="search_utente" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                    </hbox>
+                </scrollBox>
+            </groupBox>
+
+
+        <groupTable id="utentesTable"
+                    width="100%"
+                    dataContainer="utentesDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela de Utente."/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela Utente?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="certUniaoEuropeia" caption="Certidão da União Europeia"/>
+                <column id="dataNasc" caption="Data de Nascimento"/>
+                <column id="deficiente" caption="Deficiente"/>
+                <column id="dependente" caption="Dependente"/>
+                <column id="email" caption="Email"/>
+                <column id="grauEscolaridade" caption="Grau de Escolaridade"/>
+                <column id="habilitacoes" caption="Habilitações"/>
+                <column id="idTipoCivil" caption="Tipo de Civil"/>
+                <column id="idTipologiaFamiliar" caption="Tipologia Familiar"/>
+                <column id="niss" caption="Numero de Segurança Social"/>
+                <column id="nome" caption="Nome"/>
+                <column id="numContribuinte" caption="Numero de Contribuinte"/>
+                <column id="numIdCivil" caption="Numero de ID Civil"/>
+                <column id="obsConf" caption="Observaçõees de Confirmação"/>
+                <column id="obsGerais" caption="Observações Gerais"/>
+                <column id="profissao" caption="Profissão"/>
+                <column id="telefone" caption="Telefone"/>
+                <column id="telem_vel" caption="Telemóvel"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="utentesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="utentesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="utentesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="utentesTable.excel" stylename="friendly" />
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

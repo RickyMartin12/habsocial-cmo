@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="equipamentoesTable"
+        messagesPack="pt.cmolhao.web.equipamento">
+    <data readOnly="true">
+        <collection id="equipamentoesDc"
+                    class="pt.cmolhao.entity.Equipamento"
+                    view="_local">
+            <loader id="equipamentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Equipamento e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.descricao = :descricao</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+
+        <keyValueCollection id="descricao_equipamento_id">
+            <properties>
+                <property name="descricao" datatype="string" />
+            </properties>
+            <loader id="descricao_equipamento_id_loader">
+                <query>
+                    <![CDATA[select o.descricao as descricao from cmolhao_Equipamento o where o.descricao is not null group by o.descricao]]>
+                </query>
+            </loader>
+        </keyValueCollection>
+
+
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="equipamentoesTable"
+            spacing="true">
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+            <scrollBox spacing="true">
+                <hbox spacing="true">
+                    <lookupField id="desc_equipamento_id"
+                                 optionsContainer="descricao_equipamento_id"
+                                 caption="Descrição do Equipamento:"
+                                 inputPrompt="(seleccione a descrição do equipamento)"
+                                 icon="font-icon:WRENCH"
+                    />
+                    <lookupField id="linhasEquipamento"
+                                 caption="Mostrar Numero de Linhas"
+                                 inputPrompt="(seleccione o numero de linhas)"
+                                 icon="ARROWS_V"/>
+
+                </hbox>
+
+                <hbox spacing="true">
+                    <button id="reset_equipamento" icon="ERASER" caption="Limpar" />
+                    <button id="search_equipamento" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+            </scrollBox>
+        </groupBox>
+
+        <table id="equipamentoesTable"
+               width="100%"
+               dataContainer="equipamentoesDc"
+               emptyStateMessage="Não Existe Dados na Tabela"
+               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela de Equipamento."/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela Equipamento?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="descricao" caption="Descrição"/>
+                <column id="obsGerais" caption="Observações Gerais"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="equipamentoesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="equipamentoesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="equipamentoesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="equipamentoesTable.excel" stylename="friendly" />
+            </buttonsPanel>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

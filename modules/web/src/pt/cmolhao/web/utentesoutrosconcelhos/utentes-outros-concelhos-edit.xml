@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.utentesoutrosconcelhos">
+    <data>
+        <instance id="utentesOutrosConcelhosDc"
+                  class="pt.cmolhao.entity.UtentesOutrosConcelhos"
+                  view="utentesOutrosConcelhos-view">
+            <loader/>
+        </instance>
+
+        <collection id="valenciasDc"
+                    class="pt.cmolhao.entity.Valencias"
+                    view="_local">
+            <loader id="customersLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Valencias e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="utentesOutrosConcelhosDc">
+            <column width="250px">
+                <textField id="concelhoField" property="concelho" caption="Concelho: " icon="MAP"/>
+                <textField id="freguesiaField" property="freguesia" caption="Freguesia: " icon="INSTITUTION"/>
+                <lookupField id="idValenciaField"
+                             optionsContainer="valenciasDc"
+                             property="idValencia"
+                             inputPrompt="(Seleccione a Descrição da Valência)"
+                             caption="Valencia: "
+                             icon="SIMPLYBUILT"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button caption="Fechar" action="windowClose" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

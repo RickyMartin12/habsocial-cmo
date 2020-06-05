@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="instituicoesesTable"
+        messagesPack="pt.cmolhao.web.instituicoes">
+    <data readOnly="true">
+
+
+        <collection id="instituicoesesDc"
+                    class="pt.cmolhao.entity.Instituicoes"
+                    view="_local">
+            <loader id="instituicoesesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Instituicoes e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.descricao = :descricao</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.cae = :cae</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.naturezajuridica = :naturezajuridica</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.clasolhao = :clasolhao</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.cpcj = :cpcj</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.rsi = :rsi</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.plataformatematica = :plataformatematica</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.projectoscomunitarios = :projectoscomunitarios</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.outraredelocal = :outraredelocal</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+
+
+        <collection id="instituicoesDc"
+                    class="pt.cmolhao.entity.Instituicoes"
+                    view="_local">
+            <loader id="instituicoesLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Instituicoes e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <keyValueCollection id="inst_cae_id">
+            <properties>
+                <property name="cae" datatype="string" />
+            </properties>
+            <loader id="inst_cae_id_loader">
+                <query>
+                    <![CDATA[select o.cae as cae from cmolhao_Instituicoes o where o.cae is not null group by o.cae]]>
+                </query>
+            </loader>
+        </keyValueCollection>
+
+        <keyValueCollection id="inst_naturezajuridica_id">
+            <properties>
+                <property name="naturezajuridica" datatype="string" />
+            </properties>
+            <loader id="inst_naturezajuridica_id_loader">
+                <query>
+                    <![CDATA[select o.naturezajuridica as naturezajuridica from cmolhao_Instituicoes o where o.naturezajuridica is not null group by o.naturezajuridica]]>
+                </query>
+            </loader>
+        </keyValueCollection>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="instituicoesesTable"
+            spacing="true">
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <hbox spacing="true">
+                <lookupField
+                        property="descricao"
+                        id="desricaoField"
+                        optionsContainer="instituicoesDc"
+                        inputPrompt="(Seleccione a descrição da Instituição)"
+                        icon="font-icon:BUILDING_O" caption="Descrição da Instituição: "/>
+
+                <lookupField
+                    id="caeField"
+                    optionsContainer="inst_cae_id"
+                    inputPrompt="(Seleccione a CAE da Instituição)"
+                    icon="font-icon:MONEY" caption="Classificação das Actividades Economicas Instituição: " />
+
+                <lookupField
+                    id="naturezajuridcaField"
+                    optionsContainer="inst_naturezajuridica_id"
+                    inputPrompt="(Seleccione a Natureza Juridica)"
+                    icon="font-icon:LEAF" caption="Natureza Juridica da Instituição: " />
+
+
+
+
+            </hbox>
+
+            <hbox spacing="true">
+
+                <label id="text_clasolhao" icon="font-icon:LOCATION_ARROW" />
+                <checkBox id="clasolhaoField" property="clasolhao" />
+
+                <label id="text_cpcj" icon="font-icon:BANK" />
+                <checkBox id="cpcjField" property="cpcj" />
+
+                <label id="text_rsi" icon="font-icon:LINE_CHART" />
+                <checkBox id="rsiField" property="rsi" />
+
+            </hbox>
+
+            <hbox spacing="true">
+
+                <label id="text_plataformatematica" icon="font-icon:DESKTOP" />
+                <checkBox id="plataformatematicaField" property="plataformatematica" />
+
+                <label id="text_projectoscomunitarios" icon="font-icon:PASTE" />
+                <checkBox id="projectoscomunitariosField" property="projectoscomunitarios" />
+
+                <label id="text_outraredelocal" icon="font-icon:COMPRESS" />
+                <checkBox id="outraredelocalField" property="outraredelocal" />
+
+                <lookupField id="linhasInstituicoes"
+                             caption="Mostrar Numero de Linhas"
+                             inputPrompt="(seleccione o numero de linhas)"
+                             icon="ARROWS_V"/>
+
+            </hbox>
+
+            <hbox spacing="true">
+                <button id="search_instituicoes" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                <button id="reset_search_instituicoes" icon="ERASER" caption="Limpar" />
+            </hbox>
+
+
+        </groupBox>
+
+        <table id="instituicoesesTable"
+               width="100%"
+               dataContainer="instituicoesesDc"
+               emptyStateMessage="Não Existe Dados na Tabela"
+               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela da 'instituicoes'."/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela da tabela 'instituicoes'?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="descricao" caption="Descrição"/>
+                <column id="cae" caption="Classificação das Actividades Economicas"/>
+                <column id="naturezajuridica" caption="Natureza Juridica"/>
+                <column id="email" caption="Email"/>
+                <column id="fax" caption="Fax"/>
+                <column id="moradacompleta" caption="Morada"/>
+                <column id="clasolhao" caption="Classificação de Olhão"/>
+                <column id="contactopresidentedireccao" caption="Contacto do Presidente/Direcção"/>
+                <column id="contactoresponsavelservico" caption="Contacto do Serviço Responsável"/>
+                <column id="coordenadasgps" caption="Coordenadas GPS"/>
+                <column id="cpcj" caption="Centro de Protecção de Crianças e Jovens"/>
+                <column id="niss" caption="Numero de Identificação da Segurança Social"/>
+                <column id="nrregistosegsocial" caption="Numero de Registo da Segurança Social" />
+                <column id="outraredelocal" caption="Outra Rede Local"/>
+                <column id="plataformatematica" caption="Plataforma de Matemática"/>
+                <column id="presidentedireccao" caption="Presidente da Direcção"/>
+                <column id="projectoscomunitarios" caption="Projectos Comunitários"/>
+                <column id="quaisprojectoscomunitarios" caption="Identificação dos Projectos Comunitários"/>
+                <column id="qualoutraredelocal" caption="Idnetificação da Outra Rede Local"/>
+                <column id="responsavelservico" caption="Responsável pelo Serviço"/>
+                <column id="rsi" caption="Rendimento social de inserção"/>
+                <column id="telefone" caption="Telefone"/>
+                <column id="url" caption="URL"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="instituicoesesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="instituicoesesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="instituicoesesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="instituicoesesTable.excel" stylename="friendly"/>
+            </buttonsPanel>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

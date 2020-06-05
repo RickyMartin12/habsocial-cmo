@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
+    <item screen="cmolhao_DashboardValencia" id="dashboard" stylename="Dashboard"
+          shortcut="Dasboard" icon="DASHBOARD"/>
+    <menu id="application-cmolhao" insertBefore="administration" caption="Tabelas - Habitação Social" icon="font-icon:TABLE">
+        <item screen="cmolhao_Tiposvalencia.browse"/>
+        <item screen="cmolhao_BlocosHabitacaoSocial.browse"/>
+        <item screen="cmolhao_FotosValencia.browse"/>
+        <item screen="cmolhao_Instituicoes.browse"/>
+        <item screen="cmolhao_Valencias.browse"/>
+        <item screen="cmolhao_HabitacaoSocial.browse"/>
+        <item screen="cmolhao_AjudasTecnicas.browse"/>
+        <item screen="cmolhao_Localizacoes.browse"/>
+        <item screen="cmolhao_ProjectosIntervencao.browse"/>
+        <item screen="cmolhao_PessoalTecnico.browse"/>
+        <item screen="cmolhao_PessoalAuxiliar.browse"/>
+        <item screen="cmolhao_UtentesOutrosConcelhos.browse"/>
+        <item screen="cmolhao_ProjectosEmAprovacao.browse"/>
+
+
+        <item screen="cmolhao_TipoRendimento.browse"/>
+        <item screen="cmolhao_TipoAjuda.browse"/>
+        <item screen="cmolhao_TipoRelacionamentoUtentes.browse"/>
+        <item screen="cmolhao_TipoAtendimento.browse"/>
+        <item screen="cmolhao_TipoCivil.browse"/>
+        <item screen="cmolhao_TiposSituacoesUtentes.browse"/>
+        <item screen="cmolhao_AtendimentoEncaminhamento.browse"/>
+        <item screen="cmolhao_GrauEscolaridade.browse"/>
+        <item screen="cmolhao_Profissao.browse"/>
+        <item screen="cmolhao_AtendimentoObjetivos.browse"/>
+        <item screen="cmolhao_Estados.browse"/>
+        <item screen="cmolhao_Equipamento.browse"/>
+        <item screen="cmolhao_TipologiaFamiliar.browse"/>
+        <item screen="cmolhao_HabilitacoesLiterarias.browse"/>
+        <item screen="cmolhao_Tecnico.browse"/>
+        <item screen="cmolhao_Apoios.browse"/>
+        <item screen="cmolhao_Moradores.browse"/>
+        <item screen="cmolhao_Utente.browse"/>
+        <item screen="cmolhao_UtentesSituacaoProfissional.browse"/>
+        <item screen="cmolhao_Atendimento.browse"/>
+        <item screen="cmolhao_UtentesRelacionados.browse"/>
+        <item screen="cmolhao_RendimentosUtente.browse"/>
+        <item screen="cmolhao_SituacaoUtente.browse"/>
+    </menu>
+
+    <menu id="Valencia" caption="Valencia" icon="SIMPLYBUILT">
+        <item screen="cmolhao_Valencias.browse" id="valencias" stylename="valencias"
+              shortcut="valencias" icon="LIST" caption="Ver/Editar" />
+        <item screen="cmolhao_Valencias.edit" id="valencias_create" stylename="valencias_create"
+              shortcut="valencias_create" icon="PLUS" caption="Criar Novo ..." />
+    </menu>
+
+    <menu id="Tipos_Valencias" caption="Tipos de Valencia" icon="SIMPLYBUILT">
+        <item screen="cmolhao_Tiposvalencia.browse" id="tipo_valencia_browse" stylename="tipo_valencia_browse"
+              shortcut="tipo_valencia_browse" icon="LIST" caption="Visualizar/Editar" />
+        <item screen="cmolhao_Tiposvalencia.edit" id="tipo_valencia_create" stylename="tipo_valencia_create"
+              shortcut="tipo_valencia_create" icon="PLUS" caption="Criar Novo ..." />
+    </menu>
+
+
+    <menu id="Instituicoes" caption="Instituições" icon="BANK">
+        <item screen="cmolhao_Instituicoes.browse" id="instituicoes_browse" stylename="instituicoes_browse"
+              shortcut="instituicoes_browse" icon="LIST" caption="Visualizar/Editar" />
+        <item screen="cmolhao_Instituicoes.edit" id="instituicoes_create" stylename="instituicoes_create"
+              shortcut="instituicoes_create" icon="PLUS" caption="Criar Novo ..." />
+    </menu>
+
+
+    <menu id="Fotos_Valencia" caption="Fotos de Valencias" icon="PHOTO">
+        <item screen="cmolhao_FotosValencia.browse" id="fotos_valencia_list" stylename="fotos_valencia_list"
+              shortcut="fotos_valencia_list" icon="LIST" caption="Ver/Editar" />
+        <item screen="cmolhao_FotosValencia.edit" id="fotos_valencia_create" stylename="fotos_valencia_create"
+              shortcut="fotos_valencia_create" icon="PLUS" caption="Criar Novo ..." />
+    </menu>
+
+    <menu id="Localizacoes_Valencia" caption="Localizações de Valencias" icon="MAP_MARKER">
+        <item screen="cmolhao_Localizacoes.browse" id="localizacoes_list" stylename="localizacoes_list"
+              shortcut="localizacoes_list" icon="LIST" caption="Ver/Editar" />
+        <item screen="cmolhao_Localizacoes.edit" id="localizacoes_create" stylename="localizacoes_create"
+              shortcut="localizacoes_create" icon="PLUS" caption="Criar Novo ..." />
+    </menu>
+
+    <menu id="Habitacao_Social" caption="Habitação Social" icon="HOME">
+        <item screen="cmolhao_HabitacaoSocial.browse" id="hab_social" stylename="hab_social"
+              shortcut="hab_social" icon="LIST" caption="Ver/Editar " />
+        <item screen="cmolhao_HabitacaoSocial.edit" id="habsocial_create" stylename="habsocial_create"
+              shortcut="habsocial_create" icon="PLUS" caption="Criar Novo ..." />
+    </menu>
+
+    <menu id="Bloco_Habitacao_Social" caption="Blocos de Habitação Social" icon="BUILDING">
+        <item screen="cmolhao_BlocosHabitacaoSocial.browse" id="bloco_hab_social" stylename="bloco_hab_social"
+              shortcut="bloco_hab_social" icon="LIST" caption="Ver/Editar" />
+        <item screen="cmolhao_BlocosHabitacaoSocial.edit" id="bloco_habsocial_create" stylename="bloco_hab_social_create"
+              shortcut="bloco_hab_social_create" icon="PLUS" caption="Criar Novo ..." />
+    </menu>
+
+
+    <menu id="utilizadores_geral" caption="Utilizadores / Passwords" icon="USERS">
+        <item screen="User.browser" id="user_browser" stylename="user_browser"
+              shortcut="user_browser" icon="USER" caption="Ver/Editar Utilizadores" />
+        <item screen="UserPassword.browse" id="password_user_browser" stylename="password_user_browser"
+              shortcut="password_user_browser" icon="KEY" caption="Password Utilizadores" />
+    </menu>
+
+
+    <item id="GestaoRelatorios" caption="Gestão de Relatórios" icon="FILE_ARCHIVE_O" screen="report$Report.browse" />
+</menu-config>

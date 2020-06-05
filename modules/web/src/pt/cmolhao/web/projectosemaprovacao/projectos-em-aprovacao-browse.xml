@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="projectosEmAprovacaosTable"
+        messagesPack="pt.cmolhao.web.projectosemaprovacao">
+    <data readOnly="true">
+        <collection id="projectosEmAprovacaosDc"
+                    class="pt.cmolhao.entity.ProjectosEmAprovacao"
+                    view="projectosEmAprovacao-view">
+            <loader id="projectosEmAprovacaosDl">
+                <query>
+                    <![CDATA[select e from cmolhao_ProjectosEmAprovacao e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idprojectosintervencao i</c:join>
+                                <c:where>i.id = :idprojectosintervencao</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.etapaprocesso = :etapaprocesso</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="projectosIntervencaosDc"
+                    class="pt.cmolhao.entity.ProjectosIntervencao"
+                    view="projectosIntervencao-view">
+            <loader id="projectosIntervencaosDl">
+                <query>
+                    <![CDATA[select e from cmolhao_ProjectosIntervencao e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="projectosEmAprovacaosTable"
+            spacing="true">
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <hbox spacing="true">
+
+                <lookupField id="idprojectosintervencaoField"
+                             property="idprojectosintervencao"
+                             optionsContainer="projectosIntervencaosDc"
+                             inputPrompt="(Seleccione o Projecto de intervenção)"
+                             caption="Projecto de Intervenção (Com Aprovação): "
+                             contextHelpText="Projecto de Intervenção --> (ID do Projecto em Aprovação - Descrição da Instituição)"
+                             icon="PASTE"/>
+
+                <lookupField id="etapaprocessoField"
+                             caption="Etapa de Processo: "
+                             icon="CHECK_CIRCLE"
+                             property="etapaprocesso"
+                             inputPrompt="(Seleccione uma das Etapas de Processo)"
+                             />
+
+                <lookupField id="linhasProjectosEmAprovacao"
+                             caption="Mostrar Numero de Linhas"
+                             inputPrompt="(seleccione o numero de linhas)"
+                             icon="ARROWS_V"/>
+
+
+            </hbox>
+            <hbox spacing="true">
+                <button id="search_projectos_em_aprovacao" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                <button id="reset_search_projectos_em_aprovacao" icon="ERASER" caption="Limpar" />
+            </hbox>
+        </groupBox>
+        <groupTable id="projectosEmAprovacaosTable"
+                    width="100%"
+                    dataContainer="projectosEmAprovacaosDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela do Projectos em Aprovação."/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela de Projectos em Aprovação?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="etapaprocesso" caption="Etapa de Processo"/>
+                <column id="idprojectosintervencao" generator="projectosEmIntervencaoInstituição" caption="Projectos em Intervenção"/>
+                <column id="tipologia" caption="Tipologia"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="projectosEmAprovacaosTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="projectosEmAprovacaosTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="projectosEmAprovacaosTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button action="projectosEmAprovacaosTable.excel" stylename="friendly"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
