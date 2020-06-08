@@ -50,6 +50,10 @@
                             <c:jpql>
                                 <c:where>e.email = :email</c:where>
                             </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.profissao t</c:join>
+                                <c:where>t.id = :profissao</c:where>
+                            </c:jpql>
                         </and>
                     </condition>
                 </query>
@@ -228,7 +232,7 @@
                                 property="profissao"
                                 id="profissaoField"
                                 optionsContainer="profissaosDc"
-                                icon="font-icon:USERS" caption="Profissão: " />
+                                icon="font-icon:USER_MD" caption="Profissão: " />
 
 
                         <lookupField id="linhasUtente"

@@ -50,6 +50,16 @@
             </loader>
         </collection>
 
+        <collection id="profissaosDc"
+                    class="pt.cmolhao.entity.Profissao"
+                    view="_local">
+            <loader id="profissaosDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Profissao e]]>
+                </query>
+            </loader>
+        </collection>
+
 
 
 
@@ -97,17 +107,19 @@
                     <textField id="nomeField" property="nome" caption="Nome: " icon="ADDRESS_CARD"/>
                     <textField id="numContribuinteField" property="numContribuinte" caption="Numero Contribuinte: "
                                icon="font-icon:ID_CARD" maxLength="9"/>
-                    <textField id="numIdCivilField" property="numIdCivil" caption="Numero ID Civil: " icon="CREDIT_CARD_ALT"/>
-                    <textArea id="obsConfField" property="obsConf" icon="FILE_TEXT" caption="Observações Confiramento: "/>
+                    <textField id="numIdCivilField" property="numIdCivil" caption="Numero ID Civil: " icon="CREDIT_CARD_ALT"
+                               maxLength="9"/>
+                    <textArea id="obsConfField" property="obsConf" icon="FILE_TEXT" caption="Observações Confiramento: "
+                                rows="3" cols="10"/>
                     <textField id="obsGeraisField" property="obsGerais" icon="FILE_TEXT" caption="Observações Gerais: "/>
-                    <pickerField id="profissaoField" property="profissao">
-                        <actions>
-                            <action id="lookup" type="picker_lookup"/>
-                            <action id="clear" type="picker_clear"/>
-                        </actions>
-                    </pickerField>
-                    <textArea id="telefoneField" property="telefone" rows="5"/>
-                    <textArea id="telem_velField" property="telem_vel" rows="5"/>
+                    <lookupField
+                            inputPrompt="(Seleccione a Profissão)"
+                            property="profissao"
+                            id="profissaoField"
+                            optionsContainer="profissaosDc"
+                            icon="font-icon:USER_MD" caption="Profissão: " />
+                    <textField id="telefoneField" property="telefone" caption="Telefone: " icon="PHONE" maxLength="9"/>
+                    <textField id="telem_velField" property="telem_vel" caption="Telemóvel: " icon="MOBILE_PHONE" maxLength="9"/>
                 </column>
             </form>
         </scrollBox>

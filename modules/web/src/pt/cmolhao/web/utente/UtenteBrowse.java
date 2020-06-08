@@ -57,6 +57,8 @@ public class UtenteBrowse extends StandardLookup<Utente> {
     @Inject
     protected GroupTable<Utente> utentesTable;
     @Inject
+    protected LookupField<Profissao> profissaoField;
+    @Inject
     private ScreenBuilders screenBuilders;
     @Inject
     private DataManager dataManager;
@@ -140,7 +142,7 @@ public class UtenteBrowse extends StandardLookup<Utente> {
                             customer.setHabilitacoes(habilitacoesField.getValue());
                             customer.setIdTipologiaFamiliar(idTipologiaFamiliarField.getValue());
                             customer.setIdTipoCivil(idTipoCivilField.getValue());
-
+                            customer.setProfissao(profissaoField.getValue());
 
                             if (anoNascField.getValue() != null)
                             {
@@ -219,6 +221,13 @@ public class UtenteBrowse extends StandardLookup<Utente> {
             utentesDl.removeParameter("idTipoCivil");
         }
 
+        if (profissaoField.getValue() != null)
+        {
+            utentesDl.setParameter("profissao",  profissaoField.getValue().getId());
+        } else {
+            utentesDl.removeParameter("profissao");
+        }
+
         if (anoNascField.getValue() != null) {
             if (isNumeric(anoNascField.getValue()))
             {
@@ -289,13 +298,34 @@ public class UtenteBrowse extends StandardLookup<Utente> {
         {
             utentesDl.removeParameter("email");
         }
+        if(profissaoField.getValue() != null)
+        {
+            utentesDl.setParameter("profissao",  profissaoField.getValue().getId());
+        }
+        else
+        {
+            utentesDl.removeParameter("profissao");
+        }
 
         utentesDl.load();
     }
 
     @Subscribe("reset_utente")
     protected void onReset_utenteClick(Button.ClickEvent event) {
+        grauEscolaridadeField.setValue(null);
+        habilitacoesField.setValue(null);
+        idTipologiaFamiliarField.setValue(null);
+        idTipoCivilField.setValue(null);
+        profissaoField.setValue(null);
+        anoNascField.setValue(null);
+        dependenteField.setValue(false);
+        dependenteField.setValue(false);
+        niss_utn_id.setValue(null);
+        num_cont_utente_id.setValue(null);
+        nomeField.setValue(null);
+        email_uten_id.setValue(null);
         linhasUtente.setValue(null);
+        profissaoField.setValue(null);
         utentesDl.setMaxResults(0);
         utentesDl.removeParameter("email");
         utentesDl.removeParameter("nome");
@@ -308,6 +338,7 @@ public class UtenteBrowse extends StandardLookup<Utente> {
         utentesDl.removeParameter("idTipologiaFamiliar");
         utentesDl.removeParameter("habilitacoes");
         utentesDl.removeParameter("grauEscolaridade");
+        utentesDl.removeParameter("profissao");
         utentesDl.load();
     }
 

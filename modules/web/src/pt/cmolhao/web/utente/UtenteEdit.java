@@ -8,4 +8,17 @@ import pt.cmolhao.entity.Utente;
 @EditedEntityContainer("utenteDc")
 @LoadDataBeforeShow
 public class UtenteEdit extends StandardEditor<Utente> {
+
+    public static boolean isNumeric(String str) {
+        return str != null && str.matches("[-+]?\\d*\\.?\\d+");
+    }
+
+
+    @Subscribe
+    protected void onInit(InitEvent event) {
+
+
+    }
+
+
 }

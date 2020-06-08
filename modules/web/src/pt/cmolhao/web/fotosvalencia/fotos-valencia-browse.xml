@@ -69,7 +69,7 @@
             <checkBox id="daequipacolaboradoresField" property="daequipacolaboradores" />
 
 
-            <label id="text_do_equipamento" icon="WRENCH"/>
+            <label id="text_do_equipamento" icon="font-icon:WRENCH"/>
             <checkBox id="doequipamentoField" property="doequipamento" />
 
             <lookupField id="linhasFotValencias"
