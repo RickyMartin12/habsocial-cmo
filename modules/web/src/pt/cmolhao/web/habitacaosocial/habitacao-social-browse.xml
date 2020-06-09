@@ -197,7 +197,7 @@
 
                     <textField id="codPostalField" property="codPostal"
                                  caption="Código Postal: "
-                                 inputPrompt="(Insira o código postal)"
+                                 inputPrompt="(Insira o código postal (PT))"
                                  icon="MAP_SIGNS" maxLength="8"/>
 
 

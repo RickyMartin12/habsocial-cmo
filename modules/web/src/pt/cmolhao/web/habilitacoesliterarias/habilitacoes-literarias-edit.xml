@@ -16,8 +16,8 @@
         <form id="form" dataContainer="habilitacoesLiterariasDc">
             <column width="250px">
                 <lookupField id="descricaoField" property="descricao"
-                             caption="Descrição: "
-                             inputPrompt="(Indique o grau de escolaridade)"
+                             caption="Habilitações Literarias: "
+                             inputPrompt="(Indique a habilitação literária)"
                              icon="font-icon:BOOK" />
             </column>
         </form>

@@ -16,7 +16,6 @@
         <class>pt.cmolhao.entity.PessoalTecnico</class>
         <class>pt.cmolhao.entity.UtentesOutrosConcelhos</class>
         <class>pt.cmolhao.entity.TipoRendimento</class>
-        <class>pt.cmolhao.entity.Utente</class>
         <class>pt.cmolhao.entity.Moradores</class>
         <class>pt.cmolhao.entity.RendimentosUtente</class>
         <class>pt.cmolhao.entity.TipoAjuda</class>
@@ -39,5 +38,6 @@
         <class>pt.cmolhao.entity.TipologiaFamiliar</class>
         <class>pt.cmolhao.entity.HabilitacoesLiterarias</class>
         <class>pt.cmolhao.entity.Apoios</class>
+        <class>pt.cmolhao.entity.Utente</class>
     </persistence-unit>
 </persistence>

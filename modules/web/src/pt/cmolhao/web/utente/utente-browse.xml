@@ -54,6 +54,9 @@
                                 <c:join>join e.profissao t</c:join>
                                 <c:where>t.id = :profissao</c:where>
                             </c:jpql>
+                            <c:jpql>
+                                <c:where>e.estadoCivil = :estadoCivil</c:where>
+                            </c:jpql>
                         </and>
                     </condition>
                 </query>
@@ -234,7 +237,14 @@
                                 optionsContainer="profissaosDc"
                                 icon="font-icon:USER_MD" caption="Profissão: " />
 
+                        <lookupField
+                                inputPrompt="(Seleccione o Estado Civil)"
+                                property="estadoCivil"
+                                id="estadoCivilField"
+                                icon="font-icon:REFRESH" caption="Estado Civil: " />
 
+                    </hbox>
+                    <hbox spacing="true">
                         <lookupField id="linhasUtente"
                                      caption="Mostrar Numero de Linhas"
                                      inputPrompt="(seleccione o numero de linhas)"
@@ -271,6 +281,7 @@
                 <column id="deficiente" caption="Deficiente"/>
                 <column id="dependente" caption="Dependente"/>
                 <column id="email" caption="Email"/>
+                <column id="estadoCivil" caption="Estado Civil" />
                 <column id="grauEscolaridade" caption="Grau de Escolaridade"/>
                 <column id="habilitacoes" caption="Habilitações"/>
                 <column id="idTipoCivil" caption="Tipo de Civil"/>
@@ -292,6 +303,7 @@
                 <button id="editBtn" action="utentesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
                 <button id="removeBtn" action="utentesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
                 <button id="excelBtn" action="utentesTable.excel" stylename="friendly" />
+
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

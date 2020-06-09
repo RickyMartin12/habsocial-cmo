@@ -11,6 +11,13 @@
             <loader id="habilitacoesLiterariasesDl">
                 <query>
                     <![CDATA[select e from cmolhao_HabilitacoesLiterarias e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.descricao = :descricao</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>

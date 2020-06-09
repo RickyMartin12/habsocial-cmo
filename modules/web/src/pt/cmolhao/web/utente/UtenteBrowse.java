@@ -59,6 +59,8 @@ public class UtenteBrowse extends StandardLookup<Utente> {
     @Inject
     protected LookupField<Profissao> profissaoField;
     @Inject
+    protected LookupField estadoCivilField;
+    @Inject
     private ScreenBuilders screenBuilders;
     @Inject
     private DataManager dataManager;
@@ -119,6 +121,14 @@ public class UtenteBrowse extends StandardLookup<Utente> {
     protected void onInit(InitEvent event) {
         text_deficiente.setValue("Deficiente: ");
         text_dependente.setValue("Dependente: ");
+
+        List<String> list_estado_civil = new ArrayList<>();
+        list_estado_civil.add("Solteiro(a)");
+        list_estado_civil.add("Casado(a)");
+        list_estado_civil.add("Divorciado(a)");
+        list_estado_civil.add("Viúvo(a)");
+        list_estado_civil.add("Separado(a)");
+        estadoCivilField.setOptionsList(list_estado_civil);
 
         List<Integer> list = new ArrayList<>();
         list.add(10);
@@ -307,6 +317,15 @@ public class UtenteBrowse extends StandardLookup<Utente> {
             utentesDl.removeParameter("profissao");
         }
 
+        if (estadoCivilField.getValue() != null)
+        {
+            utentesDl.setParameter("estadoCivil",  estadoCivilField.getValue().toString());
+        }
+        else
+        {
+            utentesDl.removeParameter("estadoCivil");
+        }
+
         utentesDl.load();
     }
 
@@ -326,6 +345,7 @@ public class UtenteBrowse extends StandardLookup<Utente> {
         email_uten_id.setValue(null);
         linhasUtente.setValue(null);
         profissaoField.setValue(null);
+        estadoCivilField.setValue(null);
         utentesDl.setMaxResults(0);
         utentesDl.removeParameter("email");
         utentesDl.removeParameter("nome");
@@ -339,6 +359,7 @@ public class UtenteBrowse extends StandardLookup<Utente> {
         utentesDl.removeParameter("habilitacoes");
         utentesDl.removeParameter("grauEscolaridade");
         utentesDl.removeParameter("profissao");
+        utentesDl.removeParameter("estadoCivil");
         utentesDl.load();
     }
 

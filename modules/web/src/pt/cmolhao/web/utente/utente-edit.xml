@@ -70,7 +70,8 @@
         <scrollBox id="scrollBox" spacing="true">
             <form id="form" dataContainer="utenteDc">
                 <column width="250px">
-                    <textField id="certUniaoEuropeiaField" property="certUniaoEuropeia" caption="Certidão da União Europeia (BI): " icon="CREDIT_CARD"/>
+                    <textField id="certUniaoEuropeiaField" property="certUniaoEuropeia" caption="Certidão da União Europeia (BI): "
+                               icon="CREDIT_CARD" inputPrompt="00000000 0 ZZY"/>
                     <dateField id="dataNascField" property="dataNasc" caption="Data de Nascimento: " icon="CALENDAR"/>
                     <checkBox id="deficienteField" property="deficiente" caption="Deficiente: " icon="WHEELCHAIR"/>
                     <checkBox id="dependenteField" property="dependente"/>
@@ -104,11 +105,14 @@
                             icon="font-icon:USERS" caption="Topologia Familiar: "/>
                     <textField id="nissField" property="niss" caption="Numero de Segurança Social: " icon="font-icon:ID_CARD"
                                maxLength="11"/>
+
+                    <lookupField id="estadoCivilField" inputPrompt="(Seleccione o Estado Civil)"
+                                 property="estadoCivil" caption="Estado Civil: " icon="REFRESH" />
                     <textField id="nomeField" property="nome" caption="Nome: " icon="ADDRESS_CARD"/>
                     <textField id="numContribuinteField" property="numContribuinte" caption="Numero Contribuinte: "
                                icon="font-icon:ID_CARD" maxLength="9"/>
                     <textField id="numIdCivilField" property="numIdCivil" caption="Numero ID Civil: " icon="CREDIT_CARD_ALT"
-                               maxLength="9"/>
+                               maxLength="9" />
                     <textArea id="obsConfField" property="obsConf" icon="FILE_TEXT" caption="Observações Confiramento: "
                                 rows="3" cols="10"/>
                     <textField id="obsGeraisField" property="obsGerais" icon="FILE_TEXT" caption="Observações Gerais: "/>
@@ -120,6 +124,7 @@
                             icon="font-icon:USER_MD" caption="Profissão: " />
                     <textField id="telefoneField" property="telefone" caption="Telefone: " icon="PHONE" maxLength="9"/>
                     <textField id="telem_velField" property="telem_vel" caption="Telemóvel: " icon="MOBILE_PHONE" maxLength="9"/>
+
                 </column>
             </form>
         </scrollBox>

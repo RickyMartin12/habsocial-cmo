@@ -75,24 +75,6 @@
             <property name="numContribuinte" />
         </property>
     </view>
-    <view entity="cmolhao_Utente" name="utente-view" extends="_local">
-        <property name="grauEscolaridade" view="_minimal">
-            <property name="descricao" />
-        </property>
-        <property name="idTipoCivil" view="_minimal">
-            <property name="tipo" />
-        </property>
-        <property name="idTipologiaFamiliar" view="_minimal">
-            <property name="tipologiaFamiliar" />
-            <property name="tipologiaFamiliarEspecifica" />
-        </property>
-        <property name="profissao" view="_minimal">
-            <property name="nome" />
-        </property>
-        <property name="habilitacoes" view="_minimal">
-            <property name="descricao" />
-        </property>
-    </view>
     <view entity="cmolhao_Tecnico" name="tecnico-view" extends="_local">
         <property name="idInstituicao" view="_minimal">
             <property name="descricao"/>
@@ -183,6 +165,24 @@
         </property>
         <property name="idEstado" view="_minimal">
             <property name="estadosProcessos" />
+        </property>
+    </view>
+    <view entity="cmolhao_Utente" name="utente-view" extends="_local">
+        <property name="grauEscolaridade" view="_minimal">
+            <property name="descricao" />
+        </property>
+        <property name="idTipoCivil" view="_minimal">
+            <property name="tipo" />
+        </property>
+        <property name="idTipologiaFamiliar" view="_minimal">
+            <property name="tipologiaFamiliar" />
+            <property name="tipologiaFamiliarEspecifica" />
+        </property>
+        <property name="profissao" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="habilitacoes" view="_minimal">
+            <property name="descricao" />
         </property>
     </view>
 

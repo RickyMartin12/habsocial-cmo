@@ -15,8 +15,17 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="tipologiaFamiliarDc">
             <column width="250px">
-                <textField id="tipologiaFamiliarField" property="tipologiaFamiliar"/>
-                <textField id="tipologiaFamiliarEspecificaField" property="tipologiaFamiliarEspecifica"/>
+                <lookupField
+                        inputPrompt="(Seleccione a Tipologia Familiar)"
+                        property="tipologiaFamiliar"
+                        id="tipologiaFamiliarField"
+                        icon="font-icon:GROUP" caption="Tipologia Familiar: " />
+
+                <lookupField
+                        inputPrompt="(Seleccione a Tipologia Familiar Especifica)"
+                        property="tipologiaFamiliarEspecifica"
+                        id="tipologiaFamiliarEspecificaField"
+                        icon="font-icon:GROUP" caption="Tipologia Familiar Especifica: " />
             </column>
         </form>
         <hbox id="editActions" spacing="true">

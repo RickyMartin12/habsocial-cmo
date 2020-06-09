@@ -79,6 +79,7 @@
                     <textField id="codPostalField" property="codPostal"
                                caption="Código Postal: "
                                icon="MAP_SIGNS"
+                               inputPrompt="####-###"
                                 maxLength="8"/>
 
                     <textArea rows="3" cols="8" id="obsgeraisField" property="obsgerais" caption="Observações Gerais: " icon="FILE_TEXT_O" />

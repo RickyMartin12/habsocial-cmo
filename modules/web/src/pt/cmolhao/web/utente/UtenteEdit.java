@@ -2,13 +2,15 @@ package pt.cmolhao.web.utente;
 
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
+import com.haulmont.cuba.gui.components.LookupField;
 import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.components.ValidationException;
 import com.haulmont.cuba.gui.screen.*;
 import pt.cmolhao.entity.Utente;
 
 import javax.inject.Inject;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 @UiController("cmolhao_Utente.edit")
 @UiDescriptor("utente-edit.xml")
@@ -26,6 +28,8 @@ public class UtenteEdit extends StandardEditor<Utente> {
     protected TextField<String> telefoneField;
     @Inject
     protected TextField<String> telem_velField;
+    @Inject
+    protected LookupField<String> estadoCivilField;
 
     @Inject
     private Notifications notifications;
@@ -44,6 +48,14 @@ public class UtenteEdit extends StandardEditor<Utente> {
 
     @Subscribe
     protected void onInit(InitEvent event) {
+
+        List<String> list_estado_civil = new ArrayList<>();
+        list_estado_civil.add("Solteiro(a)");
+        list_estado_civil.add("Casado(a)");
+        list_estado_civil.add("Divorciado(a)");
+        list_estado_civil.add("Viúvo(a)");
+        list_estado_civil.add("Separado(a)");
+        estadoCivilField.setOptionsList(list_estado_civil);
 
         certUniaoEuropeiaField.addValidator(
                 value -> {

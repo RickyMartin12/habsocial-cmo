@@ -15,12 +15,12 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="tipoCivilDc">
             <column width="250px">
-                <textField id="tipoField" property="tipo"/>
+                <textField id="tipoField" property="tipo" icon="font-icon:ADDRESS_CARD_O" caption="Tipo Civil: " />
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button caption="Fechar" action="windowClose" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>
