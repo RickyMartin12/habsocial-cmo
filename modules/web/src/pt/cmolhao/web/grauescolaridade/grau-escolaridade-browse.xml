@@ -11,36 +11,90 @@
             <loader id="grauEscolaridadesDl">
                 <query>
                     <![CDATA[select e from cmolhao_GrauEscolaridade e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.descricao = :descricao</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
+
+
+        <keyValueCollection id="descricao_grau_escolaridade_id">
+            <properties>
+                <property name="descricao" datatype="string" />
+            </properties>
+            <loader id="descricao_grau_escolaridade_id_loader">
+                <query>
+                    <![CDATA[select o.descricao as descricao from cmolhao_GrauEscolaridade o where o.descricao is not null group by o.descricao]]>
+                </query>
+            </loader>
+        </keyValueCollection>
+
+
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="grauEscolaridadesTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="grauEscolaridadesTable"
-                dataLoader="grauEscolaridadesDl">
-            <properties include=".*"/>
-        </filter>
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+            <scrollBox spacing="true">
+                <hbox spacing="true">
+                    <lookupField id="desc_grau_escolaridade_id"
+                                 optionsContainer="descricao_grau_escolaridade_id"
+                                 caption="Grau de Escolaridade:"
+                                 inputPrompt="(seleccione a descrição do grau de escolaridade)"
+                                 icon="font-icon:UNIVERSITY"
+                    />
+                    <lookupField id="linhasGrauEscolraidade"
+                                 caption="Mostrar Numero de Linhas"
+                                 inputPrompt="(seleccione o numero de linhas)"
+                                 icon="ARROWS_V"/>
+
+                </hbox>
+
+                <hbox spacing="true">
+                    <button id="reset_grau_escolaridade" icon="ERASER" caption="Limpar" />
+                    <button id="search_grau_escolaridade" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+            </scrollBox>
+
+        </groupBox>
         <table id="grauEscolaridadesTable"
                width="100%"
-               dataContainer="grauEscolaridadesDc">
+               dataContainer="grauEscolaridadesDc"
+               emptyStateMessage="Não Existe Dados na Tabela"
+               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
-                <action id="remove" type="remove"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela de Grau de Escolaridade."/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela Grau de Escolaridade?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
             </actions>
             <columns>
-                <column id="descricao"/>
+                <column id="descricao" caption="Descrição"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="grauEscolaridadesTable.create"/>
-                <button id="editBtn" action="grauEscolaridadesTable.edit"/>
-                <button id="removeBtn" action="grauEscolaridadesTable.remove"/>
+                <button id="createBtn" action="grauEscolaridadesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="grauEscolaridadesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="grauEscolaridadesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="grauEscolaridadesTable.excel" stylename="friendly" />
             </buttonsPanel>
         </table>
         <hbox id="lookupActions" spacing="true" visible="false">

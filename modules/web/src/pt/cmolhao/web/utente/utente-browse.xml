@@ -205,8 +205,8 @@
                     <hbox spacing="true">
                         <lookupField id="niss_utn_id"
                                      optionsContainer="niss_utente_id"
-                                     caption="Utente do Utente:"
-                                     inputPrompt="(seleccione o utente do Utente)"
+                                     caption="Número de Segurança Social do Utente:"
+                                     inputPrompt="(seleccione o Numero de Segurança Social do Utente)"
                                      icon="font-icon:ID_CARD"
                         />
                         <textField id="nomeField" property="nome" caption="Nome do Utente: "

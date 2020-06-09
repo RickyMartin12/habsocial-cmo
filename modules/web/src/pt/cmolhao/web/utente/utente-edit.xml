@@ -70,7 +70,7 @@
         <scrollBox id="scrollBox" spacing="true">
             <form id="form" dataContainer="utenteDc">
                 <column width="250px">
-                    <textField id="certUniaoEuropeiaField" property="certUniaoEuropeia" caption="Ceridão da União Europeia: " icon="CREDIT_CARD"/>
+                    <textField id="certUniaoEuropeiaField" property="certUniaoEuropeia" caption="Certidão da União Europeia (BI): " icon="CREDIT_CARD"/>
                     <dateField id="dataNascField" property="dataNasc" caption="Data de Nascimento: " icon="CALENDAR"/>
                     <checkBox id="deficienteField" property="deficiente" caption="Deficiente: " icon="WHEELCHAIR"/>
                     <checkBox id="dependenteField" property="dependente"/>
@@ -124,8 +124,8 @@
             </form>
         </scrollBox>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>

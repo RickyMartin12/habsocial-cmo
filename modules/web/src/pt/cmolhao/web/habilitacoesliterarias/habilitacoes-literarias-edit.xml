@@ -15,12 +15,15 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="habilitacoesLiterariasDc">
             <column width="250px">
-                <textField id="descricaoField" property="descricao"/>
+                <lookupField id="descricaoField" property="descricao"
+                             caption="Descrição: "
+                             inputPrompt="(Indique o grau de escolaridade)"
+                             icon="font-icon:BOOK" />
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button caption="Fechar" action="windowClose" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>
