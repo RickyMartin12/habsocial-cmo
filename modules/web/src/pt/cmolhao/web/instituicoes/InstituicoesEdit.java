@@ -13,12 +13,15 @@ import javax.json.JsonReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.UUID;
 
 @UiController("cmolhao_Instituicoes.edit")
 @UiDescriptor("instituicoes-edit.xml")
 @EditedEntityContainer("instituicoesDc")
 @LoadDataBeforeShow
 public class InstituicoesEdit extends StandardEditor<Instituicoes> {
+    @Inject
+    protected TextField<UUID> idInstituicaoField;
     @Inject
     private TextField<String> coordenadasgpsField;
 
@@ -94,4 +97,11 @@ public class InstituicoesEdit extends StandardEditor<Instituicoes> {
     public void onMoradacompletaFieldTextChange(TextInputField.TextChangeEvent event) {
         locationData(event.getText());
     }
+
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Adicionar/Editar Instituição - " + idInstituicaoField.getValue());
+    }
+
+
 }

@@ -32,7 +32,7 @@ public class UserRoleEdit extends StandardEditor<UserRole> {
     protected void onAfterShow(AfterShowEvent event) {
 
 
-        getWindow().setCaption("Edit/Add Papel Utl. '"+label_user.getRawValue()+"' ");
+        getWindow().setCaption("Edit/Add Papel do Utilizaodr. '"+label_user.getRawValue()+"' ");
         Map<String, String> map = new LinkedHashMap<>();
         map.put("Acesso minimo ao Sistema", "system-minimal");
         map.put("Acesso Minimo de Gestão de relatórios ao Sistema", "system-reports-minimal");

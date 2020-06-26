@@ -178,6 +178,18 @@
                      display: none!important;
                  }*/
 
+                 .v-button.v-widget.c-logout-button.v-button-c-logout-button.icon.v-button-icon.v-button-empty-caption {
+                     margin-left: 0px;
+                 }
+
+                 .v-label.v-widget.c-user-select-label.v-label-c-user-select-label.v-label-undef-w {
+                     margin-left: -40px;
+                 }
+
+                 .v-label.v-widget.c-app-title.v-label-c-app-title.v-label-undef-w {
+                     margin: 0 auto;
+                 }
+
 
                  .c-fglayout.v-widget.inline-caption.c-fglayout-inline-caption {
                      width: 100%!important;
@@ -231,7 +243,8 @@
                   .v-widget.data_pedido_text.v-textfield-data_pedido_text,
                   .v-widget.data_renovacao_text.v-textfield-data_renovacao_text,
                   .v-widget.ano_cost_text.v-textfield-ano_cost_text,
-                   .v-widget.ano_nasc_text.v-textfield-ano_nasc_text{
+                   .v-widget.ano_nasc_text.v-textfield-ano_nasc_text,
+                   .v-widget.data_atendimento.v-textfield-data_atendimento{
                       width: 150px!important;
                   }
 
@@ -239,22 +252,42 @@
                   .v-caption-data_atribuicao_text,
                   .v-caption-data_pedido_text,
                   .v-caption-data_renovacao_text,
-                  .v-caption-ano_nasc_text
+                  .v-caption-ano_nasc_text,
+                  .v-caption-data_atendimento
                    {
                       width: 150px!important;
                   }
 
+                  .v-caption-data_inicio_morador,
+                  .v-caption-data_fim_morador
+                   {
+                      width: 120px!important;
+                  }
 
+                  .c-amcharts-chart.v-widget.graphics_chart.c-amcharts-chart-graphics_chart.v-has-width.v-has-height
+                  {
+                        margin-top: 150px;
+                  }
 
+                  .v-slot.v-slot-pie_chart_atend {
+                      height: 50%!important;
+                  }
 
+                  .v-slot.v-slot-pie_chart_moradores {
+                      height: 50%!important;
+                  }
 
+                  .v-csslayout.v-layout.v-widget.c-sidemenu-container.v-csslayout-c-sidemenu-container.v-has-height {
+                      width: 300px;
+                  }
 
+                  .v-csslayout.v-layout.v-widget.c-sidemenu-panel.v-csslayout-c-sidemenu-panel {
+                      width: 300px;
+                  }
 
-
-
-
-
-
+                  .c-sidemenu-layout.v-csslayout .c-sidemenu-panel.collapsed:hover {
+                      width: 300px!important;
+                  }
 
 
 

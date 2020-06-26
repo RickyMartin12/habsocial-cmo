@@ -1,12 +1,14 @@
 package pt.cmolhao.web.habilitacoesliterarias;
 
 import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.screen.*;
 import pt.cmolhao.entity.HabilitacoesLiterarias;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @UiController("cmolhao_HabilitacoesLiterarias.edit")
 @UiDescriptor("habilitacoes-literarias-edit.xml")
@@ -15,6 +17,8 @@ import java.util.List;
 public class HabilitacoesLiterariasEdit extends StandardEditor<HabilitacoesLiterarias> {
     @Inject
     protected LookupField<String> descricaoField;
+    @Inject
+    protected TextField<UUID> idHabilitacoesLiterariasField;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -36,4 +40,11 @@ public class HabilitacoesLiterariasEdit extends StandardEditor<HabilitacoesLiter
         descricaoField.setOptionsList(list);
 
     }
+
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Adicionar/Editar Atendimento Encaminhamento - " + idHabilitacoesLiterariasField.getValue());
+    }
+
+
 }

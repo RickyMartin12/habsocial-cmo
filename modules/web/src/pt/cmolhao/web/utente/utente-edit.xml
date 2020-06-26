@@ -70,6 +70,7 @@
         <scrollBox id="scrollBox" spacing="true">
             <form id="form" dataContainer="utenteDc">
                 <column width="250px">
+                    <textField id="idUtenteField" visible="false" property="id" />
                     <textField id="certUniaoEuropeiaField" property="certUniaoEuropeia" caption="Certidão da União Europeia (BI): "
                                icon="CREDIT_CARD" inputPrompt="00000000 0 ZZY"/>
                     <dateField id="dataNascField" property="dataNasc" caption="Data de Nascimento: " icon="CALENDAR"/>
@@ -108,7 +109,8 @@
 
                     <lookupField id="estadoCivilField" inputPrompt="(Seleccione o Estado Civil)"
                                  property="estadoCivil" caption="Estado Civil: " icon="REFRESH" />
-                    <textField id="nomeField" property="nome" caption="Nome: " icon="ADDRESS_CARD"/>
+                    <textField id="nomeField" property="nome" caption="Nome: " icon="ADDRESS_CARD" required="true"
+                                requiredMessage="O Nome do Utente deve ser preenchido"/>
                     <textField id="numContribuinteField" property="numContribuinte" caption="Numero Contribuinte: "
                                icon="font-icon:ID_CARD" maxLength="9"/>
                     <textField id="numIdCivilField" property="numIdCivil" caption="Numero ID Civil: " icon="CREDIT_CARD_ALT"
@@ -124,7 +126,8 @@
                             icon="font-icon:USER_MD" caption="Profissão: " />
                     <textField id="telefoneField" property="telefone" caption="Telefone: " icon="PHONE" maxLength="9"/>
                     <textField id="telem_velField" property="telem_vel" caption="Telemóvel: " icon="MOBILE_PHONE" maxLength="9"/>
-
+                    <lookupField id="paisOrigemField" property="paisOrigem" caption="Pais de Origem: " icon="FLAG" inputPrompt="(Introduza o teu país de origem)"
+                                 required="true" requiredMessage="O Pais de Origem do Utente deve ser preenchido"/>
                 </column>
             </form>
         </scrollBox>

@@ -9,25 +9,44 @@
                   view="utentesSituacaoProfissional-view">
             <loader/>
         </instance>
+
+        <collection id="UtentesDC"
+                    class="pt.cmolhao.entity.Utente"
+                    view="_local">
+            <loader id="utentesLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Utente e]]>
+                </query>
+            </loader>
+        </collection>
+
+
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="utentesSituacaoProfissionalDc">
             <column width="250px">
-                <dateField id="dataSituacaoProfissionalField" property="dataSituacaoProfissional"/>
-                <textField id="situacaoProfissionalField" property="situacaoProfissional"/>
-                <pickerField id="utenteField" property="utente">
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
-                </pickerField>
+                <textField id="idUtentesSituacaoProfissionalField" property="id" visible="false" />
+                <dateField id="dataSituacaoProfissionalField" property="dataSituacaoProfissional" caption="Data da Situação Profissional: "
+                           icon="font-icon:CALENDAR"/>
+                <lookupField
+                        property="situacaoProfissional"
+                        id="situacaoProfissionalField"
+                        icon="font-icon:USER_MD"
+                        caption="Situação Profissional:"
+                        inputPrompt="(Selecção a situação profissional)" />
+                <lookupField
+                        property="utente"
+                        id="utenteField"
+                        optionsContainer="UtentesDC"
+                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                        inputPrompt="(Seleccione o nome e a identificação do utente)"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>

@@ -24,6 +24,7 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="projectosEmAprovacaoDc">
             <column width="250px">
+                <textField id="idProjectosAprovacaoField" visible="false" property="id" />
                 <lookupField id="etapaprocessoField"
                              caption="Etapa de Processo: "
                              icon="CHECK_CIRCLE"

@@ -28,6 +28,7 @@
         <scrollBox id="scrollBox" spacing="true">
             <form id="form" dataContainer="projectosIntervencaoDc">
                 <column width="250px">
+                    <textField id="idProjectosIntervencaoField" property="id" visible="false" />
                     <checkBox id="adultosField" property="adultos" caption="Adultos: " icon="MALE"/>
                     <checkBox id="comunidadeField" property="comunidade" caption="Comunidade: " icon="GROUP"/>
                     <checkBox id="criancasField" property="criancas" caption="Crianças: " icon="CHILD"/>

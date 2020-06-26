@@ -9,38 +9,76 @@
                   view="utentesRelacionados-view">
             <loader/>
         </instance>
+
+        <collection id="tipoRelacionamentoUtentesesDc"
+                    class="pt.cmolhao.entity.TipoRelacionamentoUtentes"
+                    view="_local">
+            <loader id="tipoRelacionamentoUtentesesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoRelacionamentoUtentes e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="utentesDc1"
+                    class="pt.cmolhao.entity.Utente"
+                    view="utente-view">
+            <loader id="utentesDl_1">
+                <query>
+                    <![CDATA[select e from cmolhao_Utente e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="utentesDc2"
+                    class="pt.cmolhao.entity.Utente"
+                    view="utente-view">
+            <loader id="utentesDl_2">
+                <query>
+                    <![CDATA[select e from cmolhao_Utente e]]>
+                </query>
+            </loader>
+        </collection>
+
+
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="utentesRelacionadosDc">
             <column width="250px">
-                <pickerField id="idTipoRelUtentesField" property="idTipoRelUtentes">
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
-                </pickerField>
-                <pickerField id="idUtenteRel1Field" property="idUtenteRel1">
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
-                </pickerField>
-                <pickerField id="idUtenteRel2Field" property="idUtenteRel2">
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
-                </pickerField>
-                <textField id="membroAgregadoField" property="membroAgregado"/>
-                <textField id="obsConfField" property="obsConf"/>
-                <textField id="obsGeraisField" property="obsGerais"/>
+                <textField id="idUtentesRelacionadosField" visible="false" property="id" />
+                <lookupField
+                        property="idUtenteRel1"
+                        id="idUtenteRel1Field"
+                        optionsContainer="utentesDc1"
+                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente 1: "
+                        inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+
+                <lookupField
+                        property="idUtenteRel2"
+                        id="idUtenteRel2Field"
+                        optionsContainer="utentesDc2"
+                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente 2: "
+                        inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+
+                <lookupField
+                        inputPrompt="(Seleccione o tipo de relacionamento dos utentes)"
+                        property="idTipoRelUtentes"
+                        id="idTipoRelUtentesField"
+                        optionsContainer="tipoRelacionamentoUtentesesDc"
+                        icon="font-icon:GROUP" caption="Tipo de Relacionamento dos Utentes: "/>
+                <textField id="membroAgregadoField" property="membroAgregado" caption="Membro Agregado: "
+                           icon="font-icon:USERS" datatype="int" conversionErrorMessage="O Membro agregado possui numeros inteiros"/>
+                <textArea cols="20" rows="3" id="obsConfField" property="obsConf"
+                          caption="Observações de Confirmação: " icon="font-icon:FILE_TEXT_O"/>
+                <textArea cols="20" rows="3" id="obsGeraisField" property="obsGerais"
+                          caption="Observações Gerais: " icon="font-icon:FILE_TEXT_O"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button caption="Fechar" action="windowClose" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>

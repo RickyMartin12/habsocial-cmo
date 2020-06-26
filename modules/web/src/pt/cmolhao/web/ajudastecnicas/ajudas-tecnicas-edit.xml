@@ -33,6 +33,7 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="ajudasTecnicasDc">
             <column width="250px">
+                <textField id="idAjudasTecnicasField" property="id" visible="false"/>
                 <dateField id="datadisponivelField" property="datadisponivel" dateFormat="dd/MM/yyyy" resolution="DAY"
                            caption="Data Disponível: "
                            icon="CALENDAR" />

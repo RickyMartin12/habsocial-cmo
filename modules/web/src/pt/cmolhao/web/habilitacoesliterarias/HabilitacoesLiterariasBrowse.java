@@ -38,6 +38,8 @@ public class HabilitacoesLiterariasBrowse extends StandardLookup<HabilitacoesLit
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+
+        getWindow().setCaption("Listar Habilitações Literárias");
         // Arrend - Renda
         List<String> options = new ArrayList<>();
         String queryString = "select o.descricao as descricao from cmolhao_HabilitacoesLiterarias o where o.descricao is not null group by o.descricao";

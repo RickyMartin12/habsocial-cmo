@@ -15,12 +15,17 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="tipoAtendimentoDc">
             <column width="250px">
-                <textField id="tipoAtendimentoField" property="tipoAtendimento"/>
+                <textField id="idTipoAtendimentoField" property="id" visible="false" />
+                <lookupField
+                        inputPrompt="(Seleccione o tipo de atendimento)"
+                        property="tipoAtendimento"
+                        id="tipoAtendimentoField"
+                        icon="font-icon:VOLUME_CONTROL_PHONE" caption="Tipo de Atendimento: "/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button caption="Fechar" action="windowClose" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>

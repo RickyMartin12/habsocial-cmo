@@ -106,7 +106,7 @@ public class UserPasswordEdit extends StandardEditor<User> {
                 "<p><b>Username:</b> "+username+"</p>" +
                 "<p><b>Password:</b> "+password+"</p>" +
                 "<br>" +
-                "Camara Municipal de Olhao - Habitacao Social";
+                "Camara Municipal de Olhao - Acção Social";
         String subject = "Alteração da Palavra Passe do Utilizador '"+username+"'";
         if (user.getEmail() != null)
         {

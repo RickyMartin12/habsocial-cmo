@@ -25,6 +25,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import com.haulmont.cuba.core.entity.Entity;
 
@@ -44,6 +45,8 @@ public class UtentesOutrosConcelhosEdit extends StandardEditor<UtentesOutrosConc
     @Inject
     protected InstanceContainer<UtentesOutrosConcelhos> utentesOutrosConcelhosDc;
     @Inject
+    protected TextField<UUID> idUtenteOutrosConcelhosField;
+    @Inject
     private MetadataTools metadataTools;
     @Inject
     private Notifications notifications;
@@ -58,6 +61,7 @@ public class UtentesOutrosConcelhosEdit extends StandardEditor<UtentesOutrosConc
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Adicionar/Editar utente de outro concelho - " + idUtenteOutrosConcelhosField.getValue());
         Map<String, Valencias> map = new HashMap<>();
         Collection<Valencias> customers = valenciasDc.getItems();
         for (Valencias item : customers) {
@@ -98,8 +102,19 @@ public class UtentesOutrosConcelhosEdit extends StandardEditor<UtentesOutrosConc
             throw new RuntimeException(e);
         }
 
-        freguesiaField.setValue(hash_map.get("locality"));
-        concelhoField.setValue(hash_map.get("locality"));
+        if (!hash_map.isEmpty() )
+        {
+            freguesiaField.setValue(hash_map.get("locality"));
+            concelhoField.setValue(hash_map.get("locality"));
+
+        }
+        else
+        {
+            freguesiaField.setValue(null);
+            concelhoField.setValue(null);
+        }
+
+
 
     }
 

@@ -1,6 +1,7 @@
 package pt.cmolhao.web.pessoalauxiliar;
 
 import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.screen.*;
 import pt.cmolhao.entity.PessoalAuxiliar;
@@ -16,6 +17,8 @@ import java.util.*;
 public class PessoalAuxiliarEdit extends StandardEditor<PessoalAuxiliar> {
 
 
+    @Inject
+    protected TextField<UUID> idPessoalAuxiliarField;
     @Inject
     private LookupField<String> habilitacoesliterariasField;
     @Inject
@@ -38,7 +41,7 @@ public class PessoalAuxiliarEdit extends StandardEditor<PessoalAuxiliar> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-
+        getWindow().setCaption("Adicionar/Editar Pessoa Auxiliar - " + idPessoalAuxiliarField.getValue());
         Map<String, Valencias> map = new HashMap<>();
         Collection<Valencias> customers = valenciasDc.getItems();
         for (Valencias item : customers) {

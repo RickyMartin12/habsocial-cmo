@@ -53,6 +53,11 @@ public class ApoiosBrowse extends StandardLookup<Apoios> {
     @Inject
     private Notifications notifications;
 
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar Apoios");
+    }
+
 
     public Component generateValorApoio(Apoios entity) {
         Label label = (Label) uiComponents.create(Label.NAME);

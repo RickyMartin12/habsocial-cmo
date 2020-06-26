@@ -186,6 +186,8 @@ public class PessoalAuxiliarBrowse extends StandardLookup<PessoalAuxiliar> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+
+        getWindow().setCaption("Listar Pessoal Auxiliar");
         // Categoria Profissional
         List<String> options = new ArrayList<>();
         String queryString = "select o.categoriaprofissional as categoriaprofissional from cmolhao_PessoalAuxiliar o where o.categoriaprofissional is not null group by o.categoriaprofissional";

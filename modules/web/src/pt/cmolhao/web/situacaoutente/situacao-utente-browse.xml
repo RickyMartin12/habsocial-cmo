@@ -11,41 +11,141 @@
             <loader id="situacaoUtentesDl">
                 <query>
                     <![CDATA[select e from cmolhao_SituacaoUtente e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idUtente i</c:join>
+                                <c:where>i.id = :idUtente</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idTiposSituacaoUtentes j</c:join>
+                                <c:where>j.id = :idTiposSituacaoUtentes</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.dataInicio = :dataInicio</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.dataFim = :dataFim</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
+
+        <collection id="UtentesDC"
+                    class="pt.cmolhao.entity.Utente"
+                    view="_local">
+            <loader id="utentesLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Utente e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tiposSituacoesUtentesesDc"
+                    class="pt.cmolhao.entity.TiposSituacoesUtentes"
+                    view="_local">
+            <loader id="tiposSituacoesUtentesesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TiposSituacoesUtentes e]]>
+                </query>
+            </loader>
+        </collection>
+
+
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="situacaoUtentesTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="situacaoUtentesTable"
-                dataLoader="situacaoUtentesDl">
-            <properties include=".*"/>
-        </filter>
+
+
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+                <hbox spacing="true">
+                    <lookupField
+                            property="idUtente"
+                            id="idUtenteField"
+                            optionsContainer="UtentesDC"
+                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                            inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+
+
+                    <lookupField
+                            inputPrompt="(Seleccione o tipo de situação dos utentes)"
+                            property="idTiposSituacaoUtentes"
+                            id="idTiposSituacaoUtentesField"
+                            optionsContainer="tiposSituacoesUtentesesDc"
+                            icon="font-icon:REFRESH" caption="Tipo de Situação dos Utentes: "/>
+
+
+                    <dateField id="dataInicioField" property="dataInicio" datatype="date" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data de Inicio: " stylename="data_inicio_morador"/>
+                    <dateField id="dataFimField" property="dataFim" datatype="date" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data de Fim: " stylename="data_fim_morador"/>
+
+
+
+                </hbox>
+
+                <hbox spacing="true">
+
+                    <lookupField id="linhasSituacaoUtente"
+                                 caption="Mostrar Numero de Linhas"
+                                 inputPrompt="(seleccione o numero de linhas)"
+                                 icon="ARROWS_V"/>
+
+                </hbox>
+
+
+                <hbox spacing="true">
+                    <button id="reset_situacao_utente" icon="ERASER" caption="Limpar" />
+                    <button id="search_situacao_utente" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+            </scrollBox>
+        </groupBox>
+
+
         <groupTable id="situacaoUtentesTable"
                     width="100%"
-                    dataContainer="situacaoUtentesDc">
+                    dataContainer="situacaoUtentesDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
-                <action id="remove" type="remove"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela de Situação do Utente"/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha de Situação do Utente?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
             </actions>
             <columns>
-                <column id="dataFim"/>
-                <column id="dataInicio"/>
-                <column id="idTiposSituacaoUtentes"/>
-                <column id="idUtente"/>
-                <column id="obsGerais"/>
-                <column id="obserConf"/>
+
+                <column id="idUtente" caption="Utente"/>
+                <column id="idTiposSituacaoUtentes" caption="Tipos de Situação dos Utentes"/>
+
+                <column id="dataInicio" caption="Data Inicio"/>
+                <column id="dataFim" caption="Data Fim"/>
+
+                <column id="obsGerais" caption="Observações Gerais"/>
+                <column id="obserConf" caption="Observações de confirmação"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="situacaoUtentesTable.create"/>
-                <button id="editBtn" action="situacaoUtentesTable.edit"/>
-                <button id="removeBtn" action="situacaoUtentesTable.remove"/>
+                <button id="createBtn" action="situacaoUtentesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="situacaoUtentesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="situacaoUtentesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="situacaoUtentesTable.excel" stylename="friendly" />
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

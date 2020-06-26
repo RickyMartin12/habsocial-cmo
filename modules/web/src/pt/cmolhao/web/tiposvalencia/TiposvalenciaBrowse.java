@@ -52,4 +52,10 @@ public class TiposvalenciaBrowse extends StandardLookup<Tiposvalencia> {
         tiposvalenciasDl.load();
 
     }
+
+
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar Tipos de Valências");
+    }
 }

@@ -1,8 +1,142 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
-    <item screen="cmolhao_DashboardValencia" id="dashboard" stylename="Dashboard"
-          shortcut="Dasboard" icon="DASHBOARD"/>
-    <menu id="application-cmolhao" insertBefore="administration" caption="Tabelas - Habitação Social" icon="font-icon:TABLE">
+
+    <menu id="dashboard" caption="Dashboard" icon="DASHBOARD">
+        <item screen="cmolhao_DashboardValencia" id="dashboard_valencia" stylename="dashboard_valencia"
+              shortcut="dashboard_valencia" icon="SIMPLYBUILT" caption="Valência" description="Dashboard - Valência"/>
+        <item screen="cmolhao_DashboardAtendimentoSocial" id="dashboard_atendimento_social" stylename="dashboard_atendimento_social"
+              shortcut="dashboard_atendimento_social" icon="BELL" caption="Atendimento Social" description="Dashboard - Atendimento Social"/>
+    </menu>
+
+
+
+    <menu id="Valencia" caption="Valencia" icon="SIMPLYBUILT">
+        <item screen="cmolhao_Valencias.browse" id="valencias" stylename="valencias"
+              shortcut="valencias" icon="SIMPLYBUILT" caption="Valencias" description="Valência"/>
+        <item screen="cmolhao_Tiposvalencia.browse" id="tipo_valencia_browse" stylename="tipo_valencia_browse"
+              shortcut="tipo_valencia_browse" icon="SIMPLYBUILT" caption="Tipos de Valencias" description="Tipos de Valência" />
+        <item screen="cmolhao_FotosValencia.browse" id="fotos_valencias" stylename="fotos_valencias"
+              shortcut="fotos_valencias" icon="PHOTO" caption="Fotos Valências" description="Fotos Valências"/>
+        <item screen="cmolhao_Localizacoes.browse" id="localizacoes_valencias" stylename="localizacoes_valencias"
+              shortcut="localizacoes_valencias" icon="font-icon:MAP_MARKER" caption="Localizações" description="Localizações das Valências" />
+        <item screen="cmolhao_PessoalAuxiliar.browse" id="pessoal_auxiliar" stylename="pessoal_auxiliar"
+              shortcut="pessoal_auxiliar" icon="font-icon:USER_CIRCLE" caption="Pessoal Auxiliar"
+              description="Pessoal Auxiliar das valências" />
+        <item screen="cmolhao_PessoalTecnico.browse" id="pessoal_tecnico" stylename="pessoal_tecnico"
+              shortcut="pessoal_tecnico" icon="font-icon:USER_MD" caption="Pessoal Técnico"
+              description="Pessoal Técnico das valências" />
+        <item screen="cmolhao_UtentesOutrosConcelhos.browse" id="utentes_outros_concelhos" stylename="utentes_outros_concelhos"
+              shortcut="utentes_outros_concelhos" icon="font-icon:GROUP" caption="Utentes Outros Concelhos"
+              description="Utentes Outros Concelhos" />
+        <item screen="cmolhao_AjudasTecnicas.browse" id="ajudas_tecnicas" stylename="ajudas_tecnicas"
+              shortcut="ajudas_tecnicas" icon="font-icon:QUESTION_CIRCLE" caption="Ajudas Técnicas" description="Ajudas Técnicas" />
+    </menu>
+
+    <menu id="Apoios" caption="Apoios" icon="font-icon:CODE_FORK">
+        <item screen="cmolhao_Apoios.browse" id="apoios" stylename="apoios"
+              shortcut="apoios" icon="font-icon:CODE_FORK" caption="Apoios" description="Apoios" />
+        <item screen="cmolhao_Equipamento.browse" id="equipamento" stylename="equipamento"
+              shortcut="equipamento" icon="font-icon:COGS" caption="Equipamento" description="Equipamento" />
+        <item screen="cmolhao_TipoAjuda.browse" id="tipo_apoio" stylename="tipo_apoio"
+              shortcut="tipo_apoio" icon="font-icon:CODE_FORK" caption="Tipo Apoio" description="Tipo de Apoio" />
+        <item screen="cmolhao_Estados.browse" id="estados" stylename="estados"
+              shortcut="estados" icon="font-icon:REFRESH" caption="Estado Apoios" description="Estados dos Apoios" />
+    </menu>
+
+    <menu id="Instituicoes" caption="Instituições" icon="font-icon:UNIVERSITY">
+        <item screen="cmolhao_Instituicoes.browse" id="instituicoes" stylename="instituicoes"
+              shortcut="instituicoes" icon="font-icon:UNIVERSITY" caption="Instituições" description="Instituições" />
+
+    </menu>
+
+    <menu id="Moradores_Utentes" caption="Moradores dos Utentes" description="Moradores dos Utentes" icon="font-icon:HOME">
+        <item screen="cmolhao_Moradores.browse" id="moradores" stylename="moradores"
+              shortcut="moradores" icon="font-icon:HOME" caption="Moradores" description="Moradores" />
+        <item screen="cmolhao_HabitacaoSocial.browse" id="habitacao_social" stylename="habitacao_social"
+              shortcut="habitacao_social" icon="font-icon:BUILDING" caption="Habitação Social" description="Habitação Social" />
+        <item screen="cmolhao_BlocosHabitacaoSocial.browse" id="blocos_habitacao_social" stylename="blocos_habitacao_social"
+              shortcut="blocos_habitacao_social" icon="font-icon:BUILDING_O" caption="Blocos Habitação Social" description="Blocos de Habitação Social" />
+    </menu>
+
+    <menu id="Utentes" caption="Utentes" description="Utentes" icon="font-icon:USER_CIRCLE">
+        <item screen="cmolhao_Utente.browse" id="utentes" stylename="utentes"
+              shortcut="utentes" icon="font-icon:USER" caption="Utentes" description="Utentes"/>
+        <item screen="cmolhao_UtentesSituacaoProfissional.browse" id="utentes_situacao_profissional"
+              stylename="utentes_situacao_profissional" icon="font-icon:USER_MD"
+              caption="Situação Profissional" description="Situação Profissional" />
+        <item screen="cmolhao_GrauEscolaridade.browse" id="grau_escolaridade" stylename="grau_escolaridade"
+              shortcut="grau_escolaridade" icon="font-icon:PASTE" caption="Grau Escolaridade"
+              description="Grau de Escolaridade" />
+        <item screen="cmolhao_HabilitacoesLiterarias.browse" id="habilitacoes_literarias" stylename="habilitacoes_literarias"
+              shortcut="habilitacoes_literarias" icon="font-icon:BOOK" caption="Habilitações Literárias"
+              description="Habilitações Literárias" />
+        <item screen="cmolhao_Profissao.browse" id="profissao" stylename="profissao" icon="font-icon:USER_MD"
+              caption="Profissão" description="Profissão" />
+        <item screen="cmolhao_TipoCivil.browse" id="tipo_civil" stylename="tipo_civil" shortcut="tipo_civil"
+              icon="font-icon:ADDRESS_CARD_O" caption="Tipo Civil" description="Tipo Civil" />
+        <item screen="cmolhao_TipologiaFamiliar.browse" id="tipologia_familiar" stylename="tipologia_familiar" shortcut="tipologia_familiar"
+              icon="font-icon:GROUP" caption="Tipologia Familiar" description="Tipologia Familiar" />
+    </menu>
+
+    <menu id="Relacao_Utente" caption="Relação de Utentes" description="Relação de Utente" icon="font-icon:USERS">
+        <item screen="cmolhao_UtentesRelacionados.browse" id="utentes_relacionados" stylename="utentes_relacionados"
+              shortcut="utentes_relacionados" icon="font-icon:ID_CARD" description="Utentes Relacionados"
+              caption="Utentes Relacionados" />
+        <item screen="cmolhao_TipoRelacionamentoUtentes.browse" id="tipo_relacaco_utentes" stylename="tipo_relacaco_utentes"
+              shortcut="tipo_relacaco_utentes" icon="font-icon:GROUP" caption="Tipo Rel Utentes"
+              description="Tipo de relaciobamento de utentes" />
+    </menu>
+
+    <menu id="Rendiemnto_Utente" caption="Rendimento do Utentes" description="Rendimento do Utente" icon="font-icon:HOME">
+        <item screen="cmolhao_RendimentosUtente.browse" id="rendiemntos_utente" stylename="rendiemntos_utente"
+              shortcut="rendiemntos_utente" icon="font-icon:USER_O" caption="Rend. Utentes"
+              description="Rendimentos dos Utentes" />
+        <item screen="cmolhao_TipoRendimento.browse" id="tipo_rendimento_utente" stylename="tipo_rendimento_utente"
+              shortcut="tipo_rendimento_utente" icon="font-icon:HOME" caption="Tipo Rend. Utentes"
+              description="Tipo de Rendimentos dos Utentes" />
+    </menu>
+
+    <menu id="Situacao_Utente" caption="Situação Utente" description="Situação dos Utentes" icon="font-icon:REFRESH">
+        <item screen="cmolhao_SituacaoUtente.browse" id="situacao_utente" stylename="situacao_utente"
+              shortcut="situacao_utente" icon="font-icon:REFRESH" caption="Sit. Utente"
+              description="Situação do Utente" />
+        <item screen="cmolhao_TiposSituacoesUtentes.browse" id="tipos_situacao_utente" stylename="tipos_situacao_utente"
+              shortcut="tipos_situacao_utente" icon="font-icon:TEXT_HEIGHT" caption="Tipos Sit. Utente"
+              description="Tipos de Situação do Utente" />
+    </menu>
+
+    <menu id="Projectos" caption="Projectos" icon="font-icon:CLIPBOARD">
+        <item screen="cmolhao_ProjectosIntervencao.browse" id="projectos_intervencao" stylename="projectos_intervencao"
+              shortcut="projectos_intervencao" icon="font-icon:PASTE" caption="Proj. Interv."
+              description="Projectos de Intervenção"/>
+        <item screen="cmolhao_ProjectosEmAprovacao.browse" id="projectos_em_aprovacao" stylename="projectos_em_aprovacao"
+              shortcut="projectos_em_aprovacao" icon="font-icon:CLIPBOARD" caption="Proj. em Aprov."
+              description="Projectos em Aprovação" />
+    </menu>
+
+    <menu id="Atendimento" caption="Atendimento" icon="font-icon:VOLUME_CONTROL_PHONE">
+        <item screen="cmolhao_TipoAtendimento.browse" id="tipo_atendimento" stylename="tipo_atendimento"
+              shortcut="tipo_atendimento" icon="font-icon:PHONE_SQUARE" caption="Tipo Atend."
+              description="Tipo de Atendimento"/>
+        <item screen="cmolhao_AtendimentoEncaminhamento.browse" id="atendimento_encaminhamento"
+              stylename="atendimento_encaminhamento" shortcut="atendimento_encaminhamento" icon="font-icon:VOLUME_CONTROL_PHONE"
+              caption="Atend. Encaminhamento" description="Atendimento de Encaminhamento"/>
+        <item screen="cmolhao_AtendimentoObjetivos.browse" id="atendimento_objetivos" stylename="atendimento_objetivos"
+              shortcut="atendimento_objetivos" caption="Atend. Objetivos" icon="font-icon:CERTIFICATE"
+              description="Atendimento por Objectivos" />
+        <item screen="cmolhao_Atendimento.browse" id="atendimento" stylename="atendimento" shortcut="atendimento"
+              icon="font-icon:VOLUME_CONTROL_PHONE"
+              caption="Atendimento" description="Atendimento"/>
+    </menu>
+
+    <menu icon="USERS" id="utilizadores_geral" caption="Utilizadores / Passwords">
+        <item icon="USER" shortcut="user_browser" stylename="user_browser" id="user_browser" screen="User.browser" caption="Ver/Editar Utilizadores"/>
+        <item icon="KEY" shortcut="password_user_browser" stylename="password_user_browser" id="password_user_browser" screen="UserPassword.browse" caption="Password Utilizadores"/>
+    </menu>
+
+    <!--<item id="GestaoRelatorios" caption="Gestão de Relatórios" icon="FILE_ARCHIVE_O" screen="report$Report.browse" />-->
+
+    <!--<menu id="application-cmolhao" insertBefore="administration" caption="Tabelas - Habitação Social" icon="font-icon:TABLE">
         <item screen="cmolhao_Tiposvalencia.browse"/>
         <item screen="cmolhao_BlocosHabitacaoSocial.browse"/>
         <item screen="cmolhao_FotosValencia.browse"/>
@@ -16,8 +150,6 @@
         <item screen="cmolhao_PessoalAuxiliar.browse"/>
         <item screen="cmolhao_UtentesOutrosConcelhos.browse"/>
         <item screen="cmolhao_ProjectosEmAprovacao.browse"/>
-
-
         <item screen="cmolhao_TipoRendimento.browse"/>
         <item screen="cmolhao_TipoAjuda.browse"/>
         <item screen="cmolhao_TipoRelacionamentoUtentes.browse"/>
@@ -41,67 +173,9 @@
         <item screen="cmolhao_UtentesRelacionados.browse"/>
         <item screen="cmolhao_RendimentosUtente.browse"/>
         <item screen="cmolhao_SituacaoUtente.browse"/>
-    </menu>
-
-    <menu id="Valencia" caption="Valencia" icon="SIMPLYBUILT">
-        <item screen="cmolhao_Valencias.browse" id="valencias" stylename="valencias"
-              shortcut="valencias" icon="LIST" caption="Ver/Editar" />
-        <item screen="cmolhao_Valencias.edit" id="valencias_create" stylename="valencias_create"
-              shortcut="valencias_create" icon="PLUS" caption="Criar Novo ..." />
-    </menu>
-
-    <menu id="Tipos_Valencias" caption="Tipos de Valencia" icon="SIMPLYBUILT">
-        <item screen="cmolhao_Tiposvalencia.browse" id="tipo_valencia_browse" stylename="tipo_valencia_browse"
-              shortcut="tipo_valencia_browse" icon="LIST" caption="Visualizar/Editar" />
-        <item screen="cmolhao_Tiposvalencia.edit" id="tipo_valencia_create" stylename="tipo_valencia_create"
-              shortcut="tipo_valencia_create" icon="PLUS" caption="Criar Novo ..." />
-    </menu>
+    </menu>-->
 
 
-    <menu id="Instituicoes" caption="Instituições" icon="BANK">
-        <item screen="cmolhao_Instituicoes.browse" id="instituicoes_browse" stylename="instituicoes_browse"
-              shortcut="instituicoes_browse" icon="LIST" caption="Visualizar/Editar" />
-        <item screen="cmolhao_Instituicoes.edit" id="instituicoes_create" stylename="instituicoes_create"
-              shortcut="instituicoes_create" icon="PLUS" caption="Criar Novo ..." />
-    </menu>
 
 
-    <menu id="Fotos_Valencia" caption="Fotos de Valencias" icon="PHOTO">
-        <item screen="cmolhao_FotosValencia.browse" id="fotos_valencia_list" stylename="fotos_valencia_list"
-              shortcut="fotos_valencia_list" icon="LIST" caption="Ver/Editar" />
-        <item screen="cmolhao_FotosValencia.edit" id="fotos_valencia_create" stylename="fotos_valencia_create"
-              shortcut="fotos_valencia_create" icon="PLUS" caption="Criar Novo ..." />
-    </menu>
-
-    <menu id="Localizacoes_Valencia" caption="Localizações de Valencias" icon="MAP_MARKER">
-        <item screen="cmolhao_Localizacoes.browse" id="localizacoes_list" stylename="localizacoes_list"
-              shortcut="localizacoes_list" icon="LIST" caption="Ver/Editar" />
-        <item screen="cmolhao_Localizacoes.edit" id="localizacoes_create" stylename="localizacoes_create"
-              shortcut="localizacoes_create" icon="PLUS" caption="Criar Novo ..." />
-    </menu>
-
-    <menu id="Habitacao_Social" caption="Habitação Social" icon="HOME">
-        <item screen="cmolhao_HabitacaoSocial.browse" id="hab_social" stylename="hab_social"
-              shortcut="hab_social" icon="LIST" caption="Ver/Editar " />
-        <item screen="cmolhao_HabitacaoSocial.edit" id="habsocial_create" stylename="habsocial_create"
-              shortcut="habsocial_create" icon="PLUS" caption="Criar Novo ..." />
-    </menu>
-
-    <menu id="Bloco_Habitacao_Social" caption="Blocos de Habitação Social" icon="BUILDING">
-        <item screen="cmolhao_BlocosHabitacaoSocial.browse" id="bloco_hab_social" stylename="bloco_hab_social"
-              shortcut="bloco_hab_social" icon="LIST" caption="Ver/Editar" />
-        <item screen="cmolhao_BlocosHabitacaoSocial.edit" id="bloco_habsocial_create" stylename="bloco_hab_social_create"
-              shortcut="bloco_hab_social_create" icon="PLUS" caption="Criar Novo ..." />
-    </menu>
-
-
-    <menu id="utilizadores_geral" caption="Utilizadores / Passwords" icon="USERS">
-        <item screen="User.browser" id="user_browser" stylename="user_browser"
-              shortcut="user_browser" icon="USER" caption="Ver/Editar Utilizadores" />
-        <item screen="UserPassword.browse" id="password_user_browser" stylename="password_user_browser"
-              shortcut="password_user_browser" icon="KEY" caption="Password Utilizadores" />
-    </menu>
-
-
-    <item id="GestaoRelatorios" caption="Gestão de Relatórios" icon="FILE_ARCHIVE_O" screen="report$Report.browse" />
 </menu-config>

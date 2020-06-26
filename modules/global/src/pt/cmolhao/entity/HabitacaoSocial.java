@@ -14,13 +14,13 @@ import javax.persistence.*;
 @Table(name = "habitacao_social")
 @Entity(name = "cmolhao_HabitacaoSocial")
 public class HabitacaoSocial extends BaseIntegerIdEntity {
-    private static final long serialVersionUID = -5393301723858303458L;
+    private static final long serialVersionUID = -2965248998315385385L;
     @Column(name = "arrend")
     protected Integer arrend;
     @Lob
     @Column(name = "bl")
     protected String bl;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bloc_id")
     protected BlocosHabitacaoSocial bloc;
     @Column(name = "cod")
@@ -67,6 +67,9 @@ public class HabitacaoSocial extends BaseIntegerIdEntity {
     protected Integer t4;
     @Column(name = "t5")
     protected Integer t5;
+    @Lob
+    @Column(name = "tipo_arrendamento")
+    protected String tipoArrendamento;
     @Column(name = "valor_patrimonio")
     protected Integer valorPatrimonio;
     @Column(name = "vend")
@@ -86,6 +89,14 @@ public class HabitacaoSocial extends BaseIntegerIdEntity {
 
     public void setValorPatrimonio(Integer valorPatrimonio) {
         this.valorPatrimonio = valorPatrimonio;
+    }
+
+    public String getTipoArrendamento() {
+        return tipoArrendamento;
+    }
+
+    public void setTipoArrendamento(String tipoArrendamento) {
+        this.tipoArrendamento = tipoArrendamento;
     }
 
     public Integer getT5() {

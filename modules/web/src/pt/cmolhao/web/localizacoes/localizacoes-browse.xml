@@ -50,6 +50,8 @@
                   icon="font-icon:FILTER"
                   width="100%">
 
+            <scrollBox spacing="true">
+
             <hbox spacing="true">
 
                 <lookupField id="idvalenciaField"
@@ -70,6 +72,8 @@
                 <button id="search_localizacoes" caption="Pesquisar" icon="SEARCH" stylename="info" />
                 <button id="reset_search_localizacoes" icon="ERASER" caption="Limpar" />
             </hbox>
+
+            </scrollBox>
 
         </groupBox>
         <groupTable id="localizacoesesTable"

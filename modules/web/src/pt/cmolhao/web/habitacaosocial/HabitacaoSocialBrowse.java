@@ -18,8 +18,8 @@ import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.screen.LookupComponent;
 import pt.cmolhao.entity.BlocosHabitacaoSocial;
-import pt.cmolhao.entity.HabitacaoSocial;
 import com.haulmont.cuba.gui.Notifications.NotificationType;
+import pt.cmolhao.entity.HabitacaoSocial;
 import pt.cmolhao.entity.Utente;
 
 import javax.inject.Inject;
@@ -40,6 +40,8 @@ import java.util.List;
 @LoadDataBeforeShow
 public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
 
+    @Inject
+    protected LookupField tipoArrendamentoField;
     @Inject
     private CollectionContainer<HabitacaoSocial> habitacaoSocialsDc;
     @Inject
@@ -121,6 +123,11 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
         list.add(10000);
         linhasHabSocial.setOptionsList(list);
 
+        List<String> list_tipo_arrendamento = new ArrayList<>();
+        list_tipo_arrendamento.add("Reside no Concelho");
+        list_tipo_arrendamento.add("Não reside no Concelho");
+        tipoArrendamentoField.setOptionsList(list_tipo_arrendamento);
+
         habitacaoSocialsTable.setEmptyStateLinkClickHandler(emptyStateClickEvent ->
                 screenBuilders.editor(habitacaoSocialsTable)
                         .newEntity()
@@ -144,6 +151,16 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
                             if(hab_loc_id.getValue() != null)
                             {
                                 customer.setLocalidade(hab_loc_id.getValue().toString());
+                                if(hab_loc_id.getValue().equals("Quelfes") || hab_loc_id.getValue().equals("Pechão") ||
+                                        hab_loc_id.getValue().equals("Olhão") || hab_loc_id.getValue().equals("Fuseta") ||
+                                        hab_loc_id.getValue().equals("Moncarapacho"))
+                                {
+                                    customer.setTipoArrendamento("Reside no Concelho");
+                                }
+                                else
+                                {
+                                    customer.setTipoArrendamento("Não reside no Concelho");
+                                }
                             }
                             if(codPostalField.getValue() != null)
                             {
@@ -157,35 +174,69 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
                                 try {
                                     String locationAddres = blocField.getValue().getDesignacao().replaceAll(" ", "%20");
                                     URL url = new URL("https://maps.googleapis.com/maps/api/geocode/json?sensor=false&address="+locationAddres+"&language=en&key=AIzaSyAQHab9s1jUhlfo2GFHmme8bXXugkKMvrA");
+
                                     try(InputStream is = url.openStream(); JsonReader rdr = Json.createReader(is)) {
                                         JsonObject obj = rdr.readObject();
                                         JsonArray results = obj.getJsonArray("results");
                                         JsonObject geoMetryObject, locations;
                                         JsonArray addressComponentsArray;
-                                        for (JsonObject result : results.getValuesAs(JsonObject.class)) {
-                                            geoMetryObject=result.getJsonObject("geometry");
-                                            locations=geoMetryObject.getJsonObject("location");
-                                            customer.setCoord(locations.get("lat").toString()+";"+locations.get("lng").toString());
-                                            addressComponentsArray=result.getJsonArray("address_components");
-                                            string_addr = result.getString("formatted_address");
-                                            customer.setSitoLugar(string_addr);
-                                            for (JsonObject addressComponentsArray_result : addressComponentsArray.getValuesAs(JsonObject.class)) {
-                                                JsonArray types_array = addressComponentsArray_result.getJsonArray("types");
-                                                String vale = addressComponentsArray_result.get("long_name").toString().replace("\"", "");
-                                                String types_a = types_array.getString(0);
-                                                hash_map.put(types_a, vale);
+                                        if (results.size() > 0)
+                                        {
+                                            for (JsonObject result : results.getValuesAs(JsonObject.class)) {
+                                                geoMetryObject=result.getJsonObject("geometry");
+                                                locations=geoMetryObject.getJsonObject("location");
+                                                customer.setCoord(locations.get("lat").toString()+";"+locations.get("lng").toString());
+                                                addressComponentsArray=result.getJsonArray("address_components");
+                                                string_addr = result.getString("formatted_address");
+                                                customer.setSitoLugar(string_addr);
+                                                for (JsonObject addressComponentsArray_result : addressComponentsArray.getValuesAs(JsonObject.class)) {
+                                                    JsonArray types_array = addressComponentsArray_result.getJsonArray("types");
+                                                    String vale = addressComponentsArray_result.get("long_name").toString().replace("\"", "");
+                                                    String types_a = types_array.getString(0);
+                                                    hash_map.put(types_a, vale);
+                                                }
                                             }
                                         }
+                                        else
+                                        {
+                                            customer.setCoord(null);
+                                            customer.setSitoLugar(null);
+                                        }
+
 
                                     }
                                 } catch (IOException e) {
-                                    throw new RuntimeException(e);
+                                    //throw new RuntimeException(e);
                                 }
-                                customer.setRua(hash_map.get("route"));
-                                customer.setFreguesia(hash_map.get("route"));
-                                customer.setLocalidade(hash_map.get("locality"));
-                                customer.setCodPostal(hash_map.get("postal_code"));
+
+                                if (!hash_map.isEmpty())
+                                {
+                                    customer.setRua(hash_map.get("route"));
+                                    customer.setFreguesia(hash_map.get("route"));
+                                    customer.setLocalidade(hash_map.get("locality"));
+                                    customer.setCodPostal(hash_map.get("postal_code"));
+
+                                    if(hab_loc_id.getValue().equals("Quelfes") || hab_loc_id.getValue().equals("Pechão") ||
+                                            hab_loc_id.getValue().equals("Olhão") || hab_loc_id.getValue().equals("Fuseta") ||
+                                            hab_loc_id.getValue().equals("Moncarapacho"))
+                                    {
+                                        customer.setTipoArrendamento("Reside no Concelho");
+                                    }
+                                    else
+                                    {
+                                        customer.setTipoArrendamento("Não reside no Concelho");
+                                    }
+                                }
+                                else
+                                {
+                                    customer.setRua(null);
+                                    customer.setFreguesia(null);
+                                    customer.setLocalidade(null);
+                                    customer.setCodPostal(null);
+                                }
+
                             }
+
                         })
                         .withScreenClass(HabitacaoSocialEdit.class)    // specific editor screen
                         .build()
@@ -229,6 +280,8 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+
+        getWindow().setCaption("Listar Habitação Social");
         // Arrend - Renda
         List<Integer> options = new ArrayList<>();
         String queryString = "select o.arrend as arrend from cmolhao_HabitacaoSocial o where o.arrend is not null group by o.arrend";
@@ -396,6 +449,16 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
                 habitacaoSocialsDl.removeParameter("codPostal");
             }
 
+        //Localidade
+        if (tipoArrendamentoField.getValue() != null )
+        {
+            habitacaoSocialsDl.setParameter("tipoArrendamento",  tipoArrendamentoField.getValue().toString());
+        }
+        else
+        {
+            habitacaoSocialsDl.removeParameter("tipoArrendamento");
+        }
+
             habitacaoSocialsDl.load();
 
     }
@@ -411,6 +474,7 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
         hab_freg_id.setValue(null);
         hab_loc_id.setValue(null);
         codPostalField.setValue(null);
+        tipoArrendamentoField.setValue(null);
         habitacaoSocialsDl.removeParameter("bloc");
         habitacaoSocialsDl.removeParameter("arrend");
         habitacaoSocialsDl.removeParameter("bl");
@@ -419,6 +483,7 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
         habitacaoSocialsDl.removeParameter("codPostal");
         habitacaoSocialsDl.removeParameter("localidade");
         habitacaoSocialsDl.removeParameter("freguesia");
+        habitacaoSocialsDl.removeParameter("tipoArrendamento");
         habitacaoSocialsDl.setMaxResults(0);
         habitacaoSocialsDl.load();
 

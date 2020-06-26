@@ -83,7 +83,7 @@
                   spacing="true"
                   icon="font-icon:FILTER"
                   width="100%">
-
+            <scrollBox spacing="true">
             <hbox spacing="true">
                 <lookupField id="idvalenciaField"
                              property="idValencia"
@@ -134,6 +134,7 @@
                 <button id="search_pessoal_tecnico" caption="Pesquisar" icon="SEARCH" stylename="info" />
                 <button id="reset_search_pessoal_tecnico" icon="ERASER" caption="Limpar" />
             </hbox>
+            </scrollBox>
 
         </groupBox>
 

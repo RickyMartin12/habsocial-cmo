@@ -49,28 +49,30 @@
                   spacing="true"
                   icon="font-icon:FILTER"
                   width="100%">
-            <hbox spacing="true">
 
-                <lookupField id="idvalenciaField"
-                             property="idValencia"
-                             optionsContainer="valenciasDc"
-                             inputPrompt="(Seleccione a Descrição da Valência)"
-                             caption="Descrição técnica da valência: "
-                             icon="SIMPLYBUILT"/>
+            <scrollBox spacing="true">
+                <hbox spacing="true">
 
-                <dateField id="datadisponivelField" property="datadisponivel" caption="Data Disponivel: " icon="CALENDAR" datatype="date" dateFormat="dd/MM/yyyy"/>
+                    <lookupField id="idvalenciaField"
+                                 property="idValencia"
+                                 optionsContainer="valenciasDc"
+                                 inputPrompt="(Seleccione a Descrição da Valência)"
+                                 caption="Descrição técnica da valência: "
+                                 icon="SIMPLYBUILT"/>
 
-                <lookupField id="linhasAjudasTecnicas"
-                             caption="Mostrar Numero de Linhas"
-                             inputPrompt="(seleccione o numero de linhas)"
-                             icon="ARROWS_V"/>
+                    <dateField id="datadisponivelField" property="datadisponivel" caption="Data Disponivel: " icon="CALENDAR" datatype="date" dateFormat="dd/MM/yyyy"/>
 
-            </hbox>
-            <hbox spacing="true">
-                <button id="search_ajudas_tecnicas" caption="Pesquisar" icon="SEARCH" stylename="info" />
-                <button id="reset_search_ajudas_tecnicas" icon="ERASER" caption="Limpar" />
-            </hbox>
+                    <lookupField id="linhasAjudasTecnicas"
+                                 caption="Mostrar Numero de Linhas"
+                                 inputPrompt="(seleccione o numero de linhas)"
+                                 icon="ARROWS_V"/>
 
+                </hbox>
+                <hbox spacing="true">
+                    <button id="search_ajudas_tecnicas" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                    <button id="reset_search_ajudas_tecnicas" icon="ERASER" caption="Limpar" />
+                </hbox>
+            </scrollBox>
 
 
 

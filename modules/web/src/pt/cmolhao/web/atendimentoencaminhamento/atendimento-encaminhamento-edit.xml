@@ -15,13 +15,18 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="atendimentoEncaminhamentoDc">
             <column width="250px">
-                <textField id="atendimentoEncaminhamentoField" property="atendimentoEncaminhamento"/>
-                <textField id="outrosAtendimentosEncaminhamentosField" property="outrosAtendimentosEncaminhamentos"/>
+                <textField id="idAtendimentoEncaminhamentoField" property="id" visible="false" />
+                <textField id="atendimentoEncaminhamentoField" property="atendimentoEncaminhamento"
+                           icon="font-icon:VOLUME_CONTROL_PHONE"
+                           caption="Atendimento de Encaminhamento: "/>
+                <textField id="outrosAtendimentosEncaminhamentosField" property="outrosAtendimentosEncaminhamentos"
+                           icon="font-icon:VOLUME_CONTROL_PHONE"
+                           caption="Outros tipos de Atendimento de Encaminhamento: "/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button caption="Fechar" action="windowClose" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>

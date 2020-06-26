@@ -15,13 +15,22 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="tipoRelacionamentoUtentesDc">
             <column width="250px">
-                <textField id="tipoRelacionamentoField" property="tipoRelacionamento"/>
-                <textField id="tipoRelacionamentoInvField" property="tipoRelacionamentoInv"/>
+                <textField id="idTipoRelacionamentoUtentes" visible="false" property="id" />
+                <lookupField
+                        inputPrompt="(Seleccione o tipo de relacionamento)"
+                        property="tipoRelacionamento"
+                        id="tipoRelacionamentoField"
+                        icon="font-icon:GROUP" caption="Tipo de Relacionamento: "/>
+                <lookupField
+                        inputPrompt="(Seleccione o tipo de relacionamento secundário)"
+                        property="tipoRelacionamentoInv"
+                        id="tipoRelacionamentoInvField"
+                        icon="font-icon:GROUP" caption="Tipo de Relacionamento Secundário: "/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button caption="Fechar" action="windowClose" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>

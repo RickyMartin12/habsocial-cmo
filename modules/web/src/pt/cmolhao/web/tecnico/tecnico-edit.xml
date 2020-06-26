@@ -27,6 +27,7 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="tecnicoDc">
             <column width="250px">
+                <textField id="idTecnicoField" property="id" visible="false" />
                 <textField id="nomeField" property="nome" caption="Nome: " icon="ID_CARD"/>
                 <textField id="emailField" property="email" caption="Email: " icon="ENVELOPE">
                     <validator class="com.haulmont.cuba.gui.components.validators.EmailValidator"

@@ -116,5 +116,10 @@ public class ValenciasBrowse extends StandardLookup<Valencias> {
         valenciasesDl.load();
     }
 
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar Valências");
+    }
+
 
 }

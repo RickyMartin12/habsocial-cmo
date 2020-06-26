@@ -14,7 +14,7 @@ import javax.inject.Inject;
 @LoadDataBeforeShow
 public class DashboardValencia extends StandardLookup<Valencias> {
 
-    private static final String HTML = "<h1>Dashboard de Valencias e os seus tipos em cada instituição</h1>\n";
+    private static final String HTML = "<h1>Dashboard de Valências e os seus tipos em cada instituição</h1>\n";
     private static final String HTML_Instituicao = "<h2>Gráfico circular sobre as instituição em relação a capacidade</h2>";
     private static final String HTML_Valencia = "<h2>Gráfico de barras sobre os tipos de valência em relação a capacidade</h2>";
 

@@ -79,6 +79,7 @@ public class TecnicoBrowse extends StandardLookup<Tecnico> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar Técnicos");
         // Arrend - Renda
         List<String> options = new ArrayList<>();
         String queryString = "select o.email as email from cmolhao_Tecnico o where o.email is not null group by o.email";

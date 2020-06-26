@@ -15,6 +15,7 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="tipologiaFamiliarDc">
             <column width="250px">
+                <textField id="idTipologiaFamiliarField" property="id" visible="false" />
                 <lookupField
                         inputPrompt="(Seleccione a Tipologia Familiar)"
                         property="tipologiaFamiliar"

@@ -6,6 +6,7 @@ import com.haulmont.cuba.core.global.ValueLoadContext;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.screen.LookupComponent;
@@ -15,8 +16,14 @@ import pt.cmolhao.entity.Valencias;
 import pt.cmolhao.web.habitacaosocial.HabitacaoSocialEdit;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.*;
 
 @UiController("cmolhao_UtentesOutrosConcelhos.browse")
 @UiDescriptor("utentes-outros-concelhos-browse.xml")
@@ -38,6 +45,8 @@ public class UtentesOutrosConcelhosBrowse extends StandardLookup<UtentesOutrosCo
     protected LookupField utentes_conc_concelho_id;
     @Inject
     protected GroupTable<UtentesOutrosConcelhos> utentesOutrosConcelhosesTable;
+    @Inject
+    protected CollectionContainer<Valencias> valenciasDc;
     @Inject
     private DataManager dataManager;
     @Inject
@@ -126,6 +135,49 @@ public class UtentesOutrosConcelhosBrowse extends StandardLookup<UtentesOutrosCo
                         .newEntity()
                         .withInitializer(customer -> {
                             customer.setIdValencia(idValenciaField.getValue());
+
+                            if (idValenciaField.getValue() != null)
+                            {
+                                Map<String, String> hash_map = new HashMap<>();
+                                //String text = "";
+                                String string_addr = "";
+                                try {
+                                    String locationAddres = idValenciaField.getValue().getMorada().replaceAll(" ", "%20");
+                                    URL url = new URL("https://maps.googleapis.com/maps/api/geocode/json?address="+locationAddres+"&location_type=ROOFTOP&result_type=street_address&key=AIzaSyAQHab9s1jUhlfo2GFHmme8bXXugkKMvrA");
+                                    try(InputStream is = url.openStream(); JsonReader rdr = Json.createReader(is)) {
+                                        JsonObject obj = rdr.readObject();
+                                        JsonArray results = obj.getJsonArray("results");
+                                        JsonObject geoMetryObject, locations, long_name;
+                                        JsonArray addressComponentsArray;
+                                        for (JsonObject result : results.getValuesAs(JsonObject.class)) {
+                                            geoMetryObject=result.getJsonObject("geometry");
+                                            locations=geoMetryObject.getJsonObject("location");
+                                            addressComponentsArray=result.getJsonArray("address_components");
+                                            string_addr = result.getString("formatted_address");
+                                            for (JsonObject addressComponentsArray_result : addressComponentsArray.getValuesAs(JsonObject.class)) {
+                                                JsonArray types_array = addressComponentsArray_result.getJsonArray("types");
+                                                String vale = addressComponentsArray_result.get("long_name").toString().replace("\"", "");
+                                                String types_a = types_array.getString(0);
+                                                hash_map.put(types_a, vale);
+                                            }
+                                        }
+                                    }
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+
+                                if (!hash_map.isEmpty() )
+                                {
+                                    customer.setFreguesia(hash_map.get("locality"));
+                                    customer.setConcelho(hash_map.get("locality"));
+
+                                }
+                                else
+                                {
+                                    customer.setFreguesia(null);
+                                    customer.setFreguesia(null);
+                                }
+                            }
                             if(utentes_conc_freguesia_id.getValue() != null)
                             {
                                 customer.setFreguesia(utentes_conc_freguesia_id.getValue().toString());
@@ -144,6 +196,15 @@ public class UtentesOutrosConcelhosBrowse extends StandardLookup<UtentesOutrosCo
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar Utentes de Outros Concelhos");
+        Map<String, Valencias> map = new HashMap<>();
+        Collection<Valencias> customers = valenciasDc.getItems();
+        for (Valencias item :
+                customers) {
+            map.put(item.getDescricaotecnica() + " " , item);
+        }
+        idValenciaField.setOptionsMap(map);
+
         // Freguesia
 
         List<String> optionsFreguesia = new ArrayList<>();

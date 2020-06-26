@@ -182,4 +182,10 @@ public class TipologiaFamiliarBrowse extends StandardLookup<TipologiaFamiliar> {
             tipologiaFamiliarEspecificaField.setOptionsList(list_topologia_familiar_especifica);
         }
     }
+
+
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar Tipologias Familiares");
+    }
 }

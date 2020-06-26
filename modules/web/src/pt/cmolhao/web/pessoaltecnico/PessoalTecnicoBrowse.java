@@ -172,6 +172,8 @@ public class PessoalTecnicoBrowse extends StandardLookup<PessoalTecnico> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+
+        getWindow().setCaption("Listar Pessoal Técnico");
         // Categoria Profissional
         List<String> options = new ArrayList<>();
         String queryString = "select o.categoriaprofissional as categoriaprofissional from cmolhao_PessoalTecnico o where o.categoriaprofissional is not null group by o.categoriaprofissional";

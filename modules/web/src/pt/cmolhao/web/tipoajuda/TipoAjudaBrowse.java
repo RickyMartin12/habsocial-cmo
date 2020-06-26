@@ -71,6 +71,8 @@ public class TipoAjudaBrowse extends StandardLookup<TipoAjuda> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+
+        getWindow().setCaption("Listar Tipos de Ajuda");
         // Arrend - Renda
         List<String> options = new ArrayList<>();
         String queryString = "select o.descricaoTipoAjuda as descricaoTipoAjuda from cmolhao_TipoAjuda o where o.descricaoTipoAjuda is not null group by o.descricaoTipoAjuda";

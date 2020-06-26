@@ -15,6 +15,7 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="tiposvalenciaDc">
             <column width="250px">
+                <textField id="idTipoValenciaField" property="id" visible="false" />
                 <textArea id="nomeField" property="nome" rows="12" cols="12" caption="Descrição da Valência" icon="SIMPLYBUILT"/>
             </column>
         </form>

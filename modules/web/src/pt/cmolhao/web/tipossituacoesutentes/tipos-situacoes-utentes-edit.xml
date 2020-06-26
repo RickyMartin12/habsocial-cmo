@@ -15,12 +15,14 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="tiposSituacoesUtentesDc">
             <column width="250px">
-                <textField id="descricaoSituacaoField" property="descricaoSituacao"/>
+                <textField id="idTipoSituacaoUtenteField" visible="false" property="id" />
+                <textArea cols="20" rows="3" id="descricaoSituacaoField" property="descricaoSituacao"
+                          caption="Descrição da Situação do Utente: " icon="font-icon:FILE_TEXT"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button caption="Fechar" action="windowClose" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>

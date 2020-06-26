@@ -1,12 +1,14 @@
 package pt.cmolhao.web.grauescolaridade;
 
 import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.screen.*;
 import pt.cmolhao.entity.GrauEscolaridade;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @UiController("cmolhao_GrauEscolaridade.edit")
 @UiDescriptor("grau-escolaridade-edit.xml")
@@ -15,6 +17,8 @@ import java.util.List;
 public class GrauEscolaridadeEdit extends StandardEditor<GrauEscolaridade> {
     @Inject
     protected LookupField<String> descricaoField;
+    @Inject
+    protected TextField<UUID> idGrauEscolaridadeField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -30,5 +34,10 @@ public class GrauEscolaridadeEdit extends StandardEditor<GrauEscolaridade> {
         list.add("nível 7 - Mestrado");
         list.add("nível 8 - Doutoramento");
         descricaoField.setOptionsList(list);
+    }
+
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Adicionar/Editar Grau Escolaridade - " + idGrauEscolaridadeField.getValue());
     }
 }

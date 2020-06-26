@@ -15,6 +15,7 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="habilitacoesLiterariasDc">
             <column width="250px">
+                <textField id="idHabilitacoesLiterariasField" property="id" visible="false" />
                 <lookupField id="descricaoField" property="descricao"
                              caption="Habilitações Literarias: "
                              inputPrompt="(Indique a habilitação literária)"

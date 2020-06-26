@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment
+        caption="Dashboard - Atendimento Social"
+        xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd"
+
+        xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+
+    <data>
+        <keyValueCollection id="atendimento_utentes_dc">
+            <properties>
+                <property name="Atendimento" class="pt.cmolhao.entity.TipoAtendimento" />
+                <property datatype="decimal" name="CountUtentes"/>
+            </properties>
+
+            <loader id="atendimento_utentes_values">
+                <query>
+                    <![CDATA[select o.idTipoAtendimento as Atendimento, count(o.idTipoAtendimento) as CountUtentes from cmolhao_Atendimento o group by o.idTipoAtendimento]]>
+                </query>
+            </loader>
+        </keyValueCollection>
+
+        <!-- Chart Bar -->
+
+        <keyValueCollection id="tipo_arrendamento_utentes_dc">
+            <properties>
+                <property datatype="string" name="TipoArredamento"/>
+                <property datatype="decimal" name="CountUtentes"/>
+            </properties>
+
+            <loader id="tipo_arrendamento_utentes_dc_values">
+                <query>
+                    <![CDATA[select o.habitacaoSocial.tipoArrendamento as TipoArredamento, count(o.utente) as CountUtentes from cmolhao_Moradores o group by o.habitacaoSocial.tipoArrendamento ]]>
+                </query>
+            </loader>
+
+        </keyValueCollection>
+
+        <keyValueCollection id="moradores_pop_estrangeiro_dc">
+            <properties>
+                <property datatype="string" name="Freguesia"/>
+                <property datatype="decimal" name="CountUtentes"/>
+            </properties>
+
+            <loader id="moradores_pop_estrangeiro_dc_values">
+                <query>
+                    <![CDATA[select o.habitacaoSocial.freguesia as Freguesia, count(o.utente.paisOrigem) as CountUtentes from cmolhao_Moradores o where not (o.utente.paisOrigem = 'Portugal' or o.utente.paisOrigem = 'portugal')  group by o.habitacaoSocial.freguesia ]]>
+                </query>
+            </loader>
+
+        </keyValueCollection>
+    </data>
+    <layout>
+
+        <label id="htmlLabel"
+               htmlEnabled="true" stylename="title_graphic"/>
+
+
+        <cssLayout responsive="true"
+                   stylename="responsive-container"
+                   width="100%">
+            <vbox margin="true"
+                  spacing="true"
+                  stylename="group-panel">
+
+
+                <label id="htmlLabel_Valencia"
+                       htmlEnabled="true" stylename="title_graphic"/>
+                <table id="atendimento_utentes"
+                       width="100%"
+                       dataContainer="atendimento_utentes_dc">
+                    <columns>
+                        <column id="Atendimento" caption="Tipo de Atendimento" />
+                        <column id="CountUtentes" caption="Quantidade Atendimento" />
+                    </columns>
+                </table>
+
+
+                <label id="htmlLabel_Arrendamento"
+                       htmlEnabled="true" stylename="title_graphic"/>
+
+                <table id="tipo_arrendamento_utentes"
+                       width="100%"
+                       dataContainer="tipo_arrendamento_utentes_dc">
+                    <columns>
+                        <column id="TipoArredamento" caption="Tipo de Arrendamento" />
+                        <column id="CountUtentes" caption="Quantidade de Utentes" />
+                    </columns>
+
+                </table>
+
+
+            </vbox>
+            <vbox margin="true"
+                  spacing="true"
+                  stylename="group-panel">
+
+                <label id="htmlLabel_Moradores"
+                       htmlEnabled="true" stylename="title_graphic"/>
+
+                <table id="moradores_pop_estrangeiro"
+                       width="100%"
+                       dataContainer="moradores_pop_estrangeiro_dc">
+                    <columns>
+                        <column id="Freguesia" caption="Freguesia" />
+                        <column id="CountUtentes" caption="Quantidade de Utentes" />
+                    </columns>
+
+                </table>
+
+            </vbox>
+        </cssLayout>
+
+        <hbox spacing="true">
+        </hbox>
+        <hbox spacing="true">
+        </hbox>
+        <hbox spacing="true">
+        </hbox>
+        <hbox spacing="true">
+        </hbox>
+        <hbox spacing="true">
+        </hbox>
+        <hbox spacing="true">
+        </hbox>
+        <hbox spacing="true">
+        </hbox>
+        <hbox spacing="true">
+        </hbox>
+        <hbox spacing="true">
+        </hbox>
+        <hbox spacing="true">
+        </hbox>
+        <hbox spacing="true">
+        </hbox>
+        <hbox spacing="true">
+        </hbox>
+
+        <label id="htmlLabel_Valencia_Graph"
+               htmlEnabled="true" stylename="title_graphic"/>
+
+        <chart:pieChart id="pieChart"
+                        dataContainer="atendimento_utentes_dc"
+                        height="100%"
+                        stylename="pie_chart_atend"
+                        titleField="Atendimento"
+                        valueField="CountUtentes"
+                        width="100%">
+            <chart:legend autoMargins="false"
+                          marginRight="80"
+                          markerType="CIRCLE"
+                          position="RIGHT"/>
+            <chart:balloon fixedPosition="true"/>
+            <chart:export/>
+        </chart:pieChart>
+
+
+        <label id="htmlLabel_Arrendamento_Graph"
+               htmlEnabled="true" stylename="title_graphic"/>
+
+        <chart:pieChart id="pie3dChart_moradores"
+                        stylename="pie_chart_moradores"
+                        angle="30"
+                        balloonText="[[title]]&lt;br&gt;&lt;span style='font-size:14px'&gt;
+                        &lt;strong&gt;[[value]]&lt;/strong&gt; ([[percents]]%)&lt;/span&gt;"
+                        dataContainer="tipo_arrendamento_utentes_dc"
+                        depth3D="15"
+                        height="100%"
+                        outlineAlpha="0.4"
+                        titleField="TipoArredamento"
+                        valueField="CountUtentes"
+                        width="100%">
+            <chart:legend autoMargins="false"
+                          marginRight="80"
+                          markerType="CIRCLE"
+                          position="RIGHT"/>
+            <chart:export/>
+        </chart:pieChart>
+
+
+
+        <label id="htmlLabel_Moradores_Graph"
+               htmlEnabled="true" stylename="title_graphic"/>
+
+
+
+
+        <chart:serialChart id="column3d"
+                                   stylename="graphics_chart"
+                                   categoryField="Freguesia"
+                                   dataContainer="moradores_pop_estrangeiro_dc"
+                                   height="100%"
+                                   plotAreaFillAlphas="0.1"
+                                   startDuration="1"
+                                   theme="LIGHT"
+                                   width="100%">
+                    <chart:categoryAxis gridPosition="START"/>
+                    <chart:valueAxes>
+                        <chart:axis position="LEFT"
+                                    stackType="BOX_3D"
+                                    title="Numero de Moradores no Estrangeiros"
+                                    unit=" pessoas"/>
+                        <chart:axis stackType="BOX_3D"
+                                    position="BOTTOM"
+                                    title="Numero de Moradores no Estrangeiros"/>
+                    </chart:valueAxes>
+
+
+            <chart:graphs>
+                <chart:graph balloonText="Total de Atendimento: &lt;strong&gt;[[value]]&lt;/strong&gt;"
+                             fillAlphas="1"
+                             lineAlpha="0.2"
+                             title="Total de Atendimento"
+                             type="COLUMN"
+                             valueField="CountUtentes"/>
+            </chart:graphs>
+
+            <chart:export/>
+        </chart:serialChart>
+
+
+
+        <hbox spacing="true">
+        </hbox>
+        <hbox spacing="true">
+        </hbox>
+        <hbox spacing="true">
+        </hbox>
+        <hbox spacing="true">
+        </hbox>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </layout>
+</fragment>

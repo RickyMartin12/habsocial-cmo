@@ -45,6 +45,11 @@ public class HabitacaoSocialEdit extends StandardEditor<HabitacaoSocial> {
     @Inject
     protected TextField<Integer> arrendField;
     @Inject
+    protected TextField<String> tipoArrendamentoField;
+    @Inject
+    protected TextField<UUID> idHabSocialField;
+
+    @Inject
     private Metadata metadata;
     @Inject
     private MetadataTools metadataTools;
@@ -92,30 +97,67 @@ public class HabitacaoSocialEdit extends StandardEditor<HabitacaoSocial> {
                 JsonArray results = obj.getJsonArray("results");
                 JsonObject geoMetryObject, locations, long_name;
                 JsonArray addressComponentsArray;
-                for (JsonObject result : results.getValuesAs(JsonObject.class)) {
-                    geoMetryObject=result.getJsonObject("geometry");
-                    locations=geoMetryObject.getJsonObject("location");
-                    coordField.setValue(locations.get("lat").toString()+";"+locations.get("lng").toString());
-                    //addMarker(Double.parseDouble(locations.get("lat").toString()), Double.parseDouble(locations.get("lng").toString()));
-                    addressComponentsArray=result.getJsonArray("address_components");
-                    string_addr = result.getString("formatted_address");
-                    sitoLugarField.setValue(string_addr);
-                    for (JsonObject addressComponentsArray_result : addressComponentsArray.getValuesAs(JsonObject.class)) {
-                        JsonArray types_array = addressComponentsArray_result.getJsonArray("types");
-                        String vale = addressComponentsArray_result.get("long_name").toString().replace("\"", "");
-                        String types_a = types_array.getString(0);
-                        hash_map.put(types_a, vale);
+                if (results.size() > 0)
+                {
+                    for (JsonObject result : results.getValuesAs(JsonObject.class)) {
+                        geoMetryObject=result.getJsonObject("geometry");
+                        locations=geoMetryObject.getJsonObject("location");
+                        coordField.setValue(locations.get("lat").toString()+";"+locations.get("lng").toString());
+                        //addMarker(Double.parseDouble(locations.get("lat").toString()), Double.parseDouble(locations.get("lng").toString()));
+                        addressComponentsArray=result.getJsonArray("address_components");
+                        string_addr = result.getString("formatted_address");
+                        sitoLugarField.setValue(string_addr);
+                        for (JsonObject addressComponentsArray_result : addressComponentsArray.getValuesAs(JsonObject.class)) {
+                            JsonArray types_array = addressComponentsArray_result.getJsonArray("types");
+                            String vale = addressComponentsArray_result.get("long_name").toString().replace("\"", "");
+                            String types_a = types_array.getString(0);
+                            hash_map.put(types_a, vale);
+                        }
                     }
                 }
+                else
+                {
+                    coordField.setValue(null);
+                    sitoLugarField.setValue(null);
+                }
+
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
         }
 
-        ruaField.setValue(hash_map.get("route"));
-        freguesiaField.setValue(hash_map.get("route"));
-        localidadeField.setValue(hash_map.get("locality"));
-        codPostalField.setValue(hash_map.get("postal_code"));
+        if (!hash_map.isEmpty() )
+        {
+            ruaField.setValue(hash_map.get("route"));
+            freguesiaField.setValue(hash_map.get("locality"));
+            localidadeField.setValue(hash_map.get("locality"));
+            codPostalField.setValue(hash_map.get("postal_code"));
+
+            if(freguesiaField.getValue().equals("Quelfes") || freguesiaField.getValue().equals("Pechão") ||
+                    freguesiaField.getValue().equals("Olhão") || freguesiaField.getValue().equals("Fuseta") ||
+                    freguesiaField.getValue().equals("Moncarapacho"))
+            {
+                tipoArrendamentoField.setValue("Reside no Concelho");
+            }
+            else
+            {
+                tipoArrendamentoField.setValue("Não reside no Concelho");
+            }
+
+        }
+        else
+        {
+            ruaField.setValue(null);
+            freguesiaField.setValue(null);
+            localidadeField.setValue(null);
+            codPostalField.setValue(null);
+        }
+
+        //if ()
+
+
+
+
     }
 
     public static boolean isValidPostalCode(String str) {
@@ -125,6 +167,9 @@ public class HabitacaoSocialEdit extends StandardEditor<HabitacaoSocial> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+
+        getWindow().setCaption("Adicionar/Editar Habitação Social - " + idHabSocialField.getValue());
+
         if (blocField.getValue() != null)
         {
             String coord = coordField.getRawValue();

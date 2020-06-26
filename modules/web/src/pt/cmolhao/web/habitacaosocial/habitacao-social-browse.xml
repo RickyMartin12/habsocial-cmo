@@ -41,6 +41,9 @@
                             <c:jpql>
                                 <c:where>e.codPostal like :codPostal</c:where>
                             </c:jpql>
+                            <c:jpql>
+                                <c:where>e.tipoArrendamento = :tipoArrendamento</c:where>
+                            </c:jpql>
                         </and>
 
                     </condition>
@@ -114,6 +117,8 @@
 
 
 
+
+
     </data>
     <dialogMode height="600"
                 width="800"/>
@@ -138,6 +143,8 @@
                       spacing="true"
                       icon="font-icon:FILTER"
                       width="100%">
+
+                <scrollBox spacing="true">
 
                 <hbox spacing="true">
                     <lookupField
@@ -168,8 +175,8 @@
                             property="idUtente"
                             id="utenteField"
                             optionsContainer="UtentesDC"
-                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
-                            inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente Agregado: "
+                            inputPrompt="(Seleccione o nome e a identificação do utente agregado)"/>
 
                     <label id="text_fichaCompleta" icon="FILES_O"/>
                     <checkBox id="fichaCompletaField" property="fichaCompleta" />
@@ -200,18 +207,24 @@
                                  inputPrompt="(Insira o código postal (PT))"
                                  icon="MAP_SIGNS" maxLength="8"/>
 
+                    <lookupField id="tipoArrendamentoField" property="tipoArrendamento" caption="Tipo de Arrendamento: " icon="font-icon:PAPERCLIP"
+                                 inputPrompt="(Seleccione o tipo de arrendamento)" />
 
+                </hbox>
+
+                <hbox spacing="true">
                     <lookupField id="linhasHabSocial"
                                  caption="Mostrar Numero de Linhas"
                                  inputPrompt="(seleccione o numero de linhas)"
                                  icon="ARROWS_V"/>
-
                 </hbox>
 
                 <hbox spacing="true">
                     <button id="click" caption="Pesquisar" icon="SEARCH" stylename="info" />
                     <button id="reset_search_hab_social" icon="ERASER" caption="Limpar" />
                 </hbox>
+
+                </scrollBox>
 
 
             </groupBox>
@@ -277,6 +290,8 @@
 
                 <column id="valorPatrimonio" caption="Valor do Património" generator="generateValorPatrimonio"/>
                 <column id="rendimentoAnual" caption="Rendimento Anual" generator="generateRendimentoAnual"/>
+
+                <column id="tipoArrendamento" caption="Tipo de Arrendamento " />
 
             </columns>
             <rowsCount/>

@@ -14,12 +14,18 @@
                     <condition>
                         <and>
                             <c:jpql>
-                                <c:join>join e.utente j</c:join>
-                                <c:where>j.id = :utente</c:where>
+                                <c:join>join e.utente i</c:join>
+                                <c:where>i.id = :utente</c:where>
                             </c:jpql>
                             <c:jpql>
                                 <c:join>join e.habitacaoSocial j</c:join>
                                 <c:where>j.id = :habitacaoSocial</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.dataInicio = :dataInicio</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.dateFim = :dateFim</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -66,9 +72,8 @@
                     <lookupField id="habitacaoSocialField"
                                  property="habitacaoSocial"
                                  optionsContainer="habitacaoSocialsDc"
-                                 inputPrompt="(Seleccione a Habitação Sociaç)"
+                                 inputPrompt="(Seleccione a Habitação Social)"
                                  caption="Habitação Social (Designacao): "
-                                 contextHelpText="Bloco da Habitação Social --> ((Numero de Renda, Numero do Bloco/Lote) - Designação da Habitação Social)"
                                  icon="font-icon:BUILDING"/>
 
                     <lookupField
@@ -78,7 +83,8 @@
                             icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
                             inputPrompt="(Seleccione o nome e a identificação do utente)"/>
 
-
+                    <dateField id="dataInicioField" property="dataInicio" datatype="date" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data de Inicio: " stylename="data_inicio_morador"/>
+                    <dateField id="dataFimField" property="dateFim" datatype="date" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data de Fim: " stylename="data_fim_morador"/>
 
 
                 </hbox>
@@ -118,7 +124,7 @@
                 <column id="habitacaoSocial" caption="Bloco da Habitação Social" generator="MoradoresHabitacaoSocial"/>
                 <column id="utente" caption="Nome do Utente"/>
                 <column id="dataInicio" caption="Data Inicio"/>
-                <column id="dataFim" caption="Data Fim"/>
+                <column id="dateFim" caption="Data Fim"/>
                 <column id="moradaSocial" caption="Morada Social"/>
                 <column id="obsConf" caption="Observações de Confiração"/>
                 <column id="obsGerais" caption="Observações Gerais"/>

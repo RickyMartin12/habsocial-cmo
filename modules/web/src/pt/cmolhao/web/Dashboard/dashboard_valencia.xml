@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <fragment
-        caption="Dashboard"
+        caption="Dashboard - Valências"
         xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd"
 
         xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
@@ -44,6 +44,53 @@
                 </query>
             </loader>
         </collection>-->
+
+
+        <!-- Pie / Chart Bar -->
+
+        <keyValueCollection id="atendimento_utentes_dc">
+            <properties>
+                <property name="Atendimento" class="pt.cmolhao.entity.TipoAtendimento" />
+                <property datatype="decimal" name="CountUtentes"/>
+            </properties>
+
+            <loader id="atendimento_utentes_values">
+                <query>
+                    <![CDATA[select o.idTipoAtendimento as Atendimento, count(o.idTipoAtendimento) as CountUtentes from cmolhao_Atendimento o group by o.idTipoAtendimento]]>
+                </query>
+            </loader>
+        </keyValueCollection>
+
+        <!-- Chart Bar -->
+
+        <keyValueCollection id="tipo_arrendamento_utentes_dc">
+            <properties>
+                <property datatype="string" name="TipoArredamento"/>
+                <property datatype="decimal" name="CountUtentes"/>
+            </properties>
+
+            <loader id="tipo_arrendamento_utentes_dc_values">
+                <query>
+                    <![CDATA[select o.habitacaoSocial.tipoArrendamento as TipoArredamento, count(o.utente) as CountUtentes from cmolhao_Moradores o group by o.habitacaoSocial.tipoArrendamento ]]>
+                </query>
+            </loader>
+
+        </keyValueCollection>
+
+        <keyValueCollection id="moradores_pop_estrangeiro_dc">
+            <properties>
+                <property datatype="string" name="Freguesia"/>
+                <property datatype="decimal" name="CountUtentes"/>
+            </properties>
+
+            <loader id="moradores_pop_estrangeiro_dc_values">
+                <query>
+                    <![CDATA[select o.habitacaoSocial.freguesia as Freguesia, count(o.utente.paisOrigem) as CountUtentes from cmolhao_Moradores o where not (o.utente.paisOrigem = 'Portugal' or o.utente.paisOrigem = 'portugal')  group by o.habitacaoSocial.freguesia ]]>
+                </query>
+            </loader>
+
+        </keyValueCollection>
+
     </data>
 
     <layout>
@@ -72,19 +119,6 @@
                           position="RIGHT"/>
             <chart:export/>
         </chart:pieChart>
-
-            <!--<hbox spacing="true" >
-                <table id="valenciases_Table"
-                       width="100%"
-                       dataContainer="valencia_dc">
-                    <columns>
-                        <column id="Customer" caption="Nome Valencia"/>
-                        <column id="TotalTurnover" caption="Total Capacidade"/>
-                    </columns>
-                    <rowsCount/>
-                </table>
-
-            </hbox>-->
 
 
         <label id="htmlLabel_Valencia"
@@ -126,5 +160,12 @@
 
             <chart:export/>
         </chart:serialChart>
+
+
+
+
+
+
+
     </layout>
 </fragment>

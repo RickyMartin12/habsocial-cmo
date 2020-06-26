@@ -11,6 +11,13 @@
             <loader id="tipoRelacionamentoUtentesesDl">
                 <query>
                     <![CDATA[select e from cmolhao_TipoRelacionamentoUtentes e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.tipoRelacionamento = :tipoRelacionamento</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
@@ -19,18 +26,50 @@
                 width="800"/>
     <layout expand="tipoRelacionamentoUtentesesTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="tipoRelacionamentoUtentesesTable"
-                dataLoader="tipoRelacionamentoUtentesesDl">
-            <properties include=".*"/>
-        </filter>
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+                <hbox spacing="true">
+                    <lookupField
+                            inputPrompt="(Seleccione o tipo de relacionamento)"
+                            property="tipoRelacionamento"
+                            id="tipoRelacionamentoField"
+                            icon="font-icon:GROUP" caption="Tipo de Relacionamento: "/>
+                    <lookupField id="linhastipoRelacionamento"
+                                 caption="Mostrar Numero de Linhas"
+                                 inputPrompt="(seleccione o numero de linhas)"
+                                 icon="ARROWS_V"/>
+                </hbox>
+
+
+                <hbox spacing="true">
+                    <button id="reset_tipo_relacionamento_utentes" icon="ERASER" caption="Limpar" />
+                    <button id="search_tipo_relacionamento_utentes" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+            </scrollBox>
+        </groupBox>
+
         <table id="tipoRelacionamentoUtentesesTable"
                width="100%"
-               dataContainer="tipoRelacionamentoUtentesesDc">
+               dataContainer="tipoRelacionamentoUtentesesDc"
+               emptyStateMessage="Não Existe Dados na Tabela"
+               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
-                <action id="remove" type="remove"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela de Tipo Relaciomento do Utente"/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha de Tipo Relaciomento do Utente?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
             </actions>
             <columns>
                 <column id="tipoRelacionamento"/>
@@ -39,9 +78,10 @@
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="tipoRelacionamentoUtentesesTable.create"/>
-                <button id="editBtn" action="tipoRelacionamentoUtentesesTable.edit"/>
-                <button id="removeBtn" action="tipoRelacionamentoUtentesesTable.remove"/>
+                <button id="createBtn" action="tipoRelacionamentoUtentesesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="tipoRelacionamentoUtentesesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="tipoRelacionamentoUtentesesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="tipoRelacionamentoUtentesesTable.excel" stylename="friendly" />
             </buttonsPanel>
         </table>
         <hbox id="lookupActions" spacing="true" visible="false">

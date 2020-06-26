@@ -62,6 +62,7 @@ public class Instituicoes extends BaseIntegerIdEntity {
     @Column(name = "url", length = 250)
     protected String url;
 
+
     public String getUrl() {
         return url;
     }

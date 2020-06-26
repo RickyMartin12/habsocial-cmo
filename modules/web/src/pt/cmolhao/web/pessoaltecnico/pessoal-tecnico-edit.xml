@@ -26,6 +26,7 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="pessoalTecnicoDc">
             <column width="250px">
+                <textField id="idPessoalTecnicoField" visible="false" property="id" />
                 <textField id="anosservicoinstituicaoField" property="anosservicoinstituicao"
                            maxLength="2"
                            caption="Anos de Serviço da Instituição: "

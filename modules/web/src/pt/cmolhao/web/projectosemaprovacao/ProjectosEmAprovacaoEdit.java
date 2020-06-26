@@ -1,6 +1,7 @@
 package pt.cmolhao.web.projectosemaprovacao;
 
 import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.screen.*;
 import pt.cmolhao.entity.ProjectosEmAprovacao;
@@ -15,6 +16,8 @@ import java.util.*;
 @EditedEntityContainer("projectosEmAprovacaoDc")
 @LoadDataBeforeShow
 public class ProjectosEmAprovacaoEdit extends StandardEditor<ProjectosEmAprovacao> {
+    @Inject
+    protected TextField<UUID> idProjectosAprovacaoField;
     @Inject
     private CollectionContainer<ProjectosIntervencao> ProjectosIntervencaoDc;
     @Inject
@@ -34,6 +37,7 @@ public class ProjectosEmAprovacaoEdit extends StandardEditor<ProjectosEmAprovaca
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Adicionar/Editar Projecto em Aprovação - " + idProjectosAprovacaoField.getValue());
         Map<String, ProjectosIntervencao> map = new HashMap<>();
         Collection<ProjectosIntervencao> customers = ProjectosIntervencaoDc.getItems();
         for (ProjectosIntervencao item : customers) {

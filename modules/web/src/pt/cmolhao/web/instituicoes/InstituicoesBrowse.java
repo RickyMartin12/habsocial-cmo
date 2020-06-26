@@ -110,9 +110,7 @@ public class InstituicoesBrowse extends StandardLookup<Instituicoes> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
 
-
-
-
+        getWindow().setCaption("Listar Instituições");
         List<String> options = new ArrayList<>();
         String queryString = "select o.cae as cae from cmolhao_Instituicoes o where o.cae is not null group by o.cae";
         ValueLoadContext valueLoadContextontext = ValueLoadContext.create()

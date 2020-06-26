@@ -11,46 +11,207 @@
             <loader id="atendimentoesDl">
                 <query>
                     <![CDATA[select e from cmolhao_Atendimento e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idUtente i</c:join>
+                                <c:where>i.id = :idUtente</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idTecnico j</c:join>
+                                <c:where>j.id = :idTecnico</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idTipoAtendimento k</c:join>
+                                <c:where>k.id = :idTipoAtendimento</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idAtendimentoObjetivo m</c:join>
+                                <c:where>m.id = :idAtendimentoObjetivo</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idAtendimentoEncaminhamento l</c:join>
+                                <c:where>l.id = :idAtendimentoEncaminhamento</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.dataAtendimento = :dataAtendimento</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
+
+
+        <collection id="utentesDc"
+                    class="pt.cmolhao.entity.Utente"
+                    view="utente-view">
+            <loader id="utentesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Utente e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tecnicoesDc"
+                    class="pt.cmolhao.entity.Tecnico"
+                    view="tecnico-view">
+            <loader id="tecnicoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Tecnico e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoAtendimentoesDc"
+                    class="pt.cmolhao.entity.TipoAtendimento"
+                    view="_local">
+            <loader id="tipoAtendimentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoAtendimento e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="atendimentoObjetivosesDc"
+                    class="pt.cmolhao.entity.AtendimentoObjetivos"
+                    view="_local">
+            <loader id="atendimentoObjetivosesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_AtendimentoObjetivos e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="atendimentoEncaminhamentoesDc"
+                    class="pt.cmolhao.entity.AtendimentoEncaminhamento"
+                    view="_local">
+            <loader id="atendimentoEncaminhamentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_AtendimentoEncaminhamento e]]>
+                </query>
+            </loader>
+        </collection>
+
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="atendimentoesTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="atendimentoesTable"
-                dataLoader="atendimentoesDl">
-            <properties include=".*"/>
-        </filter>
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+
+                <hbox spacing="true">
+
+                    <lookupField
+                            property="idUtente"
+                            id="utenteField"
+                            optionsContainer="utentesDc"
+                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                            inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+
+                    <lookupField
+                            property="idTecnico"
+                            id="idTecnicoField"
+                            optionsContainer="tecnicoesDc"
+                            icon="font-icon:USER_MD" caption="Nome do Técnico: "
+                            inputPrompt="(Seleccione o nome do técnico)" />
+
+                    <lookupField
+                            property="idTipoAtendimento"
+                            id="idTipoAtendimentoField"
+                            optionsContainer="tipoAtendimentoesDc"
+                            icon="font-icon:VOLUME_CONTROL_PHONE" caption="Tipo de Atendimento: "
+                            inputPrompt="(Seleccione o tipo de atendimento)" />
+
+                </hbox>
+
+                <hbox spacing="true">
+
+                    <lookupField
+                            property="idAtendimentoObjetivo"
+                            id="idAtendimentoObjetivoField"
+                            optionsContainer="atendimentoObjetivosesDc"
+                            icon="font-icon:CERTIFICATE" caption="Atendimento por Objectivos Gerais: "
+                            inputPrompt="(seleccione um dos objectivos gerais)"/>
+
+                    <lookupField
+                            property="idAtendimentoEncaminhamento"
+                            id="idAtendimentoEncaminhamentoField"
+                            optionsContainer="atendimentoEncaminhamentoesDc"
+                            caption="Atendimento por Encaminhamento:"
+                            inputPrompt="(seleccione o atendimento por encaminhamento)"
+                            icon="font-icon:VOLUME_CONTROL_PHONE" />
+
+                    <dateField id="dataAtendimentoField"
+                               property="dataAtendimento"
+                               datatype="date" dateFormat="dd/MM/yyyy"
+                               icon="font-icon:CALENDAR" caption="Data Atendimento: " stylename="data_atendimento"/>
+
+
+                </hbox>
+                <hbox spacing="true">
+
+                    <lookupField id="linhasAtendimento"
+                                 caption="Mostrar Numero de Linhas"
+                                 inputPrompt="(seleccione o numero de linhas)"
+                                 icon="ARROWS_V"/>
+
+
+                </hbox>
+                <hbox spacing="true">
+                    <button id="reset_atendimento" icon="ERASER" caption="Limpar" />
+                    <button id="search_atendimento" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+            </scrollBox>
+        </groupBox>
+
         <groupTable id="atendimentoesTable"
                     width="100%"
-                    dataContainer="atendimentoesDc">
+                    dataContainer="atendimentoesDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
-                <action id="remove" type="remove"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela de Atendimento"/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela de Atendimento?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
             </actions>
             <columns>
-                <column id="contactosEfetuados"/>
-                <column id="dataAtendimento"/>
-                <column id="idAtendimentoEncaminhamento"/>
-                <column id="idAtendimentoObjetivo"/>
-                <column id="idTecnico"/>
-                <column id="idTipoAtendimento"/>
-                <column id="idUtente"/>
-                <column id="objetivoOutros"/>
-                <column id="obsConf"/>
-                <column id="obsGerais"/>
-                <column id="outrosEncaminhamentos"/>
+
+                <column id="idTecnico" caption="Técnico"/>
+                <column id="idUtente" caption="Utente"/>
+                <column id="idTipoAtendimento" caption="Tipo de Atendimento"/>
+
+                <column id="idAtendimentoEncaminhamento" caption="Atendimento de Encaminhamen0to"/>
+                <column id="idAtendimentoObjetivo" caption="Atendimento de Objectivo"/>
+
+                <column id="contactosEfetuados" caption="Contactos Efectuados"/>
+                <column id="dataAtendimento" caption="Data de Atendimento"/>
+
+                <column id="objetivoOutros" caption="Outros Objectivos"/>
+                <column id="obsConf" caption="Observações de Confirmação"/>
+                <column id="obsGerais" caption="Observações Gerais"/>
+                <column id="outrosEncaminhamentos" caption="Outros Encaminhamentos"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="atendimentoesTable.create"/>
-                <button id="editBtn" action="atendimentoesTable.edit"/>
-                <button id="removeBtn" action="atendimentoesTable.remove"/>
+                <button id="createBtn" action="atendimentoesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="atendimentoesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="atendimentoesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="atendimentoesTable.excel" stylename="friendly" />
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

@@ -21,12 +21,15 @@ import java.util.stream.Collectors;
 public class FotosValenciaEdit extends StandardEditor<FotosValencia> {
 
     @Inject
+    protected TextField<UUID> idFotosValenciaField;
+    @Inject
     private LookupField<Valencias> idvalenciaField;
     @Inject
     private CollectionContainer<Valencias> valenciasDc;
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Adicionar/Editar Fotos Valência - " + idFotosValenciaField.getValue());
         Map<String, Valencias> map = new HashMap<>();
         Collection<Valencias> customers = valenciasDc.getItems();
         for (Valencias item : customers) {

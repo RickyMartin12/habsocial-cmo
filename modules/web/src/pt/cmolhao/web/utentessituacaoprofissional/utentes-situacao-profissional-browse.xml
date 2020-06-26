@@ -11,38 +11,106 @@
             <loader id="utentesSituacaoProfissionalsDl">
                 <query>
                     <![CDATA[select e from cmolhao_UtentesSituacaoProfissional e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.utente i</c:join>
+                                <c:where>i.id = :utente</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.situacaoProfissional = :situacaoProfissional</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
+
+        <collection id="UtentesDC"
+                    class="pt.cmolhao.entity.Utente"
+                    view="_local">
+            <loader id="utentesLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Utente e]]>
+                </query>
+            </loader>
+        </collection>
+
+
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="utentesSituacaoProfissionalsTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="utentesSituacaoProfissionalsTable"
-                dataLoader="utentesSituacaoProfissionalsDl">
-            <properties include=".*"/>
-        </filter>
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+                <hbox spacing="true">
+
+                    <lookupField
+                            property="utente"
+                            id="utenteField"
+                            optionsContainer="UtentesDC"
+                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                            inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+
+                    <lookupField
+                        property="situacaoProfissional"
+                        id="situacaoProfissionalField"
+                        icon="font-icon:USER_MD"
+                        caption="Situação Profissional:"
+                        inputPrompt="(Selecção a situação profissional)" />
+
+                    <lookupField id="linhasUtentesSituacaoProfissao"
+                                 caption="Mostrar Numero de Linhas"
+                                 inputPrompt="(seleccione o numero de linhas)"
+                                 icon="ARROWS_V"/>
+
+
+                </hbox>
+                <hbox spacing="true">
+                    <button id="reset_utentes_situacao_profissao" icon="ERASER" caption="Limpar" />
+                    <button id="search_utentes_situacao_profissao" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+            </scrollBox>
+        </groupBox>
+
+
         <groupTable id="utentesSituacaoProfissionalsTable"
                     width="100%"
-                    dataContainer="utentesSituacaoProfissionalsDc">
+                    dataContainer="utentesSituacaoProfissionalsDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
-                <action id="remove" type="remove"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela de Utentes Situação Profssional"/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha de Utentes Situação Profssional?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
             </actions>
             <columns>
-                <column id="dataSituacaoProfissional"/>
-                <column id="situacaoProfissional"/>
-                <column id="utente"/>
+                <column id="utente" caption="Nome do Utente"/>
+                <column id="dataSituacaoProfissional" caption="Data de Situação Profissional"/>
+                <column id="situacaoProfissional" caption="Situação Profissional"/>
+
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="utentesSituacaoProfissionalsTable.create"/>
-                <button id="editBtn" action="utentesSituacaoProfissionalsTable.edit"/>
-                <button id="removeBtn" action="utentesSituacaoProfissionalsTable.remove"/>
+                <button id="createBtn" action="utentesSituacaoProfissionalsTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="utentesSituacaoProfissionalsTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="utentesSituacaoProfissionalsTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="utentesSituacaoProfissionalsTable.excel" stylename="friendly" />
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

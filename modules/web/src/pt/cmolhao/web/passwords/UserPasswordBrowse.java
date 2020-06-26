@@ -34,7 +34,7 @@ public class UserPasswordBrowse extends StandardLookup<User> {
     @Subscribe
     public void onInit(InitEvent event) {
 
-        getWindow().setCaption("Passwords Utilizadores");
+        getWindow().setCaption("Passwords dos Utilizadores");
 
         usersTable.setItemClickAction(new BaseAction("itemClickAction")
                 .withHandler(actionPerformedEvent -> {

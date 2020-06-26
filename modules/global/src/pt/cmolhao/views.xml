@@ -66,29 +66,9 @@
     </view>
 
 
-    <view entity="cmolhao_HabitacaoSocial" name="habitacaoSocial-view" extends="_local">
-        <property name="bloc" view="_minimal">
-            <property name="designacao"/>
-        </property>
-        <property name="idUtente" view="_minimal">
-            <property name="nome" />
-            <property name="numContribuinte" />
-        </property>
-    </view>
     <view entity="cmolhao_Tecnico" name="tecnico-view" extends="_local">
         <property name="idInstituicao" view="_minimal">
             <property name="descricao"/>
-        </property>
-    </view>
-    <view entity="cmolhao_Moradores" name="moradores-view" extends="_local">
-        <property name="habitacaoSocial" view="_minimal">
-            <property name="bloc" view="_minimal">
-                <property name="designacao"/>
-            </property>
-        </property>
-        <property name="utente" view="_minimal">
-            <property name="nome" />
-            <property name="numContribuinte" />
         </property>
     </view>
     <view entity="cmolhao_UtentesSituacaoProfissional" name="utentesSituacaoProfissional-view" extends="_local">
@@ -104,7 +84,6 @@
         </property>
         <property name="idTecnico" view="_minimal">
             <property name="nome" />
-            <property name="email" />
         </property>
         <property name="idTipoAtendimento" view="_minimal">
             <property name="tipoAtendimento" />
@@ -167,6 +146,20 @@
             <property name="estadosProcessos" />
         </property>
     </view>
+    <view entity="cmolhao_Moradores" name="moradores-view" extends="_local">
+        <property name="habitacaoSocial" view="_minimal">
+            <property name="bloc" view="_minimal">
+                <property name="designacao"/>
+            </property>
+            <property name="freguesia" />
+            <property name="tipoArrendamento" />
+        </property>
+        <property name="utente" view="_minimal">
+            <property name="nome" />
+            <property name="numContribuinte" />
+            <property name="paisOrigem" />
+        </property>
+    </view>
     <view entity="cmolhao_Utente" name="utente-view" extends="_local">
         <property name="grauEscolaridade" view="_minimal">
             <property name="descricao" />
@@ -183,6 +176,15 @@
         </property>
         <property name="habilitacoes" view="_minimal">
             <property name="descricao" />
+        </property>
+    </view>
+    <view entity="cmolhao_HabitacaoSocial" name="habitacaoSocial-view" extends="_local">
+        <property name="bloc" view="_minimal">
+            <property name="designacao"/>
+        </property>
+        <property name="idUtente" view="_minimal">
+            <property name="nome" />
+            <property name="numContribuinte" />
         </property>
     </view>
 

@@ -1,6 +1,7 @@
 package pt.cmolhao.web.pessoaltecnico;
 
 import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.screen.*;
 import pt.cmolhao.entity.PessoalTecnico;
@@ -16,6 +17,8 @@ import java.util.*;
 public class PessoalTecnicoEdit extends StandardEditor<PessoalTecnico> {
 
     @Inject
+    protected TextField<UUID> idPessoalTecnicoField;
+    @Inject
     private CollectionContainer<Valencias> valenciasDc;
     @Inject
     private LookupField<Valencias> idValenciaField;
@@ -24,7 +27,7 @@ public class PessoalTecnicoEdit extends StandardEditor<PessoalTecnico> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-
+        getWindow().setCaption("Adicionar/Editar Atendimento Pessoa Técnica - " + idPessoalTecnicoField.getValue());
         Map<String, Valencias> map = new HashMap<>();
         Collection<Valencias> customers = valenciasDc.getItems();
         for (Valencias item : customers) {

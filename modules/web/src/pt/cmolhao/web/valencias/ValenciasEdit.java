@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Date;
+import java.util.UUID;
 
 @UiController("cmolhao_Valencias.edit")
 @UiDescriptor("valencias-edit.xml")
@@ -27,6 +28,8 @@ public class ValenciasEdit extends StandardEditor<Valencias> {
 
     @Inject
     protected DateField<Date> certdatainicioField;
+    @Inject
+    protected TextField<UUID> idValenciasField;
     @Inject
     private Metadata metadata;
     @Inject
@@ -126,6 +129,7 @@ public class ValenciasEdit extends StandardEditor<Valencias> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         versionField.setValue(1);
+        getWindow().setCaption("Adicionar/Editar Valência - " + idValenciasField.getValue());
     }
 
 
@@ -133,6 +137,8 @@ public class ValenciasEdit extends StandardEditor<Valencias> {
     public void onMoradaFieldTextChange(TextInputField.TextChangeEvent event) {
         locationData(event.getText());
     }
+
+
 
 
 }

@@ -57,6 +57,9 @@
                             <c:jpql>
                                 <c:where>e.estadoCivil = :estadoCivil</c:where>
                             </c:jpql>
+                            <c:jpql>
+                                <c:where>e.paisOrigem = :paisOrigem</c:where>
+                            </c:jpql>
                         </and>
                     </condition>
                 </query>
@@ -245,10 +248,20 @@
 
                     </hbox>
                     <hbox spacing="true">
+
+                        <lookupField id="paisOrigemField"
+                                     property="paisOrigem"
+                                     caption="Pais de Origem: "
+                                     icon="FLAG" inputPrompt="(Introduza o teu país de origem)"/>
+
+
                         <lookupField id="linhasUtente"
                                      caption="Mostrar Numero de Linhas"
                                      inputPrompt="(seleccione o numero de linhas)"
                                      icon="ARROWS_V"/>
+
+
+
                     </hbox>
                     <hbox spacing="true">
                         <button id="reset_utente" icon="ERASER" caption="Limpar" />
@@ -295,6 +308,7 @@
                 <column id="profissao" caption="Profissão"/>
                 <column id="telefone" caption="Telefone"/>
                 <column id="telem_vel" caption="Telemóvel"/>
+                <column id="paisOrigem" caption="Pais de Origem" />
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

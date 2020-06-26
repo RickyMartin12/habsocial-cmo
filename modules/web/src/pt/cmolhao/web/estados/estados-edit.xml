@@ -15,6 +15,7 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="estadosDc">
             <column width="250px">
+                <textField id="idEstadosField" property="id" visible="false" />
                 <textField id="estadosProcessosField" property="estadosProcessos" caption="Estado do Processo:" icon="REFRESH_ACTION"/>
             </column>
         </form>

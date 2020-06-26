@@ -31,6 +31,7 @@
                   icon="font-icon:FILTER"
                   width="100%">
 
+            <scrollBox spacing="true">
             <hbox spacing="true">
 
                 <lookupField id="linhasTiposValencias"
@@ -39,7 +40,7 @@
                              icon="ARROWS_V"/>
 
             </hbox>
-
+            </scrollBox>
         </groupBox>
         <table id="tiposvalenciasTable"
                width="100%"

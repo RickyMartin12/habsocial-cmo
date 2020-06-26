@@ -138,6 +138,7 @@ public class LocalizacoesBrowse extends StandardLookup<Localizacoes> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar Localizações");
         Map<String, Valencias> map = new HashMap<>();
         Collection<Valencias> customers = valenciasDc.getItems();
         for (Valencias item : customers) {

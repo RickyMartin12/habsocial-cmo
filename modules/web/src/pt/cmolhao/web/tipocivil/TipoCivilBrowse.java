@@ -69,6 +69,7 @@ public class TipoCivilBrowse extends StandardLookup<TipoCivil> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar Tipos de Civil");
         // Arrend - Renda
         List<String> options = new ArrayList<>();
         String queryString = "select o.tipo as tipo from cmolhao_TipoCivil o where o.tipo is not null group by o.tipo";

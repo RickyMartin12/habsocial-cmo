@@ -41,7 +41,7 @@
         <scrollBox id="scrollBox" spacing="true">
             <form id="form" dataContainer="valenciasDc">
                 <column width="250px">
-
+                    <textField id="idValenciasField" visible="false" property="id" />
                     <textField id="descricaotecnicaField" property="descricaotecnica" caption="Descrição Técnica: " icon="FILE_TEXT"/>
 
                     <lookupField property="idinstituicao" id="idinstituicaoField" optionsContainer="InstituicaoDc"

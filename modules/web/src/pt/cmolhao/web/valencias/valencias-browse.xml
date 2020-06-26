@@ -63,6 +63,7 @@
                   icon="font-icon:FILTER"
                   width="100%">
 
+            <scrollBox spacing="true">
             <hbox spacing="true">
                 <lookupField
                         inputPrompt="(Seleccione a designação da instituição da valência)"
@@ -89,6 +90,7 @@
                 <button id="reset_valencia" icon="ERASER" caption="Limpar" />
                 <button id="search_valencia" caption="Pesquisar" icon="SEARCH" stylename="info" />
             </hbox>
+            </scrollBox>
 
         </groupBox>
 

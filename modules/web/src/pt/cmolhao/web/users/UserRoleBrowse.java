@@ -8,4 +8,9 @@ import com.haulmont.cuba.security.entity.UserRole;
 @LookupComponent("userRolesTable")
 @LoadDataBeforeShow
 public class UserRoleBrowse extends StandardLookup<UserRole> {
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar os Papéis dos Utilizadores");
+    }
+
 }

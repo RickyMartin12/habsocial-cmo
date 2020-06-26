@@ -15,13 +15,18 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="atendimentoObjetivosDc">
             <column width="250px">
-                <textField id="atendimemtoObjetivoEspecificoField" property="atendimemtoObjetivoEspecifico"/>
-                <textField id="atendimentoObjetivoGeralField" property="atendimentoObjetivoGeral"/>
+                <textField id="idAtendimentoObjetivosField" property="id" visible="false" />
+                <textField id="atendimentoObjetivoGeralField" property="atendimentoObjetivoGeral" caption="Atendimento por Objectivo Geral:"
+                           icon="font-icon:CERTIFICATE"/>
+                <textField id="atendimemtoObjetivoEspecificoField" property="atendimemtoObjetivoEspecifico"
+                           caption="Atendimento por Objectivo Especifico:"
+                           icon="font-icon:CERTIFICATE"/>
+
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>

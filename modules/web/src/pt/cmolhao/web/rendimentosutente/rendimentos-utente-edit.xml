@@ -9,31 +9,58 @@
                   view="rendimentosUtente-view">
             <loader/>
         </instance>
+
+        <collection id="UtentesDC"
+                    class="pt.cmolhao.entity.Utente"
+                    view="_local">
+            <loader id="utentesLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Utente e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoRendimentoesDc"
+                    class="pt.cmolhao.entity.TipoRendimento"
+                    view="_local">
+            <loader id="tipoRendimentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoRendimento e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="rendimentosUtenteDc">
             <column width="250px">
-                <textField id="anoField" property="ano"/>
-                <pickerField id="idTipoRendimentoField" property="idTipoRendimento">
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
-                </pickerField>
-                <pickerField id="idUtenteField" property="idUtente">
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
-                </pickerField>
-                <textField id="valorRendimentoField" property="valorRendimento"/>
+                <textField id="idRendimentoUtenteField" property="id" visible="false" />
+                <textField id="anoField" property="ano" maxLength="4" caption="Ano de Rendimento: " icon="font-icon:CALENDAR" stylename="ano_cost_text"/>
+                <lookupField
+                        property="idUtente"
+                        id="idUtenteField"
+                        optionsContainer="UtentesDC"
+                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                        inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+
+
+                <lookupField
+                        inputPrompt="(Seleccione o tipo de rendimento)"
+                        property="idTipoRendimento"
+                        id="idTipoRendimentoField"
+                        optionsContainer="tipoRendimentoesDc"
+                        icon="font-icon:HOME" caption="Tipo de Rendimento: "/>
+
+
+                <textField id="valorRendimentoField" property="valorRendimento"
+                           caption="Valor do Rendimento" icon="font-icon:MONEY" datatype="int"
+                           conversionErrorMessage="O valor do rendimento do utente possui numeros inteiros"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>

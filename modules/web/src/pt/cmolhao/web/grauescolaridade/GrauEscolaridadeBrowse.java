@@ -37,6 +37,8 @@ public class GrauEscolaridadeBrowse extends StandardLookup<GrauEscolaridade> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+
+        getWindow().setCaption("Listar Grau Escolaridade");
         // Arrend - Renda
         List<String> options = new ArrayList<>();
         String queryString = "select o.descricao as descricao from cmolhao_GrauEscolaridade o where o.descricao is not null group by o.descricao";

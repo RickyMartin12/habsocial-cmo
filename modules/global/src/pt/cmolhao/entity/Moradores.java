@@ -10,15 +10,16 @@ import java.util.Date;
 @Table(name = "moradores")
 @Entity(name = "cmolhao_Moradores")
 public class Moradores extends BaseIntegerIdEntity {
-    private static final long serialVersionUID = 4526748425096839913L;
-    @Column(name = "data_fim")
-    protected Integer dataFim;
+    private static final long serialVersionUID = -7672239516716378184L;
     @Temporal(TemporalType.DATE)
     @Column(name = "data_inicio")
     protected Date dataInicio;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date_fim")
+    protected Date dateFim;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "habitacao_social_id")
-    protected pt.cmolhao.entity.HabitacaoSocial habitacaoSocial;
+    protected HabitacaoSocial habitacaoSocial;
     @Column(name = "morada_social")
     protected String moradaSocial;
     @Column(name = "obs_conf")
@@ -61,12 +62,20 @@ public class Moradores extends BaseIntegerIdEntity {
         this.moradaSocial = moradaSocial;
     }
 
-    public pt.cmolhao.entity.HabitacaoSocial getHabitacaoSocial() {
+    public HabitacaoSocial getHabitacaoSocial() {
         return habitacaoSocial;
     }
 
-    public void setHabitacaoSocial(pt.cmolhao.entity.HabitacaoSocial habitacaoSocial) {
+    public void setHabitacaoSocial(HabitacaoSocial habitacaoSocial) {
         this.habitacaoSocial = habitacaoSocial;
+    }
+
+    public Date getDateFim() {
+        return dateFim;
+    }
+
+    public void setDateFim(Date dateFim) {
+        this.dateFim = dateFim;
     }
 
     public Date getDataInicio() {
@@ -75,13 +84,5 @@ public class Moradores extends BaseIntegerIdEntity {
 
     public void setDataInicio(Date dataInicio) {
         this.dataInicio = dataInicio;
-    }
-
-    public Integer getDataFim() {
-        return dataFim;
-    }
-
-    public void setDataFim(Integer dataFim) {
-        this.dataFim = dataFim;
     }
 }

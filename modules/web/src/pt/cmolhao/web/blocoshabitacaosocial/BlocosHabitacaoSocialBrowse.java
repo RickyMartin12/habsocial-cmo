@@ -99,6 +99,7 @@ public class BlocosHabitacaoSocialBrowse extends StandardLookup<BlocosHabitacaoS
                             if (bloco_hab_designacao_text.getValue() != null)
                             {
                                 customer.setDesignacao(bloco_hab_designacao_text.getValue().toString());
+                                customer.setMorada(bloco_hab_designacao_text.getValue().toString());
                             }
 
 
@@ -116,6 +117,8 @@ public class BlocosHabitacaoSocialBrowse extends StandardLookup<BlocosHabitacaoS
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+
+        getWindow().setCaption("Listar Blocos de Habitação Social");
 
         // Bl - Bloco
         List<String> options_designacao_bloco_hab_social = new ArrayList<>();

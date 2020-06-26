@@ -15,6 +15,7 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="grauEscolaridadeDc">
             <column width="250px">
+                <textField id="idGrauEscolaridadeField" property="id" visible="false" />
                 <lookupField id="descricaoField" property="descricao"
                              caption="Descrição: "
                              inputPrompt="(Indique o grau de escolaridade)"

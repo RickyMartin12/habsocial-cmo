@@ -7,7 +7,7 @@ import com.haulmont.cuba.core.global.DesignSupport;
 import javax.persistence.*;
 
 @DesignSupport("{'imported':true}")
-@NamePattern("%s - %s|nome, email")
+@NamePattern("%s (%s)|nome,email")
 @Table(name = "tecnico")
 @Entity(name = "cmolhao_Tecnico")
 public class Tecnico extends BaseIntegerIdEntity {

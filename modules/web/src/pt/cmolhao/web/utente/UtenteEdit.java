@@ -11,6 +11,8 @@ import pt.cmolhao.entity.Utente;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 @UiController("cmolhao_Utente.edit")
 @UiDescriptor("utente-edit.xml")
@@ -30,6 +32,10 @@ public class UtenteEdit extends StandardEditor<Utente> {
     protected TextField<String> telem_velField;
     @Inject
     protected LookupField<String> estadoCivilField;
+    @Inject
+    protected LookupField<String> paisOrigemField;
+    @Inject
+    protected TextField<UUID> idUtenteField;
 
     @Inject
     private Notifications notifications;
@@ -156,6 +162,19 @@ public class UtenteEdit extends StandardEditor<Utente> {
         });
 
 
+
+    }
+
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Adicionar/Editar Utente - " + idUtenteField.getValue());
+        List<String> list_paises = new ArrayList<>();
+        String[] countryCodes = Locale.getISOCountries();
+        for (String countryCode : countryCodes) {
+            Locale obj = new Locale("", countryCode);
+            list_paises.add(obj.getDisplayCountry());
+        }
+        paisOrigemField.setOptionsList(list_paises);
 
     }
 

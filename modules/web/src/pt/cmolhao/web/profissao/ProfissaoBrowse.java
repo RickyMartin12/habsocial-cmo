@@ -68,6 +68,7 @@ public class ProfissaoBrowse extends StandardLookup<Profissao> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar Profissões");
         // Arrend - Renda
         List<String> options = new ArrayList<>();
         String queryString = "select o.nome as nome from cmolhao_Profissao o where o.nome is not null group by o.nome";

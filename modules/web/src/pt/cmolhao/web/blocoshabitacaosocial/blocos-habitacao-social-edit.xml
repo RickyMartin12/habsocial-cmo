@@ -15,9 +15,11 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="blocosHabitacaoSocialDc">
             <column width="250px">
+                <textField id="idBlocoshabitacaoSocialField" property="id" visible="false" />
                 <dateField id="anoDeConstrucaoField" property="anoDeConstrucao" dateFormat="dd/MM/yyyy" icon="CALENDAR" caption="Ano de Construção: "/>
-                <textField id="designacaoField" property="designacao" required="true" caption="Designação do Bloco de Habitação Social:" icon="HOME" requiredMessage="Deve Inserir a designação da habitação social" />
-                <textField id="moradaField" property="morada" caption="Morada do Bloco de Habitação Social:" icon="ADDRESS_CARD" />
+                <textField id="designacaoField" property="designacao" required="true" caption="Designação da Morada do Bloco de Habitação Social:" icon="HOME" requiredMessage="Deve Inserir a designação da morada da habitação social" />
+                <textField id="moradaField" property="morada" caption="Morada do Bloco de Habitação Social:" icon="ADDRESS_CARD"
+                           requiredMessage="Deve inserir a morada do bloco da habitação social"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

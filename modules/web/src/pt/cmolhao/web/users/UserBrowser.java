@@ -37,6 +37,11 @@ public class UserBrowser extends StandardLookup<User> {
 
 
     @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar Utilizadores");
+    }
+
+    @Subscribe
     public void onInit(InitEvent event) {
 
         getWindow().setCaption("Ver Utilizadores");

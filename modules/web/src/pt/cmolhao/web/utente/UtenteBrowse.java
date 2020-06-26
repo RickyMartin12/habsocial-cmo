@@ -3,6 +3,7 @@ package pt.cmolhao.web.utente;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.ValueLoadContext;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.*;
@@ -18,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @UiController("cmolhao_Utente.browse")
 @UiDescriptor("utente-browse.xml")
@@ -61,6 +63,8 @@ public class UtenteBrowse extends StandardLookup<Utente> {
     @Inject
     protected LookupField estadoCivilField;
     @Inject
+    protected LookupField paisOrigemField;
+    @Inject
     private ScreenBuilders screenBuilders;
     @Inject
     private DataManager dataManager;
@@ -73,6 +77,7 @@ public class UtenteBrowse extends StandardLookup<Utente> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar Utentes");
         // Email do Utente
         List<String> options = new ArrayList<>();
         String queryString = "select o.email as email from cmolhao_Utente o where o.email is not null group by o.email";
@@ -114,6 +119,14 @@ public class UtenteBrowse extends StandardLookup<Utente> {
         }
 
         num_cont_utente_id.setOptionsList(optionsNumContribuinte);
+
+        List<String> list_paises = new ArrayList<>();
+        String[] countryCodes = Locale.getISOCountries();
+        for (String countryCode : countryCodes) {
+            Locale obj = new Locale("", countryCode);
+            list_paises.add(obj.getDisplayCountry());
+        }
+        paisOrigemField.setOptionsList(list_paises);
 
     }
 
@@ -190,6 +203,10 @@ public class UtenteBrowse extends StandardLookup<Utente> {
                             if(email_uten_id.getValue() != null)
                             {
                                 customer.setEmail(email_uten_id.getValue().toString());
+                            }
+                            if(paisOrigemField.getValue() != null)
+                            {
+                                customer.setPaisOrigem(paisOrigemField.getValue().toString());
                             }
                         })
                         .withScreenClass(UtenteEdit.class)    // specific editor screen
@@ -326,6 +343,15 @@ public class UtenteBrowse extends StandardLookup<Utente> {
             utentesDl.removeParameter("estadoCivil");
         }
 
+        if (paisOrigemField.getValue() != null)
+        {
+            utentesDl.setParameter("paisOrigem",  paisOrigemField.getValue().toString());
+        }
+        else
+        {
+            utentesDl.removeParameter("paisOrigem");
+        }
+
         utentesDl.load();
     }
 
@@ -346,6 +372,7 @@ public class UtenteBrowse extends StandardLookup<Utente> {
         linhasUtente.setValue(null);
         profissaoField.setValue(null);
         estadoCivilField.setValue(null);
+        paisOrigemField.setValue(null);
         utentesDl.setMaxResults(0);
         utentesDl.removeParameter("email");
         utentesDl.removeParameter("nome");
@@ -360,6 +387,7 @@ public class UtenteBrowse extends StandardLookup<Utente> {
         utentesDl.removeParameter("grauEscolaridade");
         utentesDl.removeParameter("profissao");
         utentesDl.removeParameter("estadoCivil");
+        utentesDl.removeParameter("paisOrigem");
         utentesDl.load();
     }
 

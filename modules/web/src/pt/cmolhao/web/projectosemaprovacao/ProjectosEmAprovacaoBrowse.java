@@ -91,6 +91,7 @@ public class ProjectosEmAprovacaoBrowse extends StandardLookup<ProjectosEmAprova
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar Projectos em Aprovação");
         Map<String, ProjectosIntervencao> map = new HashMap<>();
         Collection<ProjectosIntervencao> customers = projectosIntervencaosDc.getItems();
         for (ProjectosIntervencao item : customers) {
@@ -99,7 +100,11 @@ public class ProjectosEmAprovacaoBrowse extends StandardLookup<ProjectosEmAprova
                 {
                     if (item.getProjectosemaprovacao().equals(true))
                     {
-                        map.put("Projecto: " +  item.getId() + " - " + item.getIdinstituicao().getDescricao() , item);
+                        if (item.getIdinstituicao() != null) {
+                            map.put("Projecto de Intervenção: " + item.getId() + " - " + item.getIdinstituicao().getDescricao(), item);
+                        } else {
+                            map.put("Projecto de Intervenção: " + item.getId().toString(), item);
+                        }
                     }
 
                 }

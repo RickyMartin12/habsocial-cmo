@@ -25,7 +25,7 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="fotosValenciaDc">
             <column width="300px">
-                <!--<textField id="idField" property="id" />-->
+                <textField id="idFotosValenciaField" property="id" visible="false" />
                 <checkBox id="daequipacolaboradoresField" property="daequipacolaboradores" caption="Equipa de Colaboradores: " icon="USERS"/>
                 <textField id="descricaoField" property="descricao" caption="Descrição da Foto: " icon="font-icon:FILE_TEXT"/>
                 <checkBox id="doequipamentoField" property="doequipamento" caption="Equipamento: " icon="WRENCH"/>

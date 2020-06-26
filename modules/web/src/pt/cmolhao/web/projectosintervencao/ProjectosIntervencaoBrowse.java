@@ -469,4 +469,10 @@ public class ProjectosIntervencaoBrowse extends StandardLookup<ProjectosInterven
         }
         projectosIntervencaosDl.load();
     }
+
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar Projectos de Intervenção");
+    }
+
 }

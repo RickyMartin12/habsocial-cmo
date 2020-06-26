@@ -113,15 +113,16 @@ public class MapaLocalizoes extends Screen {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-
             String coord = messageLabel.getRawValue();
+            getWindow().setCaption("Mapa - Coordenada: " + coord);
+
             if (coord != "")
-            {
-                String[] arrOfStr = coord.split(";");
-                String longitudade = arrOfStr[0];
-                String latitude = arrOfStr[1];
-                addMarker(Double.parseDouble(longitudade), Double.parseDouble(latitude));
-            }
+                {
+                    String[] arrOfStr = coord.split(";");
+                    String longitudade = arrOfStr[0];
+                    String latitude = arrOfStr[1];
+                    addMarker(Double.parseDouble(longitudade), Double.parseDouble(latitude));
+                }
 
 
     }

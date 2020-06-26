@@ -68,6 +68,7 @@
         <scrollBox id="scrollBox" spacing="true">
             <form id="form" dataContainer="apoiosDc">
                 <column width="250px">
+                    <textField id="idApoiosField" visible="false" property="id" />
                     <dateField id="dataAtribuicaoField" property="dataAtribuicao" caption="Data de Atribuição: " icon="CALENDAR"/>
                     <dateField id="dataFimField" property="dataFim" icon="CALENDAR" caption="Data de Fim: "/>
                     <dateField id="dataPedidoField" property="dataPedido" caption="Data do Pedido: " icon="CALENDAR"/>

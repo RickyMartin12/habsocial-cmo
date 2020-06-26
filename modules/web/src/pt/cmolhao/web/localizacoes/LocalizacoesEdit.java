@@ -22,6 +22,7 @@ import javax.json.JsonReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.UUID;
 
 @UiController("cmolhao_Localizacoes.edit")
 @UiDescriptor("localizacoes-edit.xml")
@@ -30,6 +31,8 @@ import java.net.URL;
 
 
 public class LocalizacoesEdit extends StandardEditor<Localizacoes> {
+    @Inject
+    protected TextField<UUID> idLocalizacaoField;
     @Inject
     private TextField<String> coordField;
 
@@ -76,7 +79,7 @@ public class LocalizacoesEdit extends StandardEditor<Localizacoes> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-
+        getWindow().setCaption("Adicionar/Editar Localização - " + idLocalizacaoField.getValue());
     }
 
     @Subscribe("click_map")

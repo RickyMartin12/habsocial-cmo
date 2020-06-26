@@ -62,6 +62,9 @@ public class FotosValenciaBrowse extends StandardLookup<FotosValencia> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+
+        getWindow().setCaption("Listar Fotos de Valências");
+
         Map<String, Valencias> map = new HashMap<>();
         Collection<Valencias> customers = valenciasDc.getItems();
         for (Valencias item : customers) {

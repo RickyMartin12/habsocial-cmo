@@ -42,7 +42,7 @@ public class UserEdit extends StandardEditor<User> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
 
-        getWindow().setCaption("Editar Utl. '"+loginField.getValue()+"' ");
+        getWindow().setCaption("Editar Utlilizador '"+loginField.getValue()+"' ");
 
 
         Map<String, Group> map = new HashMap<>();
@@ -145,7 +145,7 @@ public class UserEdit extends StandardEditor<User> {
                 "<p><b>Username:</b> "+username+"</p>" +
                 "<p><b>Nome Completo:</b> " +nome_utilizador+"</p>" +
                 "<br>" +
-                "Camara Municipal de Olhao - Habitacao Social";
+                "Camara Municipal de Olhao - Acção Social";
         String subject = "Mudanca de nome do utilizador - '"+username+"'";
 
         if (emailField.getValue() != null)

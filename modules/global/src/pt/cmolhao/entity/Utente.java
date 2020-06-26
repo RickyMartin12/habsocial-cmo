@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name = "utente")
 @Entity(name = "cmolhao_Utente")
 public class Utente extends BaseIntegerIdEntity {
-    private static final long serialVersionUID = 3783011856512286494L;
+    private static final long serialVersionUID = 6959758886872812778L;
     @Column(name = "cert_uniao_europeia")
     protected String certUniaoEuropeia;
     @Temporal(TemporalType.DATE)
@@ -50,6 +50,8 @@ public class Utente extends BaseIntegerIdEntity {
     protected String obsConf;
     @Column(name = "obs_gerais")
     protected String obsGerais;
+    @Column(name = "pais_origem")
+    protected String paisOrigem;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profissao_id")
     protected Profissao profissao;
@@ -82,6 +84,14 @@ public class Utente extends BaseIntegerIdEntity {
 
     public void setProfissao(Profissao profissao) {
         this.profissao = profissao;
+    }
+
+    public String getPaisOrigem() {
+        return paisOrigem;
+    }
+
+    public void setPaisOrigem(String paisOrigem) {
+        this.paisOrigem = paisOrigem;
     }
 
     public String getObsGerais() {

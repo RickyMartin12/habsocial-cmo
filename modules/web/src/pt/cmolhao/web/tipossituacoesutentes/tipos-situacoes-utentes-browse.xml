@@ -19,28 +19,42 @@
                 width="800"/>
     <layout expand="tiposSituacoesUtentesesTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="tiposSituacoesUtentesesTable"
-                dataLoader="tiposSituacoesUtentesesDl">
-            <properties include=".*"/>
-        </filter>
+
+        <scrollBox spacing="true">
+            <hbox spacing="true">
+                <lookupField id="linhasTiposSituacoesUtentes"
+                             caption="Mostrar Numero de Linhas"
+                             inputPrompt="(seleccione o numero de linhas)"
+                             icon="ARROWS_V"/>
+            </hbox>
+
+        </scrollBox>
+
         <table id="tiposSituacoesUtentesesTable"
                width="100%"
                dataContainer="tiposSituacoesUtentesesDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
-                <action id="remove" type="remove"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela de Tipos de Situações de Utentes"/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha de Tipos de Situações de Utentes?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
             </actions>
             <columns>
-                <column id="descricaoSituacao"/>
+                <column id="descricaoSituacao" caption="Descrição da Situação"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="tiposSituacoesUtentesesTable.create"/>
-                <button id="editBtn" action="tiposSituacoesUtentesesTable.edit"/>
-                <button id="removeBtn" action="tiposSituacoesUtentesesTable.remove"/>
+                <button id="createBtn" action="tiposSituacoesUtentesesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="tiposSituacoesUtentesesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="tiposSituacoesUtentesesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="tiposSituacoesUtentesesTable.excel" stylename="friendly" />
             </buttonsPanel>
         </table>
         <hbox id="lookupActions" spacing="true" visible="false">

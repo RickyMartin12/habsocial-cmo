@@ -16,6 +16,7 @@
         <scrollBox id="scrollBox" spacing="true">
             <form id="form" dataContainer="instituicoesDc">
                 <column width="250px">
+                    <textField id="idInstituicaoField" property="id" visible="false" />
                     <textField id="caeField" property="cae" icon="font-icon:MONEY" caption="Classificação Actividades Economicas: "/>
                     <checkBox id="clasolhaoField" property="clasolhao" caption="Olhão Classificado: " icon="font-icon:LOCATION_ARROW" />
                     <textField id="contactopresidentedireccaoField" property="contactopresidentedireccao" icon="PHONE" caption="Contacto do Presidente/Direcção: "/>

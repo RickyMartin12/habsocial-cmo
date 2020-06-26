@@ -54,37 +54,39 @@
                   icon="font-icon:FILTER"
                   width="100%">
 
-        <hbox spacing="true">
+        <scrollBox spacing="true">
+                <hbox spacing="true">
+
+                    <lookupField id="idvalenciaField"
+                             property="idvalencia"
+                             optionsContainer="valenciasDc"
+                             inputPrompt="(Seleccione a Descrição da Valência)"
+                             caption="Descrição técnica da valência: "
+                             icon="SIMPLYBUILT"/>
 
 
-            <lookupField id="idvalenciaField"
-                     property="idvalencia"
-                     optionsContainer="valenciasDc"
-                     inputPrompt="(Seleccione a Descrição da Valência)"
-                     caption="Descrição técnica da valência: "
-                     icon="SIMPLYBUILT"/>
+                    <label id="text_eq_colaboradores" icon="font-icon:USERS" />
+                    <checkBox id="daequipacolaboradoresField" property="daequipacolaboradores" />
 
 
-            <label id="text_eq_colaboradores" icon="font-icon:USERS" />
-            <checkBox id="daequipacolaboradoresField" property="daequipacolaboradores" />
+                    <label id="text_do_equipamento" icon="font-icon:WRENCH"/>
+                    <checkBox id="doequipamentoField" property="doequipamento" />
 
-
-            <label id="text_do_equipamento" icon="font-icon:WRENCH"/>
-            <checkBox id="doequipamentoField" property="doequipamento" />
-
-            <lookupField id="linhasFotValencias"
-                         caption="Mostrar Numero de Linhas"
-                         inputPrompt="(seleccione o numero de linhas)"
-                         icon="ARROWS_V"/>
+                    <lookupField id="linhasFotValencias"
+                                 caption="Mostrar Numero de Linhas"
+                                 inputPrompt="(seleccione o numero de linhas)"
+                                 icon="ARROWS_V"/>
 
 
 
-        </hbox>
+                    </hbox>
 
-            <hbox spacing="true">
-                <button id="search_foto_valencia" caption="Pesquisar" icon="SEARCH" stylename="info" />
-                <button id="reset_search_foto_valencia" icon="ERASER" caption="Limpar" />
-            </hbox>
+                    <hbox spacing="true">
+                        <button id="search_foto_valencia" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                        <button id="reset_search_foto_valencia" icon="ERASER" caption="Limpar" />
+                    </hbox>
+
+            </scrollBox>
 
 
         </groupBox>

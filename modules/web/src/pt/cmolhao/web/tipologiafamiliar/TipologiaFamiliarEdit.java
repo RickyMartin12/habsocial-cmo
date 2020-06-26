@@ -2,12 +2,14 @@ package pt.cmolhao.web.tipologiafamiliar;
 
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.screen.*;
 import pt.cmolhao.entity.TipologiaFamiliar;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @UiController("cmolhao_TipologiaFamiliar.edit")
 @UiDescriptor("tipologia-familiar-edit.xml")
@@ -18,6 +20,8 @@ public class TipologiaFamiliarEdit extends StandardEditor<TipologiaFamiliar> {
     protected LookupField<String> tipologiaFamiliarField;
     @Inject
     protected LookupField<String> tipologiaFamiliarEspecificaField;
+    @Inject
+    protected TextField<UUID> idTipologiaFamiliarField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -81,5 +85,10 @@ public class TipologiaFamiliarEdit extends StandardEditor<TipologiaFamiliar> {
             }
             tipologiaFamiliarEspecificaField.setOptionsList(list_topologia_familiar_especifica);
         }
+    }
+
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Adicionar/Editar Tipologia Familiar - " + idTipologiaFamiliarField.getValue());
     }
 }

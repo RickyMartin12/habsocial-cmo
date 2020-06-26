@@ -64,7 +64,7 @@ public class UserEditor extends StandardEditor<User> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        getWindow().setCaption("Adicionar Utl.");
+        getWindow().setCaption("Adicionar Utlilizador");
         Map<String, Group> map = new HashMap<>();
         Collection<Group> customers = GroupUsersDc.getItems();
         for (Group item : customers) {
@@ -219,7 +219,7 @@ public class UserEditor extends StandardEditor<User> {
                 "<p><b>Nome Completo:</b> " +nome_utilizador+"</p>" +
                 "<p><b>Password:</b> "+password+"</p>" +
                 "<br>" +
-                "Camara Municipal de Olhao - Habitacao Social";
+                "Camara Municipal de Olhao - Acção Social";
         String subject = "Insercao do Novo utilizador - '"+username+"'";
 
         if (emailField.getValue() != null)

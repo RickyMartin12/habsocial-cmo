@@ -25,6 +25,7 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="utentesOutrosConcelhosDc">
             <column width="250px">
+                <textField id="idUtenteOutrosConcelhosField" property="id" visible="false" />
                 <textField id="concelhoField" property="concelho" caption="Concelho: " icon="MAP"/>
                 <textField id="freguesiaField" property="freguesia" caption="Freguesia: " icon="INSTITUTION"/>
                 <lookupField id="idValenciaField"

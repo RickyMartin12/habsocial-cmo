@@ -95,5 +95,10 @@ public class EstadosBrowse extends StandardLookup<Estados> {
         estadosesDl.load();
     }
 
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        getWindow().setCaption("Listar Estados");
+    }
+
 
 }
