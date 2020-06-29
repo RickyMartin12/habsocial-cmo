@@ -41,9 +41,10 @@
             <form id="form" dataContainer="habitacaoSocialDc">
                 <column width="300px">
                     <textField id="idHabSocialField" property="id" visible="false" />
-                    <textField id="arrendField" property="arrend" caption="Numero de Renda:" icon="SORT_NUMERIC_ASC" maxLength="1" stylename="uppercase-field" />
+                    <textField id="arrendField" property="arrend" caption="Número de Renda/Andar:" icon="SORT_NUMERIC_ASC" maxLength="1" stylename="uppercase-field" />
                     <textField id="blField" property="bl" caption="Bloco/Lote: " icon="BUILDING_O" maxLength="1" stylename="uppercase-field" />
                     <textField id="coordField" property="coord" editable="false" icon="MAP_MARKER" stylename="label-readonly" caption="Coordenada da Habitação social:"/>
+                    <textField id="numAndarField" property="andar" caption="Numero de Andar: " icon="font-icon:HOME" />
                     <lookupField
                             property="bloc"
                             id="blocField"

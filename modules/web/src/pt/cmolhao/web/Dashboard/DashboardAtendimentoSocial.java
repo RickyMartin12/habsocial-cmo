@@ -17,10 +17,10 @@ public class DashboardAtendimentoSocial extends StandardLookup<Atendimento> {
     private static final String HTML = "<h1>Dashboard do Atendimento Social</h1>\n\n";
     private static final String HTML_table_atend_utentes = "<b>Tabela do Tipo de  Atendimento Social aos utentes</b>\n\n";
     private static final String HTML_table_arrendamento_utentes = "<b>Tabela do Tipo de  Arrendamento nos utentes</b>\n\n";
-    private static final String HTML_table_moradores = "<b>Tabela de moradores no estrangeiros por concelho</b>\n\n";
+    private static final String HTML_table_moradores = "<b>Tabela de moradores no estrangeiros por freguesias</b>\n\n";
     private static final String HTML_graph_atend_utentes = "<h2>Gráfico do Tipo de  Atendimento Social em relação aos utentes</h2>\n\n";
     private static final String HTML_graph_arrendamento_utentes = "<h2>Gráfico do Tipo de  Arrendamento em relação aos  utentes</h2>\n\n";
-    private static final String HTML_graph_moradores = "<h2>Gráfico de moradores no estrangeiros por conçelho</h2>\n\n";
+    private static final String HTML_graph_moradores = "<h2>Gráfico de moradores no estrangeiros por freguesias</h2>\n\n";
 
 
     @Inject

@@ -7,11 +7,9 @@ import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.screen.LookupComponent;
-import pt.cmolhao.entity.HabitacaoSocial;
 import pt.cmolhao.entity.RendimentosUtente;
 import pt.cmolhao.entity.TipoRendimento;
 import pt.cmolhao.entity.Utente;
-import pt.cmolhao.web.moradores.MoradoresEdit;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

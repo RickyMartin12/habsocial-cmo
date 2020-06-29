@@ -156,7 +156,7 @@
 
                     <lookupField id="luke_hab"
                                  optionsContainer="hab_arred_id"
-                                 caption="Numero de Renda:"
+                                 caption="Número de Renda/Andar:"
                                  inputPrompt="(seleccione o numero de renda)"
                                  icon="font-icon:SORT_NUMERIC_ASC"
                                  />
@@ -253,10 +253,12 @@
             </actions>
             <columns>
                 <!--<column id="id"/>-->
-                <column id="arrend" caption="Número de Renda"/>
+                <column id="arrend" caption="Número de Renda/Andar"/>
                 <column id="bl" caption="Número de Bloco"/>
                 <column id="coord" caption="Coordenadas da Habitação Social" />
                 <column id="bloc" caption="Designacao da Habitação Social"/>
+
+                <column id="andar" caption="Número de Andar" />
 
                 <column id="cod" caption="Codigo de Habitação Social"/>
                 <column id="codbr" caption="Bloco de Habitação Social"/>

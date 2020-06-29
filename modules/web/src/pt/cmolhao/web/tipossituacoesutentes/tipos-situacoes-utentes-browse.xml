@@ -19,17 +19,22 @@
                 width="800"/>
     <layout expand="tiposSituacoesUtentesesTable"
             spacing="true">
+        <groupBox caption="Filtros de Pesquisa"
+                      collapsable="true"
+                      spacing="true"
+                      icon="font-icon:FILTER"
+                      width="100%">
+            <scrollBox spacing="true">
+                <hbox spacing="true">
 
-        <scrollBox spacing="true">
-            <hbox spacing="true">
-                <lookupField id="linhasTiposSituacoesUtentes"
-                             caption="Mostrar Numero de Linhas"
-                             inputPrompt="(seleccione o numero de linhas)"
-                             icon="ARROWS_V"/>
-            </hbox>
+                    <lookupField id="linhasTiposSituacoesUtentes"
+                                 caption="Mostrar Numero de Linhas"
+                                 inputPrompt="(seleccione o numero de linhas)"
+                                 icon="ARROWS_V"/>
+                </hbox>
 
-        </scrollBox>
-
+            </scrollBox>
+        </groupBox>
         <table id="tiposSituacoesUtentesesTable"
                width="100%"
                dataContainer="tiposSituacoesUtentesesDc">

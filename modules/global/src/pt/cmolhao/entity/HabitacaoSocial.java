@@ -14,7 +14,10 @@ import javax.persistence.*;
 @Table(name = "habitacao_social")
 @Entity(name = "cmolhao_HabitacaoSocial")
 public class HabitacaoSocial extends BaseIntegerIdEntity {
-    private static final long serialVersionUID = -2965248998315385385L;
+    private static final long serialVersionUID = 4903697522159585696L;
+    @Lob
+    @Column(name = "andar")
+    protected String andar;
     @Column(name = "arrend")
     protected Integer arrend;
     @Lob
@@ -289,5 +292,13 @@ public class HabitacaoSocial extends BaseIntegerIdEntity {
 
     public void setArrend(Integer arrend) {
         this.arrend = arrend;
+    }
+
+    public String getAndar() {
+        return andar;
+    }
+
+    public void setAndar(String andar) {
+        this.andar = andar;
     }
 }
