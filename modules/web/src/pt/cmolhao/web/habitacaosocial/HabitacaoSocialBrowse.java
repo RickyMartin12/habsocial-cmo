@@ -216,15 +216,18 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
                                     customer.setLocalidade(hash_map.get("locality"));
                                     customer.setCodPostal(hash_map.get("postal_code"));
 
-                                    if(hab_loc_id.getValue().equals("Quelfes") || hab_loc_id.getValue().equals("Pechão") ||
-                                            hab_loc_id.getValue().equals("Olhão") || hab_loc_id.getValue().equals("Fuseta") ||
-                                            hab_loc_id.getValue().equals("Moncarapacho"))
+                                    if (hab_loc_id.getValue() != null)
                                     {
-                                        customer.setTipoArrendamento("Reside no Concelho");
-                                    }
-                                    else
-                                    {
-                                        customer.setTipoArrendamento("Não reside no Concelho");
+                                        if(hab_loc_id.getValue().equals("Quelfes") || hab_loc_id.getValue().equals("Pechão") ||
+                                                hab_loc_id.getValue().equals("Olhão") || hab_loc_id.getValue().equals("Fuseta") ||
+                                                hab_loc_id.getValue().equals("Moncarapacho"))
+                                        {
+                                            customer.setTipoArrendamento("Reside no Concelho");
+                                        }
+                                        else
+                                        {
+                                            customer.setTipoArrendamento("Não reside no Concelho");
+                                        }
                                     }
                                 }
                                 else

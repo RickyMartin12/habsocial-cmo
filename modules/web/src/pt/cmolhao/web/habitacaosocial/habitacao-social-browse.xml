@@ -67,7 +67,7 @@
             </properties>
             <loader id="hab_arred_id_loader">
                 <query>
-                    <![CDATA[select o.arrend as arrend from cmolhao_HabitacaoSocial o where o.bl is not null group by o.arrend]]>
+                    <![CDATA[select o.arrend as arrend from cmolhao_HabitacaoSocial o where o.arrend is not null group by o.arrend]]>
                 </query>
             </loader>
         </keyValueCollection>
@@ -78,7 +78,7 @@
             </properties>
             <loader id="hab_bl_id_loader">
                 <query>
-                    <![CDATA[select o.bl as bl from cmolhao_HabitacaoSocial o where o.arrend is not null group by o.bl]]>
+                    <![CDATA[select o.bl as bl from cmolhao_HabitacaoSocial o where o.bl is not null group by o.bl]]>
                 </query>
             </loader>
         </keyValueCollection>
@@ -125,19 +125,6 @@
 
     <layout expand="habitacaoSocialsTable"
             spacing="true">
-        <!--<filter id="filter"
-                applyTo="habitacaoSocialsTable"
-                dataLoader="habitacaoSocialsDl"
-                caption="Filtros de Pesquisa">
-            <properties include=".*"/>
-
-            <custom caption="Bloco da Habitação Social: "
-                    join="join {E}.bloc i"
-                    name="HabitacaoSocial"
-                    paramClass="pt.cmolhao.entity.BlocosHabitacaoSocial">
-                i.id = ?
-            </custom>
-        </filter>-->
             <groupBox caption="Filtros de Pesquisa"
                       collapsable="true"
                       spacing="true"

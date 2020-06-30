@@ -206,10 +206,10 @@
 
 
             <chart:graphs>
-                <chart:graph balloonText="Total de Atendimento: &lt;strong&gt;[[value]]&lt;/strong&gt;"
+                <chart:graph balloonText="Numero de Moradores no Estrangeiros: &lt;strong&gt;[[value]]&lt;/strong&gt;"
                              fillAlphas="1"
                              lineAlpha="0.2"
-                             title="Total de Atendimento"
+                             title="Numero de Moradores no Estrangeiros"
                              type="COLUMN"
                              valueField="CountUtentes"/>
             </chart:graphs>
@@ -227,23 +227,6 @@
         </hbox>
         <hbox spacing="true">
         </hbox>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </layout>
 </fragment>
