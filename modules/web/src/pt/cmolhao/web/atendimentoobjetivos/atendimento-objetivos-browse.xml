@@ -14,7 +14,7 @@
                     <condition>
                         <and>
                             <c:jpql>
-                                <c:where>e.atendimentoObjetivoGeral = :atendimentoObjetivoGeral</c:where>
+                                <c:where>e.atendimentoObjetivoGeral like :atendimentoObjetivoGeral</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -23,16 +23,6 @@
         </collection>
 
 
-        <keyValueCollection id="atendimento_objectivos_gerais_id">
-            <properties>
-                <property name="atendimentoObjetivoGeral" datatype="string" />
-            </properties>
-            <loader id="atendimento_objectivos_gerais_id_loader">
-                <query>
-                    <![CDATA[select o.atendimentoObjetivoGeral as atendimentoObjetivoGeral from cmolhao_AtendimentoObjetivos o where o.atendimentoObjetivoGeral is not null group by o.atendimentoObjetivoGeral]]>
-                </query>
-            </loader>
-        </keyValueCollection>
     </data>
     <dialogMode height="600"
                 width="800"/>
@@ -49,17 +39,15 @@
             <scrollBox spacing="true">
                 <hbox spacing="true">
 
-                    <lookupField id="aten_enca_id"
-                                 optionsContainer="atendimento_objectivos_gerais_id"
+                    <textField id="aten_enca_id"
+                               property="atendimentoObjetivoGeral"
+                               width="370px"
                                  caption="Atendimento por Objectivos Gerais:"
-                                 inputPrompt="(seleccione um dos objectivos gerais)"
+                                 inputPrompt="(introduza um dos objectivos gerais)"
                                  icon="font-icon:CERTIFICATE"
                     />
 
-                    <lookupField id="linhasAtendimentoObjectivos"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
+
 
 
                 </hbox>
@@ -69,6 +57,13 @@
                 </hbox>
             </scrollBox>
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasAtendimentoObjectivos"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
 
 
         <table id="atendimentoObjetivosesTable"

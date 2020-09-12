@@ -68,6 +68,8 @@ public class ExtLoginScreen extends Screen {
     protected LookupField<Locale> localesSelect;
     @Inject
     protected UrlRouting urlRouting;
+    /*@Inject
+    protected Button showPasswordBtn;*/
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -267,4 +269,28 @@ public class ExtLoginScreen extends Screen {
 
         localesSelect.focus();
     }
+
+
+    private int count = 0;
+    /*@Subscribe("showPasswordBtn")
+    protected void onShowPasswordBtnClick(Button.ClickEvent event) {
+
+
+
+
+
+        if (count % 2 == 0)
+        {
+            showPasswordBtn.setIcon("font-icon:EYE");
+
+
+        }
+        else
+        {
+            showPasswordBtn.setIcon("font-icon:EYE_SLASH");
+
+        }
+
+        count++;
+    }*/
 }

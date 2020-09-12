@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="instituicoesNucleoExecutivoesTable"
+        messagesPack="pt.cmolhao.web.nucleo_executivo_elementos_membros">
+    <data readOnly="true">
+        <collection id="instituicoesNucleoExecutivoesDc"
+                    class="pt.cmolhao.entity.InstituicoesNucleoExecutivo"
+                    view="instituicoesNucleoExecutivo-view">
+            <loader id="instituicoesNucleoExecutivoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_InstituicoesNucleoExecutivo e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.descricao = :descricao</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.nrregistosegsocial like :nrregistosegsocial</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.niss like :niss</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="instituicoesNucleoExecutivoDc"
+                    class="pt.cmolhao.entity.InstituicoesNucleoExecutivo"
+                    view="instituicoesNucleoExecutivo-view">
+            <loader id="instituicoesLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_InstituicoesNucleoExecutivo e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="instituicoesNucleoExecutivoesTable"
+            spacing="true">
+
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+            <scrollBox spacing="true">
+
+
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField
+                                    property="descricao"
+                                    id="desricaoField"
+                                    stylename="id_instituicao_search"
+                                    width="500px"
+                                    optionsContainer="instituicoesNucleoExecutivoDc"
+                                    inputPrompt="(Seleccione a Instituição)"
+                                    icon="font-icon:BUILDING_O" caption="Descrição da Instituição: ">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                            <textField id="numRegistoField"
+                                       stylename="num_registo_claso"
+                                       property="nrregistosegsocial"
+                                       caption="Número de Registo: "
+                                       inputPrompt="(Introduza o registo)"
+                                       icon="font-icon:ADDRESS_CARD_O"
+                                       width="250px"
+                            />
+
+                            <textField id="nissField"
+                                       stylename="num_seg_social_claso"
+                                       property="niss"
+                                       caption="NISS: "
+                                       description="Número de Registo de Segurança Social"
+                                       inputPrompt="(Introduza o NISS)"
+                                       icon="font-icon:ADDRESS_CARD_O"
+                                       width="250px"
+                            />
+
+                        </row>
+                    </rows>
+                </grid>
+                <hbox spacing="true">
+                    <button id="search_instituicoes" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                    <button id="reset_search_instituicoes" icon="ERASER" caption="Limpar" />
+                </hbox>
+            </scrollBox>
+
+        </groupBox>
+
+
+
+
+        <hbox spacing="true" width="100%">
+            <lookupField id="linhasInstituicoes"
+                         caption="Numero de Linhas: "
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
+
+        <table id="instituicoesNucleoExecutivoesTable"
+                    width="100%"
+                    dataContainer="instituicoesNucleoExecutivoesDc"
+                   emptyStateMessage="Não Existe Dados na Tabela"
+                   emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela da 'instituicoes'."/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela da tabela 'instituicoes'?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="descricao" caption="Descrição"/>
+                <column id="nrregistosegsocial" caption="Numero de Registo da Segurança Social" />
+                <column id="niss" caption="Numero de Identificação da Segurança Social"/>
+                <column id="cae" caption="Classificação das Actividades Economicas"/>
+                <column id="naturezajuridica" caption="Natureza Juridica"/>
+                <column id="email" caption="Email"/>
+                <column id="fax" caption="Fax"/>
+                <column id="moradacompleta" caption="Morada"/>
+                <column id="clasolhao" caption="Classificação de Olhão"/>
+                <column id="contactopresidentedireccao" caption="Contacto do Presidente/Direcção"/>
+                <column id="contactoresponsavelservico" caption="Contacto do Serviço Responsável"/>
+                <column id="coordenadasgps" caption="Coordenadas GPS"/>
+                <column id="cpcj" caption="Centro de Protecção de Crianças e Jovens"/>
+
+                <column id="outraredelocal" caption="Outra Rede Local"/>
+                <column id="plataformatematica" caption="Plataforma de Matemática"/>
+                <column id="presidentedireccao" caption="Presidente da Direcção"/>
+                <column id="projectoscomunitarios" caption="Projectos Comunitários"/>
+                <column id="quaisprojectoscomunitarios" caption="Identificação dos Projectos Comunitários"/>
+                <column id="qualoutraredelocal" caption="Idnetificação da Outra Rede Local"/>
+                <column id="responsavelservico" caption="Responsável pelo Serviço"/>
+                <column id="rsi" caption="Rendimento social de inserção"/>
+                <column id="telefone" caption="Telefone"/>
+                <column id="url" caption="URL"/>
+            </columns>
+            <rowsCount/>
+
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="instituicoesNucleoExecutivoesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="instituicoesNucleoExecutivoesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="instituicoesNucleoExecutivoesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="instituicoesNucleoExecutivoesTable.excel" stylename="friendly"/>
+
+            </buttonsPanel>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

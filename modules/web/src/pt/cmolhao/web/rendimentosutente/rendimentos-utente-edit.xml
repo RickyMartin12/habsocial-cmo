@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.rendimentosutente">
     <data>
         <instance id="rendimentosUtenteDc"
@@ -33,31 +32,69 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="rendimentosUtenteDc">
-            <column width="250px">
-                <textField id="idRendimentoUtenteField" property="id" visible="false" />
-                <textField id="anoField" property="ano" maxLength="4" caption="Ano de Rendimento: " icon="font-icon:CALENDAR" stylename="ano_cost_text"/>
-                <lookupField
-                        property="idUtente"
-                        id="idUtenteField"
-                        optionsContainer="UtentesDC"
-                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
-                        inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+
+        <tabSheet>
+            <tab id="dados_rendimentos"
+                 caption="Dados Rendimentos"
+                 icon="font-icon:MONEY"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_dados_rendimentos" dataContainer="rendimentosUtenteDc">
+
+                    <column width="400px">
 
 
-                <lookupField
-                        inputPrompt="(Seleccione o tipo de rendimento)"
-                        property="idTipoRendimento"
-                        id="idTipoRendimentoField"
-                        optionsContainer="tipoRendimentoesDc"
-                        icon="font-icon:HOME" caption="Tipo de Rendimento: "/>
+                        <lookupPickerField
+                                inputPrompt="(Seleccione o tipo de rendimento)"
+                                property="idTipoRendimento"
+                                id="idTipoRendimentoField"
+                                colspan="2"
+                                width="590px"
+                                optionsContainer="tipoRendimentoesDc"
+                                icon="font-icon:HOME" caption="Tipo de Rendimento: ">
 
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
 
-                <textField id="valorRendimentoField" property="valorRendimento"
-                           caption="Valor do Rendimento" icon="font-icon:MONEY" datatype="int"
-                           conversionErrorMessage="O valor do rendimento do utente possui numeros inteiros"/>
-            </column>
-        </form>
+                        <textField id="valorRendimentoField" property="valorRendimento"
+                                   width="120px"
+                                   caption="Valor do Rendimento: " icon="font-icon:MONEY" datatype="int"
+                                   conversionErrorMessage="O valor do rendimento do utente possui numeros inteiros"/>
+                    </column>
+                    <column width="300px">
+                        <textField id="anoField" property="ano" maxLength="4" caption="Ano de Rendimento: " icon="font-icon:CALENDAR" stylename="ano_cost_text"/>
+                        <textField id="idRendimentoUtenteField" property="id" visible="false" />
+                    </column>
+                </form>
+
+            </tab>
+
+            <tab id="dados_utentes"
+                 caption="Dados Utentes"
+                 icon="font-icon:USER"
+                 margin="true"
+                 spacing="true">
+                    <form id="form_dados_utentes" dataContainer="rendimentosUtenteDc">
+
+                        <lookupPickerField
+                                property="idUtente"
+                                id="idUtenteField"
+                                optionsContainer="UtentesDC"
+                                width="400px"
+                                icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                                inputPrompt="(Seleccione o nome e a identificação do utente)">
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+                    </form>
+            </tab>
+        </tabSheet>
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
             <button action="windowClose" caption="Fechar" icon="CLOSE"/>

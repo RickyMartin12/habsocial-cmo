@@ -1,8 +1,10 @@
 package pt.cmolhao.web.apoios;
 
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
@@ -11,6 +13,7 @@ import pt.cmolhao.entity.*;
 import pt.cmolhao.web.ajudastecnicas.AjudasTecnicasEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,11 +28,7 @@ public class ApoiosBrowse extends StandardLookup<Apoios> {
     @Inject
     protected CollectionLoader<Apoios> apoiosesDl;
     @Inject
-    protected LookupField<Equipamento> idEquipamentoField;
-    @Inject
     protected LookupField<Instituicoes> idInstituicaoField;
-    @Inject
-    protected LookupField<TipoAjuda> idTipoapoioField;
     @Inject
     protected LookupField<Utente> utenteField;
     @Inject
@@ -40,18 +39,15 @@ public class ApoiosBrowse extends StandardLookup<Apoios> {
     protected GroupTable<Apoios> apoiosesTable;
     @Inject
     protected TextField<String> numProcessoField;
-    @Inject
-    protected TextField<String> dataAtribuicaoField;
-    @Inject
-    protected TextField<String> dataFimField;
-    @Inject
-    protected TextField<String> dataPedidoField;
-    @Inject
-    protected TextField<String> dataRenovacaoField;
+    @Named("apoiosesTable.remove")
+    protected RemoveAction<Apoios> apoiosesTableRemove;
     @Inject
     private ScreenBuilders screenBuilders;
     @Inject
     private Notifications notifications;
+
+    @Inject
+    private Dialogs dialogs;
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
@@ -89,97 +85,12 @@ public class ApoiosBrowse extends StandardLookup<Apoios> {
                 screenBuilders.editor(apoiosesTable)
                         .newEntity()
                         .withInitializer(customer -> {
-                            customer.setIdEquipamento(idEquipamentoField.getValue());
                             customer.setIdInstituicao(idInstituicaoField.getValue());
-                            customer.setIdTipoapoio(idTipoapoioField.getValue());
                             customer.setIdUtente(utenteField.getValue());
                             if(numProcessoField.getValue() != null)
                             {
                                 customer.setNumProcesso(Integer.valueOf(numProcessoField.getValue()));
                             }
-
-                            if (dataAtribuicaoField.getValue() != null)
-                            {
-                                String dia = "01";
-                                String mes = "01";
-                                String ano = dataAtribuicaoField.getValue();
-                                String data = dia +"/"+mes+"/"+ano;
-                                try
-                                {
-                                    Date date_ano = new SimpleDateFormat("dd/MM/yyyy").parse(data);
-                                    customer.setDataAtribuicao(date_ano);
-                                }
-                                catch (ParseException e)
-                                {
-                                    notifications.create()
-                                            .withCaption("Mensagem de erro: " + e.toString())
-                                            .withType(Notifications.NotificationType.TRAY)
-                                            .show();
-                                }
-                            }
-
-
-                            if (dataFimField.getValue() != null)
-                            {
-                                String dia = "01";
-                                String mes = "01";
-                                String ano = dataFimField.getValue();
-                                String data = dia +"/"+mes+"/"+ano;
-                                try
-                                {
-                                    Date date_ano = new SimpleDateFormat("dd/MM/yyyy").parse(data);
-                                    customer.setDataFim(date_ano);
-                                }
-                                catch (ParseException e)
-                                {
-                                    notifications.create()
-                                            .withCaption("Mensagem de erro: " + e.toString())
-                                            .withType(Notifications.NotificationType.TRAY)
-                                            .show();
-                                }
-                            }
-
-                            if (dataPedidoField.getValue() != null)
-                            {
-                                String dia = "01";
-                                String mes = "01";
-                                String ano = dataPedidoField.getValue();
-                                String data = dia +"/"+mes+"/"+ano;
-                                try
-                                {
-                                    Date date_ano = new SimpleDateFormat("dd/MM/yyyy").parse(data);
-                                    customer.setDataPedido(date_ano);
-                                }
-                                catch (ParseException e)
-                                {
-                                    notifications.create()
-                                            .withCaption("Mensagem de erro: " + e.toString())
-                                            .withType(Notifications.NotificationType.TRAY)
-                                            .show();
-                                }
-                            }
-
-
-                            if (dataRenovacaoField.getValue() != null)
-                            {
-                                String dia = "01";
-                                String mes = "01";
-                                String ano = dataRenovacaoField.getValue();
-                                String data = dia +"/"+mes+"/"+ano;
-                                try
-                                {
-                                    Date date_ano = new SimpleDateFormat("dd/MM/yyyy").parse(data);
-                                    customer.setDataRenovacao(date_ano);
-                                }
-                                catch (ParseException e)
-                                {
-                                    notifications.create()
-                                            .withCaption("Mensagem de erro: " + e.toString())
-                                            .withType(Notifications.NotificationType.TRAY)
-                                            .show();
-                                }
-                            }
-
                         })
                         .withScreenClass(ApoiosEdit.class)    // specific editor screen
                         .build()
@@ -189,27 +100,12 @@ public class ApoiosBrowse extends StandardLookup<Apoios> {
 
     @Subscribe("reset_apoios")
     protected void onReset_apoiosClick(Button.ClickEvent event) {
-        idEquipamentoField.setValue(null);
         idInstituicaoField.setValue(null);
-        idTipoapoioField.setValue(null);
         utenteField.setValue(null);
         numProcessoField.setValue(null);
-        linhasApoio.setValue(null);
-        dataAtribuicaoField.setValue(null);
-        dataFimField.setValue(null);
-        dataPedidoField.setValue(null);
-        dataRenovacaoField.setValue(null);
-        apoiosesDl.setMaxResults(0);
-        apoiosesDl.removeParameter("idEquipamento");
         apoiosesDl.removeParameter("idInstituicao");
-        apoiosesDl.removeParameter("idTipoapoio");
         apoiosesDl.removeParameter("idUtente");
         apoiosesDl.removeParameter("numProcesso");
-
-        apoiosesDl.removeParameter("dataAtribuicao");
-        apoiosesDl.removeParameter("dataFim");
-        apoiosesDl.removeParameter("dataPedido");
-        apoiosesDl.removeParameter("dataRenovacao");
 
         apoiosesDl.load();
     }
@@ -221,12 +117,7 @@ public class ApoiosBrowse extends StandardLookup<Apoios> {
 
     @Subscribe("search_apoios")
     protected void onSearch_apoiosClick(Button.ClickEvent event) {
-        // ID do equipamento
-        if (idEquipamentoField.getValue() != null) {
-            apoiosesDl.setParameter("idEquipamento",  idEquipamentoField.getValue().getId());
-        } else {
-            apoiosesDl.removeParameter("idEquipamento");
-        }
+
 
         // ID do Instituição
         if (idInstituicaoField.getValue() != null) {
@@ -235,12 +126,6 @@ public class ApoiosBrowse extends StandardLookup<Apoios> {
             apoiosesDl.removeParameter("idInstituicao");
         }
 
-        // ID Tipo de Ajuda
-        if (idTipoapoioField.getValue() != null) {
-            apoiosesDl.setParameter("idTipoapoio",  idTipoapoioField.getValue().getId());
-        } else {
-            apoiosesDl.removeParameter("idTipoapoio");
-        }
 
         // ID do Utente
         if (utenteField.getValue() != null) {
@@ -253,7 +138,7 @@ public class ApoiosBrowse extends StandardLookup<Apoios> {
         if (numProcessoField.getValue() != null) {
             if (isNumeric(numProcessoField.getValue()))
             {
-                apoiosesDl.setParameter("numProcesso", Integer.valueOf(numProcessoField.getValue()) );
+                apoiosesDl.setParameter("numProcesso", "(?i)%" + Integer.valueOf(numProcessoField.getValue()) + "%");
             }
             else
             {
@@ -269,97 +154,6 @@ public class ApoiosBrowse extends StandardLookup<Apoios> {
             apoiosesDl.removeParameter("numProcesso");
         }
 
-        // Data de Atribuicao
-
-        if (dataAtribuicaoField.getValue() != null)
-        {
-            if (isNumeric(dataAtribuicaoField.getValue()))
-            {
-                apoiosesDl.setParameter("dataAtribuicao", Integer.valueOf(dataAtribuicaoField.getValue()) );
-            }
-            else
-            {
-                notifications.create()
-                        .withCaption("<code>Erro ao atribuir string do ano de atribuição</code>")
-                        .withDescription("<u>Devera introduzir um numero inteiro</u>")
-                        .withType(Notifications.NotificationType.ERROR)
-                        .withContentMode(ContentMode.HTML)
-                        .show();
-            }
-        }
-        else
-        {
-            apoiosesDl.removeParameter("dataAtribuicao");
-        }
-
-        // Data Fim
-
-        if (dataFimField.getValue() != null)
-        {
-            if (isNumeric(dataFimField.getValue()))
-            {
-                apoiosesDl.setParameter("dataFim", Integer.valueOf(dataFimField.getValue()) );
-            }
-            else
-            {
-                notifications.create()
-                        .withCaption("<code>Erro ao atribuir string do ano do fim</code>")
-                        .withDescription("<u>Devera introduzir um numero inteiro</u>")
-                        .withType(Notifications.NotificationType.ERROR)
-                        .withContentMode(ContentMode.HTML)
-                        .show();
-            }
-        }
-        else
-        {
-            apoiosesDl.removeParameter("dataFim");
-        }
-
-        // Data de Pedido
-
-        if (dataPedidoField.getValue() != null)
-        {
-            if (isNumeric(dataPedidoField.getValue()))
-            {
-                apoiosesDl.setParameter("dataPedido", Integer.valueOf(dataPedidoField.getValue()) );
-            }
-            else
-            {
-                notifications.create()
-                        .withCaption("<code>Erro ao atribuir string do ano do pedido</code>")
-                        .withDescription("<u>Devera introduzir um numero inteiro</u>")
-                        .withType(Notifications.NotificationType.ERROR)
-                        .withContentMode(ContentMode.HTML)
-                        .show();
-            }
-        }
-        else
-        {
-            apoiosesDl.removeParameter("dataPedido");
-        }
-
-        // Data Renovação
-
-        if (dataRenovacaoField.getValue() != null)
-        {
-            if (isNumeric(dataRenovacaoField.getValue()))
-            {
-                apoiosesDl.setParameter("dataRenovacao", Integer.valueOf(dataRenovacaoField.getValue()) );
-            }
-            else
-            {
-                notifications.create()
-                        .withCaption("<code>Erro ao atribuir string do ano de renovação</code>")
-                        .withDescription("<u>Devera introduzir um numero inteiro</u>")
-                        .withType(Notifications.NotificationType.ERROR)
-                        .withContentMode(ContentMode.HTML)
-                        .show();
-            }
-        }
-        else
-        {
-            apoiosesDl.removeParameter("dataRenovacao");
-        }
 
         apoiosesDl.load();
     }
@@ -375,5 +169,36 @@ public class ApoiosBrowse extends StandardLookup<Apoios> {
             apoiosesDl.setMaxResults(0);
         }
         apoiosesDl.load();
+    }
+
+    @Subscribe("apoiosesTable.remove")
+    protected void onApoiosesTableRemove(Action.ActionPerformedEvent event) {
+        apoiosesTableRemove.setConfirmation(false);
+        if (apoiosesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção de apoios")
+                    .withMessage("Deve seleccionar pelo um dos apoios")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            Apoios user = apoiosesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do apoio número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do apoio número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        apoiosesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 }

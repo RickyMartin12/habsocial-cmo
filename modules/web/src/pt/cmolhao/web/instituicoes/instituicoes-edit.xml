@@ -1,47 +1,289 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.instituicoes">
     <data>
         <instance id="instituicoesDc"
                   class="pt.cmolhao.entity.Instituicoes"
-                  view="_local">
+                  view="instituicoes-view">
             <loader/>
+            <collection id="valenciaDc" property="valencias" />
+            <collection id="apoiosDc" property="apoios" />
+            <collection id="projectosIntervencaoDc" property="projectosIntervencaos" />
+            <collection id="tecnicosDc" property="tecnicos" />
+            <collection id="membrosRedeTrabalhosDc" property="membrosRedeTrabalhos" />
+
         </instance>
+
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="scrollBox" spacing="true">
         <scrollBox id="scrollBox" spacing="true">
-            <form id="form" dataContainer="instituicoesDc">
-                <column width="250px">
-                    <textField id="idInstituicaoField" property="id" visible="false" />
-                    <textField id="caeField" property="cae" icon="font-icon:MONEY" caption="Classificação Actividades Economicas: "/>
-                    <checkBox id="clasolhaoField" property="clasolhao" caption="Olhão Classificado: " icon="font-icon:LOCATION_ARROW" />
-                    <textField id="contactopresidentedireccaoField" property="contactopresidentedireccao" icon="PHONE" caption="Contacto do Presidente/Direcção: "/>
-                    <textField id="contactoresponsavelservicoField" property="contactoresponsavelservico" icon="PHONE" caption="Contacto pelo Serviço Responsável: "/>
-                    <textField id="coordenadasgpsField" property="coordenadasgps" icon="MAP_MARKER" caption="Coordenadas GPS: "/>
-                    <checkBox id="cpcjField" property="cpcj" icon="font-icon:BANK" caption="Centro de Protecção de Crianças e Jovens: "/>
-                    <textField id="descricaoField" property="descricao" icon="FILE_TEXT" caption="Descrição: "/>
-                    <textField id="emailField" property="email" caption="Email: " icon="ENVELOPE"/>
-                    <textField id="faxField" property="fax" icon="FAX" caption="Fax: "/>
-                    <textField id="moradacompletaField" property="moradacompleta" icon="font-icon:HOME" caption="Morada: "/>
-                    <textField id="naturezajuridicaField" property="naturezajuridica" icon="LEAF" caption="Natureza Jurídica: "/>
-                    <textField id="nissField" property="niss" caption="Numero de Identificação da Segurança Social: " icon="KEY"/>
-                    <textField id="nrregistosegsocialField" property="nrregistosegsocial" caption="Número de Segurânça Social: " icon="KEY"/>
-                    <checkBox id="outraredelocalField" property="outraredelocal" icon="font-icon:COMPRESS" caption="Outra Rede Local: "/>
-                    <checkBox id="plataformatematicaField" property="plataformatematica" icon="DESKTOP" caption="Plataforma de Informática: "/>
-                    <textField id="presidentedireccaoField" property="presidentedireccao" icon="USER_CIRCLE" caption="Presidente da Direcção"/>
-                    <checkBox id="projectoscomunitariosField" property="projectoscomunitarios" caption="Projectos Comunitários: " icon="font-icon:PASTE"/>
-                    <textField id="quaisprojectoscomunitariosField" property="quaisprojectoscomunitarios" icon="QUESTION_CIRCLE" caption="Identificação dos Projectos Comunitários: "/>
-                    <textField id="qualoutraredelocalField" property="qualoutraredelocal" caption="Identificação outra local de rede: " icon="QUESTION_CIRCLE"/>
-                    <textField id="responsavelservicoField" property="responsavelservico" caption="Serviço Responsável: " icon="USER_CIRCLE"/>
-                    <checkBox id="rsiField" property="rsi" caption="Rendimento Social de Inserção: " icon="font-icon:LINE_CHART"/>
-                    <textField id="telefoneField" property="telefone" icon="PHONE" caption="Telefone: "/>
-                    <textField id="urlField" property="url" caption="URL: " icon="font-icon:LINK"/>
-                </column>
-            </form>
+                <tabSheet>
+                    <tab id="dados_pessoais"
+                         caption="Dados Pessoais"
+                         icon="font-icon:ID_CARD"
+                         margin="true"
+                         spacing="true">
+                            <form id="form_dados_pessoais" dataContainer="instituicoesDc">
+                            <!-- Dados Pessoais -->
+                                <column width="300px">
+                                    <textField id="caeField" width="100px" property="cae"
+                                               icon="font-icon:MONEY" caption="Classificação Actividades Economicas: "/>
+                                    <textField id="descricaoField" property="descricao" colspan="2" height="100%" width="100%"
+                                               icon="FILE_TEXT" caption="Descrição: "/>
+                                </column>
+                                <column width="300px">
+                                    <textField id="emailField" property="email" caption="Email: " icon="ENVELOPE"/>
+                                    <textField id="idInstituicaoField" property="id" visible="false" />
+                                </column>
+                            </form>
+                    </tab>
+                    <tab id="contactos_outros"
+                         caption="Contactos e Outros"
+                         margin="true"
+                         icon="font-icon:PHONE"
+                         spacing="true">
+                        <form id="form_contactos_pessoais" dataContainer="instituicoesDc">
+                            <column width="300px">
+                                <textField id="faxField" property="fax" icon="FAX" caption="Fax: " width="100px" maxLength="9"/>
+                                <textField id="contactoresponsavelservicoField" property="contactoresponsavelservico" icon="PHONE" caption="Contacto do Serviço: " width="100px" maxLength="9"/>
+                                <textField id="urlField" property="url" caption="URL: " icon="font-icon:LINK" colspan="2" width="100%"/>
+                            </column>
+                            <column width="300px">
+                                <textField id="telefoneField" property="telefone" icon="PHONE" caption="Telefone: " width="100px" maxLength="9"/>
+                                <textField id="contactopresidentedireccaoField" property="contactopresidentedireccao" icon="PHONE" caption="Contacto do Presidente/Direcção: " width="100px" maxLength="9"/>
+                            </column>
+                        </form>
+                    </tab>
+                    <tab id="morada"
+                         caption="Morada"
+                         margin="true"
+                         icon="font-icon:MAP_MARKER"
+                         spacing="true">
+                        <form id="form_morada_instituicao" dataContainer="instituicoesDc">
+                        <!-- Moradas -->
+                            <column width="500px">
+                                <textField id="moradacompletaField"
+                                           stylename="morada_completa"
+                                           property="moradacompleta" icon="font-icon:HOME" caption="Morada: " width="500px"/>
+                            </column>
+                            <column width="200px">
+                                <textField id="coordenadasgpsField"
+                                           stylename="coordenada_gps"
+                                           property="coordenadasgps" icon="MAP_MARKER" caption="Coordenadas GPS: " width="200px"/>
+                            </column>
+                        </form>
+                    </tab>
+                    <tab id="outros_contactos"
+                         caption="Outro Tipos de Dados / Presidencia"
+                         icon="font-icon:ADDRESS_CARD_O"
+                         margin="true"
+                         spacing="true">
+                        <form id="form4" dataContainer="instituicoesDc">
+                            <column width="300px">
+                                <textField id="naturezajuridicaField" property="naturezajuridica" icon="LEAF" caption="Natureza Jurídica: " />
+                                <textField id="nrregistosegsocialField" property="nrregistosegsocial" caption="Número de Registo: " description="Número de Registo de Segurânça Social" icon="KEY" width="120px"/>
+                                <textField id="quaisprojectoscomunitariosField" property="quaisprojectoscomunitarios" icon="QUESTION_CIRCLE" caption="Identificação de Projectos: " width="100px"/>
+                                <textField id="responsavelservicoField" property="responsavelservico" caption="Serviço Responsável: " icon="USER_CIRCLE" />
+                            </column>
+                            <column width="300px">
+                                <textField id="nissField" property="niss" caption="NISS: " icon="KEY" description="Número de Identificação Segurânça Social" width="120px"/>
+                                <textField id="presidentedireccaoField" property="presidentedireccao" icon="USER_CIRCLE" caption="Presidente da Direcção: "/>
+                                <textField id="qualoutraredelocalField" property="qualoutraredelocal" caption="Rede Local: " icon="QUESTION_CIRCLE" width="100px"/>
+
+                            </column>
+
+
+
+                        </form>
+                    </tab>
+                    <tab id="afirmacao"
+                         caption="Afirmações"
+                         margin="true"
+                         icon="font-icon:CHECK"
+                         spacing="true">
+                        <form id="form5" dataContainer="instituicoesDc">
+
+                            <column width="300px">
+                                <checkBox id="clasolhaoField" property="clasolhao" caption="Olhão Classificado: " icon="font-icon:LOCATION_ARROW" />
+                                <checkBox id="outraredelocalField" property="outraredelocal" icon="font-icon:COMPRESS" caption="Rede Local: "/>
+                                <checkBox id="plataformatematicaField" property="plataformatematica" icon="DESKTOP" caption="Plataforma de Informática: "/>
+
+                            </column>
+
+                            <column width="300px">
+                                <checkBox id="cpcjField" property="cpcj" icon="font-icon:BANK" caption="Centro de Protecção de Crianças/Jovens: "/>
+                                <checkBox id="projectoscomunitariosField" property="projectoscomunitarios" caption="Projectos Comunitários: " icon="font-icon:PASTE"/>
+                                <checkBox id="rsiField" property="rsi" caption="Rendimento Social: " icon="font-icon:LINE_CHART"/>
+
+                            </column>
+                        </form>
+                    </tab>
+                </tabSheet>
+
+            <tabSheet>
+                <tab id="valencia"
+                     caption="Valênçia"
+                     icon="font-icon:SIMPLYBUILT"
+                     margin="true"
+                     spacing="true">
+                    <groupBox id="valenciasBox" caption="Valências">
+                        <table id="valenciasesTable" dataContainer="valenciaDc" width="100%" height="500px"
+                               emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove" />
+                            </actions>
+                            <columns>
+                                <column id="descricaotecnica" caption="Descrição"/>
+                                <column id="idtipovalencia" caption="Área de Intervenção"/>
+                                <column id="idResSocial" caption="Resposta Social"/>
+                                <column id="acordocapacidade" caption="Capacidade Máxima"/>
+                            </columns>
+                            <buttonsPanel>
+                                <button action="valenciasesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="valenciasesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="valenciasesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+                </tab>
+                <tab id="apoios"
+                     caption="Apoios"
+                     icon="font-icon:CODE_FORK"
+                     margin="true"
+                     spacing="true">
+                    <groupBox id="apoiosBox" caption="Apoios">
+                        <table id="apoiosesTable" dataContainer="apoiosDc" width="100%" height="500px"
+                               emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="idInstituicao" caption="Designação da Instituição"/>
+                                <column id="idUtente" caption="Utente"/>
+                                <column id="numProcesso" caption="Número Processo"/>
+
+                                <column id="dataAtribuicao" caption="Data de Atribuição"/>
+                                <column id="dataPedido" caption="Data de Pedido"/>
+                                <column id="dataRenovacao" caption="Data de Renovação"/>
+                                <column id="dataFim" caption="Data de Fim"/>
+
+
+                                <column id="idEstado" caption="Estado" />
+                                <column id="idTipoapoio" caption="Tipo de Ajuda"/>
+
+                                <column id="observacaoEstado" caption="Observação Estado"/>
+                                <column id="observacoesConf" caption="Observações Confirmações"/>
+                                <column id="observacoesGerais" caption="Observações Gerais"/>
+                                <column id="valorApoio" caption="Valor de Apoio" generator="generateValorApoio"/>
+                            </columns>
+                            <buttonsPanel>
+                                <button action="apoiosesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="apoiosesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="apoiosesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+                </tab>
+                <tab id="projectos_intervencao"
+                     caption="Projectos de Intervenção"
+                     icon="font-icon:PASTE"
+                     margin="true"
+                     spacing="true">
+                    <groupBox id="projectosIntervencaoBox" caption="Projectos de Intervenção">
+                        <table id="projectosIntervencaosTable" dataContainer="projectosIntervencaoDc" width="100%" height="500px"
+                               emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+
+                                <column id="nomeProjecto" caption="Nome do Projecto" />
+                                <column id="descricaoProjecto" caption="Descrição do Projecto" />
+                                <column id="projectosemaprovacao" caption="Projectos em Aprovação"/>
+                            </columns>
+                            <buttonsPanel>
+                                <button action="projectosIntervencaosTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="projectosIntervencaosTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="projectosIntervencaosTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+                </tab>
+                <tab id="tecnicos"
+                     caption="Técnicos"
+                     icon="font-icon:USER_MD"
+                     margin="true"
+                     spacing="true">
+                    <groupBox id="tecnicoBox" caption="Técnicos">
+                        <table id="tecnicoesTable" dataContainer="tecnicosDc" width="100%" height="500px"
+                               emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="nome" caption="Nome"/>
+                                <column id="email" caption="Email" />
+                            </columns>
+                            <buttonsPanel>
+                                <button action="tecnicoesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="tecnicoesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="tecnicoesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+                </tab>
+
+                <tab id="membros_rede_trabalho"
+                     caption="Membros de Rede de Trabalho"
+                     icon="font-icon:GROUP"
+                     margin="true"
+                     spacing="true">
+
+                    <groupBox id="membrosRedeTrabalhoBox" caption="Membros da Rede de Trabalho">
+                        <groupTable id="membrosRedeTrabalhoesTable"
+                                    width="100%"
+                                    dataContainer="membrosRedeTrabalhosDc"
+                                    emptyStateMessage="Não Existe Dados na Tabela"
+                                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="idInsituicao" caption="Membro da Instituição"/>
+                                <column id="idRedeTrabalho" caption="Rede de Trabalho"/>
+                                <column id="dataAdesao" caption="Data de Adesão"/>
+                            </columns>
+                            <rowsCount/>
+                            <buttonsPanel id="buttonsPanel"
+                                          alwaysVisible="true">
+                                <button id="createBtn" action="membrosRedeTrabalhoesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button id="editBtn" action="membrosRedeTrabalhoesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button id="removeBtn" action="membrosRedeTrabalhoesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </groupTable>
+                    </groupBox>
+
+                </tab>
+
+
+            </tabSheet>
         </scrollBox>
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>

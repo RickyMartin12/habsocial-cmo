@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.utente">
     <data>
         <instance id="utenteDc"
                   class="pt.cmolhao.entity.Utente"
                   view="utente-view">
             <loader/>
+            <collection id="apoiosDc" property="apoios" />
+            <collection id="atendimentosDc" property="atendimentos" />
+            <collection id="moradoresDc" property="moradores" />
+            <collection id="rendimentosUtentesDc" property="rendimentosUtentes" />
+            <collection id="situacaoUtentesDc" property="situacaoUtentes" />
+            <collection id="utentesRelacionadosDc" property="utentesRelacionados" />
+            <collection id="utentesRelacionados2Dc" property="utentesRelacionados2" />
+            <collection id="utentesSituacaoProfissionalsDc" property="utentesSituacaoProfissionals" />
         </instance>
 
         <collection id="grauEscolaridadesDc"
@@ -68,68 +75,454 @@
                 width="800"/>
     <layout expand="scrollBox" spacing="true">
         <scrollBox id="scrollBox" spacing="true">
-            <form id="form" dataContainer="utenteDc">
-                <column width="250px">
-                    <textField id="idUtenteField" visible="false" property="id" />
-                    <textField id="certUniaoEuropeiaField" property="certUniaoEuropeia" caption="Certidão da União Europeia (BI): "
-                               icon="CREDIT_CARD" inputPrompt="00000000 0 ZZY"/>
-                    <dateField id="dataNascField" property="dataNasc" caption="Data de Nascimento: " icon="CALENDAR"/>
-                    <checkBox id="deficienteField" property="deficiente" caption="Deficiente: " icon="WHEELCHAIR"/>
-                    <checkBox id="dependenteField" property="dependente"/>
-                    <textField id="emailField" property="email" caption="Email: " icon="ENVELOPE">
-                        <validator class="com.haulmont.cuba.gui.components.validators.EmailValidator"
-                                   message="Email Invalido"/>
-                    </textField>
-                    <lookupField
-                            inputPrompt="(Seleccione o grau de escolaridade)"
-                            property="grauEscolaridade"
-                            id="grauEscolaridadeField"
-                            optionsContainer="grauEscolaridadesDc"
-                            icon="font-icon:GRADUATION_CAP" caption="Grau de Escolaridade: "/>
-                    <lookupField
-                            inputPrompt="(Seleccione a habilitação literária)"
-                            property="habilitacoes"
-                            id="habilitacoesField"
-                            optionsContainer="habilitacoesLiterariasesDc"
-                            icon="font-icon:BOOK" caption="Habilitações Literarias: "/>
-                    <lookupField
-                            inputPrompt="(Seleccione o tipo de civil)"
-                            property="idTipoCivil"
-                            id="idTipoCivilField"
-                            optionsContainer="tipoCivilsDc"
-                            icon="font-icon:ADDRESS_CARD_O" caption="Tipo de Civil: "/>
-                    <lookupField
-                            inputPrompt="(Seleccione a topologia familiar)"
-                            property="idTipologiaFamiliar"
-                            id="idTipologiaFamiliarField"
-                            optionsContainer="tipologiaFamiliarsDc"
-                            icon="font-icon:USERS" caption="Topologia Familiar: "/>
-                    <textField id="nissField" property="niss" caption="Numero de Segurança Social: " icon="font-icon:ID_CARD"
-                               maxLength="11"/>
 
-                    <lookupField id="estadoCivilField" inputPrompt="(Seleccione o Estado Civil)"
-                                 property="estadoCivil" caption="Estado Civil: " icon="REFRESH" />
-                    <textField id="nomeField" property="nome" caption="Nome: " icon="ADDRESS_CARD" required="true"
-                                requiredMessage="O Nome do Utente deve ser preenchido"/>
-                    <textField id="numContribuinteField" property="numContribuinte" caption="Numero Contribuinte: "
-                               icon="font-icon:ID_CARD" maxLength="9"/>
-                    <textField id="numIdCivilField" property="numIdCivil" caption="Numero ID Civil: " icon="CREDIT_CARD_ALT"
-                               maxLength="9" />
-                    <textArea id="obsConfField" property="obsConf" icon="FILE_TEXT" caption="Observações Confiramento: "
-                                rows="3" cols="10"/>
-                    <textField id="obsGeraisField" property="obsGerais" icon="FILE_TEXT" caption="Observações Gerais: "/>
-                    <lookupField
-                            inputPrompt="(Seleccione a Profissão)"
-                            property="profissao"
-                            id="profissaoField"
-                            optionsContainer="profissaosDc"
-                            icon="font-icon:USER_MD" caption="Profissão: " />
-                    <textField id="telefoneField" property="telefone" caption="Telefone: " icon="PHONE" maxLength="9"/>
-                    <textField id="telem_velField" property="telem_vel" caption="Telemóvel: " icon="MOBILE_PHONE" maxLength="9"/>
-                    <lookupField id="paisOrigemField" property="paisOrigem" caption="Pais de Origem: " icon="FLAG" inputPrompt="(Introduza o teu país de origem)"
-                                 required="true" requiredMessage="O Pais de Origem do Utente deve ser preenchido"/>
-                </column>
-            </form>
+            <tabSheet>
+                <tab id="dados_pessoais"
+                     caption="Dados Pessoais"
+                     icon="font-icon:ID_CARD"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_dados_pessoais" dataContainer="utenteDc" >
+
+                        <column width="300px">
+                            <textField stylename="nome_utente" id="nomeField" property="nome" caption="Nome: " icon="ADDRESS_CARD" required="true"
+                                       requiredMessage="O Nome do Utente deve ser preenchido"/>
+                            <dateField stylename="data_nasc_utente" id="dataNascField" property="dataNasc" caption="Data de Nascimento: " icon="CALENDAR"/>
+                            <textField id="idUtenteField" visible="false" property="id" />
+
+                        </column>
+
+                        <column width="300px">
+                            <textField stylename="num_contribuinte_utente" id="numContribuinteField" property="numContribuinte" caption="Numero Contribuinte: "
+                                       icon="font-icon:ID_CARD" maxLength="9"/>
+                            <textField stylename="email_utente" id="emailField" property="email" caption="Email: " icon="ENVELOPE">
+                                <validator class="com.haulmont.cuba.gui.components.validators.EmailValidator"
+                                           message="Email Invalido"/>
+                            </textField>
+                        </column>
+
+                    </form>
+
+                </tab>
+
+                <tab id="dados_pessoais_secundários"
+                     caption="Dados Pessoais Secundários"
+                     icon="font-icon:ID_CARD"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_dados_pessoais_secundarios" dataContainer="utenteDc" >
+                        <column width="300px">
+                            <textField id="certUniaoEuropeiaField" property="certUniaoEuropeia" caption="Número do Documento: "
+                                       icon="CREDIT_CARD" inputPrompt="00000000 0 ZZY" stylename="cert_uniao"/>
+                            <textField id="telefoneField" property="telefone" caption="Telefone: " icon="PHONE" maxLength="9" stylename="telefone_u"/>
+                            <lookupField id="paisOrigemField" property="paisOrigem" caption="Pais de Origem: " icon="FLAG" inputPrompt="(Introduza o teu país de origem)"
+                                         required="true" requiredMessage="O Pais de Origem do Utente deve ser preenchido"
+                                         stylename="pais_origem"/>
+
+                        </column>
+                        <column width="300px">
+                            <textField id="numIdCivilField" property="numIdCivil" caption="Numero ID Civil: " icon="CREDIT_CARD_ALT"
+                                       maxLength="8" stylename="num_civil"/>
+                            <textField id="nissField" property="niss" caption="NISS: " description="Número de Identificação da Segurança Social" icon="font-icon:ID_CARD"
+                                       maxLength="11" stylename="niss"/>
+                            <textField id="telem_velField" property="telem_vel" caption="Telemóvel: " icon="MOBILE_PHONE" maxLength="9" stylename="telemovel_u"/>
+                        </column>
+                    </form>
+
+                </tab>
+                <tab id="escolaridade_profissao"
+                     caption="Escolaridade e Profissão"
+                     icon="font-icon:GRADUATION_CAP"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_escolaridade_profissao" dataContainer="utenteDc" >
+
+                        <column width="350px">
+                            <lookupPickerField
+                                    stylename="grau_escolaridade"
+                                    inputPrompt="(Seleccione o grau de escolaridade)"
+                                    property="grauEscolaridade"
+                                    id="grauEscolaridadeField"
+                                    optionsContainer="grauEscolaridadesDc"
+                                    icon="font-icon:GRADUATION_CAP" caption="Grau de Escolaridade: ">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                            </lookupPickerField>
+
+                            <lookupPickerField
+                                    stylename="habilitacoes_literarias"
+                                    inputPrompt="(Seleccione a habilitação literária)"
+                                    property="habilitacoes"
+                                    id="habilitacoesField"
+                                    colspan="2"
+                                    width="871px"
+                                    optionsContainer="habilitacoesLiterariasesDc"
+                                    icon="font-icon:BOOK" caption="Habilitações Literarias: ">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                        </column>
+                        <column width="300px">
+
+
+
+                            <lookupPickerField
+                                    stylename="profissao"
+                                    inputPrompt="(Seleccione a Profissão)"
+                                    property="profissao"
+                                    id="profissaoField"
+                                    optionsContainer="profissaosDc"
+                                    icon="font-icon:USER_MD" caption="Profissão: " >
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+                        </column>
+                    </form>
+
+                </tab>
+
+                <tab id="dados_civil"
+                     caption="Dados Civil"
+                     icon="font-icon:ADDRESS_CARD_O"
+                     margin="true"
+                     spacing="true">
+
+
+                    <form id="form_dados_civil" dataContainer="utenteDc">
+                          <column width="300px">
+                              <lookupField
+                                      stylename="estado_civil"
+                                      id="estadoCivilField" inputPrompt="(Seleccione o Estado Civil)"
+                                           property="estadoCivil" caption="Estado Civil: " icon="REFRESH" />
+                              <lookupPickerField
+                                      stylename="tipo_civil"
+                                      inputPrompt="(Seleccione o tipo de civil)"
+                                      property="idTipoCivil"
+                                      id="idTipoCivilField"
+                                      optionsContainer="tipoCivilsDc"
+                                      icon="font-icon:ADDRESS_CARD_O" caption="Tipo de Civil: ">
+                                  <actions>
+                                      <action id="lookup" type="picker_lookup"/>
+                                      <action id="clear" type="picker_clear"/>
+                                  </actions>
+                              </lookupPickerField>
+                          </column>
+                        <column width="300px">
+                            <lookupPickerField
+                                    stylename="topologia_familiar"
+                                    inputPrompt="(Seleccione a topologia familiar)"
+                                    property="idTipologiaFamiliar"
+                                    id="idTipologiaFamiliarField"
+                                    optionsContainer="tipologiaFamiliarsDc"
+                                    icon="font-icon:USERS" caption="Topologia Familiar: ">
+
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+                            </lookupPickerField>
+                        </column>
+                    </form>
+                </tab>
+
+                <tab id="dependente_deficiente"
+                     caption="Dependente e/ou Deficiente"
+                     icon="font-icon:MALE"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_dependente_deficiente" dataContainer="utenteDc">
+
+                        <column width="300px">
+
+                            <checkBox id="deficienteField" property="deficiente" caption="Deficiente: " icon="WHEELCHAIR" stylename="deficiente"/>
+                        </column>
+
+                        <column width="300px">
+                            <checkBox stylename="dependente" id="dependenteField" property="dependente" caption="Dependente: " icon="font-icon:MALE"/>
+                        </column>
+
+                    </form>
+
+                </tab>
+
+                <tab id="observacoes"
+                     caption="Observacoes"
+                     icon="font-icon:FILE_TEXT_O"
+                     margin="true"
+                     spacing="true">
+                    <form id="form_observacoes" dataContainer="utenteDc">
+                        <textArea id="obsConfField" property="obsConf" icon="FILE_TEXT" caption="Observações Confiramento: "
+                                  rows="3" cols="60" stylename="obs_conf"/>
+                        <textArea id="obsGeraisField" property="obsGerais" icon="FILE_TEXT" caption="Observações Gerais: "
+                                   rows="3" cols="60" stylename="obs_gerais"/>
+                    </form>
+                </tab>
+            </tabSheet>
+
+
+
+            <tabSheet>
+                <tab id="apoios"
+                     caption="Apoios"
+                     icon="font-icon:CODE_FORK"
+                     margin="true"
+                     spacing="true">
+                    <groupBox id="apoiosBox" caption="Apoio">
+                        <table id="apoiosesTable" dataContainer="apoiosDc" width="100%" height="300px"                                 emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="dataAtribuicao"/>
+                                <column id="dataPedido"/>
+                                <column id="idEquipamento" />
+                                <column id="idEstado" />
+                                <column id="idTipoapoio" />
+                                <column id="idUtente" />
+                                <column id="numProcesso"/>
+                                <column id="valorApoio"/>
+                            </columns>
+                            <buttonsPanel>
+                                <button action="apoiosesTable.create" caption="Adicionar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="apoiosesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="apoiosesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+                </tab>
+
+                <tab id="atendimento"
+                     caption="Atendimento"
+                     icon="font-icon:VOLUME_CONTROL_PHONE"
+                     margin="true"
+                     spacing="true">
+                    <groupBox id="atendimentoBox" caption="Atendimento">
+                        <table id="atendimentoesTable" dataContainer="atendimentosDc" width="100%" height="300px"                                 emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="idTecnico" caption="Técnico"/>
+                                <column id="idTipoAtendimento" caption="Tipo de Atendimento"/>
+                                <column id="contactosEfetuados" caption="Contactos Efectuados"/>
+                                <column id="dataAtendimento" caption="Data de Atendimento"/>
+                                <column id="objetivoOutros" caption="Outros Objectivos"/>
+                                <column id="obsConf" caption="Observações de Confirmação"/>
+                                <column id="obsGerais" caption="Observações Gerais"/>
+                                <column id="outrosEncaminhamentos" caption="Outros Encaminhamentos"/>
+                            </columns>
+                            <buttonsPanel>
+                                <button action="atendimentoesTable.create" caption="Adicionar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="atendimentoesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="atendimentoesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+                </tab>
+
+                <tab id="moradores"
+                     caption="Moradores"
+                     icon="font-icon:HOME"
+                     margin="true"
+                     spacing="true">
+                    <groupBox id="moradoresBox" caption="Morador da Habitação Social">
+                        <table id="moradoresesTable" dataContainer="moradoresDc" width="100%" height="300px"                                 emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="dataInicio"/>
+                                <column id="dateFim"/>
+                                <column id="habitacaoSocial" />
+                                <column id="moradaSocial"/>
+                                <column id="obsConf"/>
+                                <column id="obsGerais"/>
+                            </columns>
+                            <buttonsPanel>
+                                <button action="moradoresesTable.create" caption="Adicionar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="moradoresesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="moradoresesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+                </tab>
+
+                <tab id="rendimentos"
+                     caption="Rendimentos"
+                     icon="font-icon:MONEY"
+                     margin="true"
+                     spacing="true">
+                    <groupBox id="rendimentosBox" caption="Rendimentos">
+                        <table id="rendimentosUtentesTable" dataContainer="rendimentosUtentesDc" width="100%" height="300px"                                 emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="ano"/>
+                                <column id="idTipoRendimento" />
+                                <column id="valorRendimento"/>
+                            </columns>
+                            <buttonsPanel>
+                                <button action="rendimentosUtentesTable.create" caption="Adicionar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="rendimentosUtentesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="rendimentosUtentesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+                </tab>
+
+                <tab id="situacao"
+                     caption="Situação"
+                     icon="font-icon:REFRESH"
+                     margin="true"
+                     spacing="true">
+
+                    <groupBox id="situacaoBox" caption="Situação">
+                        <table id="situacaoUtentesTable" dataContainer="situacaoUtentesDc" width="100%" height="300px"                                 emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="idTiposSituacaoUtentes"/>
+                                <column id="dataInicio" />
+                                <column id="dataFim" />
+                                <column id="obserConf" />
+                                <column id="obsGerais" />
+                            </columns>
+                            <buttonsPanel>
+                                <button action="situacaoUtentesTable.create" caption="Adicionar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="situacaoUtentesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="situacaoUtentesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+
+                </tab>
+
+                <tab id="relacao_utentes"
+                     caption="Relação dos Utentes"
+                     icon="font-icon:USERS"
+                     margin="true"
+                     spacing="true">
+                    <cssLayout responsive="true"
+                               stylename="responsive-container"
+                               width="100%">
+                        <vbox margin="true"
+                              spacing="true"
+                              stylename="group-panel">
+                            <groupBox id="utentesRelacionadosBox" caption="Utentes Relacionados - 1">
+                                <table id="utentesRelacionadosesTable" dataContainer="utentesRelacionadosDc" width="100%" height="300px"                                 emptyStateMessage="Não Existe Dados na Tabela"
+                                       emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                                    <actions>
+                                        <action id="create" type="create"/>
+                                        <action id="edit" type="edit"/>
+                                        <action id="remove" type="remove"/>
+                                    </actions>
+                                    <columns>
+                                        <column id="idTipoRelUtentes" />
+                                        <column id="idUtenteRel1" />
+                                        <column id="membroAgregado"/>
+                                    </columns>
+                                    <buttonsPanel>
+                                        <button action="utentesRelacionadosesTable.create" caption="Adicionar" icon="font-icon:PLUS" stylename="primary"/>
+                                        <button action="utentesRelacionadosesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                        <button action="utentesRelacionadosesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                                    </buttonsPanel>
+                                </table>
+                            </groupBox>
+                        </vbox>
+                        <vbox margin="true"
+                              spacing="true"
+                              stylename="group-panel">
+                            <groupBox id="utentesRelacionados2Box" caption="Utentes Relacionados - 2">
+                                <table id="utentesRelacionadosesTable2" dataContainer="utentesRelacionados2Dc" width="100%" height="300px"                                 emptyStateMessage="Não Existe Dados na Tabela"
+                                       emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                                    <actions>
+                                        <action id="create" type="create"/>
+                                        <action id="edit" type="edit"/>
+                                        <action id="remove" type="remove"/>
+                                    </actions>
+                                    <columns>
+                                        <column id="idTipoRelUtentes" />
+                                        <column id="idUtenteRel2" />
+                                        <column id="membroAgregado"/>
+                                    </columns>
+                                    <buttonsPanel>
+                                        <button action="utentesRelacionadosesTable2.create" caption="Adicionar" icon="font-icon:PLUS" stylename="primary"/>
+                                        <button action="utentesRelacionadosesTable2.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                        <button action="utentesRelacionadosesTable2.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                                    </buttonsPanel>
+                                </table>
+                            </groupBox>
+                        </vbox>
+                    </cssLayout>
+                </tab>
+                <tab id="utentes_situacao_profissional"
+                     caption="Utentes Situação Profissional"
+                     icon="font-icon:USER_MD"
+                     margin="true"
+                     spacing="true">
+
+                    <groupBox id="utentesSituaçãoProfissionalBox" caption="Utentes Situação Profissional">
+                        <table id="utentesSituaçãoProfissionalTable" dataContainer="utentesSituacaoProfissionalsDc" width="100%" height="300px" emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove">
+                                    <properties>
+                                        <property name="confirmation" value="true"/>
+                                        <property name="confirmationTitle" value="Remover a linha da tabela de Utentes Situação Profssional"/>
+                                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha de Utentes Situação Profssional?"/>
+                                    </properties>
+                                </action>
+                            </actions>
+                            <columns>
+                                <column id="dataSituacaoProfissional" caption="Data de Situação Profissional"/>
+                                <column id="situacaoProfissional" caption="Situação Profissional"/>
+                            </columns>
+                            <rowsCount/>
+                            <buttonsPanel id="buttonsPanel"
+                                          alwaysVisible="true">
+                                <button id="createBtn" action="utentesSituaçãoProfissionalTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button id="editBtn" action="utentesSituaçãoProfissionalTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button id="removeBtn" action="utentesSituaçãoProfissionalTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+
+
+
+
+                </tab>
+            </tabSheet>
         </scrollBox>
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>

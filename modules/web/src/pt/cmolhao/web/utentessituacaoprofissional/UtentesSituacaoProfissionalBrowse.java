@@ -1,16 +1,18 @@
 package pt.cmolhao.web.utentessituacaoprofissional;
 
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.GroupTable;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.gui.screen.LookupComponent;
 import pt.cmolhao.entity.Utente;
+import pt.cmolhao.entity.UtentesRelacionados;
 import pt.cmolhao.entity.UtentesSituacaoProfissional;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +24,19 @@ public class UtentesSituacaoProfissionalBrowse extends StandardLookup<UtentesSit
     @Inject
     protected CollectionLoader<UtentesSituacaoProfissional> utentesSituacaoProfissionalsDl;
     @Inject
-    protected LookupField<Utente> utenteField;
+    protected LookupPickerField<Utente> utenteField;
     @Inject
     protected LookupField linhasUtentesSituacaoProfissao;
     @Inject
     protected LookupField situacaoProfissionalField;
     @Inject
     protected GroupTable<UtentesSituacaoProfissional> utentesSituacaoProfissionalsTable;
+    @Named("utentesSituacaoProfissionalsTable.remove")
+    protected RemoveAction<UtentesSituacaoProfissional> utentesSituacaoProfissionalsTableRemove;
     @Inject
     private ScreenBuilders screenBuilders;
+    @Inject
+    private Dialogs dialogs;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -78,8 +84,6 @@ public class UtentesSituacaoProfissionalBrowse extends StandardLookup<UtentesSit
     protected void onReset_utentes_situacao_profissaoClick(Button.ClickEvent event) {
         utenteField.setValue(null);
         situacaoProfissionalField.setValue(null);
-        linhasUtentesSituacaoProfissao.setValue(null);
-        utentesSituacaoProfissionalsDl.setMaxResults(0);
         utentesSituacaoProfissionalsDl.removeParameter("situacaoProfissional");
         utentesSituacaoProfissionalsDl.removeParameter("utente");
         utentesSituacaoProfissionalsDl.load();
@@ -123,5 +127,36 @@ public class UtentesSituacaoProfissionalBrowse extends StandardLookup<UtentesSit
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         getWindow().setCaption("Listar Utentes de Situações Profissionais");
+    }
+
+    @Subscribe("utentesSituacaoProfissionalsTable.remove")
+    protected void onUtentesSituacaoProfissionalsTableRemove(Action.ActionPerformedEvent event) {
+        utentesSituacaoProfissionalsTableRemove.setConfirmation(false);
+        if (utentesSituacaoProfissionalsTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção dos utentes de situação profissional")
+                    .withMessage("Deve seleccionar pelo um dos utentes de situação profissional")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            UtentesSituacaoProfissional user = utentesSituacaoProfissionalsTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela dos utentes de situação profissional número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela dos utentes de situação profissional número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        utentesSituacaoProfissionalsTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 }

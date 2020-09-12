@@ -3,6 +3,16 @@
 
     @include halo;
 
+    .v-slot-position-logo {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .c-login-icon {
+        width: 100%;
+        height: 64px;
+    }
+
     .v-slot.v-slot-c-login-form {
         position: relative;
         margin: 0 auto;
@@ -178,7 +188,7 @@
                      display: none!important;
                  }*/
 
-                 .v-button.v-widget.c-logout-button.v-button-c-logout-button.icon.v-button-icon.v-button-empty-caption {
+                 /*.v-button.v-widget.c-logout-button.v-button-c-logout-button.icon.v-button-icon.v-button-empty-caption {
                      margin-left: 0px;
                  }
 
@@ -193,18 +203,34 @@
 
                  .c-fglayout.v-widget.inline-caption.c-fglayout-inline-caption {
                      width: 100%!important;
-                 }
+                 }*/
 
-
-
-                .c-fglayout-slot.c-full-height-widget.inline {
+                /*.c-fglayout-slot.c-full-height-widget.inline {
                     padding-left: 350px!important;
-                }
+                }*/
 
 
-                .v-filterselect.v-widget.icon.v-filterselect-icon.v-has-width, .v-filterselect.v-widget.icon.v-filterselect-icon {
+                /*.v-filterselect.v-widget.icon.v-filterselect-icon.v-has-width, .v-filterselect.v-widget.icon.v-filterselect-icon {
                     width: 350px!important;
+                }*/
+
+
+                .c-app-title {
+                    margin: 0 auto;
                 }
+
+                .v-button-c-logout-button {
+                    margin-left: 0px!important;
+                }
+
+                .c-user-select-label
+                {
+                    margin-left: -40px;
+                }
+
+
+
+
 
                 .v-caption.v-caption-icon {
                     margin-right: 7px;
@@ -214,18 +240,18 @@
                     width: 320px;
                 }
 
-                .v-captiontext.c-captiontext-preformatted
+                /*.v-captiontext.c-captiontext-preformatted
                 {
                      width: 320px!important;
-                }
+                }*/
 
                 .uppercase-field {
                     text-transform: uppercase;
                   }
 
-                  .v-textfield.icon.v-textfield-icon {
+                  /*.v-textfield.icon.v-textfield-icon {
                       width: 350px!important;
-                  }
+                  }*/
 
                   .v-datefield.v-datefield-popupcalendar.v-widget.c-datefield.v-datefield-c-datefield.v-datefield-day {
                       width: 120px!important;
@@ -277,6 +303,8 @@
                       height: 50%!important;
                   }
 
+
+
                   .v-csslayout.v-layout.v-widget.c-sidemenu-container.v-csslayout-c-sidemenu-container.v-has-height {
                       width: 300px;
                   }
@@ -288,6 +316,418 @@
                   .c-sidemenu-layout.v-csslayout .c-sidemenu-panel.collapsed:hover {
                       width: 300px!important;
                   }
+
+                  // Captions
+
+                  .v-caption-morada_completa, .v-caption-coordenada_gps {
+                                      width: 155px!important;
+                                  }
+
+                                  .v-slot-id_instituicao, .v-caption-id_instituicao {
+                                      width: 350px!important;
+                                  }
+
+                                  .v-slot-bloc_field {
+                                       width: 400px!important;
+                                   }
+
+                                  .v-caption-utente_field
+                                  {
+                                       width: 320px!important;
+                                  }
+
+                                  .v-caption-num_registo, .v-slot-num_seg_social, .v-caption-localidade_field, .v-caption-id_utente
+                                  {
+                                      width: 250px!important;
+                                  }
+
+                                  .v-caption-cod_postal_field
+                                  {
+                                       width: 200px!important;
+                                   }
+
+                                   .v-slot-utente_field
+                                   {
+                                        width: 320px!important;
+                                   }
+
+
+
+                                   // bloco de habitacao social form
+
+                                   .v-caption-ano_construcao, .v-caption-morada_bl_hab_social, .v-caption-designacao_bl_hab_social, .v-caption-id_tipo_situacao
+                                   {
+                                        width: 280px!important;
+                                   }
+
+                                   // utente browse e edit
+                                   .v-caption-pais_origem, .v-caption-cert_uniao, .v-caption-telefone_u, .v-caption-num_civil, .v-caption-niss, .v-caption-telemovel_u,
+                                   .v-caption-grau_escolaridade, .v-caption-profissao, .v-caption-habilitacoes_literarias, .v-caption-estado_civil, .v-caption-tipo_civil,
+                                   .v-caption-topologia_familiar, .v-caption-deficiente, .v-caption-dependente, .v-caption-nome_utente, .v-caption-data_nasc_utente, .v-caption-num_contribuinte_utente, .v-caption-email_utente
+                                   {
+                                        width: 200px!important;
+                                   }
+
+                                   .v-caption-nome_utente_search, .v-caption-num_contribuinte_search, .v-caption-estado_civil_search, .v-caption-pais_origem_search  {
+                                       width: 235px!important;
+                                   }
+
+                                   // apoio browse e edit
+
+                                   .v-gridlayout-grid_search_apoios > .v-gridlayout-slot {
+                                       width: 300px!important;
+                                   }
+
+                                   .v-caption-id_instituicao_apoio_search
+                                   {
+                                       width: 500px!important;
+                                   }
+
+
+                                    .v-caption-id_utente_apoio_search,
+                                    .v-caption-num_processo_search
+                                    {
+                                        width: 280px!important;
+                                    }
+
+                                    .v-caption-id_instituicao_apoio,
+                                    .v-caption-num_processo_apoio,
+                                    .v-caption-id_utente_apoio,
+                                    .v-caption-valor_apoio,
+                                    .v-caption-data_atribuicao_apoio,
+                                    .v-caption-data_fim_apoio,
+                                    .v-caption-data_pedido_apoio,
+                                    .v-caption-data_renovacao_apoio,
+                                    .v-caption-observacoes_estado_apoio,
+                                    .v-caption-observacoes_gerais_apoio,
+                                    .v-caption-observacoes_conf_apoio,
+                                    .v-caption-id_tipo_apoio,
+                                    .v-caption-id_estados_apoio
+                                    {
+                                        width: 280px!important;
+                                    }
+
+                                    // atendimento browse e edit
+
+                                    .v-caption-id_utente_atendimento_search
+                                    {
+                                        width: 300px!important;
+                                    }
+                                    .v-caption-id_tecnico_atendimento_search
+                                    {
+                                        width: 370px!important;
+                                    }
+                                    .v-caption-id_tipo_atendimento_search
+                                    {
+                                        width: 470px!important;
+                                    }
+
+                                    // fotos de valencia browse e edit
+
+                                    .v-caption-descricao_fotos_valencia_search
+                                    {
+                                        width: 250px!important;
+                                    }
+
+                                    .v-button.v-widget.download_fotos_valencia.v-button-download_fotos_valencia.icon {
+                                        text-align: center;
+                                        margin: 0 auto;
+                                        display: block;
+                                    }
+
+                                    .v-caption-descricao_valencia_search
+                                    {
+                                        width: 700px!important;
+                                    }
+
+                                    .v-button.v-widget.clear_image_valencia.v-button-clear_image_valencia {
+                                        margin-top: 22px!important;
+                                    }
+
+                                    .v-button.v-widget.download_image_valencia.v-button-download_image_valencia {
+                                       margin-top: 22px!important;
+                                    }
+
+                                    // habitacao social browse e edit
+
+                                    .v-caption-bloc_field_search
+                                    {
+                                        width: 400px!important;
+                                    }
+
+                                    .v-caption-utente_field_search
+                                    {
+                                        width: 320px!important;
+                                    }
+
+                                    .v-caption-localidade_field_search
+                                    {
+                                        width: 180px!important;
+                                    }
+
+                                    .v-caption-cod_postal_field_search
+                                    {
+                                        width: 150px!important;
+                                    }
+
+                                    // habitacao social form
+                                   .v-caption-bloc_field, .v-caption-sitio_lugar, .v-caption-freguesia, .v-caption-cod_postal,
+                                   .v-caption-coord, .v-caption-rua, .v-caption-localidade, .v-caption-proj_apro
+                                   {
+                                        width: 320px!important;
+                                   }
+
+                                   // instituicao browse e edit
+
+                                   .v-caption-id_instituicao_search
+                                   {
+                                        width:500px!important;
+                                   }
+
+                                   // localizacoes browse e edit
+
+                                   .googlemap.v-widget.v-has-width.v-has-height.map_loc.googlemap-map_loc {
+                                       position: relative!important;
+                                   }
+
+                                   .v-caption-id_valencia_localizacoes
+                                   {
+                                       width: 100px!important;
+                                   }
+
+                                   .v-caption-coord_localizacoes
+                                   {
+                                        width: 150px!important;
+                                   }
+
+                                   .map_localizacoes.googlemap-map_localizacoes {
+                                       width: 1200px!important;
+                                    }
+
+                                    .coord_button_loc {
+                                        margin-top: 28px;
+                                    }
+
+                                    // moradores browse e edit
+
+                                    .v-caption-hab_social_search_morador
+                                    {
+                                        width: 500px!important;
+                                    }
+
+                                    .v-caption-utente_search_morador
+                                    {
+                                        width: 300px!important;
+                                    }
+
+                                    .v-caption-hab_social_moradores_edit
+                                    {
+                                        width:150px!important;
+                                    }
+
+                                    .v-caption-morada_morador_edit
+                                    {
+                                        width:150px!important;
+                                    }
+
+                                    .v-caption-password_user_edit, .v-caption-password_user_conf_edit
+                                    {
+                                        width: 200px!important;
+                                    }
+
+                                    // pessoal auxiliar browse e edit
+
+                                    .v-caption-id_valencia_pessoal_auxiliar_edit, .v-caption-sexo_masculino_auxiliar_edit,
+                                    .v-caption-hab_literaias_auxiliar_edit
+                                    {
+                                        width: 200px!important;
+                                    }
+
+                                    // pessoal tecnico browse e edit
+
+                                    .v-caption-id_valencia_pessoal_tecnico_edit, .v-caption-sexo_masculino_tecnico_edit,
+                                    .v-caption-hab_literaias_tecnico_edit
+                                    {
+                                        width: 200px!important;
+                                    }
+
+                                    // projectos em aprovacao browse e edit
+
+                                    .v-caption-projecto_aprovacao_edit, .v-caption-tipologia_projecto_aprovacao_edit,
+                                    .v-caption-etapa_processo_projecto_aprovacao_edit
+                                    {
+                                        width: 200px!important;
+                                    }
+
+                                    // projectos em aprovacao browse e edit
+
+                                    .v-caption-projecto_apro_int_edit, .v-caption-descricao_projecto_int_edit,
+                                    .v-caption-nome_projecto_projectos_int, .v-caption-id_instituicao_projectos_int
+                                    {
+                                        width: 200px!important;
+                                    }
+
+                                    // projectos intervencao browse e edit
+
+                                    .v-caption-deficientes_projectos_int_edit, .v-caption-deficientes_cat_projectos_int_edit,
+                                    .v-caption-adultos_proj_int_edit, .v-caption-deficientes_apoio_proj_int_edit,
+                                    .v-caption-deficientes_lares_proj_int_edit, .v-caption-criancas_proj_int_edit,
+                                    .v-caption-jovens_atl_proj_int_edit, .v-caption-jovens_creche_proj_int_edit,
+                                    .v-caption-jovens_proj_int_edit, .v-caption-jovens_cat_proj_int_edit,
+                                    .v-caption-jovens_jardim_infancia_proj_int_edit, .v-caption-idosos_proj_int_edit,
+                                    .v-caption-idosos_apoio_proj_int_edit, .v-caption-idosos_cat_proj_int_edit,
+                                    .v-caption-idosos_centros_dia_proj_int_edit, .v-caption-lares_idosos_proj_int_edit,
+                                    .v-caption-idosos_pequeno_lar_proj_int_edit
+                                    {
+                                        width: 250px!important;
+                                    }
+
+                                    // Situacao utente browse e edit
+
+                                    .v-caption-id_tipo_situacao
+                                    {
+                                        width: 250px!important;
+                                    }
+
+                                    .v-caption-id_utente_situacao_utente_browse
+                                    {
+                                        width: 300px!important;
+                                    }
+
+                                    // tecnico edit e browse
+
+                                    .v-caption-nome_tecnico_browse, .v-caption-email_tecnico_browse
+                                    {
+                                        width: 250px!important;
+                                    }
+
+                                    // tipo atendimento browse e edit
+
+                                    .v-caption-id_tipo_atendimento_edit
+                                    {
+                                        width: 200px!important;
+                                    }
+
+                                    // tipologia familiar browse e edit
+
+                                    .v-caption-id_tipologia_familiar_edit, .v-caption-id_tipologia_familiar_esp_edit
+                                    {
+                                        width: 250px!important;
+                                    }
+
+                                    // tipo relacionamento de utentes browse e edit
+
+                                    .v-caption-tipo_relacionamento_utente_edit
+                                    {
+                                        width: 200px!important;
+                                    }
+
+                                    .v-caption-tipo_relacionamento_utente_sec_edit
+                                      {
+                                           width: 280px!important;
+                                      }
+
+                                      // utentes e outros concelhos browse e edit
+
+                                      .v-caption-utentes_conc_freguesia_id_search, .v-caption-utentes_conc_concelho_id_search
+                                      {
+                                           width: 220px!important;
+                                      }
+
+
+                                      .v-caption-concelho_utentes_outros_edit, .v-caption-valencias_utentes_outros_edit,
+                                      .v-caption-freguesia_utentes_outros_edit
+                                      {
+                                           width: 180px!important;
+                                      }
+
+                                      // utentes relacionados browse e edit
+
+                                      .v-caption-utente_rel1_edit, .v-caption-utente_tipo_rel_edit,
+                                      .v-caption-utente_rel2_edit
+                                      {
+                                        width: 250px!important;
+                                      }
+
+                                      // utentes de situacao profssional
+
+                                      .v-caption-data_situacao_profissional_edit, .v-caption-situacao_profissional_edit
+                                      {
+                                        width: 200px!important;
+                                      }
+
+                                      // valencias browse e edit
+
+                                      .v-caption-morada_valencia_edit
+                                      {
+                                         width: 100px!important;
+
+                                      }
+
+                                      .v-caption-coordenadagps_valencia_edit
+                                      {
+                                        width: 150px!important;
+                                      }
+
+                                      // Ajudas tecnicas browse e edit
+
+                                      .v-caption-valencia_ajudas_tecnicas_edit,
+                                      .v-caption-localizacao_ajudas_tecnicas_edit
+                                      {
+                                        width: 175px!important;
+                                      }
+
+                                      // Instituições claso edit e browse
+
+                                      .v-caption-num_registo_claso, .v-caption-num_seg_social_claso
+                                      {
+                                        width: 200px!important;
+                                      }
+
+                                      .v-caption-ano_adesao_text_claso
+                                      {
+                                        width: 120px!important;
+                                      }
+
+                                      // Documentos
+
+                                        .v-button.v-widget.download_documentos.v-button-download_documentos.icon {
+                                            /* text-align: center; */
+                                            /* margin: 0 auto; */
+                                            width: 100%;
+                                            /* display: block; */
+                                            text-align: center;
+                                            border-radius: 0px;
+                                            /* opacity: 1; */
+                                            border: none;
+                                             color: black;
+                                            background: transparent!important;
+                                        }
+
+                                        .v-button.v-widget.download_documentos.v-button-download_documentos.icon:hover, .v-button.v-widget.download_documentos.v-button-download_documentos.icon:active {
+                                            background: transparent!important;
+                                            text-decoration: underline;
+                                        }
+
+                                        .v-selected .v-table-cell-wrapper>.download_documentos {
+                                            color: white!important;
+                                        }
+
+                                        // documentos edit
+
+                                        .v-caption-id_rede_trabalho, .v-caption-id_sub_rede_trabalho, .v-caption-num_doc
+                                        {
+                                            width: 182px!important;
+                                        }
+
+
+
+
+
+
+
+
+
 
 
 

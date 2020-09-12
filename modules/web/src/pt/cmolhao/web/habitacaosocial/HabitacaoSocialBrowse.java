@@ -1,12 +1,12 @@
 package pt.cmolhao.web.habitacaosocial;
 
-import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.MetadataTools;
-import com.haulmont.cuba.core.global.ValueLoadContext;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.Component;
@@ -23,6 +23,7 @@ import pt.cmolhao.entity.HabitacaoSocial;
 import pt.cmolhao.entity.Utente;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -40,27 +41,25 @@ import java.util.List;
 @LoadDataBeforeShow
 public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
 
+    @Named("habitacaoSocialsTable.remove")
+    protected RemoveAction<HabitacaoSocial> habitacaoSocialsTableRemove;
     @Inject
-    protected LookupField tipoArrendamentoField;
+    protected TextField<String> hab_loc_id;
     @Inject
     private CollectionContainer<HabitacaoSocial> habitacaoSocialsDc;
     @Inject
     private CollectionLoader<HabitacaoSocial> habitacaoSocialsDl;
     @Inject
-    private LookupField<BlocosHabitacaoSocial> blocField;
+    private LookupPickerField<BlocosHabitacaoSocial> blocField;
 
     @Inject
     private Notifications notifications;
 
     //@Inject
     //private TextField<String> arrend_fiel;
-    @Inject
-    private LookupField luke_hab;
 
     @Inject
     private DataManager dataManager;
-    @Inject
-    private LookupField hab_bloco;
     @Inject
     private LookupField linhasHabSocial;
     @Inject
@@ -72,17 +71,12 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
     @Inject
     protected UiComponents uiComponents;
     @Inject
-    private LookupField<Utente> utenteField;
+    private LookupPickerField<Utente> utenteField;
+
     @Inject
-    private Label<String> text_fichaCompleta;
+    private Dialogs dialogs;
 
     private static final String FICHA_COMPLETA = "Ficha Completa: <br> ";
-    @Inject
-    private CheckBox fichaCompletaField;
-    @Inject
-    private LookupField hab_freg_id;
-    @Inject
-    private LookupField hab_loc_id;
     @Inject
     private TextField<String> codPostalField;
 
@@ -123,34 +117,16 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
         list.add(10000);
         linhasHabSocial.setOptionsList(list);
 
-        List<String> list_tipo_arrendamento = new ArrayList<>();
-        list_tipo_arrendamento.add("Reside no Concelho");
-        list_tipo_arrendamento.add("Não reside no Concelho");
-        tipoArrendamentoField.setOptionsList(list_tipo_arrendamento);
 
         habitacaoSocialsTable.setEmptyStateLinkClickHandler(emptyStateClickEvent ->
                 screenBuilders.editor(habitacaoSocialsTable)
                         .newEntity()
                         .withInitializer(customer -> {
 
-                            if (luke_hab.getValue() != null)
-                            {
-                                customer.setArrend(Integer.valueOf(luke_hab.getValue().toString()));
-                            }
-                            if (hab_bloco.getValue() != null)
-                            {
-                                customer.setBl(hab_bloco.getValue().toString());
-                            }
-                            customer.setBloc(blocField.getValue());
-                            customer.setIdUtente(utenteField.getValue());
-                            customer.setFichaCompleta(fichaCompletaField.getValue());
-                            if(hab_freg_id.getValue() != null)
-                            {
-                                customer.setFreguesia(hab_freg_id.getValue().toString());
-                            }
+
                             if(hab_loc_id.getValue() != null)
                             {
-                                customer.setLocalidade(hab_loc_id.getValue().toString());
+                                customer.setLocalidade(hab_loc_id.getValue());
                                 if(hab_loc_id.getValue().equals("Quelfes") || hab_loc_id.getValue().equals("Pechão") ||
                                         hab_loc_id.getValue().equals("Olhão") || hab_loc_id.getValue().equals("Fuseta") ||
                                         hab_loc_id.getValue().equals("Moncarapacho"))
@@ -168,6 +144,7 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
                             }
                             if (blocField.getValue() != null)
                             {
+                                customer.setBloc(blocField.getValue());
                                 Map<String, String> hash_map = new HashMap<>();
                                 //String text = "";
                                 String string_addr = "";
@@ -216,7 +193,7 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
                                     customer.setLocalidade(hash_map.get("locality"));
                                     customer.setCodPostal(hash_map.get("postal_code"));
 
-                                    if (hab_loc_id.getValue() != null)
+                                    if(hab_loc_id.getValue() != null)
                                     {
                                         if(hab_loc_id.getValue().equals("Quelfes") || hab_loc_id.getValue().equals("Pechão") ||
                                                 hab_loc_id.getValue().equals("Olhão") || hab_loc_id.getValue().equals("Fuseta") ||
@@ -229,6 +206,8 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
                                             customer.setTipoArrendamento("Não reside no Concelho");
                                         }
                                     }
+
+
                                 }
                                 else
                                 {
@@ -240,11 +219,18 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
 
                             }
 
+                            customer.setIdUtente(utenteField.getValue());
+
                         })
                         .withScreenClass(HabitacaoSocialEdit.class)    // specific editor screen
                         .build()
                         .show()
         );
+
+    }
+
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
 
         habitacaoSocialsTable.setItemClickAction(new BaseAction("itemClickAction")
                 .withHandler(actionPerformedEvent -> {
@@ -273,76 +259,6 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
 
                     }
                 }));
-
-        text_fichaCompleta.setHtmlEnabled(true);
-        text_fichaCompleta.setHtmlSanitizerEnabled(true);
-        text_fichaCompleta.setValue(FICHA_COMPLETA);
-
-        
-    }
-
-    @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
-
-        getWindow().setCaption("Listar Habitação Social");
-        // Arrend - Renda
-        List<Integer> options = new ArrayList<>();
-        String queryString = "select o.arrend as arrend from cmolhao_HabitacaoSocial o where o.arrend is not null group by o.arrend";
-        ValueLoadContext valueLoadContextontext = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString));
-        valueLoadContextontext.addProperty("arrend");
-        List<KeyValueEntity>  resultList = dataManager.loadValues(valueLoadContextontext);
-        for(KeyValueEntity entry : resultList){
-            options.add((Integer)entry.getValue("arrend"));
-        }
-        luke_hab.setOptionsList(options);
-
-        // Bl - Bloco
-        List<String> optionsBl = new ArrayList<>();
-        String queryString_Bl = "select o.bl as bl from cmolhao_HabitacaoSocial o where o.bl is not null group by o.bl";
-        ValueLoadContext valueLoadContextontextBl = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString_Bl));
-        valueLoadContextontextBl.addProperty("bl");
-        List<KeyValueEntity> resultListBl = dataManager.loadValues(valueLoadContextontextBl);
-
-        for(KeyValueEntity entry : resultListBl){
-            optionsBl.add(entry.getValue("bl"));
-        }
-
-        hab_bloco.setOptionsList(optionsBl);
-
-
-        // Freguesia
-
-        List<String> optionsFreguesia = new ArrayList<>();
-        String queryString_Freguesia = "select o.freguesia as freguesia from cmolhao_HabitacaoSocial o where o.freguesia is not null group by o.freguesia";
-        ValueLoadContext valueLoadContextontextFreguesia = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString_Freguesia));
-        valueLoadContextontextFreguesia.addProperty("freguesia");
-        List<KeyValueEntity> resultListFreguesia = dataManager.loadValues(valueLoadContextontextFreguesia);
-
-        for(KeyValueEntity entry : resultListFreguesia){
-            optionsFreguesia.add(entry.getValue("freguesia"));
-        }
-
-        hab_freg_id.setOptionsList(optionsFreguesia);
-
-
-        // Localidade
-
-        List<String> optionsLocalidade = new ArrayList<>();
-        String queryString_Localidade = "select o.localidade as localidade from cmolhao_HabitacaoSocial o where o.localidade is not null group by o.localidade";
-        ValueLoadContext valueLoadContextontextLocalidade = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString_Localidade));
-        valueLoadContextontextLocalidade.addProperty("localidade");
-        List<KeyValueEntity> resultListLocalidade = dataManager.loadValues(valueLoadContextontextLocalidade);
-
-        for(KeyValueEntity entry : resultListLocalidade){
-            optionsLocalidade.add(entry.getValue("localidade"));
-        }
-
-        hab_loc_id.setOptionsList(optionsLocalidade);
-
     }
 
     public static boolean isNumeric(String str) {
@@ -363,32 +279,6 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
                 habitacaoSocialsDl.removeParameter("bloc");
             }
 
-            // Arrend
-            if (luke_hab.getValue() != null) {
-                if (isNumeric(luke_hab.getValue().toString()))
-                {
-                    habitacaoSocialsDl.setParameter("arrend", Integer.valueOf(luke_hab.getValue().toString()) );
-                }
-                else
-                {
-                    notifications.create()
-                            .withCaption("<code>Erro ao atribuir string do numero de renda</code>")
-                            .withDescription("<u>Devera introduzir um numero inteiro</u>")
-                            .withType(NotificationType.ERROR)
-                            .withContentMode(ContentMode.HTML)
-                            .show();
-                }
-
-            } else {
-                habitacaoSocialsDl.removeParameter("arrend");
-            }
-
-            // Bloco
-            if (hab_bloco.getValue() != null) {
-                habitacaoSocialsDl.setParameter("bl",  hab_bloco.getValue().toString());
-            } else {
-                habitacaoSocialsDl.removeParameter("bl");
-            }
 
             // ID Utente
             if (utenteField.getValue() != null)
@@ -400,30 +290,11 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
                 habitacaoSocialsDl.removeParameter("idUtente");
             }
 
-            // Ficha Completa
-            if (fichaCompletaField.getValue() )
-            {
-                habitacaoSocialsDl.setParameter("fichaCompleta",  true);
-            }
-            else
-            {
-                habitacaoSocialsDl.removeParameter("fichaCompleta");
-            }
-
-            // Freguesia
-            if (hab_freg_id.getValue() != null )
-            {
-                habitacaoSocialsDl.setParameter("freguesia",  hab_freg_id.getValue().toString());
-            }
-            else
-            {
-                habitacaoSocialsDl.removeParameter("freguesia");
-            }
 
             //Localidade
             if (hab_loc_id.getValue() != null )
             {
-                habitacaoSocialsDl.setParameter("localidade",  hab_loc_id.getValue().toString());
+                habitacaoSocialsDl.setParameter("localidade",  "(?i)%" + hab_loc_id.getValue() + "%");
             }
             else
             {
@@ -452,16 +323,6 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
                 habitacaoSocialsDl.removeParameter("codPostal");
             }
 
-        //Localidade
-        if (tipoArrendamentoField.getValue() != null )
-        {
-            habitacaoSocialsDl.setParameter("tipoArrendamento",  tipoArrendamentoField.getValue().toString());
-        }
-        else
-        {
-            habitacaoSocialsDl.removeParameter("tipoArrendamento");
-        }
-
             habitacaoSocialsDl.load();
 
     }
@@ -469,29 +330,14 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
     @Subscribe("reset_search_hab_social")
     public void onReset_search_hab_socialClick(Button.ClickEvent event) {
         blocField.setValue(null);
-        luke_hab.setValue(null);
-        hab_bloco.setValue(null);
-        linhasHabSocial.setValue(null);
         utenteField.setValue(null);
-        fichaCompletaField.setValue(false);
-        hab_freg_id.setValue(null);
         hab_loc_id.setValue(null);
         codPostalField.setValue(null);
-        tipoArrendamentoField.setValue(null);
         habitacaoSocialsDl.removeParameter("bloc");
-        habitacaoSocialsDl.removeParameter("arrend");
-        habitacaoSocialsDl.removeParameter("bl");
         habitacaoSocialsDl.removeParameter("idUtente");
-        habitacaoSocialsDl.removeParameter("fichaCompleta");
         habitacaoSocialsDl.removeParameter("codPostal");
         habitacaoSocialsDl.removeParameter("localidade");
-        habitacaoSocialsDl.removeParameter("freguesia");
-        habitacaoSocialsDl.removeParameter("tipoArrendamento");
-        habitacaoSocialsDl.setMaxResults(0);
         habitacaoSocialsDl.load();
-
-
-
     }
 
     @Subscribe("linhasHabSocial")
@@ -505,6 +351,40 @@ public class HabitacaoSocialBrowse extends StandardLookup<HabitacaoSocial> {
             habitacaoSocialsDl.setMaxResults(0);
         }
         habitacaoSocialsDl.load();
+    }
+
+    @Subscribe("habitacaoSocialsTable.remove")
+    protected void onHabitacaoSocialsTableRemove(Action.ActionPerformedEvent event) {
+        habitacaoSocialsTableRemove.setConfirmation(false);
+        if (habitacaoSocialsTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção da habitação social")
+                    .withMessage("Deve seleccionar pelo uma das habitações sociais")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            HabitacaoSocial user = habitacaoSocialsTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela da habitação social número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela da habitação social número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        habitacaoSocialsTableRemove.execute();
+                                    }), // execute action
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
+
+
+
     }
 
 }

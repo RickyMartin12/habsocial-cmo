@@ -22,16 +22,6 @@
             </loader>
         </collection>
 
-        <keyValueCollection id="descricao_habilitacoes_literarias_id">
-            <properties>
-                <property name="descricao" datatype="string" />
-            </properties>
-            <loader id="descricao_habilitacoes_literarias_id_loader">
-                <query>
-                    <![CDATA[select o.descricao as descricao from cmolhao_HabilitacoesLiterarias o where o.descricao is not null group by o.descricao]]>
-                </query>
-            </loader>
-        </keyValueCollection>
 
 
     </data>
@@ -47,16 +37,12 @@
             <scrollBox spacing="true">
                 <hbox spacing="true">
                     <lookupField id="desc_habilitacoes_literarias_id"
-                                 optionsContainer="descricao_habilitacoes_literarias_id"
+                                 property="descricao"
+                                 width="400px"
                                  caption="Grau de Escolaridade:"
                                  inputPrompt="(seleccione a descrição do grau de escolaridade)"
                                  icon="font-icon:UNIVERSITY"
                     />
-                    <lookupField id="linhasHabilitacoesLiterarias"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
-
                 </hbox>
 
                 <hbox spacing="true">
@@ -66,6 +52,15 @@
             </scrollBox>
 
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasHabilitacoesLiterarias"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
         <table id="habilitacoesLiterariasesTable"
                width="100%"
                dataContainer="habilitacoesLiterariasesDc"

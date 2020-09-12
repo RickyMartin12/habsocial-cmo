@@ -1,12 +1,12 @@
 package pt.cmolhao.web.projectosemaprovacao;
 
 import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.components.LookupPickerField;
 import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.screen.*;
 import pt.cmolhao.entity.ProjectosEmAprovacao;
 import pt.cmolhao.entity.ProjectosIntervencao;
-import pt.cmolhao.entity.Valencias;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -21,7 +21,7 @@ public class ProjectosEmAprovacaoEdit extends StandardEditor<ProjectosEmAprovaca
     @Inject
     private CollectionContainer<ProjectosIntervencao> ProjectosIntervencaoDc;
     @Inject
-    private LookupField<ProjectosIntervencao> idprojectosintervencaoField;
+    private LookupPickerField<ProjectosIntervencao> idprojectosintervencaoField;
     @Inject
     private LookupField<String> etapaprocessoField;
 

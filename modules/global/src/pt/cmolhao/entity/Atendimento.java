@@ -40,6 +40,7 @@ public class Atendimento extends BaseIntegerIdEntity {
     @Column(name = "outros_encaminhamentos")
     protected String outrosEncaminhamentos;
 
+
     public String getOutrosEncaminhamentos() {
         return outrosEncaminhamentos;
     }

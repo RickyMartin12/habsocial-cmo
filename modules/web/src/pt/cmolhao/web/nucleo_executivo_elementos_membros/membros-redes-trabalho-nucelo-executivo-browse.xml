@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="membrosRedesTrabalhoNuceloExecutivoesTable"
+        messagesPack="pt.cmolhao.web.nucleo_executivo_elementos_membros">
+    <data readOnly="true">
+        <collection id="membrosRedesTrabalhoNuceloExecutivoesDc"
+                    class="pt.cmolhao.entity.MembrosRedesTrabalhoNuceloExecutivo"
+                    view="membrosRedesTrabalhoNuceloExecutivo-view">
+            <loader id="membrosRedesTrabalhoNuceloExecutivoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_MembrosRedesTrabalhoNuceloExecutivo e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idInsituicao j</c:join>
+                                <c:where>j.id = :idInsituicao</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>extract(year from e.dataAdesao) = :anoAdesao</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="instituicoesDc"
+                    class="pt.cmolhao.entity.Instituicoes"
+                    view="_local">
+            <loader id="instituicoesLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Instituicoes e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="membrosRedesTrabalhoNuceloExecutivoesTable"
+            spacing="true">
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+
+
+
+
+                <grid spacing="true" width="100%">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+
+
+                            <lookupPickerField id="idInstituicaoField"
+                                               property="idInsituicao"
+                                               optionsContainer="instituicoesDc"
+                                               inputPrompt="(Seleccione a instituição)"
+                                               width="950px"
+                                               caption="Membro da Instituição: "
+                                               icon="WRENCH">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                        </row>
+                    </rows>
+                </grid>
+
+
+                <hbox spacing="true">
+                    <button id="reset_membros_rede_trabalho_nucleo_executivo" icon="ERASER" caption="Limpar" />
+                    <button id="search_membros_rede_trabalho_nucleo_executivo" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+
+            </scrollBox>
+        </groupBox>
+
+
+        <hbox spacing="true">
+            <lookupField id="linhasMembrosRedeTrabalho"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
+
+        <groupTable id="membrosRedesTrabalhoNuceloExecutivoesTable"
+                    width="100%"
+                    dataContainer="membrosRedesTrabalhoNuceloExecutivoesDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="idRedeTrabalho" caption="Rede de Trabalho"/>
+                <column id="idInsituicao" caption="Instituição"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="membrosRedesTrabalhoNuceloExecutivoesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="membrosRedesTrabalhoNuceloExecutivoesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="membrosRedesTrabalhoNuceloExecutivoesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="membrosRedesTrabalhoNuceloExecutivoesTable.excel" stylename="friendly" />
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

@@ -13,12 +13,18 @@ public class UtentesRelacionados extends BaseIntegerIdEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipo_rel_utentes")
     protected TipoRelacionamentoUtentes idTipoRelUtentes;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_utente_rel1")
     protected Utente idUtenteRel1;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_utente_rel2")
     protected Utente idUtenteRel2;
+
+
     @Column(name = "membro_agregado")
     protected Integer membroAgregado;
     @Column(name = "obs_conf")

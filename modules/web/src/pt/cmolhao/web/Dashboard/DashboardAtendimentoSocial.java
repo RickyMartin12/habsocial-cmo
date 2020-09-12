@@ -3,7 +3,6 @@ package pt.cmolhao.web.Dashboard;
 import com.haulmont.cuba.gui.components.Label;
 import com.haulmont.cuba.gui.screen.*;
 import pt.cmolhao.entity.Atendimento;
-import pt.cmolhao.entity.Valencias;
 
 import javax.inject.Inject;
 

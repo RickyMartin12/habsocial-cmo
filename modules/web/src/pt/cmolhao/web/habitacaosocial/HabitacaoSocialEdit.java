@@ -8,6 +8,7 @@ import com.haulmont.cuba.core.global.MetadataTools;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.app.core.inputdialog.DialogActions;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
@@ -18,6 +19,7 @@ import pt.cmolhao.entity.BlocosHabitacaoSocial;
 import pt.cmolhao.entity.HabitacaoSocial;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -29,6 +31,7 @@ import java.net.URL;
 import java.util.*;
 
 import com.haulmont.cuba.core.entity.Entity;
+import pt.cmolhao.entity.Moradores;
 import pt.cmolhao.entity.Utente;
 
 @UiController("cmolhao_HabitacaoSocial.edit")
@@ -48,6 +51,10 @@ public class HabitacaoSocialEdit extends StandardEditor<HabitacaoSocial> {
     protected TextField<String> tipoArrendamentoField;
     @Inject
     protected TextField<UUID> idHabSocialField;
+    @Inject
+    protected Table<Moradores> moradoresesTable;
+    @Named("moradoresesTable.remove")
+    protected RemoveAction<Moradores> moradoresesTableRemove;
 
     @Inject
     private Metadata metadata;
@@ -64,14 +71,14 @@ public class HabitacaoSocialEdit extends StandardEditor<HabitacaoSocial> {
     @Inject
     private Dialogs dialogs;
     @Inject
-    private LookupField<BlocosHabitacaoSocial> blocField;
+    private LookupPickerField<BlocosHabitacaoSocial> blocField;
     @Inject
     private CollectionContainer<BlocosHabitacaoSocial> customersDc;
     private static final String HTML_MAPS = "<h3><img src='https://cdn.onlinewebfonts.com/svg/img_467222.png' width='20' height='20'>&nbsp; Localizacao de mapas da morada na habitação social</h3>\n";
     @Inject
     private CollectionContainer<Utente> UtentesDC;
     @Inject
-    private TextField<String> ruaField;
+    private TextArea<String> ruaField;
     @Inject
     private TextField<String> blField;
     @Inject
@@ -79,7 +86,7 @@ public class HabitacaoSocialEdit extends StandardEditor<HabitacaoSocial> {
     @Inject
     private TextField<String> freguesiaField;
     @Inject
-    private TextField<String> sitoLugarField;
+    private TextArea<String> sitoLugarField;
     @Inject
     private TextField<String> codPostalField;
 
@@ -172,7 +179,8 @@ public class HabitacaoSocialEdit extends StandardEditor<HabitacaoSocial> {
 
         if (blocField.getValue() != null)
         {
-            String coord = coordField.getRawValue();
+            locationData(blocField.getValue().getDesignacao());
+            /*String coord = coordField.getRawValue();
             if (coord != "")
             {
                 String[] arrOfStr = coord.split(";");
@@ -180,7 +188,7 @@ public class HabitacaoSocialEdit extends StandardEditor<HabitacaoSocial> {
                 String latitude = arrOfStr[1];
                 //addMarker(Double.parseDouble(longitudade), Double.parseDouble(latitude));
                 coordField.setValue(Double.parseDouble(longitudade)+";"+Double.parseDouble(latitude));
-            }
+            }*/
         }
 
         codPostalField.addValidator(value -> {
@@ -211,6 +219,38 @@ public class HabitacaoSocialEdit extends StandardEditor<HabitacaoSocial> {
 
         }
     }
+
+    @Subscribe("moradoresesTable.remove")
+    protected void onMoradoresesTableRemove(Action.ActionPerformedEvent event) {
+        moradoresesTableRemove.setConfirmation(false);
+        if (moradoresesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção dos moradores")
+                    .withMessage("Deve seleccionar pelo um dos moradores")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            Moradores user = moradoresesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do morador número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do morador número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        moradoresesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
+    }
+
 
     // Adicionar uma dada localizacao
     /*private void addMarker(double latitude, double longitude) {

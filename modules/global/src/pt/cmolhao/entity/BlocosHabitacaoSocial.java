@@ -1,11 +1,16 @@
 package pt.cmolhao.entity;
 
+import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.BaseIntegerIdEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
+import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.core.global.DesignSupport;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @DesignSupport("{'imported':true}")
 @AttributeOverrides({
@@ -26,6 +31,19 @@ public class BlocosHabitacaoSocial extends BaseIntegerIdEntity {
     @Lob
     @Column(name = "morada")
     protected String morada;
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "bloc")
+    protected Set<HabitacaoSocial> habitacaoSocials;
+
+    public Set<HabitacaoSocial> getHabitacaoSocials() {
+        return habitacaoSocials;
+    }
+
+    public void setHabitacaoSocials(Set<HabitacaoSocial> habitacaoSocials) {
+        this.habitacaoSocials = habitacaoSocials;
+    }
 
     public String getMorada() {
         return morada;

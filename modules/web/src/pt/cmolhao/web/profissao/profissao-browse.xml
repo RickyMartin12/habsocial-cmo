@@ -14,7 +14,7 @@
                     <condition>
                         <and>
                             <c:jpql>
-                                <c:where>e.nome = :nome</c:where>
+                                <c:where>e.nome like :nome</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -22,17 +22,6 @@
             </loader>
         </collection>
 
-
-        <keyValueCollection id="nome_profissao_id">
-            <properties>
-                <property name="nome" datatype="string" />
-            </properties>
-            <loader id="nome_profissao_id_loader">
-                <query>
-                    <![CDATA[select o.nome as nome from cmolhao_Profissao o where o.nome is not null group by o.nome]]>
-                </query>
-            </loader>
-        </keyValueCollection>
     </data>
     <dialogMode height="600"
                 width="800"/>
@@ -45,16 +34,13 @@
                   width="100%">
             <scrollBox spacing="true">
                 <hbox spacing="true">
-                    <lookupField id="nome_prof_id"
-                                 optionsContainer="nome_profissao_id"
+                    <textField id="nome_prof_id"
                                  caption="Profissão:"
-                                 inputPrompt="(seleccione o nome da profissão)"
+                                 property="nome"
+                                 inputPrompt="(Insira a profissão)"
                                  icon="font-icon:USER_MD"
                     />
-                    <lookupField id="linhasProfissao"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
+
 
                 </hbox>
 
@@ -65,6 +51,14 @@
             </scrollBox>
 
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasProfissao"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
         <table id="profissaosTable"
                width="100%"
                dataContainer="profissaosDc"

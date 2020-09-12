@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        messagesPack="pt.cmolhao.web.redetrabalho">
+    <data>
+        <instance id="redeTrabalhoDc"
+                  class="pt.cmolhao.entity.RedeTrabalho"
+                  view="redeTrabalho-view">
+            <loader/>
+            <collection id="subRedeTrabalhosDc" property="subRedeTrabalhos"/>
+            <collection id="documentacaosDc" property="documentacaos"/>
+            <collection id="membrosRedeTrabalhosDc" property="membrosRedeTrabalhos" />
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
+
+            <tabSheet>
+                <tab id="dados"
+                     caption="Dados"
+                     icon="font-icon:ADDRESS_CARD"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_dados" dataContainer="redeTrabalhoDc">
+                        <column width="400px">
+                            <textField id="nomeField" property="nome" width="400px" caption="Nome da Rede de Trabalho: " icon="font-icon:WRENCH"/>
+                        </column>
+                        <column width="400px">
+                            <textField id="idRedeTrabalhoField" property="id" visible="false" />
+                        </column>
+                    </form>
+
+
+
+                </tab>
+            </tabSheet>
+
+            <tabSheet>
+                <tab id="sub_rede_trabalho"
+                     caption="Sub Rede de Trabalho"
+                     icon="font-icon:WRENCH"
+                     margin="true"
+                     spacing="true">
+
+                    <groupBox id="subRedeTrabalhosBox" caption="Sub Rede de Trabalho">
+                        <table id="subRedeTrabalhosTable" dataContainer="subRedeTrabalhosDc" width="100%" height="500px"
+                               emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove" />
+                            </actions>
+                            <columns>
+                                <column id="idRedeTrabalho" caption="Nome da Rede de Trabalho"/>
+                                <column id="nome" caption="Nome da Sub rede de Trabalho"/>
+                            </columns>
+                            <buttonsPanel>
+                                <button action="subRedeTrabalhosTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="subRedeTrabalhosTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="subRedeTrabalhosTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+
+                </tab>
+
+                <tab id="documentos"
+                     caption="Documentos"
+                     icon="font-icon:FILES_O"
+                     margin="true"
+                     spacing="true">
+
+                    <groupBox id="documentacaosBox" caption="Documentos">
+                        <table id="documentacaosTable" dataContainer="documentacaosDc" width="100%" height="500px"
+                               emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove" />
+                            </actions>
+                            <columns>
+                                <column id="idRedeTrabalho" caption="Rede de Trabalho"/>
+                                <column id="idSubRedeTrabalho" caption="Sub Rede de Trabalho"/>
+                                <column id="dataDocumento" caption="Data do Ficheiro"/>
+
+                                <column id="nomeFicheiro" caption="Nome do Ficheiro"/>
+                                <column id="numeroDocumentacao" caption="Numero do Ficheiro"/>
+                                <column id="file" caption="Ficheiro" />
+                            </columns>
+                            <buttonsPanel>
+                                <button action="documentacaosTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="documentacaosTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="documentacaosTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+
+                </tab>
+
+                <tab id="membros_rede_trabalho"
+                     caption="Membros de Rede de Trabalho"
+                     icon="font-icon:GROUP"
+                     margin="true"
+                     spacing="true">
+
+                    <groupBox id="membrosRedeTrabalhoBox" caption="Membros da Rede de Trabalho">
+                        <groupTable id="membrosRedeTrabalhoesTable"
+                                    width="100%"
+                                    dataContainer="membrosRedeTrabalhosDc"
+                                    emptyStateMessage="Não Existe Dados na Tabela"
+                                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="idInsituicao" caption="Membro da Instituição"/>
+                                <column id="idRedeTrabalho" caption="Rede de Trabalho"/>
+                                <column id="dataAdesao" caption="Data de Adesão"/>
+                            </columns>
+                            <rowsCount/>
+                            <buttonsPanel id="buttonsPanel"
+                                          alwaysVisible="true">
+                                <button id="createBtn" action="membrosRedeTrabalhoesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button id="editBtn" action="membrosRedeTrabalhoesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button id="removeBtn" action="membrosRedeTrabalhoesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </groupTable>
+                    </groupBox>
+
+                </tab>
+
+
+            </tabSheet>
+
+        </scrollBox>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

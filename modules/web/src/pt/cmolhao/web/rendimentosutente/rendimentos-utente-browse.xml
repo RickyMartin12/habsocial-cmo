@@ -64,36 +64,52 @@
                   width="100%">
 
             <scrollBox spacing="true">
-                <hbox spacing="true">
-                    <lookupField
-                            property="idUtente"
-                            id="idUtenteField"
-                            optionsContainer="UtentesDC"
-                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
-                            inputPrompt="(Seleccione o nome e a identificação do utente)"/>
-
-
-                    <lookupField
-                            inputPrompt="(Seleccione o tipo de rendimento)"
-                            property="idTipoRendimento"
-                            id="idTipoRendimentoField"
-                            optionsContainer="tipoRendimentoesDc"
-                            icon="font-icon:HOME" caption="Tipo de Rendimento: "/>
-
-
-                    <textField id="anoField" property="ano" maxLength="4" caption="Ano de Rendimento: " icon="font-icon:CALENDAR" inputPrompt="Insere o ano" stylename="ano_cost_text"/>
-
-
-                </hbox>
 
                 <hbox spacing="true">
 
-                    <lookupField id="linhasRendimentosUtente"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
+                    <grid spacing="true">
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <lookupPickerField
+                                        property="idUtente"
+                                        id="idUtenteField"
+                                        optionsContainer="UtentesDC"
+                                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                                        width="400px"
+                                        inputPrompt="(Seleccione o utente)">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+                                <lookupPickerField
+                                        inputPrompt="(Seleccione o tipo de rendimento)"
+                                        property="idTipoRendimento"
+                                        id="idTipoRendimentoField"
+                                        width="400px"
+                                        optionsContainer="tipoRendimentoesDc"
+                                        icon="font-icon:HOME" caption="Tipo de Rendimento: ">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+                                <textField id="anoField" property="ano" maxLength="4" caption="Ano de Rendimento: " icon="font-icon:CALENDAR" inputPrompt="Insere o ano" stylename="ano_cost_text"/>
+                            </row>
+                        </rows>
+                    </grid>
 
                 </hbox>
+
+
 
 
                 <hbox spacing="true">
@@ -102,6 +118,15 @@
                 </hbox>
             </scrollBox>
         </groupBox>
+
+        <hbox spacing="true">
+
+            <lookupField id="linhasRendimentosUtente"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+
+        </hbox>
 
 
         <groupTable id="rendimentosUtentesTable"

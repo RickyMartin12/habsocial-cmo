@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.nucleo_executivo_elementos_membros">
+    <data>
+        <instance id="projectosAprovacaoNucleoExecutivoDc"
+                  class="pt.cmolhao.entity.ProjectosAprovacaoNucleoExecutivo"
+                  view="projectosAprovacaoNucleoExecutivo-view">
+            <loader/>
+        </instance>
+
+        <collection id="ProjectosIntervencaoNucleoExecutivoDc"
+                    class="pt.cmolhao.entity.ProjectoIntervencaoNucleoExecutivo"
+                    view="projectoIntervencaoNucleoExecutivo-view">
+            <loader id="customersLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_ProjectoIntervencaoNucleoExecutivo e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+    </data>
+
+
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <tabSheet>
+
+            <tab id="dados_projecto"
+                 caption="Dados do Projecto"
+                 icon="font-icon:PASTE"
+                 margin="true"
+                 spacing="true">
+                <form id="form_dados_pessoais" dataContainer="projectosAprovacaoNucleoExecutivoDc">
+
+                    <column width="300px">
+                        <lookupPickerField id="idprojectosintervencaoField"
+                                           property="idprojectosintervencao"
+                                           optionsContainer="ProjectosIntervencaoNucleoExecutivoDc"
+                                           inputPrompt="(Seleccione o ID do projecto de intervenção)"
+                                           caption="Projecto de Intervenção: "
+                                           stylename="projecto_aprovacao_edit"
+                                           required="true"
+                                           colspan="2"
+                                           width="820px"
+                                           requiredMessage="Preenche o Projecto de Intervenção"
+                                           icon="font-icon:PASTE">
+
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
+
+                        </lookupPickerField>
+
+                        <textField id="tipologiaField" property="tipologia"
+                                   caption="Tipologia: "
+                                   stylename="tipologia_projecto_aprovacao_edit"
+                                   icon="CERTIFICATE"/>
+
+
+                    </column>
+                    <column width="300px">
+
+                        <lookupField id="etapaprocessoField"
+                                     caption="Etapa de Processo: "
+                                     icon="CHECK_CIRCLE"
+                                     width="300px"
+                                     property="etapaprocesso"
+                                     stylename="etapa_processo_projecto_aprovacao_edit"
+                                     inputPrompt="(Seleccione uma das Etapas de Processo)"
+                        />
+
+                        <textField id="idProjectosAprovacaoField" visible="false" property="id" />
+
+                    </column>
+
+
+                </form>
+            </tab>
+
+
+
+        </tabSheet>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

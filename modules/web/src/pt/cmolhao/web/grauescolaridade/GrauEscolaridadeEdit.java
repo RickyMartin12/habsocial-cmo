@@ -1,11 +1,15 @@
 package pt.cmolhao.web.grauescolaridade;
 
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.gui.Dialogs;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.screen.*;
+import pt.cmolhao.entity.Apoios;
 import pt.cmolhao.entity.GrauEscolaridade;
+import pt.cmolhao.entity.Utente;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -15,10 +19,19 @@ import java.util.UUID;
 @EditedEntityContainer("grauEscolaridadeDc")
 @LoadDataBeforeShow
 public class GrauEscolaridadeEdit extends StandardEditor<GrauEscolaridade> {
+
+    @Inject
+    protected TextField<UUID> idGrauEscolaridadeField;
     @Inject
     protected LookupField<String> descricaoField;
     @Inject
-    protected TextField<UUID> idGrauEscolaridadeField;
+    protected Table<Utente> utentesTable;
+    @Named("utentesTable.remove")
+    protected RemoveAction<Utente> utentesTableRemove;
+
+    @Inject
+    private Dialogs dialogs;
+
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -39,5 +52,36 @@ public class GrauEscolaridadeEdit extends StandardEditor<GrauEscolaridade> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         getWindow().setCaption("Adicionar/Editar Grau Escolaridade - " + idGrauEscolaridadeField.getValue());
+    }
+
+    @Subscribe("utentesTable.remove")
+    protected void onUtentesTableRemove(Action.ActionPerformedEvent event) {
+        utentesTableRemove.setConfirmation(false);
+        if (utentesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção dos utentes")
+                    .withMessage("Deve seleccionar pelo um dos utentes")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            Utente user = utentesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do utente número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do utente número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        utentesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 }

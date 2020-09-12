@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        messagesPack="pt.cmolhao.web.nucleo_executivo_elementos_membros">
+    <data>
+        <instance id="atendimentoNucleoExecutivoDc"
+                  class="pt.cmolhao.entity.AtendimentoNucleoExecutivo"
+                  view="atendimentoNucleoExecutivo-view">
+            <loader/>
+        </instance>
+
+        <collection id="tecnicoesNucleoExecutivoDc"
+                    class="pt.cmolhao.entity.TecnicoNucleoExecutivo"
+                    view="tecnicoNucleoExecutivo-view">
+            <loader id="tecnicoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TecnicoNucleoExecutivo e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="utentesDc"
+                    class="pt.cmolhao.entity.Utente"
+                    view="utente-view">
+            <loader id="utentesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Utente e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoAtendimentoesDc"
+                    class="pt.cmolhao.entity.TipoAtendimento"
+                    view="_local">
+            <loader id="tipoAtendimentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoAtendimento e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="atendimentoObjetivosesDc"
+                    class="pt.cmolhao.entity.AtendimentoObjetivos"
+                    view="_local">
+            <loader id="atendimentoObjetivosesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_AtendimentoObjetivos e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="atendimentoEncaminhamentoesDc"
+                    class="pt.cmolhao.entity.AtendimentoEncaminhamento"
+                    view="_local">
+            <loader id="atendimentoEncaminhamentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_AtendimentoEncaminhamento e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
+            <tabSheet>
+                <tab id="dados_pessoais"
+                     caption="Dados Pessoais"
+                     icon="font-icon:ID_CARD"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_dados_pessoais" dataContainer="atendimentoNucleoExecutivoDc">
+                        <column width="350px">
+
+                            <lookupPickerField
+                                    property="idUtente"
+                                    id="idUtenteField"
+                                    optionsContainer="utentesDc"
+                                    icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                                    width="300px"
+                                    inputPrompt="(Seleccione o utente)">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                            <lookupPickerField
+                                    property="idTipoAtendimento"
+                                    id="idTipoAtendimentoField"
+                                    optionsContainer="tipoAtendimentoesDc"
+                                    width="832px"
+                                    colspan="2"
+                                    icon="font-icon:VOLUME_CONTROL_PHONE" caption="Tipo de Atendimento: "
+                                    inputPrompt="(Seleccione o tipo de atendimento)" >
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                        </column>
+                        <column width="350px">
+
+                            <lookupPickerField
+                                    property="idTecnico"
+                                    id="idTecnicoField"
+                                    optionsContainer="tecnicoesNucleoExecutivoDc"
+                                    icon="font-icon:USER_MD" caption="Nome do Técnico: "
+                                    width="350px"
+
+                                    inputPrompt="(Seleccione o técnico)" >
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+                            </lookupPickerField>
+
+                            <textField id="idAtendimentoField" property="id" visible="false" />
+
+                        </column>
+
+                    </form>
+
+                </tab>
+
+                <tab id="contactos_data"
+                     caption="Contactos e Datas"
+                     icon="font-icon:MOBILE_PHONE"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_contactos_data" dataContainer="atendimentoNucleoExecutivoDc">
+                        <column width="200px">
+                            <dateField id="dataAtendimentoField" property="dataAtendimento"
+                                       icon="font-icon:CALENDAR" caption="Data Atendimento: " stylename="data_atendimento"/>
+                        </column>
+                        <column width="200px">
+                            <textField id="contactosEfetuadosField" property="contactosEfetuados"
+                                       caption="Contactos Efectuados: " icon="font-icon:MOBILE_PHONE"/>
+                        </column>
+
+                    </form>
+                </tab>
+
+                <tab id="objectivos_observacoes"
+                     caption="Objectivos e Observações"
+                     icon="font-icon:FILE_TEXT_O"
+                     margin="true"
+                     spacing="true">
+                    <form id="form_objectivos_observacoes" dataContainer="atendimentoNucleoExecutivoDc">
+                        <column width="250px">
+
+                            <lookupPickerField caption="Atendimento de Objectivos: "
+                                               id="idAtendimentoObjetivoField"
+                                               inputPrompt="(seleccione um dos objectivos gerais)"
+                                               icon="font-icon:CERTIFICATE"
+                                               width="811px"
+                                               colspan="2"
+                                               optionsContainer="atendimentoObjetivosesDc"
+                                               property="idAtendimentoObjetivo">
+
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+                            </lookupPickerField>
+
+                            <lookupPickerField caption="Atendimento de Encaminhamento:"
+                                               id="idAtendimentoEncaminhamentoField"
+                                               width="811px"
+                                               colspan="2"
+                                               inputPrompt="(seleccione o atendimento por encaminhamento)"
+                                               icon="font-icon:VOLUME_CONTROL_PHONE"
+                                               optionsContainer="atendimentoEncaminhamentoesDc"
+                                               property="idAtendimentoEncaminhamento">
+
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+                            </lookupPickerField>
+
+
+
+                            <textArea cols="60" rows="3" id="objetivoOutrosField" property="objetivoOutros"
+                                      caption="Outros Objectivos: " icon="font-icon:FILE_TEXT_O"/>
+                            <textArea cols="60" rows="3" id="obsGeraisField" property="obsGerais"
+                                      caption="Observações Gerais: " icon="font-icon:FILE_TEXT_O"/>
+                        </column>
+                        <column width="250px">
+
+                            <textArea cols="60" rows="3" id="obsConfField" property="obsConf"
+                                      caption="Observações de Confirmação: " icon="font-icon:FILE_TEXT_O"/>
+                            <textArea cols="60" rows="3" id="outrosEncaminhamentosField" property="outrosEncaminhamentos"
+                                      caption="Outros Encaminhamentos: " icon="font-icon:FILE_TEXT_O"/>
+                        </column>
+                    </form>
+                </tab>
+            </tabSheet>
+        </scrollBox>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

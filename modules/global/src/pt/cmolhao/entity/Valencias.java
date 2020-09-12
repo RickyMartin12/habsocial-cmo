@@ -1,25 +1,46 @@
 package pt.cmolhao.entity;
 
+import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.chile.core.annotations.NamePattern;
-import com.haulmont.cuba.core.entity.BaseIntegerIdEntity;
+import com.haulmont.cuba.core.entity.*;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
+import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.core.global.DesignSupport;
 
-import javax.annotation.CheckForNull;
 import javax.persistence.*;
-import javax.validation.constraints.Null;
+import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
 @DesignSupport("{'imported':true}")
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "idvalencias"))
 })
-
-@NamePattern("%s - %s|descricaotecnica,morada")
 @Table(name = "valencias")
 @Entity(name = "cmolhao_Valencias")
-public class Valencias extends BaseIntegerIdEntity {
-    private static final long serialVersionUID = -1232246021847256341L;
+@NamePattern("%s - %s|descricaotecnica,morada")
+public class Valencias extends BaseIntegerIdEntity implements Versioned, SoftDelete, Updatable, Creatable {
+    private static final long serialVersionUID = -4917356834841335333L;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_ts")
+    protected Date createTs;
+    @Column(name = "created_by", length = 50)
+    protected String createdBy;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "delete_ts")
+    protected Date deleteTs;
+    @Column(name = "deleted_by", length = 50)
+    protected String deletedBy;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_ts")
+    protected Date updateTs;
+    @Column(name = "updated_by", length = 50)
+    protected String updatedBy;
+    @Version
+    @Column(name = "version", nullable = false)
+    protected Integer version;
     @Column(name = "acordocapacidade")
     protected Integer acordocapacidade;
     @Column(name = "acordocomparticipacao", precision = 12, scale = 2)
@@ -112,11 +133,13 @@ public class Valencias extends BaseIntegerIdEntity {
     @Column(name = "horariosemanainiciotarde")
     protected Date horariosemanainiciotarde;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_res_social")
+    protected RespostaSocial idResSocial;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idinstituicao")
     protected Instituicoes idinstituicao;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idtipovalencia")
@@ -151,8 +174,56 @@ public class Valencias extends BaseIntegerIdEntity {
     protected Integer utentespechao;
     @Column(name = "utentesquelfes")
     protected Integer utentesquelfes;
-    @Column(name = "version")
-    protected Integer version;
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idValencia")
+    protected Set<AjudasTecnicas> ajudasTecnicas;
+    public Set<AjudasTecnicas> getAjudasTecnicas() {
+        return ajudasTecnicas;
+    }
+    public void setAjudasTecnicas(Set<AjudasTecnicas> ajudasTecnicas) {
+        this.ajudasTecnicas = ajudasTecnicas;
+    }
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idvalencia")
+    protected Set<FotosValencia> fotosValencias;
+    public Set<FotosValencia> getFotosValencias() {
+        return fotosValencias;
+    }
+    public void setFotosValencias(Set<FotosValencia> fotosValencias) {
+        this.fotosValencias = fotosValencias;
+    }
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idvalencia")
+    protected Set<Localizacoes> localizacoes;
+    public Set<Localizacoes> getLocalizacoes() {
+        return localizacoes;
+    }
+    public void setLocalizacoes(Set<Localizacoes> localizacoes) {
+        this.localizacoes = localizacoes;
+    }
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idValencia")
+    protected Set<UtentesOutrosConcelhos> utentesOutrosConcelhos;
+    public Set<UtentesOutrosConcelhos> getUtentesOutrosConcelhos() {
+        return utentesOutrosConcelhos;
+    }
+    public void setUtentesOutrosConcelhos(Set<UtentesOutrosConcelhos> utentesOutrosConcelhos) {
+        this.utentesOutrosConcelhos = utentesOutrosConcelhos;
+    }
+
+
+    @Override
+    public Boolean isDeleted() {
+        return deleteTs != null;
+    }
 
     public Integer getUtentesquelfes() {
         return utentesquelfes;
@@ -288,6 +359,14 @@ public class Valencias extends BaseIntegerIdEntity {
 
     public void setIdinstituicao(Instituicoes idinstituicao) {
         this.idinstituicao = idinstituicao;
+    }
+
+    public RespostaSocial getIdResSocial() {
+        return idResSocial;
+    }
+
+    public void setIdResSocial(RespostaSocial idResSocial) {
+        this.idResSocial = idResSocial;
     }
 
     public Date getHorariosemanainiciotarde() {
@@ -610,13 +689,73 @@ public class Valencias extends BaseIntegerIdEntity {
         this.acordocapacidade = acordocapacidade;
     }
 
-
+    @Override
     public Integer getVersion() {
         return version;
     }
 
+    @Override
     public void setVersion(Integer version) {
         this.version = version;
     }
 
+    @Override
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    @Override
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    @Override
+    public Date getUpdateTs() {
+        return updateTs;
+    }
+
+    @Override
+    public void setUpdateTs(Date updateTs) {
+        this.updateTs = updateTs;
+    }
+
+    @Override
+    public String getDeletedBy() {
+        return deletedBy;
+    }
+
+    @Override
+    public void setDeletedBy(String deletedBy) {
+        this.deletedBy = deletedBy;
+    }
+
+    @Override
+    public Date getDeleteTs() {
+        return deleteTs;
+    }
+
+    @Override
+    public void setDeleteTs(Date deleteTs) {
+        this.deleteTs = deleteTs;
+    }
+
+    @Override
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    @Override
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    @Override
+    public Date getCreateTs() {
+        return createTs;
+    }
+
+    @Override
+    public void setCreateTs(Date createTs) {
+        this.createTs = createTs;
+    }
 }

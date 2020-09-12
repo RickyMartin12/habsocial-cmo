@@ -3,17 +3,19 @@ package pt.cmolhao.web.tipocivil;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.ValueLoadContext;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.Table;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.gui.screen.LookupComponent;
+import pt.cmolhao.entity.TipoAtendimento;
 import pt.cmolhao.entity.TipoCivil;
 import pt.cmolhao.web.profissao.ProfissaoEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +31,15 @@ public class TipoCivilBrowse extends StandardLookup<TipoCivil> {
     @Inject
     protected LookupField linhasTipoCivil;
     @Inject
-    protected LookupField idTipoCivilField;
+    protected TextField<String> idTipoCivilField;
+    @Named("tipoCivilsTable.remove")
+    protected RemoveAction<TipoCivil> tipoCivilsTableRemove;
     @Inject
     private DataManager dataManager;
     @Inject
     private ScreenBuilders screenBuilders;
+    @Inject
+    private Dialogs dialogs;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -56,7 +62,7 @@ public class TipoCivilBrowse extends StandardLookup<TipoCivil> {
                         .withInitializer(customer -> {
                             if (idTipoCivilField.getValue() != null)
                             {
-                                customer.setTipo(idTipoCivilField.getValue().toString());
+                                customer.setTipo(idTipoCivilField.getValue());
                             }
                         })
                         .withScreenClass(TipoCivilEdit.class)    // specific editor screen
@@ -70,32 +76,19 @@ public class TipoCivilBrowse extends StandardLookup<TipoCivil> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         getWindow().setCaption("Listar Tipos de Civil");
-        // Arrend - Renda
-        List<String> options = new ArrayList<>();
-        String queryString = "select o.tipo as tipo from cmolhao_TipoCivil o where o.tipo is not null group by o.tipo";
-        ValueLoadContext valueLoadContextontext = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString));
-        valueLoadContextontext.addProperty("tipo");
-        List<KeyValueEntity> resultList = dataManager.loadValues(valueLoadContextontext);
-        for (KeyValueEntity entry : resultList) {
-            options.add(entry.getValue("tipo"));
-        }
-        idTipoCivilField.setOptionsList(options);
     }
 
     @Subscribe("reset_tipo_civil")
     protected void onReset_tipo_civilClick(Button.ClickEvent event) {
         idTipoCivilField.setValue(null);
-        linhasTipoCivil.setValue(null);
         tipoCivilsDl.removeParameter("tipo");
-        tipoCivilsDl.setMaxResults(0);
         tipoCivilsDl.load();
     }
 
     @Subscribe("search_tipo_civil")
     protected void onSearch_tipo_civilClick(Button.ClickEvent event) {
         if (idTipoCivilField.getValue() != null) {
-            tipoCivilsDl.setParameter("tipo",  idTipoCivilField.getValue().toString());
+            tipoCivilsDl.setParameter("tipo",  "(?i)%" + idTipoCivilField.getValue() + "%");
         } else {
             tipoCivilsDl.removeParameter("tipo");
         }
@@ -114,5 +107,38 @@ public class TipoCivilBrowse extends StandardLookup<TipoCivil> {
             tipoCivilsDl.setMaxResults(0);
         }
         tipoCivilsDl.load();
+    }
+
+    @Subscribe("tipoCivilsTable.remove")
+    protected void onTipoCivilsTableRemove(Action.ActionPerformedEvent event) {
+
+        tipoCivilsTableRemove.setConfirmation(false);
+        if (tipoCivilsTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção do tipo de civil")
+                    .withMessage("Deve seleccionar pelo uns dos tipos de civil")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            TipoCivil user = tipoCivilsTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do tipo de civil número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do tipo de civil número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        tipoCivilsTableRemove.execute();
+                                    }), // execute action
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
+
     }
 }

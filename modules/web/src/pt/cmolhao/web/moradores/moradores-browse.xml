@@ -10,7 +10,7 @@
                     view="moradores-view">
             <loader id="moradoresesDl">
                 <query>
-                    <![CDATA[select e from cmolhao_Moradores e]]>
+                    <![CDATA[select e from cmolhao_Moradores e where e.dataInicio >= :dataInicio and e.dateFim <= :dateFim]]>
                     <condition>
                         <and>
                             <c:jpql>
@@ -20,12 +20,6 @@
                             <c:jpql>
                                 <c:join>join e.habitacaoSocial j</c:join>
                                 <c:where>j.id = :habitacaoSocial</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.dataInicio = :dataInicio</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.dateFim = :dateFim</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -67,39 +61,67 @@
                   width="100%">
 
             <scrollBox spacing="true">
-                <hbox spacing="true">
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField id="habitacaoSocialField"
+                                               property="habitacaoSocial"
+                                               optionsContainer="habitacaoSocialsDc"
+                                               inputPrompt="(Seleccione a Habitação Social)"
+                                               caption="Habitação Social (Designacao): "
+                                               width="500px"
+                                               stylename="hab_social_search_morador"
+                                               icon="font-icon:BUILDING">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
 
-                    <lookupField id="habitacaoSocialField"
-                                 property="habitacaoSocial"
-                                 optionsContainer="habitacaoSocialsDc"
-                                 inputPrompt="(Seleccione a Habitação Social)"
-                                 caption="Habitação Social (Designacao): "
-                                 icon="font-icon:BUILDING"/>
+                            <lookupPickerField
+                                    property="utente"
+                                    id="utenteField"
+                                    optionsContainer="UtentesDC"
+                                    icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                                    width="300px"
+                                    stylename="utente_search_morador"
+                                    inputPrompt="(Seleccione o utente)">
 
-                    <lookupField
-                            property="utente"
-                            id="utenteField"
-                            optionsContainer="UtentesDC"
-                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
-                            inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
 
-                    <dateField id="dataInicioField" property="dataInicio" datatype="date" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data de Inicio: " stylename="data_inicio_morador"/>
-                    <dateField id="dataFimField" property="dateFim" datatype="date" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data de Fim: " stylename="data_fim_morador"/>
+                            <dateField id="dataInicioField" property="dataInicio" datatype="date" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data de Inicio: " stylename="data_inicio_morador"/>
+                            <dateField id="dataFimField" property="dateFim" datatype="date" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data de Fim: " stylename="data_fim_morador"/>
+                        </row>
+                    </rows>
+                </grid>
 
-
-                </hbox>
-                <hbox spacing="true">
-                    <lookupField id="linhasMoradeores"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
-                </hbox>
                 <hbox spacing="true">
                     <button id="reset_moradores" icon="ERASER" caption="Limpar" />
                     <button id="search_moradores" caption="Pesquisar" icon="SEARCH" stylename="info" />
                 </hbox>
             </scrollBox>
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasMoradeores"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
 
 
         <groupTable id="moradoresesTable"

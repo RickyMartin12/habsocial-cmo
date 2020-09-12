@@ -4,10 +4,6 @@
 
         <class>pt.cmolhao.entity.Tiposvalencia</class>
         <class>pt.cmolhao.entity.BlocosHabitacaoSocial</class>
-        <class>pt.cmolhao.entity.ProjectosIntervencao</class>
-        <class>pt.cmolhao.entity.Login</class>
-        <class>pt.cmolhao.entity.Instituicoes</class>
-        <class>pt.cmolhao.entity.Valencias</class>
         <class>pt.cmolhao.entity.ProjectosEmAprovacao</class>
         <class>pt.cmolhao.entity.FotosValencia</class>
         <class>pt.cmolhao.entity.AjudasTecnicas</class>
@@ -38,6 +34,43 @@
         <class>pt.cmolhao.entity.Apoios</class>
         <class>pt.cmolhao.entity.Moradores</class>
         <class>pt.cmolhao.entity.Utente</class>
+        <class>pt.cmolhao.entity.Valencias</class>
+        <class>pt.cmolhao.entity.ProjectosIntervencao</class>
+        <class>pt.cmolhao.entity.RespostaSocial</class>
         <class>pt.cmolhao.entity.HabitacaoSocial</class>
+        <class>pt.cmolhao.entity.Instituicoes</class>
+        <class>pt.cmolhao.entity.InstituicoesClaso</class>
+        <class>pt.cmolhao.entity.ValenciasClaso</class>
+        <class>pt.cmolhao.entity.LocalizacoesClaso</class>
+        <class>pt.cmolhao.entity.FotosValenciaClaso</class>
+        <class>pt.cmolhao.entity.AjudasTecnicasClaso</class>
+        <class>pt.cmolhao.entity.UtentesOutrosConcelhosClaso</class>
+        <class>pt.cmolhao.entity.SubRedeTrabalho</class>
+        <class>pt.cmolhao.entity.RedeTrabalho</class>
+        <class>pt.cmolhao.entity.Documentacao</class>
+        <class>pt.cmolhao.entity.DocumentacaoClasoAtas</class>
+        <class>pt.cmolhao.entity.DocumentacaoClasoFichasAdesao</class>
+        <class>pt.cmolhao.entity.DocumentacaoClasoRegulamentos</class>
+        <class>pt.cmolhao.entity.InstituicoesNucleoExecutivo</class>
+        <class>pt.cmolhao.entity.ValenciaNucleoExecutivo</class>
+        <class>pt.cmolhao.entity.LocalizacaoNucleoExecutivo</class>
+        <class>pt.cmolhao.entity.FotosValenciasNucleoExecutivo</class>
+        <class>pt.cmolhao.entity.AjudasTecnicasNucleoExecutivo</class>
+        <class>pt.cmolhao.entity.ProjectoIntervencaoNucleoExecutivo</class>
+        <class>pt.cmolhao.entity.PessoalTecnicoNucleoExecutivo</class>
+        <class>pt.cmolhao.entity.ProjectosAprovacaoNucleoExecutivo</class>
+        <class>pt.cmolhao.entity.PessoalAuxiliarNucleoExecutivo</class>
+        <class>pt.cmolhao.entity.ApoiosNucleoExecutivo</class>
+        <class>pt.cmolhao.entity.TecnicoNucleoExecutivo</class>
+        <class>pt.cmolhao.entity.UtentesOutrosConcelhosNucleoExecutivo</class>
+        <class>pt.cmolhao.entity.AtendimentoNucleoExecutivo</class>
+        <class>pt.cmolhao.entity.MembrosRedeTrabalho</class>
+        <class>pt.cmolhao.entity.MembrosRedesTrabalhoClaso</class>
+        <class>pt.cmolhao.entity.MembrosRedesTrabalhoNuceloExecutivo</class>
+        <class>pt.cmolhao.entity.DocumentacaoNucleoExecutivoAtas</class>
+        <class>pt.cmolhao.entity.DocumentacaoInstrumentosPlaneamento</class>
+        <class>pt.cmolhao.entity.DocumentacaoLegislacao</class>
+        <class>pt.cmolhao.entity.DocumentacaoMinutas</class>
+        <class>pt.cmolhao.entity.DocumentacaoRegulamentos</class>
     </persistence-unit>
 </persistence>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.pessoalauxiliar">
     <data>
         <instance id="pessoalAuxiliarDc"
@@ -23,46 +22,91 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="pessoalAuxiliarDc">
-            <column width="250px">
-                <textField id="idPessoalAuxiliarField" property="id" visible="false" />
-                <textField id="anosservicoinstituicaoField" property="anosservicoinstituicao"
-                           maxLength="2"
-                           caption="Anos de Serviço da Instituição: "
-                           icon="CALENDAR_TIMES_O"
-                />
-                <textField id="categoriaprofissionalField"
-                             caption="Categoria Profissional: "
-                             icon="ADDRESS_BOOK"
-                             property="categoriaprofissional"/>
-                <checkBox id="formacaoprofissionalField"
-                          caption="Formação Profissional: "
-                          icon="GRADUATION_CAP"
-                          property="formacaoprofissional"/>
-                <lookupField id="habilitacoesliterariasField" property="habilitacoesliterarias"
-                             caption="Habilitações Literarias: "
-                             icon="UNIVERSITY"
-                             inputPrompt="(Seleccione uma das Habilitações Literárias)"/>
-                <lookupField id="idValenciaField"
-                             property="idValencia"
-                             optionsContainer="valenciasDc"
-                             inputPrompt="(Seleccione a Descrição da Valência)"
-                             caption="Descrição técnica da valência: "
-                             icon="SIMPLYBUILT"/>
-                <textField id="idadeField"
-                           caption="Idade: "
-                           icon="ADDRESS_CARD"
-                           property="idade"/>
-                <checkBox id="sexomasculinoField"
-                          caption="Sexo Masculino: "
-                          icon="font-icon:USER_O"
-                          property="sexomasculino"/>
-                <textField id="tipovinculoField"
-                           caption="Tipo Vinculo: "
-                           icon="ARCHIVE"
-                           property="tipovinculo"/>
-            </column>
-        </form>
+
+        <tabSheet>
+            <tab id="dados_pessoal"
+                 caption="Dados do Pessoal"
+                 icon="font-icon:GROUP"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_dados_pessoal" dataContainer="pessoalAuxiliarDc">
+
+
+                    <column width="250px">
+                        <lookupPickerField id="idValenciaField"
+                                     property="idValencia"
+                                     colspan="2"
+                                     optionsContainer="valenciasDc"
+                                     width="820px"
+                                     stylename="id_valencia_pessoal_auxiliar_edit"
+                                     inputPrompt="(Seleccione a Descrição da Valência)"
+                                     caption="Descrição da valência: "
+                                     icon="SIMPLYBUILT">
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+                        <checkBox id="sexomasculinoField"
+                                  caption="Sexo Masculino: "
+                                  stylename="sexo_masculino_auxiliar_edit"
+                                  icon="font-icon:USER_O"
+                                  property="sexomasculino"/>
+                    </column>
+                    <column width="350px">
+                        <lookupField id="habilitacoesliterariasField" property="habilitacoesliterarias"
+                                     caption="Habilitações Literarias: "
+                                     stylename="hab_literaias_auxiliar_edit"
+                                     icon="UNIVERSITY"
+                                     inputPrompt="(Seleccione uma das Habilitações Literárias)"/>
+                        <textField id="idPessoalAuxiliarField" property="id" visible="false" />
+                    </column>
+
+                </form>
+
+            </tab>
+            <tab id="dados_secundarios"
+                 caption="Dados Secundários"
+                 icon="font-icon:ID_CARD"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_dados_secundarios" dataContainer="pessoalAuxiliarDc">
+                    <column width="300px">
+
+                        <textField id="idadeField"
+                                   caption="Idade: "
+                                   width="100px"
+                                   icon="ADDRESS_CARD"
+                                   property="idade"/>
+
+                        <textField id="categoriaprofissionalField"
+                                   caption="Categoria Profissional: "
+                                   icon="ADDRESS_BOOK"
+                                   property="categoriaprofissional"/>
+
+                        <textField id="tipovinculoField"
+                                   caption="Tipo Vinculo: "
+                                   icon="ARCHIVE"
+                                   property="tipovinculo"/>
+
+                    </column>
+                    <column width="300px">
+                        <textField id="anosservicoinstituicaoField" property="anosservicoinstituicao"
+                                   maxLength="2"
+                                   caption="Anos de Serviço: "
+                                   width="100px"
+                                   icon="CALENDAR_TIMES_O"
+                        />
+                        <checkBox id="formacaoprofissionalField"
+                                  caption="Formação Profissional: "
+                                  icon="GRADUATION_CAP"
+                                  property="formacaoprofissional"/>
+                    </column>
+                </form>
+            </tab>
+        </tabSheet>
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
             <button action="windowClose" caption="Fechar" icon="CLOSE"/>

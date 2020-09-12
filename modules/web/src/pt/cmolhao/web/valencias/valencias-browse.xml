@@ -21,6 +21,9 @@
                                 <c:join>join e.idtipovalencia j</c:join>
                                 <c:where>j.id = :idtipovalencia</c:where>
                             </c:jpql>
+                            <c:jpql>
+                                <c:where>e.descricaotecnica like :descricaotecnica</c:where>
+                            </c:jpql>
                         </and>
 
                     </condition>
@@ -65,24 +68,60 @@
 
             <scrollBox spacing="true">
             <hbox spacing="true">
-                <lookupField
-                        inputPrompt="(Seleccione a designação da instituição da valência)"
-                        property="idinstituicao"
-                        id="idinstituicaoField"
-                        optionsContainer="InstituicaoDc"
-                        icon="font-icon:BUILDING" caption="Designação da Instituição da valencia: "/>
 
-                <lookupField
-                        inputPrompt="(Seleccione o tipo de valência)"
-                        property="idtipovalencia"
-                        id="idtipovalenciaField"
-                        optionsContainer="TipoValenciaDc"
-                        icon="SIMPLYBUILT" caption="Tipo de Valencia: " />
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField
+                                    inputPrompt="(Seleccione a instituição)"
+                                    property="idinstituicao"
+                                    id="idinstituicaoField"
+                                    width="400px"
+                                    optionsContainer="InstituicaoDc"
+                                    icon="font-icon:BUILDING" caption="Instituição: ">
 
-                <lookupField id="linhasValencias"
-                             caption="Mostrar Numero de Linhas"
-                             inputPrompt="(seleccione o numero de linhas)"
-                             icon="ARROWS_V"/>
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+                            </lookupPickerField>
+
+                            <lookupPickerField
+                                    inputPrompt="(Seleccione a área de intervenção)"
+                                    property="idtipovalencia"
+                                    id="idtipovalenciaField"
+                                    width="400px"
+                                    optionsContainer="TipoValenciaDc"
+                                    icon="SIMPLYBUILT" caption="Área de Intervenção: " >
+
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+                            </lookupPickerField>
+
+                            <textField id="descricaotecnicaField"
+                                       caption="Descrição:"
+                                       property="descricaotecnica"
+                                       inputPrompt="(introduza a descricao técnica)"
+                                       width="350px"
+                                       icon="font-icon:ADDRESS_CARD"/>
+
+                        </row>
+                    </rows>
+                    </grid>
+
+
 
             </hbox>
 
@@ -94,11 +133,12 @@
 
         </groupBox>
 
-
-       <!--<filter id="filter"
-                applyTo="valenciasesTable"
-                dataLoader="valenciasesDl">
-        </filter>-->
+        <hbox spacing="true">
+            <lookupField id="linhasValencias"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
 
         <groupTable id="valenciasesTable"
                     width="100%"
@@ -119,9 +159,10 @@
                 <action id="excel" type="excel"/>
             </actions>
             <columns>
-                <column id="descricaotecnica" caption="Descrição Técnica"/>
+                <column id="descricaotecnica" caption="Descrição"/>
                 <column id="idinstituicao" caption="Nome da Instituição"/>
-                <column id="idtipovalencia" caption="Descrição da Valencia"/>
+                <column id="idtipovalencia" caption="Área de Intervenção"/>
+                <column id="idResSocial" caption="Resposta Social" />
                 <column id="morada" caption="Morada"/>
                 <column id="nregsegsocial" caption="Numero de Segurânça Social"/>
                 <column id="directortecnico" caption="Director Técnico"/>

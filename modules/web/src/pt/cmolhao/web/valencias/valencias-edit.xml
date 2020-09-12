@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
-        messagesPack="pt.cmolhao.web.screens.valencias">
+        messagesPack="pt.cmolhao.web.valencias">
     <data>
         <instance id="valenciasDc"
                   class="pt.cmolhao.entity.Valencias"
                   view="valencias-view">
             <loader/>
+            <collection id="valenciasAjudasTecnicasDc" property="ajudasTecnicas" />
+            <collection id="fotosValenciasDc" property="fotosValencias" />
+            <collection id="localizacoesDc" property="localizacoes" />
+            <collection id="utentesOutrosConcelhosDc" property="utentesOutrosConcelhos" />
         </instance>
         <instance id="valencias_Dc"
                   class="pt.cmolhao.entity.Valencias"
                   view="valencias-view"/>
+
 
 
         <collection id="InstituicaoDc"
@@ -20,6 +24,18 @@
             <loader id="ins_Loader">
                 <query>
                     <![CDATA[select e from cmolhao_Instituicoes e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+
+        <collection id="valencias_dc"
+                    class="pt.cmolhao.entity.Valencias"
+                    view="valencias-view">
+            <loader id="valencias_dc_loader">
+                <query>
+                    <![CDATA[select e from cmolhao_Valencias e]]>
                 </query>
             </loader>
         </collection>
@@ -34,197 +50,530 @@
                 </query>
             </loader>
         </collection>
+
+        <collection id="respostaSocialsDc"
+                    class="pt.cmolhao.entity.RespostaSocial"
+                    view="respostaSocial-view">
+            <loader id="respostaSocialsDl">
+                <query>
+                    <![CDATA[select e from cmolhao_RespostaSocial e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="scrollBox" spacing="true">
         <scrollBox id="scrollBox" spacing="true">
-            <form id="form" dataContainer="valenciasDc">
-                <column width="250px">
-                    <textField id="idValenciasField" visible="false" property="id" />
-                    <textField id="descricaotecnicaField" property="descricaotecnica" caption="Descrição Técnica: " icon="FILE_TEXT"/>
 
-                    <lookupField property="idinstituicao" id="idinstituicaoField" optionsContainer="InstituicaoDc"
-                                 caption="Designação da Instituição da valencia:"
-                                 inputPrompt="(Seleccione a designação da instituição da valência)"
-                                 icon="font-icon:BUILDING"/>
+            <tabSheet>
+                <tab id="dados_descricao_valencia"
+                     caption="Descrição da Valênçia"
+                     icon="font-icon:HOME"
+                     margin="true"
+                     spacing="true">
 
-                    <lookupField property="idtipovalencia" id="idtipovalenciaField" optionsContainer="TipoValenciaDc"
-                                caption="Tipo de Valência: "
-                                inputPrompt="(Seleccione o tipo de valência)"
-                                icon="SIMPLYBUILT"/>
+                    <form id="form_dados_descricao_valencia" dataContainer="valenciasDc">
+                        <textField id="descricaotecnicaField" property="descricaotecnica" caption="Descrição Técnica: " icon="FILE_TEXT" width="500px"/>
+                        <lookupPickerField property="idinstituicao" id="idinstituicaoField" optionsContainer="InstituicaoDc"
+                                     caption="Instituição:"
+                                     width="600px"
+                                     inputPrompt="(Seleccione a instituição)"
+                                     icon="font-icon:BUILDING">
 
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
 
-                    <textField id="moradaField" property="morada" caption="Morada: "
-                               icon="font-icon:HOME"/>
+                        </lookupPickerField>
+                        <textField id="idValenciasField" visible="false" property="id" />
+                    </form>
 
-                    <textField id="nregsegsocialField"
-                               property="nregsegsocial"
-                               caption="Numero de Segurança Social: "
-                               icon="KEY"/>
-                    <textField id="contactodirectortecnicoField" property="contactodirectortecnico"
-                               caption="Contacto Directorio Técnico: " icon="PHONE"/>
+                </tab>
 
-                    <textField id="emalField" property="emal"
-                               caption="Email: " icon="ENVELOPE"/>
-                    <textField id="faxField" property="fax"
-                               caption="Fax: " icon="FAX"/>
+                <tab id="area_intervencao"
+                     caption="Área de Intervenção"
+                     icon="font-icon:SIMPLYBUILT"
+                     margin="true"
+                     spacing="true">
+                    <form id="form_area_intervencao" dataContainer="valenciasDc">
+                        <column width="400px">
+                            <lookupPickerField property="idtipovalencia" id="idtipovalenciaField" optionsContainer="TipoValenciaDc"
+                                         caption="Área de Intervenção: "
+                                         inputPrompt="(Seleccione o tipo de valência)"
+                                         icon="SIMPLYBUILT">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+                        </column>
+                        <column width="400px">
+                            <lookupPickerField property="idResSocial" id="idResSocialField" optionsContainer="respostaSocialsDc"
+                                               caption="Resposta Social: "
+                                               inputPrompt="(Seleccione a resposta social)"
+                                               icon="SIMPLYBUILT">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+                        </column>
+                    </form>
+                </tab>
 
-                    <textField id="acordocapacidadeField" property="acordocapacidade"
-                               caption="Capacidade de Pessoas: " icon="USERS"/>
+                <tab id="morada_valencia"
+                     caption="Morada da Valênçia"
+                     icon="font-icon:MAP_MARKER"
+                     margin="true"
+                     spacing="true">
 
+                    <form id="form_morada_valencia" dataContainer="valenciasDc">
+                        <column width="400px">
+                            <textField id="moradaField" property="morada" caption="Morada: " stylename="morada_valencia_edit"
+                                       icon="font-icon:HOME" width="600px"/>
+                        </column>
 
-                    <textField id="acordocomparticipacaoField" property="acordocomparticipacao"
-                               caption="Comparticipação de Pessoas: " icon="USERS"/>
+                        <column width="300px">
+                            <textField id="coordenadagpsField" property="coordenadagps" stylename="coordenadagps_valencia_edit"
+                                       icon="MAP_MARKER" caption="Coordenadas GPS: "/>
+                        </column>
+                    </form>
 
-                    <dateField id="acordodatacelebracaoField" property="acordodatacelebracao"
-                               caption="Celebração de Pessoas: " dateFormat="dd/MM/yyyy" icon="CALENDAR"/>
+                </tab>
 
+                <tab id="dados_secundarios"
+                     caption="Dados Secundários"
+                     icon="font-icon:ADDRESS_CARD"
+                     margin="true"
+                     spacing="true">
 
-                    <textField id="acordolistaesperaField" property="acordolistaespera"
-                               caption="Lista de Espera: " icon="LIST_ALT"/>
+                    <form id="form_dados_secundarios" dataContainer="valenciasDc">
 
-                    <textField id="acordoutentesextrafemininoField" property="acordoutentesextrafeminino"
-                               caption="Utentes extra no sexo feminino: " icon="USERS"/>
+                        <column width="250px">
+                            <textField id="nregsegsocialField"
+                                       property="nregsegsocial"
+                                       caption="Numero de Segurança Social: "
+                                       icon="KEY"/>
 
+                            <textField id="emalField" property="emal"
+                                       caption="Email: " icon="ENVELOPE"/>
 
-                    <textField id="acordoutentesextramasculinoField" property="acordoutentesextramasculino"
-                               caption="Utentes extra no sexo masculino: " icon="USERS"/>
+                            <textField id="directortecnicoField" property="directortecnico"
+                                       caption="Directorio Técnico: " icon="USER_MD"/>
 
-                    <textField id="acordoutentesfemininoField" property="acordoutentesfeminino"
-                               caption="Utentes no sexo feminino: " icon="USERS"/>
+                            <textField id="urlField" property="url"
+                                       caption="URL: " icon="LINK"/>
 
+                            <textField id="versionField" property="version" visible="false"/>
 
+                        </column>
+                        <column width="250px">
+                            <textField id="contactodirectortecnicoField" property="contactodirectortecnico"
+                                       caption="Contacto Directorio Técnico: " icon="PHONE"/>
+                            <textField id="faxField" property="fax"
+                                       caption="Fax: " icon="FAX"/>
+                            <textField id="telefoneField" property="telefone"
+                                       caption="Telefone: " icon="PHONE"/>
+                            <textField id="formacaopreviaField" property="formacaoprevia"
+                                       caption="Formação Previa: " icon="FOLDER_OPEN"/>
 
+                        </column>
 
-                    <textField id="acordoutentesmasculinoField" property="acordoutentesmasculino"
-                               caption="Utentes no sexo masculino: " icon="USERS"/>
+                    </form>
 
-                    <textField id="utentesfuzetaField" property="utentesfuzeta"
-                               caption="Utentes na Fuzeta: " icon="USERS"/>
-                    <textField id="utentesmoncarapachoField" property="utentesmoncarapacho"
-                               caption="Utentes no Moncarapacho: " icon="USERS"/>
+                </tab>
 
-                    <textField id="utentesolhaoField" property="utentesolhao"
-                               caption="Utentes de Olhão: " icon="USERS"/>
-                    <textField id="utentespechaoField" property="utentespechao"
-                               caption="Utentes de Pechão: " icon="USERS"/>
+                <tab id="acordo_capacidade"
+                     caption="Acordo Capacidade"
+                     icon="font-icon:USERS"
+                     margin="true"
+                     spacing="true">
 
-                    <textField id="utentesquelfesField" property="utentesquelfes"
-                               caption="Utentes de Quelfes: " icon="USERS"/>
+                    <form id="form_acordo_capacidade" dataContainer="valenciasDc">
+                        <column width="150px">
+                            <textField id="acordocapacidadeField" property="acordocapacidade"
+                                       caption="Capacidade de Pessoas: " icon="USERS"/>
 
+                            <dateField id="acordodatacelebracaoField" property="acordodatacelebracao"
+                                       caption="Celebração de Pessoas: " dateFormat="dd/MM/yyyy" icon="CALENDAR"/>
 
-                    <textField id="acordovagasfemininoField" property="acordovagasfeminino"
-                               caption="Vagas no Feminino:" icon="STREET_VIEW"/>
+                            <textField id="acordoutentesextrafemininoField" property="acordoutentesextrafeminino"
+                                       caption="Utentes extra no sexo feminino: " icon="USERS"/>
 
-                    <textField id="acordovagasmasculinoField" property="acordovagasmasculino"
-                               caption="Vagas no Masculino:" icon="STREET_VIEW"/>
+                            <textField id="acordoutentesfemininoField" property="acordoutentesfeminino"
+                                       caption="Utentes no sexo feminino: " icon="USERS"/>
+                        </column>
+                        <column width="150px">
 
+                            <textField id="acordocomparticipacaoField" property="acordocomparticipacao"
+                                       caption="Número de Utentes: " icon="USERS"/>
 
+                            <textField id="acordolistaesperaField" property="acordolistaespera"
+                                       caption="Lista de Espera: " icon="LIST_ALT"/>
 
-                    <checkBox id="actividadesculturalField" property="actividadescultural"
-                                caption="Actividades Culturais: " icon="UNIVERSITY"/>
+                            <textField id="acordoutentesextramasculinoField" property="acordoutentesextramasculino"
+                                       caption="Utentes extra no sexo masculino: " icon="USERS"/>
 
-                    <checkBox id="actividadesdesportivaField" property="actividadesdesportiva"
-                                caption="Actividades Desportivas: " icon="FUTBOL_O"/>
+                        </column>
+                    </form>
 
+                </tab>
 
-                    <checkBox id="actividadeslazerField" property="actividadeslazer"
-                                caption="Actividades de Lazer: " icon="GAMEPAD"/>
+                <tab id="acordo_utentes"
+                     caption="Acordo Utentes"
+                     icon="font-icon:USERS"
+                     margin="true"
+                     spacing="true">
 
-                    <textField id="actividadesoutrasField" property="actividadesoutras"
-                                caption="Outro tipo de Actividades: " icon="FONT_AWESOME"/>
-                    <checkBox id="actividadesrecreativasField" property="actividadesrecreativas"
-                                caption="Actividades Recreativas: " icon="PUZZLE_PIECE"/>
+                    <form id="form_acordo_utentes" dataContainer="valenciasDc">
+                        <column width="150px">
 
-                    <checkBox id="actividadessocialField" property="actividadessocial"
-                                caption="Activiadades Sociais: " icon="GROUP"/>
-                    <checkBox id="certauditoriaexternacursoField" property="certauditoriaexternacurso"
-                                caption="Certidão de Auditoria Externa: " icon="CERTIFICATE"/>
+                            <textField id="acordoutentesmasculinoField" property="acordoutentesmasculino"
+                                       caption="Utentes no sexo masculino: " icon="USERS"/>
 
-                    <checkBox id="certauditoriasinternascursoField" property="certauditoriasinternascurso"
-                                caption="Certidão de Auditorias Internas: " icon="CERTIFICATE"/>
-                    <dateField id="certdatainicioField" property="certdatainicio"
-                                caption="Certidão Data de Inicio: " dateFormat="dd/MM/yyyy" icon="CALENDAR"/>
-
-                    <dateField id="certdataprevistaField" property="certdataprevista" dateFormat="dd/MM/yyyy" icon="CALENDAR" caption="Certidão Data Prevista: "/>
-                    <checkBox id="certificacaoqualidadeField" property="certificacaoqualidade" icon="CERTIFICATE" caption="Certificação de Qualidade: "/>
-
-                    <textField id="directortecnicoField" property="directortecnico"
-                                caption="Directorio Técnico: " icon="USER_MD"/>
-                    <checkBox id="contratacaoexternajardinagemField" property="contratacaoexternajardinagem"
-                                caption="Contratação de Jardinagem Externa: " icon="LEAF"/>
-
-
-                    <checkBox id="contratacaoexternalimpezaField" property="contratacaoexternalimpeza"
-                                caption="Contratação de Limpeza Externa: " icon="PAINT_BRUSH"/>
-                    <textField id="contratacaoexternaoutrasField" property="contratacaoexternaoutras"
-                                caption="Outros Contratação Externos: " icon="OBJECT_GROUP"/>
-
-                    <checkBox id="contratacaoexternarefeicoesField" property="contratacaoexternarefeicoes"
-                                caption="Contratação de Refeições Externas: " icon="CUTLERY"/>
-                    <textField id="coordenadagpsField" property="coordenadagps"
-                    icon="MAP_MARKER" caption="Coordenadas de GPS: "/>
-
-                    <textField id="formacaopreviaField" property="formacaoprevia"
-                    caption="Formação Previa: " icon="FOLDER_OPEN"/>
-                    <timeField id="horariofimsemanainiciomanhaField" property="horariofimsemanainiciomanha"
-                                caption="Horario de Fim de Semana no Inicio da Manha: " icon="CLOCK_O"/>
-
-                    <timeField id="horariofimsemanafimmanhaField" property="horariofimsemanafimmanha"
-                               caption="Horario de Fim de Semana no Fim da Manhã: " icon="CLOCK_O"/>
-
-
-                    <timeField id="horariofimsemanainiciotardeField" property="horariofimsemanainiciotarde"
-                    caption="Horario do Fim de Semana no Inicio da Tarde: " icon="CLOCK_O"/>
-
-                    <timeField id="horariofimsemanafimtardeField" property="horariofimsemanafimtarde"
-                    caption="Horario no Fim de Semana no Fim da Tarde: " icon="CLOCK_O"/>
-
-
-                    <timeField id="horariosemanainiciomanhaField" property="horariosemanainiciomanha"
-                    caption="Horario da Semana no Inicio da Manha: " icon="CLOCK_O"/>
-
-                    <timeField id="horariosemanafimmanhaField" property="horariosemanafimmanha"
-                    caption="Horario da Semana no Fim da Manhã: " icon="CLOCK_O"/>
-
-
-                    <timeField id="horariosemanainiciotardeField" property="horariosemanainiciotarde"
-                    caption="Horario da Semana no Inicio da Tarde: " icon="CLOCK_O"/>
-
-
-                    <timeField id="horariosemanafimtardeField" property="horariosemanafimtarde"
-                    caption="Horario da Semana no Fim da Tarde: " icon="CLOCK_O"/>
-
-
-                    <textField id="recursostecnicoscomplementaresField" property="recursostecnicoscomplementares"
-                    caption="Recursos Técnicos Complementares: " icon="FILES_O"/>
-
-                    <textField id="servicosespecializadosField" property="servicosespecializados"
-                    caption="Serviços Especializados: " icon="COGS"/>
-
-                    <textField id="telefoneField" property="telefone"
-                    caption="Telefone: " icon="PHONE"/>
-
-                    <textField id="tipoacordosegsocialField" property="tipoacordosegsocial"
-                    caption="Tipo de Acordo de Segurança Social: " icon="GROUP"/>
-
-                    <checkBox id="transporteField" property="transporte"
-                    caption="Transporte: " icon="BUS"/>
-
-                    <textField id="transportecapacidadeField" property="transportecapacidade"
-                    caption="Transporte da Capacidade: " icon="CAR"/>
-
-                    <checkBox id="transporteproprioField" property="transporteproprio"
-                    caption="Transporte Próprio: " icon="CAR"/>
-
-                    <textField id="urlField" property="url"
-                    caption="URL: " icon="LINK"/>
-                    <textField id="versionField" property="version" visible="false"/>
+                            <textField id="utentesmoncarapachoField" property="utentesmoncarapacho"
+                                       caption="Utentes no Moncarapacho: " icon="USERS"/>
 
 
-                </column>
-            </form>
+                            <textField id="utentespechaoField" property="utentespechao"
+                                       caption="Utentes de Pechão: " icon="USERS"/>
+
+
+
+                        </column>
+                        <column width="150px">
+                            <textField id="utentesfuzetaField" property="utentesfuzeta"
+                                       caption="Utentes na Fuzeta: " icon="USERS"/>
+                            <textField id="utentesolhaoField" property="utentesolhao"
+                                       caption="Utentes de Olhão: " icon="USERS"/>
+                            <textField id="utentesquelfesField" property="utentesquelfes"
+                                       caption="Utentes de Quelfes: " icon="USERS"/>
+                        </column>
+                    </form>
+                </tab>
+
+                <tab id="acordo_vagas"
+                     caption="Acordo Vagas"
+                     icon="font-icon:USERS"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_acordo_vagas" dataContainer="valenciasDc">
+                        <column width="150px">
+                            <textField id="acordovagasfemininoField" property="acordovagasfeminino"
+                                       caption="Vagas no Feminino:" icon="STREET_VIEW"/>
+                        </column>
+                        <column width="150px">
+                            <textField id="acordovagasmasculinoField" property="acordovagasmasculino"
+                                       caption="Vagas no Masculino:" icon="STREET_VIEW"/>
+                        </column>
+                    </form>
+                </tab>
+
+                <tab id="actividades"
+                     caption="Actividades"
+                     icon="font-icon:WRENCH"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_actividades" dataContainer="valenciasDc">
+                        <column width="300px">
+                            <checkBox id="actividadesculturalField" property="actividadescultural"
+                                      caption="Actividades Culturais: " icon="UNIVERSITY"/>
+                            <checkBox id="actividadeslazerField" property="actividadeslazer"
+                                      caption="Actividades de Lazer: " icon="GAMEPAD"/>
+                            <checkBox id="actividadesrecreativasField" property="actividadesrecreativas"
+                                      caption="Actividades Recreativas: " icon="PUZZLE_PIECE"/>
+                        </column>
+                        <column width="300px">
+                            <checkBox id="actividadesdesportivaField" property="actividadesdesportiva"
+                                      caption="Actividades Desportivas: " icon="FUTBOL_O"/>
+                            <textField id="actividadesoutrasField" property="actividadesoutras"
+                                       caption="Outro tipo de Actividades: " icon="FONT_AWESOME"/>
+                            <checkBox id="actividadessocialField" property="actividadessocial"
+                                      caption="Activiadades Sociais: " icon="GROUP"/>
+                        </column>
+                    </form>
+                </tab>
+
+                <tab id="certidao"
+                     caption="Certidão"
+                     icon="font-icon:CERTIFICATE"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_certidao" dataContainer="valenciasDc">
+                        <column width="300px">
+                            <checkBox id="certauditoriaexternacursoField" property="certauditoriaexternacurso"
+                                      caption="Certidão de Auditoria Externa: " icon="CERTIFICATE"/>
+
+                            <dateField id="certdatainicioField" property="certdatainicio"
+                                       caption="Certidão Data de Inicio: " dateFormat="dd/MM/yyyy" icon="CALENDAR"/>
+
+                            <checkBox id="certificacaoqualidadeField" property="certificacaoqualidade" icon="CERTIFICATE" caption="Certificação de Qualidade: "/>
+
+                        </column>
+                        <column width="300px">
+                            <checkBox id="certauditoriasinternascursoField" property="certauditoriasinternascurso"
+                                      caption="Certidão de Auditorias Internas: " icon="CERTIFICATE"/>
+                            <dateField id="certdataprevistaField" property="certdataprevista" dateFormat="dd/MM/yyyy" icon="CALENDAR" caption="Certidão Data Prevista: "/>
+
+                        </column>
+                    </form>
+                </tab>
+
+                <tab id="contractos"
+                     caption="Contractos"
+                     icon="font-icon:OBJECT_GROUP"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_contractos" dataContainer="valenciasDc">
+                        <column width="300px">
+                            <checkBox id="contratacaoexternajardinagemField" property="contratacaoexternajardinagem"
+                                      caption="Contratação de Jardinagem Externa: " icon="LEAF"/>
+                            <textField id="contratacaoexternaoutrasField" property="contratacaoexternaoutras"
+                                       caption="Outros Contratação Externos: " icon="OBJECT_GROUP"/>
+                        </column>
+                        <column width="300px">
+                            <checkBox id="contratacaoexternalimpezaField" property="contratacaoexternalimpeza"
+                                      caption="Contratação de Limpeza Externa: " icon="PAINT_BRUSH"/>
+                            <checkBox id="contratacaoexternarefeicoesField" property="contratacaoexternarefeicoes"
+                                      caption="Contratação de Refeições Externas: " icon="CUTLERY"/>
+                        </column>
+                    </form>
+                </tab>
+
+                <tab id="horarios"
+                     caption="Horarios"
+                     icon="font-icon:CLOCK_O"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_horarios" dataContainer="valenciasDc">
+                        <column width="250px">
+                            <timeField id="horariofimsemanainiciomanhaField" property="horariofimsemanainiciomanha"
+                                       caption="Horario de Fim de Semana no Inicio da Manha: " icon="CLOCK_O"/>
+
+                            <timeField id="horariofimsemanainiciotardeField" property="horariofimsemanainiciotarde"
+                                       caption="Horario do Fim de Semana no Inicio da Tarde: " icon="CLOCK_O"/>
+
+
+                            <timeField id="horariosemanainiciomanhaField" property="horariosemanainiciomanha"
+                                       caption="Horario da Semana no Inicio da Manha: " icon="CLOCK_O"/>
+
+                            <timeField id="horariosemanainiciotardeField" property="horariosemanainiciotarde"
+                                       caption="Horario da Semana no Inicio da Tarde: " icon="CLOCK_O"/>
+
+                        </column>
+                        <column width="250px">
+                            <timeField id="horariofimsemanafimmanhaField" property="horariofimsemanafimmanha"
+                                       caption="Horario de Fim de Semana no Fim da Manhã: " icon="CLOCK_O"/>
+                            <timeField id="horariofimsemanafimtardeField" property="horariofimsemanafimtarde"
+                                       caption="Horario no Fim de Semana no Fim da Tarde: " icon="CLOCK_O"/>
+                            <timeField id="horariosemanafimmanhaField" property="horariosemanafimmanha"
+                                       caption="Horario da Semana no Fim da Manhã: " icon="CLOCK_O"/>
+                            <timeField id="horariosemanafimtardeField" property="horariosemanafimtarde"
+                                       caption="Horario da Semana no Fim da Tarde: " icon="CLOCK_O"/>
+                        </column>
+
+                    </form>
+                </tab>
+
+                <tab id="recursos_serviços"
+                     caption="Recursos e Serviços"
+                     icon="font-icon:COGS"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_recursos_serviços" dataContainer="valenciasDc">
+                        <column width="300px">
+                            <textField id="recursostecnicoscomplementaresField" property="recursostecnicoscomplementares"
+                                       caption="Recursos Técnicos Complementares: " icon="FILES_O"/>
+                            <textField id="tipoacordosegsocialField" property="tipoacordosegsocial"
+                                       caption="Tipo de Acordo de Segurança Social: " icon="GROUP"/>
+                        </column>
+                        <column width="300px">
+                            <textField id="servicosespecializadosField" property="servicosespecializados"
+                                       caption="Serviços Especializados: " icon="COGS"/>
+                        </column>
+                    </form>
+                </tab>
+
+                <tab id="transportes"
+                     caption="Transportes"
+                     icon="font-icon:CAR"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_transportes" dataContainer="valenciasDc">
+                        <column width="300px">
+                            <checkBox id="transporteField" property="transporte"
+                                      caption="Transporte: " icon="BUS"/>
+                            <checkBox id="transporteproprioField" property="transporteproprio"
+                                      caption="Transporte Próprio: " icon="CAR"/>
+                        </column>
+                        <column width="300px">
+                            <textField id="transportecapacidadeField" property="transportecapacidade"
+                                       caption="Transporte da Capacidade: " icon="CAR"/>
+                        </column>
+                    </form>
+                </tab>
+            </tabSheet>
+
+
+            <tabSheet>
+                <tab id="ajudas_tecnicas"
+                     caption="Ajudas Técnicas"
+                     icon="font-icon:USER_MD"
+                     margin="true"
+                     spacing="true">
+
+                    <groupBox id="valenciasBox" caption="Ajudas Técnicas">
+                        <table id="ajudasTecnicasesTable" dataContainer="valenciasAjudasTecnicasDc" width="100%" height="500px"
+                               emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="idValencia" caption="Valênçia" generator="generateValenciasDescricaoAjudasTecnicas" />
+                                <column id="tipoajuda" caption="Tipo de Ajuda"/>
+                                <column id="datadisponivel" caption="Data Disponível" />
+                                <column id="localizacao" caption="Localização" />
+                            </columns>
+                            <buttonsPanel>
+                                <button action="ajudasTecnicasesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="ajudasTecnicasesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="ajudasTecnicasesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+
+                </tab>
+
+                <tab id="fotos_valencias"
+                     caption="Fotos"
+                     icon="font-icon:PHOTO"
+                     margin="true"
+                     spacing="true">
+
+                    <groupBox id="fotosValenciaBox" caption="Fotos de Valênçia">
+                        <table id="fotosValenciasTable" dataContainer="fotosValenciasDc" width="100%" height="500px"
+                               emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="idvalencia" caption="Valênçia" generator="generateValenciasDescricaoFotosValencia" />
+                                <column id="descricao" caption="Descrição da Foto"/>
+                                <column id="daequipacolaboradores" caption="Equipa de Colaboradores"/>
+                                <column id="doequipamento" caption="Equipamento"/>
+                                <column id="image" caption="Fotos/Imagem"/>
+                                <column id="download" caption="Descarregar Imagem"/>
+                            </columns>
+                            <buttonsPanel>
+                                <button action="fotosValenciasTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary" />
+                                <button action="fotosValenciasTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info" />
+                                <button action="fotosValenciasTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger" />
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+
+
+                </tab>
+
+                <tab id="localizacoes"
+                     caption="Localizações"
+                     icon="font-icon:MAP"
+                     margin="true"
+                     spacing="true">
+
+                    <groupBox id="localizacoesBox" caption="Localizações">
+                        <table id="localizacoesesTable"
+                                    width="100%"
+                                    height="400px"
+                                    dataContainer="localizacoesDc"
+                                    emptyStateMessage="Não Existe Dados na Tabela"
+                                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove">
+                                    <properties>
+                                        <property name="confirmation" value="true"/>
+                                        <property name="confirmationTitle" value="Remover a linha da tabela das localizações."/>
+                                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela da localizações?"/>
+                                    </properties>
+                                </action>
+                            </actions>
+                            <columns>
+                                <column id="idvalencia" caption="Descrição da Valência" generator="generateValenciasDescricaoLocalizacoes" />
+                                <column id="coord" caption="Coordenada da Localização"/>
+                            </columns>
+                            <rowsCount/>
+                            <buttonsPanel>
+                                <button action="localizacoesesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="localizacoesesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="localizacoesesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+
+                </tab>
+
+                <tab id="utentes_outros_concelhos"
+                     caption="Utentes Outros Concelhos"
+                     icon="font-icon:GROUP"
+                     margin="true"
+                     spacing="true">
+
+                    <groupBox id="utentesOutrosConcelhosBox" caption="Utentes Outros Concelhos">
+                        <table id="utentesOutrosConcelhosesTable"
+                               width="100%"
+                               height="500px"
+                               dataContainer="utentesOutrosConcelhosDc"
+                               emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove">
+                                    <properties>
+                                        <property name="confirmation" value="true"/>
+                                        <property name="confirmationTitle" value="Remover a linha da tabela dos 'utentes outros concelhos'."/>
+                                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela dos 'utentes outros concelhos'?"/>
+                                    </properties>
+                                </action>
+                            </actions>
+                            <columns>
+                                <column id="idValencia" caption="Descrição da Valencia" generator="generateValenciasDescricaoUtentesOutrosConcelhos"/>
+                                <column id="concelho" caption="Concelho"/>
+                                <column id="freguesia" caption="Freguesia"/>
+                            </columns>
+                            <rowsCount/>
+                            <buttonsPanel>
+                                <button action="utentesOutrosConcelhosesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="utentesOutrosConcelhosesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="utentesOutrosConcelhosesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+
+                </tab>
+            </tabSheet>
+
+
         </scrollBox>
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>

@@ -5,21 +5,51 @@
         messagesPack="pt.cmolhao.web.localizacoes">
     <layout>
 
+        <scrollBox id="scrollBox" spacing="true">
+
         <form >
-            <column width="300px">
-                <textField id="messageLabel" caption="Coordenadas: " icon="MAP_MARKER" editable="false" />
-                <textField id="latitudeField" caption="Latitude:" icon="MAP_MARKER" visible="false" />
-                <label id="htmlMaps"
-                       htmlEnabled="true" stylename="title_maps"/>
-                <chart:mapViewer id="map"
-                                 height="400px"
-                                 width="100%"/>
-            </column>
-            <column width="300px">
-                <button id="closeBtn" caption="Submeter Dados da Coordenada" icon="MAP_PIN"/>
-                <textField id="longuitudeField" caption="Longuitude:" icon="MAP_MARKER" visible="false"/>
-            </column>
+
+            <tabSheet>
+                <tab id="dados_mapa"
+                     caption="Dados Mapa"
+                     icon="font-icon:MAP"
+                     margin="true"
+                     spacing="true">
+
+                    <groupBox caption="Coordenadas"
+                              orientation="horizontal"
+                              spacing="true"
+                              icon="font-icon:MAP_MARKER"
+                              width="AUTO">
+
+                        <textField id="messageLabel" caption="Coordenadas: " stylename="coord_map_localizacoes" icon="MAP_MARKER" editable="false" width="300px" />
+                        <button id="closeBtn" caption="Submeter Dados da Coordenada" icon="MAP_PIN" stylename="coord_button_loc"/>
+                        <textField id="latitudeField" caption="Latitude:" icon="MAP_MARKER" visible="false" />
+                        <textField id="longuitudeField" caption="Longuitude:" icon="MAP_MARKER" visible="false"/>
+
+
+
+                    </groupBox>
+                    <groupBox caption="Mapa"
+                              spacing="true"
+                              icon="font-icon:MAP"
+                              width="AUTO">
+
+                        <chart:mapViewer id="map"
+                                         stylename="map_localizacoes"
+                                         height="450px"
+                                         width="100%"/>
+
+
+                    </groupBox>
+
+
+
+                </tab>
+            </tabSheet>
         </form>
+
+        </scrollBox>
 
 
     </layout>

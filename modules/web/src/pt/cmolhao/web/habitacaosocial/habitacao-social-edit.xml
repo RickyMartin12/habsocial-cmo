@@ -2,13 +2,13 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.habitacaosocial">
     <data>
         <instance id="habitacaoSocialDc"
                   class="pt.cmolhao.entity.HabitacaoSocial"
                   view="habitacaoSocial-view">
             <loader/>
+            <collection id="moradoresHabSocialDc" property="moradores" />
         </instance>
 
         <collection id="customersDc"
@@ -38,73 +38,204 @@
 
     <layout expand="scrollBox" spacing="true">
         <scrollBox id="scrollBox" spacing="true">
-            <form id="form" dataContainer="habitacaoSocialDc">
-                <column width="300px">
-                    <textField id="idHabSocialField" property="id" visible="false" />
-                    <textField id="arrendField" property="arrend" caption="Número de Renda/Andar:" icon="SORT_NUMERIC_ASC" maxLength="1" stylename="uppercase-field" />
-                    <textField id="blField" property="bl" caption="Bloco/Lote: " icon="BUILDING_O" maxLength="1" stylename="uppercase-field" />
-                    <textField id="coordField" property="coord" editable="false" icon="MAP_MARKER" stylename="label-readonly" caption="Coordenada da Habitação social:"/>
-                    <textField id="numAndarField" property="andar" caption="Numero de Andar: " icon="font-icon:HOME" />
-                    <lookupField
-                            property="bloc"
-                            id="blocField"
-                            optionsContainer="customersDc"
-                            inputPrompt="(Seleccione a morada do bloco de habitação social)"
-                            icon="font-icon:HOME" caption="Morada do Bloco de Habitacao Social"
-                            required="true" requiredMessage="Deve seleccionar pelo menos a morada dos blocos da habitação social"/>
 
-                    <textField id="codField" property="cod" icon="font-icon:KEY" caption="Código da Habitação Social: " />
-                    <textField id="codbrField" icon="font-icon:KEY" property="codbr" caption="Código do bloco da Habitação Social: " />
+            <tabSheet>
+                <tab id="dados_pessoais"
+                     caption="Dados Pessoais"
+                     icon="font-icon:ID_CARD"
+                     margin="true"
+                     spacing="true">
+                    <form id="form_dados_pessoais" dataContainer="habitacaoSocialDc">
+                        <!-- Dados Pessoais -->
+                        <column width="300px">
+                            <textField id="arrendField" width="100px" property="arrend" caption="Número de Renda/Andar:" icon="SORT_NUMERIC_ASC" maxLength="1" stylename="uppercase-field" inputPrompt="(Numero do Andar)"/>
+                            <textField id="blField" property="bl" width="100px" caption="Bloco/Lote: " icon="BUILDING_O" maxLength="1" stylename="uppercase-field" inputPrompt="(Lote)" />
+                        </column>
+                        <column width="300px">
+                            <textField id="numAndarField" width="100px" property="andar" caption="Numero de Andar: " icon="font-icon:HOME" inputPrompt="Ex: 3º Esquerdo" />
+                            <textField id="idHabSocialField" property="id" visible="false" />
+                        </column>
+                    </form>
+                </tab>
+                <tab id="outros_dados"
+                     caption="Outros Dados"
+                     icon="font-icon:ID_CARD_O"
+                     margin="true"
+                     spacing="true">
+                    <form id="form_outros_dados" dataContainer="habitacaoSocialDc">
+                        <column width="300px">
+                            <!--<textField id="codField" width="150px" property="cod" icon="font-icon:KEY" caption="Código: " />-->
+                            <textField id="numpoliciaField" width="100px" property="numpolicia" caption="Numero Policia: " icon="USER_SECRET" maxLength="9" />
+                            <!--<textField id="eqsocialField" width="100px" property="eqsocial" icon="SORT_NUMERIC_ASC" caption="Numero de Habitação Social: "/>-->
+                        </column>
 
-                    <textField id="eqsocialField" property="eqsocial" icon="SORT_NUMERIC_ASC" caption="Numero de Habitação Social: "/>
-                    <textField id="t0Field" property="t0" caption="Numero de Apartamento T0:" icon="BUILDING"/>
+                        <column width="300px">
+                            <!--<textField id="codbrField" width="100px" icon="font-icon:KEY" property="codbr" caption="Código do bloco da Habitação Social: " />-->
+                            <!--<textField id="vendField" width="100px" property="vend" icon="SORT_NUMERIC_ASC" caption="Numero Apartamento Vendedor:"/>-->
+                        </column>
 
-                    <textField id="t1Field" property="t1" caption="Numero de Apartamento T1:" icon="BUILDING"/>
-                    <textField id="t2Field" property="t2" caption="Numero de Apartamento T2:" icon="BUILDING"/>
+                    </form>
+                </tab>
 
-                    <textField id="t3Field" property="t3" caption="Numero de Apartamento T3:" icon="BUILDING"/>
-                    <textField id="t4Field" property="t4" caption="Numero do Apartamento T4:" icon="BUILDING"/>
+                <tab id="morada_localizacao"
+                     caption="Morada e Localização"
+                     icon="font-icon:MAP_MARKER"
+                     margin="true"
+                     spacing="true">
 
-                    <textField id="t5Field" property="t5" caption="Numero de Apartamento T5:" icon="BUILDING"/>
-                    <textField id="vendField" property="vend" icon="SORT_NUMERIC_ASC" caption="Numero do Vendedor:"/>
+                    <scrollBox id="loc_scroll" width="100%" spacing="true">
 
-                    <textField id="sitoLugarField" property="sitoLugar" caption="Sitio do Lugar: " icon="MAP_PIN" />
-                    <textField id="ruaField" property="rua" caption="Rua/Morada: " icon="font-icon:ROAD" />
-                    <textField id="numpoliciaField" property="numpolicia" caption="Numero Policia: " icon="USER_SECRET" maxLength="9" />
+                    <form id="form_morada_localizacao" dataContainer="habitacaoSocialDc">
+                        <column width="200px">
 
-                    <textField id="freguesiaField" property="freguesia" caption="Freguesia: " icon="INSTITUTION" />
+                            <textArea rows="3" cols="20" id="sitoLugarField" width="350px" property="sitoLugar" caption="Sitio do Lugar: " icon="MAP_PIN" stylename="sitio_lugar" inputPrompt="Morada da Habitação Social"/>
+                            <textField id="freguesiaField" width="200px" property="freguesia" caption="Freguesia: " icon="INSTITUTION" stylename="freguesia" />
+                            <textField id="codPostalField" width="150px" property="codPostal"
+                                       caption="Código Postal: "
+                                       icon="MAP_SIGNS"
+                                       inputPrompt="####-###"
+                                       stylename="cod_postal"
+                                       maxLength="8"/>
+                            <lookupPickerField
+                                    colspan="2"
+                                    width="100%"
+                                    property="bloc"
+                                    id="blocField"
+                                    stylename="bloc_field"
+                                    optionsContainer="customersDc"
+                                    inputPrompt="(Seleccione a morada do bloco de habitação social)"
+                                    icon="font-icon:HOME" caption="Morada do Bloco de Habitacao Social: "
+                                    required="true" requiredMessage="Deve seleccionar pelo menos a morada dos blocos da habitação social">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+                        </column>
+
+                        <column width="200px">
+                            <textField id="coordField"  property="coord" editable="false" icon="MAP_MARKER" stylename="coord" caption="Coordenada da Habitação social:" inputPrompt="(Latitude; Longitude)"/>
+                            <textArea stylename="rua" rows="3" cols="20" id="ruaField"  property="rua" caption="Rua/Morada: " icon="font-icon:ROAD" />
+                            <textField stylename="localidade" id="localidadeField"   property="localidade" caption="Localidade: " icon="MAP" />
+
+                        </column>
+                    </form>
+
+                    </scrollBox>
+
+                </tab>
+
+                <tab id="numeros_apartamento_t"
+                     caption="Números de Apartamentos"
+                     icon="font-icon:BUILDING"
+                     margin="true"
+                     spacing="true">
+                    <form id="form_numeros_apartamentos" dataContainer="habitacaoSocialDc">
+                        <column width="300px">
+                            <checkBox id="t0Field" width="100px" property="t0" caption="Apartamento T0:" icon="BUILDING"/>
+                            <checkBox id="t2Field" width="100px" property="t2" caption="Apartamento T2:" icon="BUILDING"/>
+                            <checkBox id="t4Field" width="100px" property="t4" caption="Apartamento T4:" icon="BUILDING"/>
+                        </column>
+                        <column width="300px">
+                            <checkBox id="t1Field" width="100px" property="t1" caption="Apartamento T1:" icon="BUILDING"/>
+                            <checkBox id="t3Field" width="100px" property="t3" caption="Apartamento T3:" icon="BUILDING"/>
+                            <checkBox id="t5Field" width="100px" property="t5" caption="Apartamento T5:" icon="BUILDING"/>
+                        </column>
+                    </form>
+                </tab>
+
+                <tab id="observacoes_gerais"
+                     caption="Observações Gerais"
+                     icon="font-icon:FILE_TEXT"
+                     margin="true"
+                     spacing="true">
+                    <form id="form_observacoes_gerais" dataContainer="habitacaoSocialDc">
+                        <column width="300px">
+                            <textArea rows="3" cols="20"
+                                      id="obsgeraisField"
+                                      inputPrompt="(Principais Observações)"
+                                      property="obsgerais" caption="Observações Gerais: " icon="FILE_TEXT_O" />
+                        </column>
+                        <column width="300px">
+                            <textArea rows="3" cols="20"
+                                      id="obsconfField" property="obsconf"
+                                      inputPrompt="(Principais Observações)"
+                                      caption="Observações Confirmação: " icon="FILE_TEXT_O" />
+                        </column>
+                    </form>
+                </tab>
+
+                <tab id="dados_utente"
+                     caption="Dados do Utente"
+                     icon="font-icon:ADDRESS_CARD_O"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_dados_utente" dataContainer="habitacaoSocialDc">
+
+                        <column width="300px">
+                            <lookupPickerField
+                                    property="idUtente"
+                                    id="utenteField"
+                                    optionsContainer="UtentesDC"
+                                    icon="font-icon:ID_CARD" caption="Utente Agregado: "
+                                    inputPrompt="(Seleccione o utente agregado)">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+                            <textField id="rendimentoAnualField" width="100px" property="rendimentoAnual" icon="MONEY" caption="Rendimento Anual: " />
+                        </column>
+                        <column width="300px">
+                            <textField id="valorPatrimonioField" width="100px" property="valorPatrimonio" caption="Valor do Património: " icon="MONEY" inputPrompt="(valor em euros(€))" />
+                            <textField id="tipoArrendamentoField" width="200px" property="tipoArrendamento" caption="Tipo de Arrendamento: " icon="font-icon:PAPERCLIP" inputPrompt="(valor em euros(€))" />
+                            <checkBox id="fichaCompletaField" property="fichaCompleta" caption="Ficha Completa: " icon="FILES_O" />
+                        </column>
+                    </form>
+                </tab>
 
 
-                    <textField id="localidadeField" property="localidade" caption="Localidade: " icon="MAP" />
+            </tabSheet>
 
 
-                    <textField id="codPostalField" property="codPostal"
-                               caption="Código Postal: "
-                               icon="MAP_SIGNS"
-                               inputPrompt="####-###"
-                                maxLength="8"/>
+            <tabSheet>
+                <tab id="moradores"
+                     caption="Moradores"
+                     icon="font-icon:BUILDING_O"
+                     margin="true"
+                     spacing="true">
+                    <groupBox id="moradoresBox" caption="Mordaor da Habitação Social">
+                        <table id="moradoresesTable" dataContainer="moradoresHabSocialDc" width="100%" height="500px"
+                               emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="utente" caption="Utente"/>
+                                <column id="habitacaoSocial" caption="Habitação Social" />
+                                <column id="moradaSocial" caption="Morada Social"/>
 
-                    <textArea rows="3" cols="8" id="obsgeraisField" property="obsgerais" caption="Observações Gerais: " icon="FILE_TEXT_O" />
-                    <textArea rows="3" cols="8" id="obsconfField" property="obsconf" caption="Observações Confirmação: " icon="FILE_TEXT_O" />
+                                <column id="dataInicio" caption="Data de Inicio"/>
+                                <column id="dateFim" caption="Data de Fim"/>
 
-                    <checkBox id="fichaCompletaField" property="fichaCompleta" caption="Ficha Completa: " icon="FILES_O" />
+                                <column id="obsConf" caption="Observações de Confirmação"/>
+                                <column id="obsGerais" caption="Observações Gerais"/>
+                            </columns>
+                            <buttonsPanel>
+                                <button action="moradoresesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="moradoresesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="moradoresesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+                </tab>
+            </tabSheet>
 
-                    <lookupField
-                            property="idUtente"
-                            id="utenteField"
-                            optionsContainer="UtentesDC"
-                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente Agregado: "
-                            inputPrompt="(Seleccione o nome e a identificação do utente agregado)"/>
 
-                    <textField id="valorPatrimonioField" property="valorPatrimonio" caption="Valor do Património: " icon="MONEY"  />
-                    <textField id="rendimentoAnualField" property="rendimentoAnual" icon="MONEY" caption="Rendimento Anual: " />
-
-                    <textField id="tipoArrendamentoField" property="tipoArrendamento" caption="Tipo de Arrendamento: " icon="font-icon:PAPERCLIP" />
-                    <!--<chart:mapViewer id="map"
-                                     height="600px"
-                                     width="1200px"/>-->
-                </column>
-            </form>
         </scrollBox>
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>

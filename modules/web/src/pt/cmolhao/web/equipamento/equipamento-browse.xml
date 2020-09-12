@@ -14,7 +14,7 @@
                     <condition>
                         <and>
                             <c:jpql>
-                                <c:where>e.descricao = :descricao</c:where>
+                                <c:where>e.descricao like :descricao</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -22,16 +22,6 @@
             </loader>
         </collection>
 
-        <keyValueCollection id="descricao_equipamento_id">
-            <properties>
-                <property name="descricao" datatype="string" />
-            </properties>
-            <loader id="descricao_equipamento_id_loader">
-                <query>
-                    <![CDATA[select o.descricao as descricao from cmolhao_Equipamento o where o.descricao is not null group by o.descricao]]>
-                </query>
-            </loader>
-        </keyValueCollection>
 
 
 
@@ -49,16 +39,13 @@
                   width="100%">
             <scrollBox spacing="true">
                 <hbox spacing="true">
-                    <lookupField id="desc_equipamento_id"
-                                 optionsContainer="descricao_equipamento_id"
+                    <textField id="desc_equipamento_id"
+                                 property="descricao"
                                  caption="Descrição do Equipamento:"
+                                 width="350px"
                                  inputPrompt="(seleccione a descrição do equipamento)"
-                                 icon="font-icon:WRENCH"
-                    />
-                    <lookupField id="linhasEquipamento"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
+                                 icon="font-icon:WRENCH"/>
+
 
                 </hbox>
 
@@ -68,6 +55,17 @@
                 </hbox>
             </scrollBox>
         </groupBox>
+
+
+        <hbox spacing="true">
+            <lookupField id="linhasEquipamento"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
+
 
         <table id="equipamentoesTable"
                width="100%"

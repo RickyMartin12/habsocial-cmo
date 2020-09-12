@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        messagesPack="pt.cmolhao.web.subredetrabalho">
+    <data>
+        <instance id="subRedeTrabalhoDc"
+                  class="pt.cmolhao.entity.SubRedeTrabalho"
+                  view="subRedeTrabalho-view">
+            <loader/>
+            <collection id="documentacaosDc" property="documentacaos"/>
+        </instance>
+
+        <collection id="redeTrabalhoDc"
+                    class="pt.cmolhao.entity.RedeTrabalho"
+                    view="redeTrabalho-view">
+            <loader id="customersRedeTrabalhoLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_RedeTrabalho e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
+            <tabSheet>
+                <tab id="dados"
+                     caption="Dados"
+                     icon="font-icon:ADDRESS_CARD"
+                     margin="true"
+                     spacing="true">
+
+                        <form id="form_dados" dataContainer="subRedeTrabalhoDc">
+                            <column width="300px">
+                                <lookupPickerField id="idRedeTrabalhoField"
+                                                   property="idRedeTrabalho"
+                                                   optionsContainer="redeTrabalhoDc"
+                                                   inputPrompt="(Seleccione a rede trabalho)"
+                                                   caption="Rede de Trabalho: "
+                                                   icon="WRENCH">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+
+                            </column>
+                            <column width="300px">
+                                <textField id="nomeField" property="nome" caption="Nome da Sub Rede de Trabalho: " icon="WRENCH"/>
+                                <textField id="idSubRedeTrabalhoField" property="id" visible="false" />
+                            </column>
+                        </form>
+                </tab>
+            </tabSheet>
+
+            <tabSheet>
+                <tab id="documentos"
+                     caption="Documentos"
+                     icon="font-icon:FILES_O"
+                     margin="true"
+                     spacing="true">
+
+                    <groupBox id="documentacaosBox" caption="Documentos">
+                        <table id="documentacaosTable" dataContainer="documentacaosDc" width="100%" height="500px"
+                               emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="idRedeTrabalho" caption="Rede de Trabalho"/>
+                                <column id="idSubRedeTrabalho" caption="Sub Rede de Trabalho"/>
+                                <column id="dataDocumento" caption="Data do Ficheiro"/>
+
+                                <column id="nomeFicheiro" caption="Nome do Ficheiro"/>
+                                <column id="numeroDocumentacao" caption="Numero do Ficheiro"/>
+                                <column id="file" caption="Ficheiro" />
+                            </columns>
+                            <buttonsPanel>
+                                <button action="documentacaosTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="documentacaosTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="documentacaosTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+
+                </tab>
+            </tabSheet>
+        </scrollBox>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

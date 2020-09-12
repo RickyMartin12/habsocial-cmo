@@ -25,17 +25,6 @@
                                 <c:join>join e.idTipoAtendimento k</c:join>
                                 <c:where>k.id = :idTipoAtendimento</c:where>
                             </c:jpql>
-                            <c:jpql>
-                                <c:join>join e.idAtendimentoObjetivo m</c:join>
-                                <c:where>m.id = :idAtendimentoObjetivo</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:join>join e.idAtendimentoEncaminhamento l</c:join>
-                                <c:where>l.id = :idAtendimentoEncaminhamento</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.dataAtendimento = :dataAtendimento</c:where>
-                            </c:jpql>
                         </and>
                     </condition>
                 </query>
@@ -106,70 +95,78 @@
 
             <scrollBox spacing="true">
 
-                <hbox spacing="true">
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField
+                                    property="idUtente"
+                                    id="utenteField"
+                                    stylename="id_utente_atendimento_search"
+                                    optionsContainer="utentesDc"
+                                    width="300px"
+                                    icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                                    inputPrompt="(Seleccione o utente)">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                            </lookupPickerField>
 
-                    <lookupField
-                            property="idUtente"
-                            id="utenteField"
-                            optionsContainer="utentesDc"
-                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
-                            inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+                            <lookupPickerField
+                                    property="idTecnico"
+                                    id="idTecnicoField"
+                                    stylename="id_tecnico_atendimento_search"
+                                    optionsContainer="tecnicoesDc"
+                                    width="370px"
+                                    icon="font-icon:USER_MD" caption="Nome do Técnico: "
+                                    inputPrompt="(Seleccione o técnico)" >
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                            </lookupPickerField>
 
-                    <lookupField
-                            property="idTecnico"
-                            id="idTecnicoField"
-                            optionsContainer="tecnicoesDc"
-                            icon="font-icon:USER_MD" caption="Nome do Técnico: "
-                            inputPrompt="(Seleccione o nome do técnico)" />
+                            <lookupPickerField
+                                    property="idTipoAtendimento"
+                                    id="idTipoAtendimentoField"
+                                    stylename="id_tipo_atendimento_search"
+                                    optionsContainer="tipoAtendimentoesDc"
+                                    width="470px"
+                                    icon="font-icon:VOLUME_CONTROL_PHONE" caption="Tipo de Atendimento: "
+                                    inputPrompt="(Seleccione o tipo de atendimento)" >
 
-                    <lookupField
-                            property="idTipoAtendimento"
-                            id="idTipoAtendimentoField"
-                            optionsContainer="tipoAtendimentoesDc"
-                            icon="font-icon:VOLUME_CONTROL_PHONE" caption="Tipo de Atendimento: "
-                            inputPrompt="(Seleccione o tipo de atendimento)" />
-
-                </hbox>
-
-                <hbox spacing="true">
-
-                    <lookupField
-                            property="idAtendimentoObjetivo"
-                            id="idAtendimentoObjetivoField"
-                            optionsContainer="atendimentoObjetivosesDc"
-                            icon="font-icon:CERTIFICATE" caption="Atendimento por Objectivos Gerais: "
-                            inputPrompt="(seleccione um dos objectivos gerais)"/>
-
-                    <lookupField
-                            property="idAtendimentoEncaminhamento"
-                            id="idAtendimentoEncaminhamentoField"
-                            optionsContainer="atendimentoEncaminhamentoesDc"
-                            caption="Atendimento por Encaminhamento:"
-                            inputPrompt="(seleccione o atendimento por encaminhamento)"
-                            icon="font-icon:VOLUME_CONTROL_PHONE" />
-
-                    <dateField id="dataAtendimentoField"
-                               property="dataAtendimento"
-                               datatype="date" dateFormat="dd/MM/yyyy"
-                               icon="font-icon:CALENDAR" caption="Data Atendimento: " stylename="data_atendimento"/>
-
-
-                </hbox>
-                <hbox spacing="true">
-
-                    <lookupField id="linhasAtendimento"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
 
 
-                </hbox>
+                            </lookupPickerField>
+                        </row>
+                    </rows>
+                </grid>
+
                 <hbox spacing="true">
                     <button id="reset_atendimento" icon="ERASER" caption="Limpar" />
                     <button id="search_atendimento" caption="Pesquisar" icon="SEARCH" stylename="info" />
                 </hbox>
             </scrollBox>
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasAtendimento"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
 
         <groupTable id="atendimentoesTable"
                     width="100%"
@@ -194,15 +191,14 @@
                 <column id="idUtente" caption="Utente"/>
                 <column id="idTipoAtendimento" caption="Tipo de Atendimento"/>
 
-                <column id="idAtendimentoEncaminhamento" caption="Atendimento de Encaminhamen0to"/>
-                <column id="idAtendimentoObjetivo" caption="Atendimento de Objectivo"/>
-
                 <column id="contactosEfetuados" caption="Contactos Efectuados"/>
                 <column id="dataAtendimento" caption="Data de Atendimento"/>
 
+                <column caption="Atendimento de Objectivo" id="idAtendimentoObjetivo"/>
                 <column id="objetivoOutros" caption="Outros Objectivos"/>
                 <column id="obsConf" caption="Observações de Confirmação"/>
                 <column id="obsGerais" caption="Observações Gerais"/>
+                <column caption="Atendimento de Encaminhamento" id="idAtendimentoEncaminhamento"/>
                 <column id="outrosEncaminhamentos" caption="Outros Encaminhamentos"/>
             </columns>
             <rowsCount/>

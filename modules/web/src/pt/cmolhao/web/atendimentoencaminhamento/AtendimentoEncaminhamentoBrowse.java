@@ -3,17 +3,18 @@ package pt.cmolhao.web.atendimentoencaminhamento;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.ValueLoadContext;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.Table;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.gui.screen.LookupComponent;
 import pt.cmolhao.entity.AtendimentoEncaminhamento;
 import pt.cmolhao.web.utentessituacaoprofissional.UtentesSituacaoProfissionalEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,14 +27,20 @@ public class AtendimentoEncaminhamentoBrowse extends StandardLookup<AtendimentoE
     protected Table<AtendimentoEncaminhamento> atendimentoEncaminhamentoesTable;
     @Inject
     protected LookupField linhasAtendimentoEncaminhamento;
-    @Inject
-    protected LookupField aten_enca_id;
+
     @Inject
     protected CollectionLoader<AtendimentoEncaminhamento> atendimentoEncaminhamentoesDl;
+    @Inject
+    protected TextField<String> aten_enca_id;
+    @Named("atendimentoEncaminhamentoesTable.remove")
+    protected RemoveAction<AtendimentoEncaminhamento> atendimentoEncaminhamentoesTableRemove;
     @Inject
     private DataManager dataManager;
     @Inject
     private ScreenBuilders screenBuilders;
+
+    @Inject
+    private Dialogs dialogs;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -56,7 +63,7 @@ public class AtendimentoEncaminhamentoBrowse extends StandardLookup<AtendimentoE
                         .withInitializer(customer -> {
                             if (aten_enca_id.getValue() != null)
                             {
-                                customer.setAtendimentoEncaminhamento(aten_enca_id.getValue().toString());
+                                customer.setAtendimentoEncaminhamento(aten_enca_id.getValue());
                             }
                         })
                         .withScreenClass(AtendimentoEncaminhamentoEdit.class)    // specific editor screen
@@ -83,24 +90,11 @@ public class AtendimentoEncaminhamentoBrowse extends StandardLookup<AtendimentoE
     protected void onAfterShow(AfterShowEvent event) {
 
         getWindow().setCaption("Listar Atendimento Encaminhamento");
-        // Arrend - Renda
-        List<String> options = new ArrayList<>();
-        String queryString = "select o.atendimentoEncaminhamento as atendimentoEncaminhamento from cmolhao_AtendimentoEncaminhamento o where o.atendimentoEncaminhamento is not null group by o.atendimentoEncaminhamento";
-        ValueLoadContext valueLoadContextontext = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString));
-        valueLoadContextontext.addProperty("atendimentoEncaminhamento");
-        List<KeyValueEntity> resultList = dataManager.loadValues(valueLoadContextontext);
-        for (KeyValueEntity entry : resultList) {
-            options.add(entry.getValue("atendimentoEncaminhamento"));
-        }
-        aten_enca_id.setOptionsList(options);
     }
 
     @Subscribe("reset_atendimento_encaminhamento")
     protected void onReset_atendimento_encaminhamentoClick(Button.ClickEvent event) {
         aten_enca_id.setValue(null);
-        linhasAtendimentoEncaminhamento.setValue(null);
-        atendimentoEncaminhamentoesDl.setMaxResults(0);
         atendimentoEncaminhamentoesDl.removeParameter("atendimentoEncaminhamento");
         atendimentoEncaminhamentoesDl.load();
     }
@@ -109,7 +103,7 @@ public class AtendimentoEncaminhamentoBrowse extends StandardLookup<AtendimentoE
     protected void onSearch_atendimento_encaminhamentoClick(Button.ClickEvent event) {
         if (aten_enca_id.getValue() != null)
         {
-            atendimentoEncaminhamentoesDl.setParameter("atendimentoEncaminhamento", aten_enca_id.getValue().toString());
+            atendimentoEncaminhamentoesDl.setParameter("atendimentoEncaminhamento", "(?i)" + aten_enca_id.getValue() + "%");
         }
         else
         {
@@ -117,5 +111,36 @@ public class AtendimentoEncaminhamentoBrowse extends StandardLookup<AtendimentoE
         }
 
         atendimentoEncaminhamentoesDl.load();
+    }
+
+    @Subscribe("atendimentoEncaminhamentoesTable.remove")
+    protected void onAtendimentoEncaminhamentoesTableRemove(Action.ActionPerformedEvent event) {
+        atendimentoEncaminhamentoesTableRemove.setConfirmation(false);
+        if (atendimentoEncaminhamentoesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção de atendimento por encaminhamento")
+                    .withMessage("Deve seleccionar pelo um das atendimentos por encaminhamentos")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            AtendimentoEncaminhamento user = atendimentoEncaminhamentoesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do atendimento por encaminhamento número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do atendimento por encaminhamento número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        atendimentoEncaminhamentoesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 }

@@ -1,10 +1,14 @@
 package pt.cmolhao.entity;
 
+import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.BaseIntegerIdEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.core.global.DesignSupport;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @DesignSupport("{'imported':true}")
 @AttributeOverrides({
@@ -14,7 +18,7 @@ import javax.persistence.*;
 @Table(name = "habitacao_social")
 @Entity(name = "cmolhao_HabitacaoSocial")
 public class HabitacaoSocial extends BaseIntegerIdEntity {
-    private static final long serialVersionUID = 4903697522159585696L;
+    private static final long serialVersionUID = -1282627708413235453L;
     @Lob
     @Column(name = "andar")
     protected String andar;
@@ -59,17 +63,17 @@ public class HabitacaoSocial extends BaseIntegerIdEntity {
     @Column(name = "sito_lugar")
     protected String sitoLugar;
     @Column(name = "t0")
-    protected Integer t0;
+    protected Boolean t0;
     @Column(name = "t1")
-    protected Integer t1;
+    protected Boolean t1;
     @Column(name = "t2")
-    protected Integer t2;
+    protected Boolean t2;
     @Column(name = "t3")
-    protected Integer t3;
+    protected Boolean t3;
     @Column(name = "t4")
-    protected Integer t4;
+    protected Boolean t4;
     @Column(name = "t5")
-    protected Integer t5;
+    protected Boolean t5;
     @Lob
     @Column(name = "tipo_arrendamento")
     protected String tipoArrendamento;
@@ -77,6 +81,19 @@ public class HabitacaoSocial extends BaseIntegerIdEntity {
     protected Integer valorPatrimonio;
     @Column(name = "vend")
     protected Integer vend;
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "habitacaoSocial")
+    protected Set<Moradores> moradores;
+
+    public Set<Moradores> getMoradores() {
+        return moradores;
+    }
+
+    public void setMoradores(Set<Moradores> moradores) {
+        this.moradores = moradores;
+    }
 
     public Integer getVend() {
         return vend;
@@ -102,51 +119,51 @@ public class HabitacaoSocial extends BaseIntegerIdEntity {
         this.tipoArrendamento = tipoArrendamento;
     }
 
-    public Integer getT5() {
+    public Boolean getT5() {
         return t5;
     }
 
-    public void setT5(Integer t5) {
+    public void setT5(Boolean t5) {
         this.t5 = t5;
     }
 
-    public Integer getT4() {
+    public Boolean getT4() {
         return t4;
     }
 
-    public void setT4(Integer t4) {
+    public void setT4(Boolean t4) {
         this.t4 = t4;
     }
 
-    public Integer getT3() {
+    public Boolean getT3() {
         return t3;
     }
 
-    public void setT3(Integer t3) {
+    public void setT3(Boolean t3) {
         this.t3 = t3;
     }
 
-    public Integer getT2() {
+    public Boolean getT2() {
         return t2;
     }
 
-    public void setT2(Integer t2) {
+    public void setT2(Boolean t2) {
         this.t2 = t2;
     }
 
-    public Integer getT1() {
+    public Boolean getT1() {
         return t1;
     }
 
-    public void setT1(Integer t1) {
+    public void setT1(Boolean t1) {
         this.t1 = t1;
     }
 
-    public Integer getT0() {
+    public Boolean getT0() {
         return t0;
     }
 
-    public void setT0(Integer t0) {
+    public void setT0(Boolean t0) {
         this.t0 = t0;
     }
 

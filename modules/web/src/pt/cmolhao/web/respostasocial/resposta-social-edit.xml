@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        messagesPack="pt.cmolhao.web.respostasocial">
+    <data>
+        <instance id="respostaSocialDc"
+                  class="pt.cmolhao.entity.RespostaSocial"
+                  view="respostaSocial-view">
+            <loader/>
+            <collection id="valenciaDc" property="valencias" />
+        </instance>
+
+        <collection id="TipoValenciaDc"
+                    class="pt.cmolhao.entity.Tiposvalencia"
+                    view="_local">
+            <loader id="tipo_valencia_Loader">
+                <query>
+                    <![CDATA[select e from cmolhao_Tiposvalencia e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+
+        <tabSheet>
+            <tab id="dados_resposta"
+                 caption="Dados da Resposta Social"
+                 icon="font-icon:QUESTION_CIRCLE"
+                 margin="true"
+                 spacing="true">
+
+                    <form id="form_dados_resposta" dataContainer="respostaSocialDc">
+
+                        <column width="500px">
+                            <lookupPickerField property="idTipoValencia" id="idtipovalenciaField" optionsContainer="TipoValenciaDc"
+                                               caption="Área de Intervenção: "
+                                               inputPrompt="(Seleccione o tipo de valência)"
+                                               icon="SIMPLYBUILT">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                            <textField id="nomeField" property="nome" caption="Resposta Social: " icon="font-icon:QUESTION_CIRCLE_O"/>
+
+                        </column>
+                        <column width="400px">
+                            <textField id="capacidadeField" width="100px" property="capacidade" caption="Capacidade Máxima: " icon="font-icon:USERS" >
+                                <validators>
+                                    <positiveOrZero message=" A capacidade da resposta social '$value' deve possuir numeros positivos"/>
+                                </validators>
+                            </textField>
+                            <textField id="idRespostaSocialField" property="id" visible="false"  />
+                        </column>
+
+                    </form>
+
+            </tab>
+        </tabSheet>
+
+
+        <tabSheet>
+            <tab id="valencia"
+                 caption="Valênçia"
+                 icon="font-icon:SIMPLYBUILT"
+                 margin="true"
+                 spacing="true">
+
+                <groupBox id="valenciasBox" caption="Valências">
+                    <table id="valenciasesTable" dataContainer="valenciaDc" width="100%" height="500px"
+                           emptyStateMessage="Não Existe Dados na Tabela"
+                           emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                        <actions>
+                            <action id="create" type="create"/>
+                            <action id="edit" type="edit"/>
+                            <action id="remove" type="remove" />
+                        </actions>
+                        <columns>
+                            <column id="descricaotecnica" caption="Descrição"/>
+                            <column id="idinstituicao" caption="Instituição"/>
+                            <column id="idtipovalencia" caption="Área de Intervenção"/>
+                            <column id="idResSocial" caption="Resposta Social"/>
+                            <column id="acordocapacidade" caption="Numero de Utentes"/>
+                        </columns>
+                        <buttonsPanel>
+                            <button action="valenciasesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                            <button action="valenciasesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                            <button action="valenciasesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                        </buttonsPanel>
+                    </table>
+                </groupBox>
+
+            </tab>
+        </tabSheet>
+
+
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

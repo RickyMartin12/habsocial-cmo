@@ -3,17 +3,18 @@ package pt.cmolhao.web.grauescolaridade;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.ValueLoadContext;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.Table;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.gui.screen.LookupComponent;
 import pt.cmolhao.entity.GrauEscolaridade;
 import pt.cmolhao.web.tipoajuda.TipoAjudaEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,38 +27,35 @@ public class GrauEscolaridadeBrowse extends StandardLookup<GrauEscolaridade> {
     protected Table<GrauEscolaridade> grauEscolaridadesTable;
     @Inject
     protected LookupField linhasGrauEscolraidade;
-    @Inject
-    protected LookupField desc_grau_escolaridade_id;
+
     @Inject
     protected CollectionLoader<GrauEscolaridade> grauEscolaridadesDl;
+    @Inject
+    protected LookupField desc_grau_escolaridade_id;
+    @Named("grauEscolaridadesTable.remove")
+    protected RemoveAction<GrauEscolaridade> grauEscolaridadesTableRemove;
+
     @Inject
     private DataManager dataManager;
     @Inject
     private ScreenBuilders screenBuilders;
 
+    @Inject
+    private Dialogs dialogs;
+
+
+
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
 
         getWindow().setCaption("Listar Grau Escolaridade");
-        // Arrend - Renda
-        List<String> options = new ArrayList<>();
-        String queryString = "select o.descricao as descricao from cmolhao_GrauEscolaridade o where o.descricao is not null group by o.descricao";
-        ValueLoadContext valueLoadContextontext = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString));
-        valueLoadContextontext.addProperty("descricao");
-        List<KeyValueEntity> resultList = dataManager.loadValues(valueLoadContextontext);
-        for (KeyValueEntity entry : resultList) {
-            options.add(entry.getValue("descricao"));
-        }
-        desc_grau_escolaridade_id.setOptionsList(options);
+
     }
 
     @Subscribe("reset_grau_escolaridade")
     protected void onReset_grau_escolaridadeClick(Button.ClickEvent event) {
         desc_grau_escolaridade_id.setValue(null);
-        linhasGrauEscolraidade.setValue(null);
         grauEscolaridadesDl.removeParameter("descricao");
-        grauEscolaridadesDl.setMaxResults(0);
         grauEscolaridadesDl.load();
     }
 
@@ -66,7 +64,7 @@ public class GrauEscolaridadeBrowse extends StandardLookup<GrauEscolaridade> {
         // Descrição de Tipo Ajuda
 
         if (desc_grau_escolaridade_id.getValue() != null) {
-            grauEscolaridadesDl.setParameter("descricao",  desc_grau_escolaridade_id.getValue().toString());
+            grauEscolaridadesDl.setParameter("descricao",  desc_grau_escolaridade_id.getValue().toString() );
         } else {
             grauEscolaridadesDl.removeParameter("descricao");
         }
@@ -102,6 +100,18 @@ public class GrauEscolaridadeBrowse extends StandardLookup<GrauEscolaridade> {
         list.add(10000);
         linhasGrauEscolraidade.setOptionsList(list);
 
+        List<String> list_escolaridade = new ArrayList<>();
+        list_escolaridade.add("Sem Escolaridade");
+        list_escolaridade.add("nível 1 - 2º ciclo do ensino básico (6º ano)");
+        list_escolaridade.add("nível 2 - 3º ciclo do ensino básico (9º ano)");
+        list_escolaridade.add("nível 3 - Ensino Secundário");
+        list_escolaridade.add("nível 4 - Ensino Secundário acrescentando um estágio profissional com duração de seis meses");
+        list_escolaridade.add("nível 5 - Qualificação de nível pós-secundário e não superior");
+        list_escolaridade.add("nível 6 - Ensino Superior (Licenciatura)");
+        list_escolaridade.add("nível 7 - Mestrado");
+        list_escolaridade.add("nível 8 - Doutoramento");
+        desc_grau_escolaridade_id.setOptionsList(list_escolaridade);
+
         grauEscolaridadesTable.setEmptyStateLinkClickHandler(emptyStateClickEvent ->
                 screenBuilders.editor(grauEscolaridadesTable)
                         .newEntity()
@@ -117,5 +127,36 @@ public class GrauEscolaridadeBrowse extends StandardLookup<GrauEscolaridade> {
         );
 
 
+    }
+
+    @Subscribe("grauEscolaridadesTable.remove")
+    protected void onGrauEscolaridadesTableRemove(Action.ActionPerformedEvent event) {
+        grauEscolaridadesTableRemove.setConfirmation(false);
+        if (grauEscolaridadesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção do grau de escolaridade")
+                    .withMessage("Deve seleccionar pelo um dos graus de escolaridade")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            GrauEscolaridade user = grauEscolaridadesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do grau de escolaridade número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do grau de escolaridade número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        grauEscolaridadesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 }

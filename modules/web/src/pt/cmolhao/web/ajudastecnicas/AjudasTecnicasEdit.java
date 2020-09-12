@@ -27,13 +27,13 @@ public class AjudasTecnicasEdit extends StandardEditor<AjudasTecnicas> {
     @Inject
     protected TextField<String> localizacaoField;
     @Inject
+    protected LookupPickerField<Valencias> idValenciaField;
+    @Inject
     private InstanceContainer<AjudasTecnicas> ajudas_Tecnicas_Dc;
     @Inject
     private DateField<Date> datadisponivelField;
     @Inject
     private CollectionContainer<Valencias> valenciasDc;
-    @Inject
-    private LookupField<Valencias> idValenciaField;
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {

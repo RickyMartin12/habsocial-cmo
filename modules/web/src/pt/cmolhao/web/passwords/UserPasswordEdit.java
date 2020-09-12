@@ -23,7 +23,7 @@ import java.util.UUID;
 @UiDescriptor("user-password-edit.xml")
 @EditedEntityContainer("userDc")
 @LoadDataBeforeShow
-@DialogMode(forceDialog = true, width = "600px", height = "250px")
+@DialogMode(forceDialog = true, width = "600px", height = "222px")
 public class UserPasswordEdit extends StandardEditor<User> {
 
     @Inject

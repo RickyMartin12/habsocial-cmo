@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="respostaSocialsTable"
+        messagesPack="pt.cmolhao.web.respostasocial">
+    <data readOnly="true">
+        <collection id="respostaSocialsDc"
+                    class="pt.cmolhao.entity.RespostaSocial"
+                    view="respostaSocial-view">
+            <loader id="respostaSocialsDl">
+                <query>
+                    <![CDATA[select e from cmolhao_RespostaSocial e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idTipoValencia i</c:join>
+                                <c:where>i.id = :idTipoValencia</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.nome like :nome</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="TipoValenciaDc"
+                    class="pt.cmolhao.entity.Tiposvalencia"
+                    view="_local">
+            <loader id="tipo_valencia_Loader">
+                <query>
+                    <![CDATA[select e from cmolhao_Tiposvalencia e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="respostaSocialsTable"
+            spacing="true">
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+
+                <hbox spacing="true">
+
+                    <grid spacing="true">
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <lookupPickerField property="idTipoValencia" id="idtipovalenciaField" optionsContainer="TipoValenciaDc"
+                                                   caption="Área de Intervenção: "
+                                                   inputPrompt="(Seleccione o tipo de valência)"
+                                                   width="600px"
+                                                   icon="SIMPLYBUILT">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+
+                                <textField id="nomeField" property="nome" caption="Resposta Social: "
+                                           icon="font-icon:QUESTION_CIRCLE_O" width="300px" inputPrompt="(Nome da Resposta Social)" />
+                            </row>
+                        </rows>
+                    </grid>
+
+
+
+                </hbox>
+
+                <hbox spacing="true">
+                    <button id="search_resposta_social" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                    <button id="reset_search_resposta_social" icon="ERASER" caption="Limpar" />
+                </hbox>
+            </scrollBox>
+
+        </groupBox>
+
+        <hbox spacing="true" width="100%">
+            <lookupField id="linhasRespostaSocial"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
+        <groupTable id="respostaSocialsTable"
+                    aggregatable="true"
+                    dataContainer="respostaSocialsDc"
+                    fixedGrouping="true"
+                    width="100%"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove">
+                    <properties>
+                        <property name="confirmation" value="true"/>
+                        <property name="confirmationTitle" value="Remover a linha da tabela do Resposta Social."/>
+                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela de Resposta Social?"/>
+                    </properties>
+                </action>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <group>
+                    <column id="idTipoValencia" caption="Área de Intervenção"/>
+                </group>
+                <column id="nome"/>
+                <column id="capacidade" caption="Número de Pessoas">
+                    <aggregation type="SUM" editable="false"/>
+                </column>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="respostaSocialsTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="respostaSocialsTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="respostaSocialsTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button action="respostaSocialsTable.excel" stylename="friendly"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

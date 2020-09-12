@@ -1,25 +1,90 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.tiporendimento">
     <data>
         <instance id="tipoRendimentoDc"
                   class="pt.cmolhao.entity.TipoRendimento"
-                  view="_local">
+                  view="tipoRendimento-view">
             <loader/>
+            <collection id="rendimentosUtentesDc" property="rendimentosUtentes" />
         </instance>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="tipoRendimentoDc">
-            <column width="250px">
-                <textField id="idTipoRendimentoField" property="id" visible="false" />
-                <textField id="tipoRendimentoField" property="tipoRendimento" caption="Tipo de Rendimento: "
-                            icon="font-icon:HOME"/>
-            </column>
-        </form>
+        <scrollBox id="scrollBox" spacing="true">
+
+            <tabSheet>
+                <tab id="dados_rendimentos"
+                     caption="Dados do Rendimentos"
+                     icon="font-icon:MONEY"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_dados_rendimentos" dataContainer="tipoRendimentoDc">
+
+                        <column width="600px">
+                            <textField id="idTipoRendimentoField" property="id" visible="false" />
+                            <textArea id="tipoRendimentoField" property="tipoRendimento" caption="Tipo de Rendimento: "
+                                      icon="font-icon:HOME" cols="60" rows="3"/>
+                        </column>
+
+                    </form>
+
+                </tab>
+            </tabSheet>
+
+            <tabSheet>
+                <tab id="rendimentos_utentes"
+                     caption="Rendimentos Utentes"
+                     icon="font-icon:HOME"
+                     margin="true"
+                     spacing="true">
+                    <groupBox id="rendimentosUtentesBox" caption="Rendimentos Utentes">
+                        <table id="rendimentosUtentesTable"
+                               width="100%"
+                               height="300px"
+                               dataContainer="rendimentosUtentesDc"
+                               emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove">
+                                    <properties>
+                                        <property name="confirmation" value="true"/>
+                                        <property name="confirmationTitle" value="Remover a linha da tabela de Rendimentos de Utentes"/>
+                                        <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha de Rendimentos de Utentes?"/>
+                                    </properties>
+                                </action>
+                                <action id="excel" type="excel"/>
+                            </actions>
+                            <columns>
+                                <column id="ano" caption="Ano de Rndimento"/>
+                                <column id="idUtente" caption="Utente"/>
+                                <column id="valorRendimento" caption="Valor do Rendimento" generator="generateValorRendimento"/>
+                            </columns>
+                            <rowsCount/>
+                            <buttonsPanel id="buttonsPanel"
+                                          alwaysVisible="true">
+                                <button id="createBtn" action="rendimentosUtentesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button id="editBtn" action="rendimentosUtentesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button id="removeBtn" action="rendimentosUtentesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                                <button id="excelBtn" action="rendimentosUtentesTable.excel" stylename="friendly" />
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+
+                </tab>
+            </tabSheet>
+
+        </scrollBox>
+
+
+
+
+
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
             <button caption="Fechar" action="windowClose" icon="CLOSE"/>

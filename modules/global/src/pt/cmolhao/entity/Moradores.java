@@ -17,15 +17,21 @@ public class Moradores extends BaseIntegerIdEntity {
     @Temporal(TemporalType.DATE)
     @Column(name = "date_fim")
     protected Date dateFim;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "habitacao_social_id")
     protected HabitacaoSocial habitacaoSocial;
+
+
     @Column(name = "morada_social")
     protected String moradaSocial;
     @Column(name = "obs_conf")
     protected String obsConf;
     @Column(name = "obs_gerais")
     protected String obsGerais;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "utente_id")
     protected Utente utente;

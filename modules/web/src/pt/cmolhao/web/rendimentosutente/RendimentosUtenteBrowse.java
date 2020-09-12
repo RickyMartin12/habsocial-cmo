@@ -1,8 +1,10 @@
 package pt.cmolhao.web.rendimentosutente;
 
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
@@ -12,6 +14,7 @@ import pt.cmolhao.entity.TipoRendimento;
 import pt.cmolhao.entity.Utente;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,19 +28,25 @@ public class RendimentosUtenteBrowse extends StandardLookup<RendimentosUtente> {
     @Inject
     protected TextField<String> anoField;
     @Inject
-    protected LookupField<TipoRendimento> idTipoRendimentoField;
+    protected LookupPickerField<TipoRendimento> idTipoRendimentoField;
     @Inject
-    protected LookupField<Utente> idUtenteField;
+    protected LookupPickerField<Utente> idUtenteField;
     @Inject
     protected CollectionLoader<RendimentosUtente> rendimentosUtentesDl;
     @Inject
     protected GroupTable<RendimentosUtente> rendimentosUtentesTable;
+    @Named("rendimentosUtentesTable.remove")
+    protected RemoveAction<RendimentosUtente> rendimentosUtentesTableRemove;
     @Inject
     private Notifications notifications;
     @Inject
     private ScreenBuilders screenBuilders;
     @Inject
     protected UiComponents uiComponents;
+
+
+    @Inject
+    private Dialogs dialogs;
 
     public static boolean isNumeric(String str) {
         return str != null && str.matches("[-+]?\\d*\\.?\\d+");
@@ -91,14 +100,12 @@ public class RendimentosUtenteBrowse extends StandardLookup<RendimentosUtente> {
 
     @Subscribe("reset_rendimentos_utentes")
     protected void onReset_rendimentos_utentesClick(Button.ClickEvent event) {
-        linhasRendimentosUtente.setValue(null);
         anoField.setValue(null);
         idUtenteField.setValue(null);
         idTipoRendimentoField.setValue(null);
         rendimentosUtentesDl.removeParameter("ano");
         rendimentosUtentesDl.removeParameter("idUtente");
         rendimentosUtentesDl.removeParameter("idTipoRendimento");
-        rendimentosUtentesDl.setMaxResults(0);
         rendimentosUtentesDl.load();
     }
 
@@ -160,5 +167,36 @@ public class RendimentosUtenteBrowse extends StandardLookup<RendimentosUtente> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         getWindow().setCaption("Listar Rendimentos dos Utentes");
+    }
+
+    @Subscribe("rendimentosUtentesTable.remove")
+    protected void onRendimentosUtentesTableRemove(Action.ActionPerformedEvent event) {
+        rendimentosUtentesTableRemove.setConfirmation(false);
+        if (rendimentosUtentesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção de rendimentos de utentes")
+                    .withMessage("Deve seleccionar pelo um dos rendimentos dos utentes")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            RendimentosUtente user = rendimentosUtentesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do rendimento do utente número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do rendimento do utente número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        rendimentosUtentesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 }

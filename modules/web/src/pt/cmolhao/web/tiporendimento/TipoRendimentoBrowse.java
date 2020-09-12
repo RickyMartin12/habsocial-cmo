@@ -1,17 +1,19 @@
 package pt.cmolhao.web.tiporendimento;
 
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.Table;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.gui.screen.LookupComponent;
+import pt.cmolhao.entity.TipoRelacionamentoUtentes;
 import pt.cmolhao.entity.TipoRendimento;
 import pt.cmolhao.web.tiporelacionamentoutentes.TipoRelacionamentoUtentesEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +27,18 @@ public class TipoRendimentoBrowse extends StandardLookup<TipoRendimento> {
     @Inject
     protected CollectionLoader<TipoRendimento> tipoRendimentoesDl;
     @Inject
-    protected LookupField tipoRendimentoField;
-    @Inject
     protected Table<TipoRendimento> tipoRendimentoesTable;
+    @Inject
+    protected TextField<String> tipoRendimentoField;
+    @Named("tipoRendimentoesTable.remove")
+    protected RemoveAction<TipoRendimento> tipoRendimentoesTableRemove;
     @Inject
     private DataManager dataManager;
     @Inject
     private ScreenBuilders screenBuilders;
+
+    @Inject
+    private Dialogs dialogs;
 
     @Subscribe("linhastipoRendimento")
     protected void onLinhastipoRendimentoValueChange(HasValue.ValueChangeEvent event) {
@@ -67,7 +74,7 @@ public class TipoRendimentoBrowse extends StandardLookup<TipoRendimento> {
                         .withInitializer(customer -> {
                             if (tipoRendimentoField.getValue() != null)
                             {
-                                customer.setTipoRendimento(tipoRendimentoField.getValue().toString());
+                                customer.setTipoRendimento(tipoRendimentoField.getValue());
                             }
                         })
                         .withScreenClass(TipoRendimentoEdit.class)    // specific editor screen
@@ -79,8 +86,6 @@ public class TipoRendimentoBrowse extends StandardLookup<TipoRendimento> {
     @Subscribe("reset_tipo_rendimento_utentes")
     protected void onReset_tipo_rendimento_utentesClick(Button.ClickEvent event) {
         tipoRendimentoField.setValue(null);
-        linhastipoRendimento.setValue(null);
-        tipoRendimentoesDl.setMaxResults(0);
         tipoRendimentoesDl.removeParameter("tipoRendimento");
         tipoRendimentoesDl.load();
     }
@@ -89,7 +94,7 @@ public class TipoRendimentoBrowse extends StandardLookup<TipoRendimento> {
     protected void onSearch_tipo_rendimento_utentesClick(Button.ClickEvent event) {
         if (tipoRendimentoField.getValue() != null)
         {
-            tipoRendimentoesDl.setParameter("tipoRendimento",  tipoRendimentoField.getValue().toString());
+            tipoRendimentoesDl.setParameter("tipoRendimento",  "(?i)%" + tipoRendimentoField.getValue() + "%");
         }
         else
         {
@@ -101,6 +106,37 @@ public class TipoRendimentoBrowse extends StandardLookup<TipoRendimento> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         getWindow().setCaption("Listar Tipos de Rendimentos");
+    }
+
+    @Subscribe("tipoRendimentoesTable.remove")
+    protected void onTipoRendimentoesTableRemove(Action.ActionPerformedEvent event) {
+        tipoRendimentoesTableRemove.setConfirmation(false);
+        if (tipoRendimentoesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção do tipo de rendimento")
+                    .withMessage("Deve seleccionar pelo um dos tipos de rendimento")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            TipoRendimento user = tipoRendimentoesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do tipo de rendimento número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do tipo de rendimento número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        tipoRendimentoesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 
 }

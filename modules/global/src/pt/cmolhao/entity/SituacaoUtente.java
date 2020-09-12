@@ -17,12 +17,15 @@ public class SituacaoUtente extends BaseIntegerIdEntity {
     @Temporal(TemporalType.DATE)
     @Column(name = "data_inicio")
     protected Date dataInicio;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipos_situacao_utentes")
     protected TiposSituacoesUtentes idTiposSituacaoUtentes;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_utente")
     protected Utente idUtente;
+
     @Column(name = "obs_gerais")
     protected String obsGerais;
     @Column(name = "obser_conf")

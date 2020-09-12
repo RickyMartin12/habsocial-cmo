@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.moradores">
     <data>
         <instance id="moradoresDc"
@@ -35,33 +34,107 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="moradoresDc">
-            <column width="250px">
-                <textField id="idMoradoresField" visible="false" property="id" />
-                <dateField id="dataInicioField" property="dataInicio" caption="Data de Inicio: " icon="font-icon:CALENDAR" />
-                <dateField id="dataFimField" property="dateFim" caption="Data de Fim: " icon="font-icon:CALENDAR" />
 
-                <lookupField id="habitacaoSocialField"
-                             property="habitacaoSocial"
-                             optionsContainer="habitacaoSocialsDc"
-                             inputPrompt="(Seleccione a Habitação Social)"
-                             caption="Habitação Social (Designacao): "
-                             icon="font-icon:BUILDING"/>
+        <tabSheet>
 
-                <lookupField
-                        property="utente"
-                        id="utenteField"
-                        optionsContainer="UtentesDC"
-                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
-                        inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+            <tab id="dados_morada"
+                 caption="Dados da Morada"
+                 icon="font-icon:LOCATION_ARROW"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_dados_morada" dataContainer="moradoresDc">
+                        <lookupPickerField id="habitacaoSocialField"
+                                     property="habitacaoSocial"
+                                     optionsContainer="habitacaoSocialsDc"
+                                     width="840px"
+                                     stylename="hab_social_moradores_edit"
+                                     inputPrompt="(Seleccione a Habitação Social)"
+                                     caption="Habitação Social: "
+                                     icon="font-icon:BUILDING">
+
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+
+                    <textArea cols="60" rows="3"
+                              stylename="morada_morador_edit"
+                              id="moradaSocialField"
+                              property="moradaSocial"
+                              caption="Morada: " icon="ADDRESS_CARD"/>
 
 
-                <textField id="moradaSocialField" property="moradaSocial" caption="Morada: " icon="ADDRESS_CARD"/>
-                <textArea rows="3" cols="8" id="obsConfField" property="obsConf" caption="Observações de Confiração: " icon="FILE_TEXT_O"/>
-                <textArea rows="3" cols="8" id="obsGeraisField" property="obsGerais" caption="Observações Gerais: " icon="FILE_TEXT_O" />
+                    <textField id="idMoradoresField" visible="false" property="id" />
 
-            </column>
-        </form>
+                </form>
+
+
+
+            </tab>
+
+            <tab id="datas"
+                 caption="Datas"
+                 icon="font-icon:CALENDAR"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_datas" dataContainer="moradoresDc">
+                    <column width="300px">
+                        <dateField id="dataInicioField" property="dataInicio" caption="Data de Inicio: " icon="font-icon:CALENDAR" />
+                    </column>
+                    <column width="300px">
+                        <dateField id="dataFimField" property="dateFim" caption="Data de Fim: " icon="font-icon:CALENDAR" />
+                    </column>
+
+                </form>
+            </tab>
+
+            <tab id="dados_utente"
+                 caption="Dados do Utente"
+                 icon="font-icon:USER"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_dados_utente" dataContainer="moradoresDc">
+
+                    <lookupPickerField
+                            property="utente"
+                            id="utenteField"
+                            width="300px"
+                            optionsContainer="UtentesDC"
+                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                            inputPrompt="(Seleccione o utente)">
+
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                            <action id="clear" type="picker_clear"/>
+                        </actions>
+
+                    </lookupPickerField>
+
+                </form>
+
+            </tab>
+
+
+            <tab id="observacoes"
+                 caption="Observações"
+                 icon="font-icon:FILE_TEXT_O"
+                 margin="true"
+                 spacing="true">
+                <form id="form_observacoes" dataContainer="moradoresDc">
+                    <column width="300px">
+                        <textArea rows="3" cols="30" id="obsConfField" property="obsConf" caption="Observações de Confiração: " icon="FILE_TEXT_O"/>
+                    </column>
+                    <column width="300px">
+                        <textArea rows="3" cols="30" id="obsGeraisField" property="obsGerais" caption="Observações Gerais: " icon="FILE_TEXT_O" />
+                    </column>
+                </form>
+            </tab>
+        </tabSheet>
+
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
             <button caption="Fechar" action="windowClose" icon="CLOSE"/>

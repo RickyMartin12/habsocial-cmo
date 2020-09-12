@@ -1,28 +1,77 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.tipoatendimento">
     <data>
         <instance id="tipoAtendimentoDc"
                   class="pt.cmolhao.entity.TipoAtendimento"
-                  view="_local">
+                  view="tipoAtendimento-view">
             <loader/>
+            <collection id="atendimentosDc" property="atendimentos" />
         </instance>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="tipoAtendimentoDc">
-            <column width="250px">
-                <textField id="idTipoAtendimentoField" property="id" visible="false" />
-                <lookupField
-                        inputPrompt="(Seleccione o tipo de atendimento)"
-                        property="tipoAtendimento"
-                        id="tipoAtendimentoField"
-                        icon="font-icon:VOLUME_CONTROL_PHONE" caption="Tipo de Atendimento: "/>
-            </column>
-        </form>
+
+        <tabSheet>
+            <tab id="dados_tipo_atendimento"
+                 caption="Dados do Tipo de Atendimento"
+                 icon="font-icon:ADDRESS_CARD"
+                 margin="true"
+                 spacing="true">
+                <form id="form_dados_tipo_atendimento" dataContainer="tipoAtendimentoDc">
+                    <column width="600px">
+                        <lookupField
+                                inputPrompt="(Seleccione o tipo de atendimento)"
+                                property="tipoAtendimento"
+                                stylename="id_tipo_atendimento_edit"
+                                id="tipoAtendimentoField"
+                                width="600px"
+                                icon="font-icon:VOLUME_CONTROL_PHONE" caption="Tipo de Atendimento: "/>
+                    </column>
+                    <column width="300px">
+                        <textField id="idTipoAtendimentoField" property="id" visible="false" />
+                    </column>
+                </form>
+            </tab>
+        </tabSheet>
+
+
+        <tabSheet>
+            <tab id="atendimento"
+                 caption="Atendimento"
+                 icon="font-icon:VOLUME_CONTROL_PHONE"
+                 margin="true"
+                 spacing="true">
+                <groupBox id="atendimentoBox" caption="Atendimento">
+                    <table id="atendimentoesTable" dataContainer="atendimentosDc" width="100%" height="500px"
+                           emptyStateMessage="Não Existe Dados na Tabela"
+                           emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                        <actions>
+                            <action id="create" type="create"/>
+                            <action id="edit" type="edit"/>
+                            <action id="remove" type="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="idUtente" caption="Utente"/>
+                            <column id="idTecnico" caption="Técnico" />
+                            <column id="idTipoAtendimento" caption="Tipo de Atendimento"  />
+                            <column id="contactosEfetuados" caption="Contactos Efectuados"/>
+                            <column id="dataAtendimento" caption="Data de Atendimento"/>
+                        </columns>
+                        <buttonsPanel>
+                            <button action="atendimentoesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                            <button action="atendimentoesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                            <button action="atendimentoesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                        </buttonsPanel>
+                    </table>
+                </groupBox>
+            </tab>
+
+        </tabSheet>
+
+
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
             <button caption="Fechar" action="windowClose" icon="CLOSE"/>

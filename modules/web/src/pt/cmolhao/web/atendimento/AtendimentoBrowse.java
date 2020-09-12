@@ -1,6 +1,8 @@
 package pt.cmolhao.web.atendimento;
 
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
@@ -9,6 +11,7 @@ import pt.cmolhao.entity.*;
 import pt.cmolhao.web.moradores.MoradoresEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,19 +28,18 @@ public class AtendimentoBrowse extends StandardLookup<Atendimento> {
     @Inject
     protected LookupField linhasAtendimento;
     @Inject
-    protected LookupField<Utente> utenteField;
+    protected LookupPickerField<Utente> utenteField;
     @Inject
-    protected LookupField<Tecnico> idTecnicoField;
+    protected LookupPickerField<Tecnico> idTecnicoField;
     @Inject
-    protected LookupField<TipoAtendimento> idTipoAtendimentoField;
-    @Inject
-    protected LookupField<AtendimentoObjetivos> idAtendimentoObjetivoField;
-    @Inject
-    protected LookupField<AtendimentoEncaminhamento> idAtendimentoEncaminhamentoField;
-    @Inject
-    protected DateField<Date> dataAtendimentoField;
+    protected LookupPickerField<TipoAtendimento> idTipoAtendimentoField;
+    @Named("atendimentoesTable.remove")
+    protected RemoveAction<Atendimento> atendimentoesTableRemove;
     @Inject
     private ScreenBuilders screenBuilders;
+
+    @Inject
+    private Dialogs dialogs;
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
@@ -68,12 +70,6 @@ public class AtendimentoBrowse extends StandardLookup<Atendimento> {
                             customer.setIdUtente(utenteField.getValue());
                             customer.setIdTecnico(idTecnicoField.getValue());
                             customer.setIdTipoAtendimento(idTipoAtendimentoField.getValue());
-                            customer.setIdAtendimentoEncaminhamento(idAtendimentoEncaminhamentoField.getValue());
-                            customer.setIdAtendimentoObjetivo(idAtendimentoObjetivoField.getValue());
-                            if (dataAtendimentoField.getValue() != null)
-                            {
-                                customer.setDataAtendimento(dataAtendimentoField.getValue());
-                            }
 
                         })
                         .withScreenClass(AtendimentoEdit.class)    // specific editor screen
@@ -100,17 +96,9 @@ public class AtendimentoBrowse extends StandardLookup<Atendimento> {
         utenteField.setValue(null);
         idTecnicoField.setValue(null);
         idTipoAtendimentoField.setValue(null);
-        idAtendimentoObjetivoField.setValue(null);
-        idAtendimentoEncaminhamentoField.setValue(null);
-        dataAtendimentoField.setValue(null);
-        linhasAtendimento.setValue(null);
         atendimentoesDl.removeParameter("idUtente");
         atendimentoesDl.removeParameter("idTecnico");
         atendimentoesDl.removeParameter("idTipoAtendimento");
-        atendimentoesDl.removeParameter("idAtendimentoObjetivo");
-        atendimentoesDl.removeParameter("idAtendimentoEncaminhamento");
-        atendimentoesDl.removeParameter("dataAtendimento");
-        atendimentoesDl.setMaxResults(0);
         atendimentoesDl.load();
     }
 
@@ -144,36 +132,39 @@ public class AtendimentoBrowse extends StandardLookup<Atendimento> {
             atendimentoesDl.removeParameter("idTipoAtendimento");
         }
 
-        if (idAtendimentoObjetivoField.getValue() != null)
-        {
-            atendimentoesDl.setParameter("idAtendimentoObjetivo", idAtendimentoObjetivoField.getValue().getId());
-        }
-        else
-        {
-            atendimentoesDl.removeParameter("idAtendimentoObjetivo");
-        }
-
-
-        if (idAtendimentoEncaminhamentoField.getValue() != null)
-        {
-            atendimentoesDl.setParameter("idAtendimentoEncaminhamento", idAtendimentoEncaminhamentoField.getValue().getId());
-        }
-        else
-        {
-            atendimentoesDl.removeParameter("idAtendimentoEncaminhamento");
-        }
-
-        if (dataAtendimentoField.getValue() != null)
-        {
-            atendimentoesDl.setParameter("dataAtendimento", dataAtendimentoField.getValue());
-        }
-        else
-        {
-            atendimentoesDl.removeParameter("dataAtendimento");
-        }
-
         atendimentoesDl.load();
 
 
+    }
+
+    @Subscribe("atendimentoesTable.remove")
+    protected void onAtendimentoesTableRemove(Action.ActionPerformedEvent event) {
+        atendimentoesTableRemove.setConfirmation(false);
+        if (atendimentoesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção dos atendimentos")
+                    .withMessage("Deve seleccionar pelo um dos atendimentos")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            Atendimento user = atendimentoesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do atendimento número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do atendimento número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        atendimentoesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 }

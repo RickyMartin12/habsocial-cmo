@@ -1,17 +1,18 @@
 package pt.cmolhao.web.estados;
 
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.Table;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.gui.screen.LookupComponent;
 import pt.cmolhao.entity.Estados;
 import pt.cmolhao.web.tipoajuda.TipoAjudaEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,16 +23,22 @@ import java.util.List;
 public class EstadosBrowse extends StandardLookup<Estados> {
     @Inject
     protected LookupField linhasEstados;
-    @Inject
-    protected LookupField est_processos_apoio_id;
+
     @Inject
     protected CollectionLoader<Estados> estadosesDl;
     @Inject
     protected Table<Estados> estadosesTable;
     @Inject
+    protected TextField<String> est_processos_apoio_id;
+    @Named("estadosesTable.remove")
+    protected RemoveAction<Estados> estadosesTableRemove;
+    @Inject
     private DataManager dataManager;
     @Inject
     private ScreenBuilders screenBuilders;
+
+    @Inject
+    private Dialogs dialogs;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -79,18 +86,16 @@ public class EstadosBrowse extends StandardLookup<Estados> {
     @Subscribe("reset_tipo_ajuda")
     protected void onReset_tipo_ajudaClick(Button.ClickEvent event) {
         est_processos_apoio_id.setValue(null);
-        linhasEstados.setValue(null);
-        estadosesDl.removeParameter("descricaoTipoAjuda");
-        estadosesDl.setMaxResults(0);
+        estadosesDl.removeParameter("estadosProcessos");
         estadosesDl.load();
     }
 
     @Subscribe("search_tipo_ajuda")
     protected void onSearch_tipo_ajudaClick(Button.ClickEvent event) {
         if (est_processos_apoio_id.getValue() != null) {
-            estadosesDl.setParameter("descricaoTipoAjuda",  est_processos_apoio_id.getValue().toString());
+            estadosesDl.setParameter("estadosProcessos",  "(?i)%" + est_processos_apoio_id.getValue() + "%");
         } else {
-            estadosesDl.removeParameter("descricaoTipoAjuda");
+            estadosesDl.removeParameter("estadosProcessos");
         }
         estadosesDl.load();
     }
@@ -98,6 +103,38 @@ public class EstadosBrowse extends StandardLookup<Estados> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         getWindow().setCaption("Listar Estados");
+    }
+
+    @Subscribe("estadosesTable.remove")
+    protected void onEstadosesTableRemove(Action.ActionPerformedEvent event) {
+        estadosesTableRemove.setConfirmation(false);
+        if (estadosesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção de estados")
+                    .withMessage("Deve seleccionar pelo um dos estados")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            Estados user = estadosesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do estado número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do estado número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        estadosesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
+
     }
 
 

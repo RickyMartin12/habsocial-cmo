@@ -2,6 +2,7 @@ package pt.cmolhao.web.utente;
 
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
+import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupField;
 import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.components.ValidationException;
@@ -109,7 +110,7 @@ public class UtenteEdit extends StandardEditor<Utente> {
             }
         });
 
-        numIdCivilField.addValidator(value -> {
+        /*numIdCivilField.addValidator(value -> {
             if (value != null)
             {
                 if (!isNumeric(value))
@@ -142,7 +143,7 @@ public class UtenteEdit extends StandardEditor<Utente> {
                     }
                 }
             }
-        });
+        });*/
 
 
         telefoneField.addValidator(value -> {
@@ -175,6 +176,15 @@ public class UtenteEdit extends StandardEditor<Utente> {
             list_paises.add(obj.getDisplayCountry());
         }
         paisOrigemField.setOptionsList(list_paises);
+
+    }
+
+    @Subscribe("numIdCivilField")
+    protected void onNumIdCivilFieldValueChange(HasValue.ValueChangeEvent<String> event) {
+        if (event.getValue() != null)
+        {
+            certUniaoEuropeiaField.setValue(event.getValue() + " 0 ZY3");
+        }
 
     }
 

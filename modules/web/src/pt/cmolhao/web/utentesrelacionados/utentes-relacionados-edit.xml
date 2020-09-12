@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.utentesrelacionados">
     <data>
         <instance id="utentesRelacionadosDc"
@@ -45,37 +44,110 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="utentesRelacionadosDc">
-            <column width="250px">
-                <textField id="idUtentesRelacionadosField" visible="false" property="id" />
-                <lookupField
-                        property="idUtenteRel1"
-                        id="idUtenteRel1Field"
-                        optionsContainer="utentesDc1"
-                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente 1: "
-                        inputPrompt="(Seleccione o nome e a identificação do utente)"/>
 
-                <lookupField
-                        property="idUtenteRel2"
-                        id="idUtenteRel2Field"
-                        optionsContainer="utentesDc2"
-                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente 2: "
-                        inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+        <tabSheet>
+            <tab id="dados_utentes_relacionados"
+                 caption="Dados dos Utentes Relacionados"
+                 icon="font-icon:GROUP"
+                 margin="true"
+                 spacing="true">
+                <form id="form_dados_utentes_relacionados" dataContainer="utentesRelacionadosDc">
 
-                <lookupField
-                        inputPrompt="(Seleccione o tipo de relacionamento dos utentes)"
-                        property="idTipoRelUtentes"
-                        id="idTipoRelUtentesField"
-                        optionsContainer="tipoRelacionamentoUtentesesDc"
-                        icon="font-icon:GROUP" caption="Tipo de Relacionamento dos Utentes: "/>
-                <textField id="membroAgregadoField" property="membroAgregado" caption="Membro Agregado: "
-                           icon="font-icon:USERS" datatype="int" conversionErrorMessage="O Membro agregado possui numeros inteiros"/>
-                <textArea cols="20" rows="3" id="obsConfField" property="obsConf"
-                          caption="Observações de Confirmação: " icon="font-icon:FILE_TEXT_O"/>
-                <textArea cols="20" rows="3" id="obsGeraisField" property="obsGerais"
-                          caption="Observações Gerais: " icon="font-icon:FILE_TEXT_O"/>
-            </column>
-        </form>
+                    <column width="320px">
+                        <lookupPickerField
+                                property="idUtenteRel1"
+                                id="idUtenteRel1Field"
+                                stylename="utente_rel1_edit"
+                                optionsContainer="utentesDc1"
+                                icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente 1: "
+                                inputPrompt="(Seleccione o nome e a identificação do utente)">
+
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
+
+
+                        </lookupPickerField>
+
+                        <lookupPickerField
+                                inputPrompt="(Seleccione o tipo de relacionamento dos utentes)"
+                                property="idTipoRelUtentes"
+                                id="idTipoRelUtentesField"
+                                stylename="utente_tipo_rel_edit"
+                                colspan="2"
+                                width="912px"
+                                optionsContainer="tipoRelacionamentoUtentesesDc"
+                                icon="font-icon:GROUP" caption="Tipo de Relacionamento: ">
+
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
+
+                        </lookupPickerField>
+
+
+                    </column>
+                    <column width="320px">
+                        <lookupPickerField
+                                property="idUtenteRel2"
+                                id="idUtenteRel2Field"
+                                stylename="utente_rel2_edit"
+                                optionsContainer="utentesDc2"
+                                icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente 2: "
+                                inputPrompt="(Seleccione o nome e a identificação do utente)">
+
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
+
+                        </lookupPickerField>
+                        <textField id="idUtentesRelacionadosField" visible="false" property="id" />
+
+                    </column>
+
+                </form>
+            </tab>
+            <tab id="dados_numero_agregados"
+                 caption="Numero de Membros Agregados"
+                 icon="font-icon:USERS"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_dados_numero_agregados" dataContainer="utentesRelacionadosDc">
+                    <column width="300px">
+                        <textField id="membroAgregadoField" property="membroAgregado" caption="Membro Agregado: " width="120px"
+                                   icon="font-icon:USERS" datatype="int" conversionErrorMessage="O Membro agregado possui numeros inteiros"/>
+                    </column>
+                </form>
+            </tab>
+
+            <tab id="observacoes_gerais"
+                 caption="Observações"
+                 icon="font-icon:FILE_TEXT_O"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_observacoes_gerais" dataContainer="utentesRelacionadosDc">
+
+                    <column width="300px">
+                        <textArea cols="60" rows="3" id="obsConfField" property="obsConf"
+                                  caption="Observações de Confirmação: " icon="font-icon:FILE_TEXT_O"/>
+                    </column>
+
+                    <column width="300px">
+                        <textArea cols="60" rows="3" id="obsGeraisField" property="obsGerais"
+                                  caption="Observações Gerais: " icon="font-icon:FILE_TEXT_O"/>
+                    </column>
+
+                </form>
+
+            </tab>
+
+        </tabSheet>
+
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
             <button caption="Fechar" action="windowClose" icon="CLOSE"/>

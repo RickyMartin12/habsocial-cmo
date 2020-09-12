@@ -1,10 +1,15 @@
 package pt.cmolhao.entity;
 
+import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.BaseIntegerIdEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
+import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.core.global.DesignSupport;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @DesignSupport("{'imported':true}")
 @AttributeOverrides({
@@ -25,4 +30,32 @@ public class Tiposvalencia extends BaseIntegerIdEntity {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idTipoValencia")
+    protected Set<RespostaSocial> resp_social;
+
+    public Set<RespostaSocial> getResp_social() {
+        return resp_social;
+    }
+
+    public void setResp_social(Set<RespostaSocial> resp_social) {
+        this.resp_social = resp_social;
+    }
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idtipovalencia")
+    protected Set<Valencias> valencias;
+
+    public Set<Valencias> getValencias() {
+        return valencias;
+    }
+
+    public void setValencias(Set<Valencias> valencias) {
+        this.valencias = valencias;
+    }
+
+
 }

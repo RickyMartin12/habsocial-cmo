@@ -1,11 +1,16 @@
 package pt.cmolhao.entity;
 
+import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.BaseIntegerIdEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
+import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.core.global.DesignSupport;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @DesignSupport("{'imported':true}")
 @NamePattern("( %s ) %s|numContribuinte,nome")
@@ -61,6 +66,113 @@ public class Utente extends BaseIntegerIdEntity {
     @Lob
     @Column(name = "\"telemóvel\"")
     protected String telem_vel;
+
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idUtente")
+    protected Set<Apoios> apoios;
+
+    public Set<Apoios> getApoios() {
+        return apoios;
+    }
+
+    public void setApoios(Set<Apoios> apoios) {
+        this.apoios = apoios;
+    }
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idUtente")
+    protected Set<Atendimento> atendimentos;
+
+    public Set<Atendimento> getAtendimentos() {
+        return atendimentos;
+    }
+
+    public void setAtendimentos(Set<Atendimento> atendimentos) {
+        this.atendimentos = atendimentos;
+    }
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "utente")
+    protected Set<Moradores> moradores;
+
+    public Set<Moradores> getMoradores() {
+        return moradores;
+    }
+
+    public void setMoradores(Set<Moradores> moradores) {
+        this.moradores = moradores;
+    }
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idUtente")
+    protected Set<RendimentosUtente> rendimentosUtentes;
+
+    public Set<RendimentosUtente> getRendimentosUtentes() {
+        return rendimentosUtentes;
+    }
+
+    public void setRendimentosUtentes(Set<RendimentosUtente> rendimentosUtentes) {
+        this.rendimentosUtentes = rendimentosUtentes;
+    }
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idUtente")
+    protected Set<SituacaoUtente> situacaoUtentes;
+
+    public Set<SituacaoUtente> getSituacaoUtentes() {
+        return situacaoUtentes;
+    }
+
+    public void setSituacaoUtentes(Set<SituacaoUtente> situacaoUtentes) {
+        this.situacaoUtentes = situacaoUtentes;
+    }
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idUtenteRel1")
+    protected Set<UtentesRelacionados> utentesRelacionados;
+
+    public Set<UtentesRelacionados> getUtentesRelacionados() {
+        return utentesRelacionados;
+    }
+
+    public void setUtentesRelacionados(Set<UtentesRelacionados> utentesRelacionados) {
+        this.utentesRelacionados = utentesRelacionados;
+    }
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idUtenteRel2")
+    protected Set<UtentesRelacionados> utentesRelacionados2;
+
+    public Set<UtentesRelacionados> getUtentesRelacionados2() {
+        return utentesRelacionados2;
+    }
+
+    public void setUtentesRelacionados2(Set<UtentesRelacionados> utentesRelacionados2) {
+        this.utentesRelacionados2 = utentesRelacionados2;
+    }
+
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "utente")
+    protected Set<UtentesSituacaoProfissional> utentesSituacaoProfissionals;
+
+    public Set<UtentesSituacaoProfissional> getUtentesSituacaoProfissionals() {
+        return utentesSituacaoProfissionals;
+    }
+
+    public void setUtentesSituacaoProfissionals(Set<UtentesSituacaoProfissional> utentesSituacaoProfissionals) {
+        this.utentesSituacaoProfissionals = utentesSituacaoProfissionals;
+    }
+
 
     public String getTelem_vel() {
         return telem_vel;

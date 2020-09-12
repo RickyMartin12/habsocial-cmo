@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="documentacaoClasoRegulamentosesTable"
+        messagesPack="pt.cmolhao.web.claso_regulamentos">
+    <data readOnly="true">
+        <collection id="documentacaoClasoRegulamentosesDc"
+                    class="pt.cmolhao.entity.DocumentacaoClasoRegulamentos"
+                    view="documentacaoClasoRegulamentos-view">
+            <loader id="documentacaoClasoRegulamentosesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_DocumentacaoClasoRegulamentos e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.numeroDocumentacao like :numeroDocumentacao</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="documentacaoClasoRegulamentosesTable"
+            spacing="true">
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+
+
+                <grid spacing="true" width="100%">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+
+                            <textField id="numeroDocumentacaoField"
+                                       property="numeroDocumentacao"
+                                       width="250px"
+                                       icon="font-icon:FILE"
+                                       inputPrompt="(Introduza o numero documento)"
+                                       caption="Número do Documento: "/>
+                        </row>
+                    </rows>
+                </grid>
+
+                <hbox spacing="true">
+                    <button id="reset_documentacao_claso" icon="ERASER" caption="Limpar" />
+                    <button id="search_documentacao_claso" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+
+            </scrollBox>
+        </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasDocumentacao"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+        <groupTable id="documentacaoClasoRegulamentosesTable"
+                    width="100%"
+                    dataContainer="documentacaoClasoRegulamentosesDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="idRedeTrabalho" caption="Rede de Trabalho"/>
+                <column id="idSubRedeTrabalho" caption="Sub Rede de Trabalho"/>
+                <column id="numeroDocumentacao" caption="Número do Documentação"/>
+                <column id="dataDocumento" caption="Data do Ficheiro"/>
+
+                <column id="nomeFicheiro" caption="Nome do Ficheiro"/>
+
+                <column id="file" caption="Ficheiro"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="documentacaoClasoRegulamentosesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="documentacaoClasoRegulamentosesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="documentacaoClasoRegulamentosesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="documentacaoClasoRegulamentosesTable.excel" stylename="friendly" />
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

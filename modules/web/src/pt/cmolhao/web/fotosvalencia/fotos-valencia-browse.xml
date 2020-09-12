@@ -20,10 +20,7 @@
                                 <c:where>i.id = :idvalencia</c:where>
                             </c:jpql>
                             <c:jpql>
-                                <c:where>e.daequipacolaboradores = :daequipacolaboradores</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.doequipamento = :doequipamento</c:where>
+                                <c:where>e.descricao like :descricao</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -54,33 +51,44 @@
                   icon="font-icon:FILTER"
                   width="100%">
 
-        <scrollBox spacing="true">
-                <hbox spacing="true">
+            <scrollBox spacing="true">
 
-                    <lookupField id="idvalenciaField"
-                             property="idvalencia"
-                             optionsContainer="valenciasDc"
-                             inputPrompt="(Seleccione a Descrição da Valência)"
-                             caption="Descrição técnica da valência: "
-                             icon="SIMPLYBUILT"/>
+                    <grid spacing="true">
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <textField id="descricaoField"
+                                           stylename="descricao_fotos_valencia_search"
+                                           caption="Descrição:"
+                                           inputPrompt="(Introduza a descrição)"
+                                           property="descricao"
+                                           width="250px"
+                                           icon="font-icon:ID_CARD"
+                                />
+                                <lookupPickerField id="idvalenciaField"
+                                             property="idvalencia"
+                                             stylename="descricao_valencia_search"
+                                             width="700px"
+                                             optionsContainer="valenciasDc"
+                                             inputPrompt="(Seleccione a Valência)"
+                                             caption="Descrição técnica da valência: "
+                                             icon="SIMPLYBUILT">
+
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
 
 
-                    <label id="text_eq_colaboradores" icon="font-icon:USERS" />
-                    <checkBox id="daequipacolaboradoresField" property="daequipacolaboradores" />
-
-
-                    <label id="text_do_equipamento" icon="font-icon:WRENCH"/>
-                    <checkBox id="doequipamentoField" property="doequipamento" />
-
-                    <lookupField id="linhasFotValencias"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
-
-
-
-                    </hbox>
-
+                                </lookupPickerField>
+                            </row>
+                        </rows>
+                    </grid>
                     <hbox spacing="true">
                         <button id="search_foto_valencia" caption="Pesquisar" icon="SEARCH" stylename="info" />
                         <button id="reset_search_foto_valencia" icon="ERASER" caption="Limpar" />
@@ -90,6 +98,14 @@
 
 
         </groupBox>
+
+
+        <hbox spacing="true">
+            <lookupField id="linhasFotValencias"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
 
 
         <groupTable id="fotosValenciasTable"

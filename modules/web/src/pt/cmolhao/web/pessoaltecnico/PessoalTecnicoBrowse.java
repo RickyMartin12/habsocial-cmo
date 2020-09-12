@@ -1,9 +1,13 @@
 package pt.cmolhao.web.pessoaltecnico;
 
+import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.ValueLoadContext;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
+import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
@@ -14,6 +18,7 @@ import pt.cmolhao.entity.Valencias;
 import pt.cmolhao.web.pessoalauxiliar.PessoalAuxiliarEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.*;
 
 @UiController("cmolhao_PessoalTecnico.browse")
@@ -22,22 +27,16 @@ import java.util.*;
 @LoadDataBeforeShow
 public class PessoalTecnicoBrowse extends StandardLookup<PessoalTecnico> {
 
-    @Inject
-    private Label<String> text_sexo_masculino;
-    @Inject
-    private Label<String> text_formacao_profissional;
+    @Named("pessoalTecnicoesTable.remove")
+    protected RemoveAction<PessoalTecnico> pessoalTecnicoesTableRemove;
     @Inject
     private LookupField linhasPessoalTecnica;
     @Inject
-    private LookupField<Valencias> idvalenciaField;
-    @Inject
-    private LookupField categoria_profissional_id;
+    private LookupPickerField<Valencias> idvalenciaField;
+
     @Inject
     private LookupField habilitacoes_literarias_id;
-    @Inject
-    private CheckBox sexomasculinoField;
-    @Inject
-    private CheckBox formacaoprofissionalField;
+
     @Inject
     private CollectionLoader<PessoalTecnico> pessoalTecnicoesDl;
     @Inject
@@ -48,11 +47,14 @@ public class PessoalTecnicoBrowse extends StandardLookup<PessoalTecnico> {
     private CollectionContainer<Valencias> valenciasDc;
     @Inject
     private DataManager dataManager;
+    @Inject
+    protected UiComponents uiComponents;
+
+    @Inject
+    private Dialogs dialogs;
 
     @Subscribe
     protected void onInit(InitEvent event) {
-        text_sexo_masculino.setValue("Sexo Masculino: ");
-        text_formacao_profissional.setValue("Formação Profissional: ");
 
         List<Integer> list = new ArrayList<>();
         list.add(10);
@@ -71,17 +73,11 @@ public class PessoalTecnicoBrowse extends StandardLookup<PessoalTecnico> {
                 screenBuilders.editor(pessoalTecnicoesTable)
                         .newEntity()
                         .withInitializer(customer -> {
-                            if (categoria_profissional_id.getValue() != null)
-                            {
-                                customer.setCategoriaprofissional(categoria_profissional_id.getValue().toString());
-                            }
                             if (habilitacoes_literarias_id.getValue() != null)
                             {
                                 customer.setHabilitacoesliterarias(habilitacoes_literarias_id.getValue().toString());
                             }
                             customer.setIdValencia(idvalenciaField.getValue());
-                            customer.setSexomasculino(sexomasculinoField.getValue());
-                            customer.setFormacaoprofissional(formacaoprofissionalField.getValue());
                         })
                         .withScreenClass(PessoalTecnicoEdit.class)    // specific editor screen
                         .build()
@@ -113,34 +109,6 @@ public class PessoalTecnicoBrowse extends StandardLookup<PessoalTecnico> {
             pessoalTecnicoesDl.removeParameter("idValencia");
         }
 
-        // Sexo Masculino
-
-        if (sexomasculinoField.getValue())
-        {
-            pessoalTecnicoesDl.setParameter("sexomasculino",  true);
-        } else {
-            pessoalTecnicoesDl.removeParameter("sexomasculino");
-        }
-
-        // Formação Profissional
-
-        if (formacaoprofissionalField.getValue())
-        {
-            pessoalTecnicoesDl.setParameter("formacaoprofissional",  true);
-        }
-        else
-        {
-            pessoalTecnicoesDl.removeParameter("formacaoprofissional");
-        }
-
-        // Categoria Profissional
-
-        if (categoria_profissional_id.getValue() != null) {
-            pessoalTecnicoesDl.setParameter("categoriaprofissional",  categoria_profissional_id.getValue().toString());
-        } else {
-            pessoalTecnicoesDl.removeParameter("categoriaprofissional");
-        }
-
         // Habilitações Litetarias
 
         if (habilitacoes_literarias_id.getValue() != null) {
@@ -156,17 +124,9 @@ public class PessoalTecnicoBrowse extends StandardLookup<PessoalTecnico> {
     @Subscribe("reset_search_pessoal_tecnico")
     public void onReset_search_pessoal_tecnicoClick(Button.ClickEvent event) {
         idvalenciaField.setValue(null);
-        sexomasculinoField.setValue(false);
-        formacaoprofissionalField.setValue(false);
-        linhasPessoalTecnica.setValue(null);
-        categoria_profissional_id.setValue(null);
         habilitacoes_literarias_id.setValue(null);
-        pessoalTecnicoesDl.removeParameter("sexomasculino");
-        pessoalTecnicoesDl.removeParameter("formacaoprofissional");
         pessoalTecnicoesDl.removeParameter("idValencia");
-        pessoalTecnicoesDl.removeParameter("categoriaprofissional");
         pessoalTecnicoesDl.removeParameter("habilitacoesliterarias");
-        pessoalTecnicoesDl.setMaxResults(0);
         pessoalTecnicoesDl.load();
     }
 
@@ -174,18 +134,6 @@ public class PessoalTecnicoBrowse extends StandardLookup<PessoalTecnico> {
     protected void onAfterShow(AfterShowEvent event) {
 
         getWindow().setCaption("Listar Pessoal Técnico");
-        // Categoria Profissional
-        List<String> options = new ArrayList<>();
-        String queryString = "select o.categoriaprofissional as categoriaprofissional from cmolhao_PessoalTecnico o where o.categoriaprofissional is not null group by o.categoriaprofissional";
-        ValueLoadContext valueLoadContextontext = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString));
-        valueLoadContextontext.addProperty("categoriaprofissional");
-        List<KeyValueEntity> resultList = dataManager.loadValues(valueLoadContextontext);
-        for (KeyValueEntity entry : resultList) {
-            options.add(entry.getValue("categoriaprofissional"));
-        }
-        categoria_profissional_id.setOptionsList(options);
-
         // Habilitações Literarias
 
         List<String> list = new ArrayList<>();
@@ -198,17 +146,6 @@ public class PessoalTecnicoBrowse extends StandardLookup<PessoalTecnico> {
         list.add("Mestrado");
         habilitacoes_literarias_id.setOptionsList(list);
 
-        /*List<String> options_hab_literarias = new ArrayList<>();
-        String queryString_hab_literarias = "select o.habilitacoesliterarias as habilitacoesliterarias from cmolhao_PessoalAuxiliar o where o.habilitacoesliterarias is not null group by o.habilitacoesliterarias";
-        ValueLoadContext valueLoadContextontext__hab_literarias = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString_hab_literarias));
-        valueLoadContextontext__hab_literarias.addProperty("habilitacoesliterarias");
-        List<KeyValueEntity> resultList__hab_literaria = dataManager.loadValues(valueLoadContextontext__hab_literarias);
-        for (KeyValueEntity entry : resultList__hab_literaria) {
-            options_hab_literarias.add(entry.getValue("habilitacoesliterarias"));
-        }
-        habilitacoes_literarias_id.setOptionsList(options_hab_literarias);*/
-
 
         Map<String, Valencias> map = new HashMap<>();
         Collection<Valencias> customers = valenciasDc.getItems();
@@ -217,6 +154,48 @@ public class PessoalTecnicoBrowse extends StandardLookup<PessoalTecnico> {
         }
         idvalenciaField.setOptionsMap(map);
 
+
+    }
+
+    public Component generateValenciasDescricao(PessoalTecnico entity) {
+        Label label = (Label) uiComponents.create(Label.NAME);
+        if (entity.getIdValencia() != null)
+        {
+            label.setValue(entity.getIdValencia().getDescricaotecnica());
+            return label;
+        }
+        return null;
+    }
+
+    @Subscribe("pessoalTecnicoesTable.remove")
+    protected void onPessoalTecnicoesTableRemove(Action.ActionPerformedEvent event) {
+        pessoalTecnicoesTableRemove.setConfirmation(false);
+        if (pessoalTecnicoesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção do pessoal técnico")
+                    .withMessage("Deve seleccionar pelo um do pessoal técnico")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            PessoalTecnico user = pessoalTecnicoesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do pessoal técnico número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do pessoal técnico número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        pessoalTecnicoesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
 
     }
 }

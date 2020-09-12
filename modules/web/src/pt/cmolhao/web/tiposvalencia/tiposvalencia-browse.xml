@@ -11,6 +11,13 @@
             <loader id="tiposvalenciasDl">
                 <query>
                     <![CDATA[select e from cmolhao_Tiposvalencia e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.nome like :nome</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
@@ -32,16 +39,31 @@
                   width="100%">
 
             <scrollBox spacing="true">
-            <hbox spacing="true">
 
-                <lookupField id="linhasTiposValencias"
-                             caption="Mostrar Numero de Linhas"
-                             inputPrompt="(seleccione o numero de linhas)"
-                             icon="ARROWS_V"/>
+                <hbox spacing="true">
+                    <textField
+                            inputPrompt="(introduza o tipo de descricao da valencia)"
+                            id="descricaoField"
+                            property="nome"
+                            width="350px"
+                            icon="font-icon:FILE_TEXT_O" caption="Descrição: "/>
+                </hbox>
 
-            </hbox>
+                <hbox spacing="true">
+                    <button id="reset_tipos_valencia" icon="ERASER" caption="Limpar" />
+                    <button id="search_tipos_valencia" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+
             </scrollBox>
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasTiposValencias"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
         <table id="tiposvalenciasTable"
                width="100%"
                dataContainer="tiposvalenciasDc">

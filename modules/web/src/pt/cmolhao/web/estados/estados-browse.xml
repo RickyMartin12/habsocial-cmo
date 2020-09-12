@@ -14,7 +14,7 @@
                     <condition>
                         <and>
                             <c:jpql>
-                                <c:where>e.estadosProcessos = :estadosProcessos</c:where>
+                                <c:where>e.estadosProcessos like :estadosProcessos</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -22,16 +22,6 @@
             </loader>
         </collection>
 
-        <keyValueCollection id="estado_processos_apoio_id">
-            <properties>
-                <property name="estadosProcessos" datatype="string" />
-            </properties>
-            <loader id="estado_processos_apoio_id_loader">
-                <query>
-                    <![CDATA[select o.estadosProcessos as estadosProcessos from cmolhao_Estados o where o.estadosProcessos is not null group by o.estadosProcessos]]>
-                </query>
-            </loader>
-        </keyValueCollection>
 
 
 
@@ -47,16 +37,13 @@
                   width="100%">
             <scrollBox spacing="true">
                 <hbox spacing="true">
-                    <lookupField id="est_processos_apoio_id"
-                                 optionsContainer="estado_processos_apoio_id"
-                                 caption="Estado do Processo:"
-                                 inputPrompt="(seleccione os estados de processos)"
+                    <textField id="est_processos_apoio_id"
+                                 caption="Estado:"
+                                 inputPrompt="(Introduza o estado)"
+                                 property="estadosProcessos"
                                  icon="font-icon:REFRESH"
                     />
-                    <lookupField id="linhasEstados"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
+
 
                 </hbox>
 
@@ -66,6 +53,15 @@
                 </hbox>
             </scrollBox>
         </groupBox>
+
+
+        <hbox spacing="true">
+            <lookupField id="linhasEstados"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
         <table id="estadosesTable"
                width="100%"
                dataContainer="estadosesDc"
@@ -84,7 +80,7 @@
                 <action id="excel" type="excel"/>
             </actions>
             <columns>
-                <column id="estadosProcessos" caption="Estados de Processos"/>
+                <column id="estadosProcessos" caption="Estados de Apoio"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

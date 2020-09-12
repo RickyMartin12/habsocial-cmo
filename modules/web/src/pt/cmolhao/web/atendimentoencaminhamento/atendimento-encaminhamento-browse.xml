@@ -14,7 +14,7 @@
                     <condition>
                         <and>
                             <c:jpql>
-                                <c:where>e.atendimentoEncaminhamento = :atendimentoEncaminhamento</c:where>
+                                <c:where>e.atendimentoEncaminhamento like :atendimentoEncaminhamento</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -22,16 +22,7 @@
             </loader>
         </collection>
 
-        <keyValueCollection id="atendimentoEncaminhamento_id">
-            <properties>
-                <property name="atendimentoEncaminhamento" datatype="string" />
-            </properties>
-            <loader id="atendimentoEncaminhamento_id_loader">
-                <query>
-                    <![CDATA[select o.atendimentoEncaminhamento as atendimentoEncaminhamento from cmolhao_AtendimentoEncaminhamento o where o.atendimentoEncaminhamento is not null group by o.atendimentoEncaminhamento]]>
-                </query>
-            </loader>
-        </keyValueCollection>
+
 
 
 
@@ -49,20 +40,13 @@
 
             <scrollBox spacing="true">
                 <hbox spacing="true">
-
-                    <lookupField id="aten_enca_id"
-                                 optionsContainer="atendimentoEncaminhamento_id"
+                    <textField id="aten_enca_id"
                                  caption="Atendimento por Encaminhamento:"
+                                 width="370px"
+                                 property="atendimentoEncaminhamento"
                                  inputPrompt="(seleccione o atendimento por encaminhamento)"
                                  icon="font-icon:VOLUME_CONTROL_PHONE"
                     />
-
-                    <lookupField id="linhasAtendimentoEncaminhamento"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
-
-
                 </hbox>
                 <hbox spacing="true">
                     <button id="reset_atendimento_encaminhamento" icon="ERASER" caption="Limpar" />
@@ -70,6 +54,14 @@
                 </hbox>
             </scrollBox>
         </groupBox>
+
+
+        <hbox spacing="true">
+            <lookupField id="linhasAtendimentoEncaminhamento"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
 
 
 

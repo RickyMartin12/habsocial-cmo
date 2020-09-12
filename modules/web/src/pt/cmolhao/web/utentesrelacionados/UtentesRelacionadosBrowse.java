@@ -1,24 +1,23 @@
 package pt.cmolhao.web.utentesrelacionados;
 
-import com.haulmont.cuba.gui.Notifications;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.GroupTable;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.gui.screen.LookupComponent;
 import pt.cmolhao.entity.TipoRelacionamentoUtentes;
 import pt.cmolhao.entity.Utente;
 import pt.cmolhao.entity.UtentesRelacionados;
-import pt.cmolhao.entity.Valencias;
-import pt.cmolhao.web.utente.UtenteEdit;
 
 import javax.inject.Inject;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import javax.inject.Named;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 @UiController("cmolhao_UtentesRelacionados.browse")
 @UiDescriptor("utentes-relacionados-browse.xml")
@@ -43,8 +42,12 @@ public class UtentesRelacionadosBrowse extends StandardLookup<UtentesRelacionado
     protected CollectionContainer<Utente> utentesDc1;
     @Inject
     protected CollectionContainer<Utente> utentesDc2;
+    @Named("utentesRelacionadosesTable.remove")
+    protected RemoveAction<UtentesRelacionados> utentesRelacionadosesTableRemove;
     @Inject
     private ScreenBuilders screenBuilders;
+    @Inject
+    private Dialogs dialogs;
 
 
     @Subscribe
@@ -200,5 +203,36 @@ public class UtentesRelacionadosBrowse extends StandardLookup<UtentesRelacionado
             }
         }
         idUtenteRel1Field.setOptionsMap(map);
+    }
+
+    @Subscribe("utentesRelacionadosesTable.remove")
+    protected void onUtentesRelacionadosesTableRemove(Action.ActionPerformedEvent event) {
+        utentesRelacionadosesTableRemove.setConfirmation(false);
+        if (utentesRelacionadosesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção dos utentes relacionados")
+                    .withMessage("Deve seleccionar pelo um dos utentes relacionados")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            UtentesRelacionados user = utentesRelacionadosesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela dos utentes relacionados número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela dos utentes relacionados número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        utentesRelacionadosesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 }

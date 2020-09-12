@@ -75,38 +75,73 @@
                   width="100%">
 
             <scrollBox spacing="true">
+
                 <hbox spacing="true">
-                    <lookupField
-                            property="idUtenteRel1"
-                            id="idUtenteRel1Field"
-                            optionsContainer="utentesDc1"
-                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente 1: "
-                            inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+                    <grid spacing="true">
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <lookupPickerField
+                                        property="idUtenteRel1"
+                                        id="idUtenteRel1Field"
+                                        width="350px"
+                                        optionsContainer="utentesDc1"
+                                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente 1: "
+                                        inputPrompt="(Seleccione o utente)">
 
-                    <lookupField
-                            property="idUtenteRel2"
-                            id="idUtenteRel2Field"
-                            optionsContainer="utentesDc2"
-                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente 2: "
-                            inputPrompt="(Seleccione o nome e a identificação do utente)"/>
 
-                    <lookupField
-                            inputPrompt="(Seleccione o tipo de relacionamento dos utentes)"
-                            property="idTipoRelUtentes"
-                            id="idTipoRelUtentesField"
-                            optionsContainer="tipoRelacionamentoUtentesesDc"
-                            icon="font-icon:GROUP" caption="Tipo de Relacionamento dos Utentes: "/>
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+
+                                </lookupPickerField>
+
+                                <lookupPickerField
+                                        property="idUtenteRel2"
+                                        id="idUtenteRel2Field"
+                                        width="350px"
+                                        optionsContainer="utentesDc2"
+                                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente 2: "
+                                        inputPrompt="(Seleccione o utente)">
+
+
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+
+                                </lookupPickerField>
+
+                                <lookupPickerField
+                                        inputPrompt="(Seleccione o tipo de relacionamento de utentes)"
+                                        property="idTipoRelUtentes"
+                                        id="idTipoRelUtentesField"
+                                        width="420px"
+                                        optionsContainer="tipoRelacionamentoUtentesesDc"
+                                        icon="font-icon:GROUP" caption="Tipo de Relacionamento dos Utentes: ">
+
+
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+
+                                </lookupPickerField>
+                            </row>
+                        </rows>
+                    </grid>
 
                 </hbox>
 
-                <hbox spacing="true">
 
-                    <lookupField id="linhasUtentesRelacionados"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
-
-                </hbox>
 
 
                 <hbox spacing="true">
@@ -115,6 +150,15 @@
                 </hbox>
             </scrollBox>
         </groupBox>
+
+        <hbox spacing="true">
+
+            <lookupField id="linhasUtentesRelacionados"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+
+        </hbox>
 
 
         <groupTable id="utentesRelacionadosesTable"

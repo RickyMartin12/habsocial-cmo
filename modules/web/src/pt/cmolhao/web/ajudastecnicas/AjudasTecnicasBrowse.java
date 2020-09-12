@@ -1,18 +1,19 @@
 package pt.cmolhao.web.ajudastecnicas;
 
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.screen.LookupComponent;
 import pt.cmolhao.entity.AjudasTecnicas;
-import pt.cmolhao.entity.FotosValencia;
 import pt.cmolhao.entity.Valencias;
-import pt.cmolhao.web.fotosvalencia.FotosValenciaEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -28,6 +29,8 @@ import java.util.*;
 @LookupComponent("ajudasTecnicasesTable")
 @LoadDataBeforeShow
 public class AjudasTecnicasBrowse extends StandardLookup<AjudasTecnicas> {
+    @Named("ajudasTecnicasesTable.remove")
+    protected RemoveAction<AjudasTecnicas> ajudasTecnicasesTableRemove;
     @Inject
     private GroupTable<AjudasTecnicas> ajudasTecnicasesTable;
     @Inject
@@ -44,6 +47,9 @@ public class AjudasTecnicasBrowse extends StandardLookup<AjudasTecnicas> {
     private LookupField linhasAjudasTecnicas;
     @Inject
     private CollectionContainer<Valencias> valenciasDc;
+
+    @Inject
+    private Dialogs dialogs;
 
     public Component generateValenciasDescricao(AjudasTecnicas entity) {
         Label label = (Label) uiComponents.create(Label.NAME);
@@ -165,10 +171,8 @@ public class AjudasTecnicasBrowse extends StandardLookup<AjudasTecnicas> {
     public void onReset_search_ajudas_tecnicasClick(Button.ClickEvent event) {
         idvalenciaField.setValue(null);
         datadisponivelField.setValue(null);
-        linhasAjudasTecnicas.setValue(null);
         ajudasTecnicasesDl.removeParameter("datadisponivel");
         ajudasTecnicasesDl.removeParameter("idValencia");
-        ajudasTecnicasesDl.setMaxResults(0);
         ajudasTecnicasesDl.load();
     }
 
@@ -183,6 +187,37 @@ public class AjudasTecnicasBrowse extends StandardLookup<AjudasTecnicas> {
             ajudasTecnicasesDl.setMaxResults(0);
         }
         ajudasTecnicasesDl.load();
+    }
+
+    @Subscribe("ajudasTecnicasesTable.remove")
+    protected void onAjudasTecnicasesTableRemove(Action.ActionPerformedEvent event) {
+        ajudasTecnicasesTableRemove.setConfirmation(false);
+        if (ajudasTecnicasesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção de ajudas técnicas")
+                    .withMessage("Deve seleccionar pelo um das ajudas técnicas")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            AjudasTecnicas user = ajudasTecnicasesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela da ajuda técnica número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela da ajuda técnica número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        ajudasTecnicasesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 
 

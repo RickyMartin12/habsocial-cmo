@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.situacaoutente">
     <data>
         <instance id="situacaoUtenteDc"
@@ -35,32 +34,80 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="situacaoUtenteDc">
-            <column width="250px">
-                <textField id="idSituacaoUtenteField" property="id" visible="false" />
-                <lookupField
-                        property="idUtente"
-                        id="idUtenteField"
-                        optionsContainer="UtentesDC"
-                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
-                        inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+
+        <tabSheet>
+            <tab id="dados_utente"
+                 caption="Dados do Utente"
+                 icon="font-icon:ID_CARD_O"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_dados_utente" dataContainer="situacaoUtenteDc">
+                    <column width="800px">
+                        <lookupPickerField
+                                property="idUtente"
+                                id="idUtenteField"
+                                optionsContainer="UtentesDC"
+                                stylename="id_utente"
+                                icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                                width="300px"
+                                inputPrompt="(Seleccione o utente)">
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
 
 
-                <lookupField
-                        inputPrompt="(Seleccione o tipo de situação dos utentes)"
-                        property="idTiposSituacaoUtentes"
-                        id="idTiposSituacaoUtentesField"
-                        optionsContainer="tiposSituacoesUtentesesDc"
-                        icon="font-icon:REFRESH" caption="Tipo de Situação dos Utentes: "/>
+                        <lookupPickerField
+                                inputPrompt="(Seleccione o tipo de situação dos utentes)"
+                                property="idTiposSituacaoUtentes"
+                                id="idTiposSituacaoUtentesField"
+                                optionsContainer="tiposSituacoesUtentesesDc"
+                                stylename="id_tipo_situacao"
+                                icon="font-icon:REFRESH" caption="Tipo de Situação dos Utentes: ">
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
 
-                <dateField id="dataInicioField" property="dataInicio" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data de Inicio: " stylename="data_inicio_morador"/>
-                <dateField id="dataFimField" property="dataFim" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data de Fim: " stylename="data_fim_morador"/>
+                    </column>
 
-                <textArea rows="3" cols="8" id="obsGeraisField" property="obsGerais" caption="Observações Gerais: " icon="FILE_TEXT_O" />
-                <textArea rows="3" cols="8" id="obserConfField" property="obserConf" caption="Observações de Confiração: " icon="FILE_TEXT_O"/>
+                    <column width="200px">
+                        <textField id="idSituacaoUtenteField" property="id" visible="false" />
+                    </column>
+                </form>
 
-            </column>
-        </form>
+            </tab>
+            <tab id="datas_inicio_fim"
+                 caption="Datas de Inicio / Fim"
+                 icon="font-icon:CALENDAR"
+                 margin="true"
+                 spacing="true">
+                <form id="form_datas" dataContainer="situacaoUtenteDc">
+                    <column width="300px">
+                        <dateField id="dataInicioField" property="dataInicio" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data de Inicio: " stylename="data_inicio_morador"/>
+                    </column>
+                    <column width="300px">
+                        <dateField id="dataFimField" property="dataFim" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data de Fim: " stylename="data_fim_morador"/>
+                    </column>
+                </form>
+            </tab>
+            <tab id="obs"
+                 caption="Observações"
+                 icon="font-icon:FILE_TEXT_O"
+                 margin="true"
+                 spacing="true">
+                    <form id="form_obs" dataContainer="situacaoUtenteDc">
+                            <textArea rows="3" cols="60" id="obsGeraisField" property="obsGerais" caption="Observações Gerais: " icon="FILE_TEXT_O" />
+                            <textArea rows="3" cols="60" id="obserConfField" property="obserConf" caption="Observações de Confiração: " icon="FILE_TEXT_O"/>
+                    </form>
+            </tab>
+        </tabSheet>
+
+
+
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
             <button caption="Fechar" action="windowClose" icon="CLOSE"/>

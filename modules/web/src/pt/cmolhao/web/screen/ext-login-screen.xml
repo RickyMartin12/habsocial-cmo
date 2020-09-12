@@ -15,16 +15,21 @@
                   margin="true"
                   stylename="c-login-panel"
                   width="AUTO">
-                <hbox id="loginTitleBox"
-                      align="MIDDLE_CENTER"
-                      spacing="true"
-                      stylename="c-login-title">
+
+                <hbox stylename="position-logo">
                     <image id="logoImage"
                            align="MIDDLE_LEFT"
                            height="AUTO"
                            scaleMode="SCALE_DOWN"
                            stylename="c-login-icon"
                            width="AUTO"/>
+                </hbox>
+
+
+                <hbox id="loginTitleBox"
+                      align="MIDDLE_CENTER"
+                      spacing="true"
+                      stylename="c-login-title">
 
                     <label id="welcomeLabel"
                            align="MIDDLE_LEFT"
@@ -56,6 +61,9 @@
                                        stylename="c-login-password"
                                        caption="Password: "
                                        icon="font-icon:KEY"/>
+
+                        <!--<button id="showPasswordBtn" icon="font-icon:EYE" align="BOTTOM_LEFT"/>-->
+
                     </cssLayout>
                     <hbox id="rememberLocalesBox"
                           stylename="c-login-remember-locales">

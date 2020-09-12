@@ -18,15 +18,6 @@
                                 <c:where>i.id = :idValencia</c:where>
                             </c:jpql>
                             <c:jpql>
-                                <c:where>e.sexomasculino = :sexomasculino</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.formacaoprofissional = :formacaoprofissional</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.categoriaprofissional = :categoriaprofissional</c:where>
-                            </c:jpql>
-                            <c:jpql>
                                 <c:where>e.habilitacoesliterarias = :habilitacoesliterarias</c:where>
                             </c:jpql>
                         </and>
@@ -45,36 +36,6 @@
             </loader>
         </collection>
 
-        <!-- Categoria Profissional -->
-
-        <keyValueCollection id="categoria_profissional_pessoal_auxiliar_id">
-            <properties>
-                <property name="categoriaprofissional" datatype="string" />
-            </properties>
-            <loader id="categoria_profissional_pessoal_auxiliar_id_loader">
-                <query>
-                    <![CDATA[select o.categoriaprofissional as categoriaprofissional from cmolhao_PessoalAuxiliar o where o.categoriaprofissional is not null group by o.categoriaprofissional]]>
-                </query>
-            </loader>
-        </keyValueCollection>
-
-        <!-- Habilitacoes Literarias -->
-
-        <keyValueCollection id="habilitacoes_literarias_pessoal_auxiliar_id">
-            <properties>
-                <property name="habilitacoesliterarias" datatype="string" />
-            </properties>
-            <loader id="habilitacoes_literarias_pessoal_auxiliar_id_loader">
-                <query>
-                    <![CDATA[select o.habilitacoesliterarias as habilitacoesliterarias from cmolhao_PessoalAuxiliar o where o.habilitacoesliterarias is not null group by o.habilitacoesliterarias]]>
-                </query>
-            </loader>
-        </keyValueCollection>
-
-
-
-
-
     </data>
     <dialogMode height="600"
                 width="800"/>
@@ -87,60 +48,55 @@
                   icon="font-icon:FILTER"
                   width="100%">
             <scrollBox spacing="true">
-            <hbox spacing="true">
-                <lookupField id="idvalenciaField"
-                             property="idValencia"
-                             optionsContainer="valenciasDc"
-                             inputPrompt="(Seleccione a Descrição da Valência)"
-                             caption="Descrição técnica da valência: "
-                             icon="SIMPLYBUILT"/>
 
-                <lookupField id="categoria_profissional_id"
-                             optionsContainer="categoria_profissional_pessoal_auxiliar_id"
-                             caption="Categoria Profissional:"
-                             inputPrompt="(seleccione as categorias profissionais criadas)"
-                             icon="font-icon:ADDRESS_BOOK"
-                />
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                        <rows>
+                            <row>
+                                <lookupPickerField id="idvalenciaField"
+                                                   property="idValencia"
+                                                   optionsContainer="valenciasDc"
+                                                   inputPrompt="(Seleccione a Valência)"
+                                                   width="700px"
+                                                   caption="Descrição técnica da valência: "
+                                                   icon="SIMPLYBUILT">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
 
-                <!--<lookupField id="habilitacoes_literarias_id"
-                             optionsContainer="habilitacoes_literarias_pessoal_auxiliar_id"
-                             caption="Habilitações Literárias:"
-                             inputPrompt="(seleccione as habilitações literarias criadas)"
-                             icon="font-icon:UNIVERSITY"
-                />-->
+                                <lookupField id="habilitacoes_literarias_id"
+                                             caption="Habilitações Literárias:"
+                                             property="habilitacoesliterarias"
+                                             inputPrompt="(seleccione as habilitações literarias)"
+                                             width="350px"
+                                             icon="font-icon:UNIVERSITY"
+                                />
+                            </row>
+                        </rows>
+                </grid>
 
-                <lookupField id="habilitacoes_literarias_id"
-                             caption="Habilitações Literárias:"
-                             inputPrompt="(seleccione as habilitações literarias criadas)"
-                             icon="font-icon:UNIVERSITY"
-                />
-
-
-
-            </hbox>
-            <hbox spacing="true">
-                <label id="text_sexo_masculino" icon="font-icon:USER_O" />
-                <checkBox id="sexomasculinoField" property="sexomasculino" />
-
-
-                <label id="text_formacao_profissional" icon="GRADUATION_CAP"/>
-                <checkBox id="formacaoprofissionalField" property="formacaoprofissional" />
-
-
-
-                <lookupField id="linhasPessoalAuxiliar"
-                             caption="Mostrar Numero de Linhas"
-                             inputPrompt="(seleccione o numero de linhas)"
-                             icon="ARROWS_V"/>
-
-            </hbox>
             <hbox spacing="true">
                 <button id="search_pssoal_auxiliar" caption="Pesquisar" icon="SEARCH" stylename="info" />
                 <button id="reset_search_pssoal_auxiliar" icon="ERASER" caption="Limpar" />
             </hbox>
             </scrollBox>
-
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasPessoalAuxiliar"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
         <groupTable id="pessoalAuxiliarsTable"
                     width="100%"
                     dataContainer="pessoalAuxiliarsDc"
@@ -159,13 +115,18 @@
                 <action id="excel" type="excel" />
             </actions>
             <columns>
+
+                <column id="idValencia" caption="Descrição da Valência" generator="generateValenciasDescricao"/>
+                <column id="habilitacoesliterarias" caption="Habilitações Literarias"/>
+                <column id="sexomasculino" caption="Sexo Masculino"/>
+                <column id="formacaoprofissional" caption="Formação Profissional"/>
+
                 <column id="anosservicoinstituicao" caption="Anos de Serviço da Instituição"/>
                 <column id="categoriaprofissional" caption="Categoria Profissional"/>
-                <column id="formacaoprofissional" caption="Formação Profissional"/>
-                <column id="habilitacoesliterarias" caption="Habilitações Literarias"/>
-                <column id="idValencia" caption="Descrição da Valência"/>
+
+
                 <column id="idade" caption="Idade"/>
-                <column id="sexomasculino" caption="Sexo Masculino"/>
+
                 <column id="tipovinculo" caption="Tipo Vinculo"/>
             </columns>
             <rowsCount/>

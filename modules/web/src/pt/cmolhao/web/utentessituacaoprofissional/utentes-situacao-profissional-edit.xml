@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.utentessituacaoprofissional">
     <data>
         <instance id="utentesSituacaoProfissionalDc"
@@ -25,25 +24,59 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="utentesSituacaoProfissionalDc">
-            <column width="250px">
-                <textField id="idUtentesSituacaoProfissionalField" property="id" visible="false" />
-                <dateField id="dataSituacaoProfissionalField" property="dataSituacaoProfissional" caption="Data da Situação Profissional: "
-                           icon="font-icon:CALENDAR"/>
-                <lookupField
-                        property="situacaoProfissional"
-                        id="situacaoProfissionalField"
-                        icon="font-icon:USER_MD"
-                        caption="Situação Profissional:"
-                        inputPrompt="(Selecção a situação profissional)" />
-                <lookupField
-                        property="utente"
-                        id="utenteField"
-                        optionsContainer="UtentesDC"
-                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
-                        inputPrompt="(Seleccione o nome e a identificação do utente)"/>
-            </column>
-        </form>
+
+
+        <tabSheet>
+            <tab id="dados_utente"
+                 caption="Utente"
+                 icon="font-icon:USER"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_dados_utente" dataContainer="utentesSituacaoProfissionalDc">
+                    <column width="400px">
+                        <lookupPickerField
+                                property="utente"
+                                id="utenteField"
+                                optionsContainer="UtentesDC"
+                                icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                                inputPrompt="(Seleccione o nome e a identificação do utente)">
+
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+                    </column>
+                    <column width="400px">
+                        <textField id="idUtentesSituacaoProfissionalField" property="id" visible="false" />
+                    </column>
+                </form>
+
+            </tab>
+            <tab id="situacao_profissional"
+                 caption="Situação Profissional"
+                 icon="font-icon:USER_MD"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_situacao_profissional" dataContainer="utentesSituacaoProfissionalDc">
+                       <column width="150px">
+                           <dateField id="dataSituacaoProfissionalField" stylename="data_situacao_profissional_edit" property="dataSituacaoProfissional" caption="Data Situação Profissional: "
+                                      icon="font-icon:CALENDAR"/>
+                       </column>
+                        <column width="600px">
+                            <lookupField
+                                    property="situacaoProfissional"
+                                    id="situacaoProfissionalField"
+                                    stylename="situacao_profissional_edit"
+                                    icon="font-icon:USER_MD"
+                                    caption="Situação Profissional:"
+                                    inputPrompt="(Selecção a situação profissional)" />
+                        </column>
+                </form>
+            </tab>
+        </tabSheet>
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
             <button action="windowClose" caption="Fechar" icon="CLOSE"/>

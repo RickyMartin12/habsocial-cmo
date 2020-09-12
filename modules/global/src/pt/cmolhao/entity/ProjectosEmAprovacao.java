@@ -1,6 +1,8 @@
 package pt.cmolhao.entity;
 
 import com.haulmont.cuba.core.entity.BaseIntegerIdEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
+import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.core.global.DesignSupport;
 
 import javax.persistence.*;
@@ -15,9 +17,14 @@ public class ProjectosEmAprovacao extends BaseIntegerIdEntity {
     private static final long serialVersionUID = 766498386604972900L;
     @Column(name = "etapaprocesso", length = 45)
     protected String etapaprocesso;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idprojectosintervencao")
     protected ProjectosIntervencao idprojectosintervencao;
+
+
+
     @Column(name = "tipologia", length = 45)
     protected String tipologia;
 

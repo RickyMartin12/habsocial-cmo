@@ -1,8 +1,9 @@
 package pt.cmolhao.web.projectosemaprovacao;
 
-import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
@@ -10,10 +11,9 @@ import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.screen.LookupComponent;
 import pt.cmolhao.entity.ProjectosEmAprovacao;
 import pt.cmolhao.entity.ProjectosIntervencao;
-import pt.cmolhao.entity.Valencias;
-import pt.cmolhao.web.pessoalauxiliar.PessoalAuxiliarEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.*;
 
 @UiController("cmolhao_ProjectosEmAprovacao.browse")
@@ -26,6 +26,8 @@ public class ProjectosEmAprovacaoBrowse extends StandardLookup<ProjectosEmAprova
 
     @Inject
     protected UiComponents uiComponents;
+    @Named("projectosEmAprovacaosTable.remove")
+    protected RemoveAction<ProjectosEmAprovacao> projectosEmAprovacaosTableRemove;
     @Inject
     private CollectionContainer<ProjectosIntervencao> projectosIntervencaosDc;
     @Inject
@@ -41,11 +43,14 @@ public class ProjectosEmAprovacaoBrowse extends StandardLookup<ProjectosEmAprova
     @Inject
     private ScreenBuilders screenBuilders;
 
+    @Inject
+    private Dialogs dialogs;
+
     public Component projectosEmIntervencaoInstituição(ProjectosEmAprovacao entity) {
         Label label = (Label) uiComponents.create(Label.NAME);
         if (entity.getIdprojectosintervencao() != null)
         {
-            label.setValue("Projecto de Intervenção: " + entity.getIdprojectosintervencao().getId() + " - " + entity.getIdprojectosintervencao().getIdinstituicao().getDescricao());
+            label.setValue("Projecto: " + entity.getIdprojectosintervencao().getId() + " - " + entity.getIdprojectosintervencao().getIdinstituicao().getDescricao());
             return label;
         }
         return null;
@@ -101,9 +106,9 @@ public class ProjectosEmAprovacaoBrowse extends StandardLookup<ProjectosEmAprova
                     if (item.getProjectosemaprovacao().equals(true))
                     {
                         if (item.getIdinstituicao() != null) {
-                            map.put("Projecto de Intervenção: " + item.getId() + " - " + item.getIdinstituicao().getDescricao(), item);
+                            map.put("Projecto: " + item.getId() + " - " + item.getIdinstituicao().getDescricao(), item);
                         } else {
-                            map.put("Projecto de Intervenção: " + item.getId().toString(), item);
+                            map.put("Projecto: " + item.getId().toString(), item);
                         }
                     }
 
@@ -140,10 +145,8 @@ public class ProjectosEmAprovacaoBrowse extends StandardLookup<ProjectosEmAprova
     public void onReset_search_projectos_em_aprovacaoClick(Button.ClickEvent event) {
         etapaprocessoField.setValue(null);
         idprojectosintervencaoField.setValue(null);
-        linhasProjectosEmAprovacao.setValue(null);
         projectosEmAprovacaosDl.removeParameter("etapaprocesso");
         projectosEmAprovacaosDl.removeParameter("idprojectosintervencao");
-        projectosEmAprovacaosDl.setMaxResults(0);
         projectosEmAprovacaosDl.load();
     }
 
@@ -158,5 +161,37 @@ public class ProjectosEmAprovacaoBrowse extends StandardLookup<ProjectosEmAprova
             projectosEmAprovacaosDl.setMaxResults(0);
         }
         projectosEmAprovacaosDl.load();
+    }
+
+    @Subscribe("projectosEmAprovacaosTable.remove")
+    protected void onProjectosEmAprovacaosTableRemove(Action.ActionPerformedEvent event) {
+        projectosEmAprovacaosTableRemove.setConfirmation(false);
+        if (projectosEmAprovacaosTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção de projectos em aprovação")
+                    .withMessage("Deve seleccionar pelo um dos projectos em aprovação")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            ProjectosEmAprovacao user = projectosEmAprovacaosTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do projecto em aprovação número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do projecto em aprovação número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        projectosEmAprovacaosTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
+
     }
 }

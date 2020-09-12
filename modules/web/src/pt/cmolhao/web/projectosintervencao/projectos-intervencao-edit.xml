@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.projectosintervencao">
     <data>
         <instance id="projectosIntervencaoDc"
                   class="pt.cmolhao.entity.ProjectosIntervencao"
                   view="projectosIntervencao-view">
             <loader/>
+            <collection id="projectosEmAprovacaosDc" property="projectosEmAprovacaos" />
         </instance>
 
         <collection id="InstituicaoDc"
@@ -26,50 +26,199 @@
                 width="800"/>
     <layout expand="scrollBox" spacing="true">
         <scrollBox id="scrollBox" spacing="true">
-            <form id="form" dataContainer="projectosIntervencaoDc">
-                <column width="250px">
-                    <textField id="idProjectosIntervencaoField" property="id" visible="false" />
-                    <checkBox id="adultosField" property="adultos" caption="Adultos: " icon="MALE"/>
-                    <checkBox id="comunidadeField" property="comunidade" caption="Comunidade: " icon="GROUP"/>
-                    <checkBox id="criancasField" property="criancas" caption="Crianças: " icon="CHILD"/>
-                    <checkBox id="deficientesField" property="deficientes" caption="Deficientes: " icon="WHEELCHAIR"/>
-                    <checkBox id="deficientesapoiodomiciliarioField" property="deficientesapoiodomiciliario"
-                              caption="Deficientes de Apoio Domiciliário: " icon="HOME"/>
-                    <checkBox id="deficientescaoField" property="deficientescao"
-                              caption="Categoria dos deficientes: " icon="WHEELCHAIR_ALT"/>
-                    <checkBox id="deficienteslarresidencialField" property="deficienteslarresidencial"
-                              icon="HOME" caption="Deficientes de Lares Residencial: "/>
-                    <lookupField property="idinstituicao" id="idinstituicaoField" optionsContainer="InstituicaoDc"
-                                 caption="Designação da Instituição da valencia:"
-                                 inputPrompt="(Seleccione a designação da instituição da valência)"
-                                 required="true"
-                                 requiredMessage="Preenche a Descrição da Instituição"
-                                 icon="font-icon:BUILDING"/>
-                    <checkBox id="idososField" property="idosos" icon="BLIND" caption="Idosos: "/>
-                    <checkBox id="idososapoiodomiciliarioField" property="idososapoiodomiciliario"
-                              icon="HOME" caption="Idosos de Apoio Domiciliario: "/>
-                    <checkBox id="idososcatField" property="idososcat"  icon="BLIND" caption="Categoria dos Idosos: "/>
-                    <checkBox id="idososcentrodiaField" property="idososcentrodia"
-                              caption="Idosos de Centros do Dia: " icon="HOME"/>
-                    <checkBox id="idososlarField" property="idososlar"
-                              caption="Lares de Idosos: " icon="HOME"/>
-                    <checkBox id="idosospequenolarField" property="idosospequenolar"
-                              caption="Idosos de Pequeno Lar: " icon="HOME" />
-                    <checkBox id="jovensField" property="jovens" caption="Jovens: " icon="CHILD"/>
-                    <checkBox id="jovensatlField" property="jovensatl"
-                              caption="Jovens de ATL: " icon="INSTITUTION"/>
-                    <checkBox id="jovenscatField" property="jovenscat" caption="Categoria de Jovens: " icon="CHILD"/>
-                    <checkBox id="jovenscrecheField" property="jovenscreche" caption="Jovens de Creche: " icon="font-icon:INSTITUTION"/>
-                    <checkBox id="jovensjardiminfanciaField" property="jovensjardiminfancia"
-                              caption="Jovens de Jardim de Infância: " icon="ENVIRA"/>
-                    <textField id="outrosgruposField" property="outrosgrupos"
-                               caption="Outros Grupos: " icon="OBJECT_GROUP"/>
-                    <checkBox id="pretendealargarservicosField" property="pretendealargarservicos"
-                              icon="COGS" caption="Pretende Serviços do Algarve: "/>
-                    <checkBox id="projectosemaprovacaoField" property="projectosemaprovacao"
-                              icon="PASTE" caption="Projectos Em Aprovacao: "/>
-                </column>
-            </form>
+
+
+
+                <tabSheet>
+                    <tab id="dados_projecto"
+                         caption="Dados do Projecto"
+                         icon="font-icon:PASTE"
+                         margin="true"
+                         spacing="true">
+                        <form id="form_dados_dados_projecto" dataContainer="projectosIntervencaoDc">
+                            <column width="400px">
+                                <lookupPickerField property="idinstituicao" id="idinstituicaoField" optionsContainer="InstituicaoDc"
+                                             caption="Designação da Instituição:"
+                                             inputPrompt="(Seleccione a instituição)"
+                                             required="true"
+                                              colspan="2"
+                                                   width="820px"
+                                                   stylename="id_instituicao_projectos_int"
+                                             requiredMessage="Preenche a Instituição"
+                                             icon="font-icon:BUILDING">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+                                <textField id="nomeProjectoField" property="nomeProjecto" caption="Nome do Projecto: "
+                                           stylename="nome_projecto_projectos_int"
+                                           icon="font-icon:ID_CARD_O" />
+                                <textField id="idProjectosIntervencaoField" property="id" visible="false" />
+                                <textArea rows="3" cols="50" colspan="2" id="descricaoProjectoField"
+                                          stylename="descricao_projecto_int_edit"
+                                          property="descricaoProjecto" caption="Descrição do Projecto: "
+                                          icon="font-icon:FILE_TEXT_O" />
+                            </column>
+                            <column width="500px">
+                                <checkBox id="projectosemaprovacaoField" property="projectosemaprovacao"
+                                          stylename="projecto_apro_int_edit"
+                                          icon="PASTE" caption="Projecto Aprovado: "/>
+
+                            </column>
+                        </form>
+                    </tab>
+
+                    <tab id="adultos_deficientes"
+                         caption="Adultos e Deficiêntes"
+                         icon="font-icon:MALE"
+                         margin="true"
+                         spacing="true">
+
+                        <form id="form_adultos_deficientes" dataContainer="projectosIntervencaoDc">
+                            <column width="300px">
+                                <checkBox id="deficientesField" property="deficientes" caption="Deficientes: " icon="WHEELCHAIR"
+                                          stylename="deficientes_projectos_int_edit"/>
+                                <checkBox id="deficientescaoField" property="deficientescao"
+                                          stylename="deficientes_cat_projectos_int_edit"
+                                          caption="Categoria dos deficientes: " icon="WHEELCHAIR_ALT"/>
+                                <checkBox id="adultosField" property="adultos"
+                                          stylename="adultos_proj_int_edit"
+                                          caption="Adultos: " icon="MALE"/>
+
+                            </column>
+                            <column width="300px">
+                                <checkBox id="deficientesapoiodomiciliarioField"
+                                          stylename="deficientes_apoio_proj_int_edit"
+                                          property="deficientesapoiodomiciliario"
+                                          caption="Deficientes de Apoio Domiciliário: " icon="HOME"/>
+                                <checkBox id="deficienteslarresidencialField"
+                                          stylename="deficientes_lares_proj_int_edit"
+                                          property="deficienteslarresidencial"
+                                          icon="HOME" caption="Deficientes de Lares Residencial: "/>
+                            </column>
+                        </form>
+
+                    </tab>
+
+                    <tab id="criancas_jovens"
+                         caption="Crianças e Jovens"
+                         icon="font-icon:MALE"
+                         margin="true"
+                         spacing="true">
+
+                        <form id="form_criancas_jovens" dataContainer="projectosIntervencaoDc">
+                            <column width="300px">
+                                <checkBox id="criancasField" property="criancas"
+                                          stylename="criancas_proj_int_edit"
+                                          caption="Crianças: " icon="CHILD"/>
+                                <checkBox id="jovensatlField" property="jovensatl"
+                                          stylename="jovens_atl_proj_int_edit"
+                                          caption="Jovens de ATL: " icon="INSTITUTION"/>
+                                <checkBox id="jovenscrecheField" property="jovenscreche"
+                                          stylename="jovens_creche_proj_int_edit"
+                                          caption="Jovens de Creche: " icon="font-icon:INSTITUTION"/>
+                            </column>
+                            <column width="300px">
+                                <checkBox id="jovensField"
+                                          stylename="jovens_proj_int_edit"
+                                          property="jovens" caption="Jovens: " icon="CHILD"/>
+                                <checkBox id="jovenscatField"
+                                          stylename="jovens_cat_proj_int_edit"
+                                          property="jovenscat" caption="Categoria de Jovens: " icon="CHILD"/>
+                                <checkBox id="jovensjardiminfanciaField"
+                                          stylename="jovens_jardim_infancia_proj_int_edit"
+                                          property="jovensjardiminfancia"
+                                          caption="Jovens de Jardim: " icon="ENVIRA"/>
+                            </column>
+                        </form>
+
+                    </tab>
+
+                    <tab id="idosos"
+                         caption="Idosos"
+                         icon="font-icon:BLIND"
+                         margin="true"
+                         spacing="true">
+
+                        <form id="form_idosos" dataContainer="projectosIntervencaoDc">
+
+                            <column width="300px">
+                                <checkBox id="idososField"
+                                          stylename="idosos_proj_int_edit"
+                                          property="idosos" icon="BLIND" caption="Idosos: "/>
+                                <checkBox id="idososapoiodomiciliarioField" property="idososapoiodomiciliario"
+                                          stylename="idosos_apoio_proj_int_edit"
+                                          icon="HOME" caption="Idosos de Apoio Domiciliario: "/>
+                                <checkBox id="idososcatField"
+                                          stylename="idosos_cat_proj_int_edit"
+                                          property="idososcat"  icon="BLIND" caption="Categoria dos Idosos: "/>
+                            </column>
+                            <column width="300px">
+                                <checkBox id="idososcentrodiaField" property="idososcentrodia"
+                                          stylename="idosos_centros_dia_proj_int_edit"
+                                          caption="Idosos de Centros do Dia: " icon="HOME"/>
+                                <checkBox id="idososlarField" property="idososlar"
+                                          stylename="lares_idosos_proj_int_edit"
+                                          caption="Lares de Idosos: " icon="HOME"/>
+                                <checkBox id="idosospequenolarField" property="idosospequenolar"
+                                          stylename="idosos_pequeno_lar_proj_int_edit"
+                                          caption="Idosos de Pequeno Lar: " icon="HOME" />
+                            </column>
+                        </form>
+
+                    </tab>
+
+                    <tab id="outros_servicos"
+                         caption="Outros Serviços"
+                         icon="font-icon:PASTE"
+                         margin="true"
+                         spacing="true">
+                        <form id="form" dataContainer="projectosIntervencaoDc">
+                            <column width="300px">
+                                <textField id="outrosgruposField" property="outrosgrupos"
+                                           caption="Outros Grupos: " icon="font-icon:CHECK"/>
+                                <checkBox id="pretendealargarservicosField" property="pretendealargarservicos"
+                                          icon="COGS" caption="Pretende Serviços do Algarve: "/>
+                            </column>
+                            <column width="300px">
+                                <checkBox id="comunidadeField" property="comunidade" caption="Comunidade: " icon="GROUP"/>
+                            </column>
+                        </form>
+                    </tab>
+                </tabSheet>
+                <tabSheet>
+                    <tab id="projectos_aprovacao"
+                         caption="Projectos em Aprovação"
+                         icon="font-icon:PASTE"
+                         margin="true"
+                         spacing="true">
+
+                        <groupBox id="projectosEmAprovacaosBox" caption="Projectos em Aprovação">
+                            <table id="projectosEmAprovacaosTable" dataContainer="projectosEmAprovacaosDc" width="100%" height="300px"
+                                   emptyStateMessage="Não Existe Dados na Tabela"
+                                   emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                                <actions>
+                                    <action id="create" type="create"/>
+                                    <action id="edit" type="edit"/>
+                                    <action id="remove" type="remove"/>
+                                </actions>
+                                <columns>
+                                    <column id="idprojectosintervencao" generator="projectosEmIntervencaoInstituição" caption="Projecto de Intervenção Aprovado"/>
+                                    <column id="etapaprocesso" caption="Etapa de Processo" />
+                                    <column id="tipologia" caption="Tipologia" />
+                                </columns>
+                                <buttonsPanel>
+                                    <button action="projectosEmAprovacaosTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                    <button action="projectosEmAprovacaosTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                    <button action="projectosEmAprovacaosTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                                </buttonsPanel>
+                            </table>
+                        </groupBox>
+
+                    </tab>
+                </tabSheet>
+
         </scrollBox>
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>

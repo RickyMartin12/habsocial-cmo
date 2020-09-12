@@ -23,16 +23,6 @@
         </collection>
 
 
-        <keyValueCollection id="descricao_grau_escolaridade_id">
-            <properties>
-                <property name="descricao" datatype="string" />
-            </properties>
-            <loader id="descricao_grau_escolaridade_id_loader">
-                <query>
-                    <![CDATA[select o.descricao as descricao from cmolhao_GrauEscolaridade o where o.descricao is not null group by o.descricao]]>
-                </query>
-            </loader>
-        </keyValueCollection>
 
 
     </data>
@@ -49,15 +39,13 @@
             <scrollBox spacing="true">
                 <hbox spacing="true">
                     <lookupField id="desc_grau_escolaridade_id"
-                                 optionsContainer="descricao_grau_escolaridade_id"
                                  caption="Grau de Escolaridade:"
+                                 property="descricao"
+                                 width="280px"
                                  inputPrompt="(seleccione a descrição do grau de escolaridade)"
                                  icon="font-icon:UNIVERSITY"
                     />
-                    <lookupField id="linhasGrauEscolraidade"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
+
 
                 </hbox>
 
@@ -68,6 +56,15 @@
             </scrollBox>
 
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasGrauEscolraidade"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
         <table id="grauEscolaridadesTable"
                width="100%"
                dataContainer="grauEscolaridadesDc"

@@ -3,8 +3,10 @@ package pt.cmolhao.web.blocoshabitacaosocial;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.ValueLoadContext;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
@@ -14,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import pt.cmolhao.entity.BlocosHabitacaoSocial;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,14 +31,15 @@ import java.util.List;
 @LoadDataBeforeShow
 
 public class BlocosHabitacaoSocialBrowse extends StandardLookup<BlocosHabitacaoSocial> {
+    @Named("blocosHabitacaoSocialsTable.remove")
+    protected RemoveAction<BlocosHabitacaoSocial> blocosHabitacaoSocialsTableRemove;
+    @Inject
+    protected TextField<String> bloco_hab_designacao_text;
     @Inject
     private CollectionLoader<BlocosHabitacaoSocial> blocosHabitacaoSocialsDl;
-    //@Inject
-    //private DateField<Date> anoDeConstrucaoField;
     @Inject
     private Notifications notifications;
-    @Inject
-    private LookupField bloco_hab_designacao_text;
+
 
     @Inject
     private DataManager dataManager;
@@ -47,6 +51,8 @@ public class BlocosHabitacaoSocialBrowse extends StandardLookup<BlocosHabitacaoS
     private Table<BlocosHabitacaoSocial> blocosHabitacaoSocialsTable;
     @Inject
     private ScreenBuilders screenBuilders;
+    @Inject
+    private Dialogs dialogs;
 
     public static boolean isNumeric(String str) {
         return str != null && str.matches("[-+]?\\d*\\.?\\d+");
@@ -120,20 +126,6 @@ public class BlocosHabitacaoSocialBrowse extends StandardLookup<BlocosHabitacaoS
 
         getWindow().setCaption("Listar Blocos de Habitação Social");
 
-        // Bl - Bloco
-        List<String> options_designacao_bloco_hab_social = new ArrayList<>();
-        String queryString_hab_social_designacao = "select o.designacao as designacao from cmolhao_BlocosHabitacaoSocial o where o.designacao is not null group by o.designacao";
-        ValueLoadContext valueLoadContextontext_hab_social_designacao = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString_hab_social_designacao));
-        valueLoadContextontext_hab_social_designacao.addProperty("designacao");
-        List<KeyValueEntity> resultList_hab_social_designacao = dataManager.loadValues(valueLoadContextontext_hab_social_designacao);
-
-        for(KeyValueEntity entry : resultList_hab_social_designacao){
-            options_designacao_bloco_hab_social.add(entry.getValue("designacao"));
-        }
-
-        bloco_hab_designacao_text.setOptionsList(options_designacao_bloco_hab_social);
-
 
     }
 
@@ -152,7 +144,7 @@ public class BlocosHabitacaoSocialBrowse extends StandardLookup<BlocosHabitacaoS
 
         // Designação da Morada do Bloco de Habitação Social
         if (bloco_hab_designacao_text.getValue() != null) {
-            blocosHabitacaoSocialsDl.setParameter("designacao",  bloco_hab_designacao_text.getValue().toString());
+            blocosHabitacaoSocialsDl.setParameter("designacao",  "(?i)%" + bloco_hab_designacao_text.getValue() + "%");
         } else {
             blocosHabitacaoSocialsDl.removeParameter("designacao");
         }
@@ -183,10 +175,8 @@ public class BlocosHabitacaoSocialBrowse extends StandardLookup<BlocosHabitacaoS
     public void onReset_search_blocos_hab_socialClick(Button.ClickEvent event) {
         anoCons.setValue(null);
         bloco_hab_designacao_text.setValue(null);
-        linhasHabSocial.setValue(null);
         blocosHabitacaoSocialsDl.removeParameter("designacao");
         blocosHabitacaoSocialsDl.removeParameter("anoCons");
-        blocosHabitacaoSocialsDl.setMaxResults(0);
         blocosHabitacaoSocialsDl.load();
     }
 
@@ -201,6 +191,37 @@ public class BlocosHabitacaoSocialBrowse extends StandardLookup<BlocosHabitacaoS
             blocosHabitacaoSocialsDl.setMaxResults(0);
         }
         blocosHabitacaoSocialsDl.load();
+    }
+
+    @Subscribe("blocosHabitacaoSocialsTable.remove")
+    protected void onBlocosHabitacaoSocialsTableRemove(Action.ActionPerformedEvent event) {
+        blocosHabitacaoSocialsTableRemove.setConfirmation(false);
+        if (blocosHabitacaoSocialsTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção da instituições")
+                    .withMessage("Deve seleccionar pelo uma das instituições")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            BlocosHabitacaoSocial user = blocosHabitacaoSocialsTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do bloco de habitação social número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do bloco de habitação social número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        blocosHabitacaoSocialsTableRemove.execute();
+                                    }), // execute action
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 
 

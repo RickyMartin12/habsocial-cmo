@@ -18,65 +18,10 @@
                                 <c:where>i.id = :idinstituicao</c:where>
                             </c:jpql>
                             <c:jpql>
-                                <c:where>e.pretendealargarservicos = :pretendealargarservicos</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.criancas = :criancas</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.jovens = :jovens</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.adultos = :adultos</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.idosos = :idosos</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.comunidade = :comunidade</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.deficientes = :deficientes</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.idososlar = :idososlar</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.idosospequenolar = :idosospequenolar</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.idososcentrodia = :idososcentrodia</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.idososcat = :idososcat</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.idososapoiodomiciliario = :idososapoiodomiciliario</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.jovensjardiminfancia = :jovensjardiminfancia</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.jovenscreche = :jovenscreche</c:where>
-                            </c:jpql>
-
-                            <c:jpql>
-                                <c:where>e.jovensatl = :jovensatl</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.jovenscat = :jovenscat</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.deficientescao = :deficientescao</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.deficienteslarresidencial = :deficienteslarresidencial</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.deficientesapoiodomiciliario = :deficientesapoiodomiciliario</c:where>
-                            </c:jpql>
-                            <c:jpql>
                                 <c:where>e.projectosemaprovacao = :projectosemaprovacao</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.nomeProjecto like :nomeProjecto</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -109,94 +54,45 @@
                   width="100%">
 
             <scrollBox spacing="true">
-            <hbox spacing="true">
-
-                <lookupField
-                    inputPrompt="(Seleccione a designação da instituição da valência)"
-                    property="idinstituicao"
-                    id="idinstituicaoField"
-                    optionsContainer="InstituicaoDc"
-                    icon="font-icon:BUILDING" caption="Designação da Instituição da valencia: "/>
-
-                <lookupField id="linhasProjectosIntervencao"
-                             caption="Mostrar Numero de Linhas"
-                             inputPrompt="(seleccione o numero de linhas)"
-                             icon="ARROWS_V"/>
-
-            </hbox>
-            <hbox spacing="true">
-
-                <label id="text_pretende_algarga_servicos" icon="font-icon:COGS" />
-                <checkBox id="pretendealargarservicosField" property="pretendealargarservicos" />
-
-                <label id="text_criancas" icon="CHILD" />
-                <checkBox id="criancasField" property="criancas" />
-
-                <label id="text_jovens" icon="CHILD" />
-                <checkBox id="jovensField" property="jovens" />
-
-                <label id="text_adultos" icon="MALE" />
-                <checkBox id="adultosField" property="adultos" />
-
-                <label id="text_idosos" icon="BLIND" />
-                <checkBox id="idososField" property="idosos" />
-
-                <label id="text_comunidade" icon="GROUP" />
-                <checkBox id="comunidadeField" property="comunidade" />
-
-                <label id="text_deficientes" icon="WHEELCHAIR" />
-                <checkBox id="deficientesField" property="deficientes" />
-
-                <label id="text_idososlar" icon="INSTITUTION" />
-                <checkBox id="idososlarField" property="idososlar" />
-
-            </hbox>
 
             <hbox spacing="true">
 
-                <label id="text_idosospequenolar" icon="HOME" />
-                <checkBox id="idosospequenolarField" property="idosospequenolar" />
+                <grid spacing="true"
+                      width="100%">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField
+                                    inputPrompt="(Seleccione a instituição)"
+                                    property="idinstituicao"
+                                    id="idinstituicaoField"
+                                    optionsContainer="InstituicaoDc"
+                                    stylename="id_instituicao"
+                                    width="600px"
+                                    icon="font-icon:BUILDING" caption="Designação da Instituição: ">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
 
-                <label id="text_idososcentrodia" icon="HOME" />
-                <checkBox id="idososcentrodiaField" property="idososcentrodia" />
+                            <label id="text_projectosemaprovacao" icon="PASTE"/>
+                            <checkBox id="projectosemaprovacaoField" property="projectosemaprovacao" />
 
-                <label id="text_idososcat" icon="BLIND" />
-                <checkBox id="idososcatField" property="idososcat" />
-
-                <label id="text_idososapoiodomiciliario" icon="HOME"/>
-                <checkBox id="idososapoiodomiciliarioField" property="idososapoiodomiciliario" />
-
-                <label id="text_jovensjardiminfancia" icon="ENVIRA"/>
-                <checkBox id="jovensjardiminfanciaField" property="jovensjardiminfancia" />
-
-            </hbox>
-
-            <hbox spacing="true">
-                <label id="text_jovensatl" icon="INSTITUTION"/>
-                <checkBox id="jovensatlField" property="jovensatl" />
-
-                <label id="text_jovenscat" icon="CHILD"/>
-                <checkBox id="jovenscatField" property="jovenscat" />
-
-                <label id="text_deficientescao" icon="WHEELCHAIR_ALT"/>
-                <checkBox id="deficientescaoField" property="deficientescao" />
-
-                <label id="text_deficienteslarresidencial" icon="HOME"/>
-                <checkBox id="deficienteslarresidencialField" property="deficienteslarresidencial" />
-
-                <label id="texdeficientesapoiodomiciliario" icon="HOME"/>
-                <checkBox id="deficientesapoiodomiciliarioField" property="deficientesapoiodomiciliario" />
+                            <textField id="nomeProjectoField" property="nomeProjecto" caption="Nome do Projecto: "
+                                       icon="font-icon:ID_CARD_O" width="300px" inputPrompt="(Nome do Projecto)" />
+                        </row>
+                    </rows>
+                </grid>
 
 
-            </hbox>
-
-            <hbox spacing="true">
-
-                <label id="text_jovenscreche" icon="INSTITUTION"/>
-                <checkBox id="jovenscrecheField" property="jovenscreche" />
-
-                <label id="text_projectosemaprovacao" icon="PASTE"/>
-                <checkBox id="projectosemaprovacaoField" property="projectosemaprovacao" />
 
             </hbox>
 
@@ -207,6 +103,13 @@
             </scrollBox>
 
         </groupBox>
+
+        <hbox spacing="true" width="100%">
+            <lookupField id="linhasProjectosIntervencao"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
         <groupTable id="projectosIntervencaosTable"
                     width="100%"
                     dataContainer="projectosIntervencaosDc"
@@ -226,7 +129,12 @@
             </actions>
             <columns>
                 <column id="idinstituicao" caption="Nome da Instituição"/>
+
+                <column id="nomeProjecto" caption="Nome do Projecto" />
+                <column id="descricaoProjecto" caption="Descrição do Projecto" />
+
                 <column id="projectosemaprovacao" caption="Projectos em Aprovação"/>
+
                 <column id="adultos" caption="Adultos"/>
                 <column id="idosos" caption="Idosos"/>
                 <column id="jovens" caption="Jovens"/>

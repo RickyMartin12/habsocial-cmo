@@ -14,7 +14,7 @@
                     <condition>
                         <and>
                             <c:jpql>
-                                <c:where>e.tipo = :tipo</c:where>
+                                <c:where>e.tipo like :tipo</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -22,16 +22,6 @@
             </loader>
         </collection>
 
-        <keyValueCollection id="tipo_civil_id">
-            <properties>
-                <property name="tipo" datatype="string" />
-            </properties>
-            <loader id="tipo_civil_id_loader">
-                <query>
-                    <![CDATA[select o.tipo as tipo from cmolhao_TipoCivil o where o.tipo is not null group by o.tipo]]>
-                </query>
-            </loader>
-        </keyValueCollection>
     </data>
     <dialogMode height="600"
                 width="800"/>
@@ -45,16 +35,11 @@
                   width="100%">
             <scrollBox spacing="true">
                 <hbox spacing="true">
-                    <lookupField
+                    <textField
                             inputPrompt="(Seleccione o tipo de civil)"
                             id="idTipoCivilField"
-                            optionsContainer="tipo_civil_id"
+                            width="400px"
                             icon="font-icon:ADDRESS_CARD_O" caption="Tipo de Civil: "/>
-                    <lookupField id="linhasTipoCivil"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
-
                 </hbox>
 
                 <hbox spacing="true">
@@ -64,6 +49,14 @@
             </scrollBox>
 
         </groupBox>
+
+
+        <hbox spacing="true">
+            <lookupField id="linhasTipoCivil"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
 
 
         <table id="tipoCivilsTable"

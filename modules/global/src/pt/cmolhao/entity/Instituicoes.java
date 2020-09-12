@@ -1,10 +1,15 @@
 package pt.cmolhao.entity;
 
+import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.BaseIntegerIdEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.core.global.DesignSupport;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.Set;
 
 @DesignSupport("{'imported':true}")
 @AttributeOverrides({
@@ -14,7 +19,7 @@ import javax.persistence.*;
 @Table(name = "instituicoes")
 @Entity(name = "cmolhao_Instituicoes")
 public class Instituicoes extends BaseIntegerIdEntity {
-    private static final long serialVersionUID = 2173434840167193055L;
+    private static final long serialVersionUID = 3610667108364975924L;
     @Column(name = "cae", length = 45)
     protected String cae;
     @Column(name = "clasolhao")
@@ -27,6 +32,9 @@ public class Instituicoes extends BaseIntegerIdEntity {
     protected String coordenadasgps;
     @Column(name = "cpcj")
     protected Boolean cpcj;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_adesao")
+    protected Date dataAdesao;
     @Column(name = "descricao", length = 250)
     protected String descricao;
     @Column(name = "email", length = 250)
@@ -62,6 +70,71 @@ public class Instituicoes extends BaseIntegerIdEntity {
     @Column(name = "url", length = 250)
     protected String url;
 
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idinstituicao")
+    protected Set<Valencias> valencias;
+
+    public Set<Valencias> getValencias() {
+        return valencias;
+    }
+
+    public void setValencias(Set<Valencias> valencias) {
+        this.valencias = valencias;
+    }
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idInstituicao")
+    protected Set<Apoios> apoios;
+
+    public Set<Apoios> getApoios() {
+        return apoios;
+    }
+
+    public void setApoios(Set<Apoios> apoios) {
+        this.apoios = apoios;
+    }
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idInstituicao")
+    protected Set<Tecnico> tecnicos;
+
+    public Set<Tecnico> getTecnicos() {
+        return tecnicos;
+    }
+
+    public void setTecnicos(Set<Tecnico> tecnicos) {
+        this.tecnicos = tecnicos;
+    }
+
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idinstituicao")
+    protected Set<ProjectosIntervencao> projectosIntervencaos;
+
+    public Set<ProjectosIntervencao> getProjectosIntervencaos() {
+        return projectosIntervencaos;
+    }
+
+    public void setProjectosIntervencaos(Set<ProjectosIntervencao> projectosIntervencaos) {
+        this.projectosIntervencaos = projectosIntervencaos;
+    }
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idInsituicao")
+    protected Set<MembrosRedeTrabalho> membrosRedeTrabalhos;
+
+    public Set<MembrosRedeTrabalho> getMembrosRedeTrabalhos() {
+        return membrosRedeTrabalhos;
+    }
+
+    public void setMembrosRedeTrabalhos(Set<MembrosRedeTrabalho> membrosRedeTrabalhos) {
+        this.membrosRedeTrabalhos = membrosRedeTrabalhos;
+    }
 
     public String getUrl() {
         return url;
@@ -197,6 +270,14 @@ public class Instituicoes extends BaseIntegerIdEntity {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Date getDataAdesao() {
+        return dataAdesao;
+    }
+
+    public void setDataAdesao(Date dataAdesao) {
+        this.dataAdesao = dataAdesao;
     }
 
     public Boolean getCpcj() {

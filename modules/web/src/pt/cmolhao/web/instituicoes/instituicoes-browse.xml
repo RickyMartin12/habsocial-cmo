@@ -19,28 +19,10 @@
                                 <c:where>e.descricao = :descricao</c:where>
                             </c:jpql>
                             <c:jpql>
-                                <c:where>e.cae = :cae</c:where>
+                                <c:where>e.nrregistosegsocial like :nrregistosegsocial</c:where>
                             </c:jpql>
                             <c:jpql>
-                                <c:where>e.naturezajuridica = :naturezajuridica</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.clasolhao = :clasolhao</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.cpcj = :cpcj</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.rsi = :rsi</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.plataformatematica = :plataformatematica</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.projectoscomunitarios = :projectoscomunitarios</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.outraredelocal = :outraredelocal</c:where>
+                                <c:where>e.niss like :niss</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -59,27 +41,6 @@
             </loader>
         </collection>
 
-        <keyValueCollection id="inst_cae_id">
-            <properties>
-                <property name="cae" datatype="string" />
-            </properties>
-            <loader id="inst_cae_id_loader">
-                <query>
-                    <![CDATA[select o.cae as cae from cmolhao_Instituicoes o where o.cae is not null group by o.cae]]>
-                </query>
-            </loader>
-        </keyValueCollection>
-
-        <keyValueCollection id="inst_naturezajuridica_id">
-            <properties>
-                <property name="naturezajuridica" datatype="string" />
-            </properties>
-            <loader id="inst_naturezajuridica_id_loader">
-                <query>
-                    <![CDATA[select o.naturezajuridica as naturezajuridica from cmolhao_Instituicoes o where o.naturezajuridica is not null group by o.naturezajuridica]]>
-                </query>
-            </loader>
-        </keyValueCollection>
 
 
     </data>
@@ -94,71 +55,72 @@
                   icon="font-icon:FILTER"
                   width="100%">
             <scrollBox spacing="true">
-            <hbox spacing="true">
-                <lookupField
-                        property="descricao"
-                        id="desricaoField"
-                        optionsContainer="instituicoesDc"
-                        inputPrompt="(Seleccione a descrição da Instituição)"
-                        icon="font-icon:BUILDING_O" caption="Descrição da Instituição: "/>
-
-                <lookupField
-                    id="caeField"
-                    optionsContainer="inst_cae_id"
-                    inputPrompt="(Seleccione a CAE da Instituição)"
-                    icon="font-icon:MONEY" caption="Classificação das Actividades Economicas Instituição: " />
-
-                <lookupField
-                    id="naturezajuridcaField"
-                    optionsContainer="inst_naturezajuridica_id"
-                    inputPrompt="(Seleccione a Natureza Juridica)"
-                    icon="font-icon:LEAF" caption="Natureza Juridica da Instituição: " />
 
 
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField
+                                    property="descricao"
+                                    id="desricaoField"
+                                    stylename="id_instituicao_search"
+                                    width="500px"
+                                    optionsContainer="instituicoesDc"
+                                    inputPrompt="(Seleccione a Instituição)"
+                                    icon="font-icon:BUILDING_O" caption="Descrição da Instituição: ">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
 
+                            <textField id="numRegistoField"
+                                       stylename="num_registo"
+                                       property="nrregistosegsocial"
+                                       caption="Número de Registo: "
+                                       inputPrompt="(Introduza o número de registo)"
+                                       icon="font-icon:ADDRESS_CARD_O"
+                                       width="250px"
+                            />
 
-            </hbox>
-
-            <hbox spacing="true">
-
-                <label id="text_clasolhao" icon="font-icon:LOCATION_ARROW" />
-                <checkBox id="clasolhaoField" property="clasolhao" />
-
-                <label id="text_cpcj" icon="font-icon:BANK" />
-                <checkBox id="cpcjField" property="cpcj" />
-
-                <label id="text_rsi" icon="font-icon:LINE_CHART" />
-                <checkBox id="rsiField" property="rsi" />
-
-            </hbox>
-
-            <hbox spacing="true">
-
-                <label id="text_plataformatematica" icon="font-icon:DESKTOP" />
-                <checkBox id="plataformatematicaField" property="plataformatematica" />
-
-                <label id="text_projectoscomunitarios" icon="font-icon:PASTE" />
-                <checkBox id="projectoscomunitariosField" property="projectoscomunitarios" />
-
-                <label id="text_outraredelocal" icon="font-icon:COMPRESS" />
-                <checkBox id="outraredelocalField" property="outraredelocal" />
-
-                <lookupField id="linhasInstituicoes"
-                             caption="Mostrar Numero de Linhas"
-                             inputPrompt="(seleccione o numero de linhas)"
-                             icon="ARROWS_V"/>
-
-            </hbox>
-
+                            <textField id="nissField"
+                                       stylename="num_seg_social"
+                                       property="niss"
+                                       caption="NISS: "
+                                       description="Número de Registo de Segurança Social"
+                                       inputPrompt="(Introduza o NISS)"
+                                       icon="font-icon:ADDRESS_CARD_O"
+                                       width="250px"
+                            />
+                        </row>
+                    </rows>
+                </grid>
             <hbox spacing="true">
                 <button id="search_instituicoes" caption="Pesquisar" icon="SEARCH" stylename="info" />
                 <button id="reset_search_instituicoes" icon="ERASER" caption="Limpar" />
             </hbox>
-
             </scrollBox>
 
-
         </groupBox>
+
+
+
+
+        <hbox spacing="true" width="100%">
+            <lookupField id="linhasInstituicoes"
+                         caption="Numero de Linhas: "
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
 
         <table id="instituicoesesTable"
                width="100%"
@@ -179,6 +141,8 @@
             </actions>
             <columns>
                 <column id="descricao" caption="Descrição"/>
+                <column id="nrregistosegsocial" caption="Numero de Registo da Segurança Social" />
+                <column id="niss" caption="Numero de Identificação da Segurança Social"/>
                 <column id="cae" caption="Classificação das Actividades Economicas"/>
                 <column id="naturezajuridica" caption="Natureza Juridica"/>
                 <column id="email" caption="Email"/>
@@ -189,8 +153,7 @@
                 <column id="contactoresponsavelservico" caption="Contacto do Serviço Responsável"/>
                 <column id="coordenadasgps" caption="Coordenadas GPS"/>
                 <column id="cpcj" caption="Centro de Protecção de Crianças e Jovens"/>
-                <column id="niss" caption="Numero de Identificação da Segurança Social"/>
-                <column id="nrregistosegsocial" caption="Numero de Registo da Segurança Social" />
+
                 <column id="outraredelocal" caption="Outra Rede Local"/>
                 <column id="plataformatematica" caption="Plataforma de Matemática"/>
                 <column id="presidentedireccao" caption="Presidente da Direcção"/>
@@ -203,13 +166,16 @@
                 <column id="url" caption="URL"/>
             </columns>
             <rowsCount/>
+
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <button id="createBtn" action="instituicoesesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
                 <button id="editBtn" action="instituicoesesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
                 <button id="removeBtn" action="instituicoesesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
                 <button id="excelBtn" action="instituicoesesTable.excel" stylename="friendly"/>
+
             </buttonsPanel>
+
         </table>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>

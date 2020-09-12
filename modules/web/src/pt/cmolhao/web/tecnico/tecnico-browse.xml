@@ -21,7 +21,7 @@
                                 <c:where>e.nome like :nome</c:where>
                             </c:jpql>
                             <c:jpql>
-                                <c:where>e.email = :email</c:where>
+                                <c:where>e.email like :email</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -39,17 +39,6 @@
             </loader>
         </collection>
 
-        <keyValueCollection id="email_tecnico_id">
-            <properties>
-                <property name="email" datatype="string" />
-            </properties>
-            <loader id="email_tecnico_id_loader">
-                <query>
-                    <![CDATA[select o.email as email from cmolhao_Tecnico o where o.email is not null group by o.email]]>
-                </query>
-            </loader>
-        </keyValueCollection>
-
 
     </data>
     <dialogMode height="600"
@@ -63,30 +52,45 @@
                   width="100%">
 
             <scrollBox spacing="true">
-                <hbox spacing="true">
-                    <lookupField
-                            inputPrompt="(Seleccione a designação da instituição da valência)"
-                            property="idInstituicao"
-                            id="idInstituicaoField"
-                            optionsContainer="InstituicaoDc"
-                            icon="font-icon:BUILDING" caption="Designação da Instituição da valencia: "/>
-                    <textField id="nomeField" property="nome" caption="Nome do Técnico"
-                               inputPrompt="(Indique o nome do Técnico)"
-                               icon="ID_CARD" />
-                    <lookupField id="email_tec_id"
-                                 optionsContainer="email_tecnico_id"
-                                 caption="Email do Técnico:"
-                                 inputPrompt="(seleccione o email do técnico)"
-                                 icon="font-icon:ENVELOPE"
-                    />
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField
+                                    inputPrompt="(Seleccione a instituição)"
+                                    property="idInstituicao"
+                                    id="idInstituicaoField"
+                                    optionsContainer="InstituicaoDc"
+                                    width="600px"
+                                    icon="font-icon:BUILDING" caption="Designação da Instituição da valencia: ">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
 
-                </hbox>
-                <hbox spacing="true">
-                    <lookupField id="linhasTecnico"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
-                </hbox>
+                            </lookupPickerField>
+                            <textField id="nomeField" property="nome" caption="Nome do Técnico"
+                                       inputPrompt="(Indique o nome do Técnico)"
+                                       stylename="nome_tecnico_browse"
+                                       icon="ID_CARD" />
+                            <textField id="email_tec_id"
+                                       caption="Email do Técnico:"
+                                       property="email"
+                                       stylename="email_tecnico_browse"
+                                       inputPrompt="(seleccione o email do técnico)"
+                                       icon="font-icon:ENVELOPE"
+                            />
+                        </row>
+                    </rows>
+                </grid>
+
 
 
                 <hbox spacing="true">
@@ -95,6 +99,13 @@
                 </hbox>
             </scrollBox>
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasTecnico"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
 
 
         <groupTable id="tecnicoesTable"

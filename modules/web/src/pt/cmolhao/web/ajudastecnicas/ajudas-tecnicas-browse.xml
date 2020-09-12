@@ -53,19 +53,38 @@
             <scrollBox spacing="true">
                 <hbox spacing="true">
 
-                    <lookupField id="idvalenciaField"
-                                 property="idValencia"
-                                 optionsContainer="valenciasDc"
-                                 inputPrompt="(Seleccione a Descrição da Valência)"
-                                 caption="Descrição técnica da valência: "
-                                 icon="SIMPLYBUILT"/>
+                    <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                        <rows>
+                            <row>
+                                <lookupPickerField id="idvalenciaField"
+                                             property="idValencia"
+                                             optionsContainer="valenciasDc"
+                                             width="600px"
+                                             inputPrompt="(Seleccione a Valência)"
+                                             caption="Descrição da valência: "
+                                             icon="SIMPLYBUILT">
 
-                    <dateField id="datadisponivelField" property="datadisponivel" caption="Data Disponivel: " icon="CALENDAR" datatype="date" dateFormat="dd/MM/yyyy"/>
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
 
-                    <lookupField id="linhasAjudasTecnicas"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
+                                </lookupPickerField>
+
+                                <dateField id="datadisponivelField" property="datadisponivel" caption="Data Disponivel: " icon="CALENDAR" datatype="date" dateFormat="dd/MM/yyyy"/>
+
+                            </row>
+                        </rows>
+                    </grid>
+
+
+
 
                 </hbox>
                 <hbox spacing="true">
@@ -77,6 +96,13 @@
 
 
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasAjudasTecnicas"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
 
         <groupTable id="ajudasTecnicasesTable"
                     width="100%"

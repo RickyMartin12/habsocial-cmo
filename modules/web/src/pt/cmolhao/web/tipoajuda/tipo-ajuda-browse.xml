@@ -14,7 +14,7 @@
                     <condition>
                         <and>
                             <c:jpql>
-                                <c:where>e.descricaoTipoAjuda = :descricaoTipoAjuda</c:where>
+                                <c:where>e.descricaoTipoAjuda like :descricaoTipoAjuda</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -22,16 +22,6 @@
             </loader>
         </collection>
 
-        <keyValueCollection id="descricao_tipo_ajuda_equipamento_id">
-            <properties>
-                <property name="descricaoTipoAjuda" datatype="string" />
-            </properties>
-            <loader id="descricao_tipo_ajuda_equipamento_id_loader">
-                <query>
-                    <![CDATA[select o.descricaoTipoAjuda as descricaoTipoAjuda from cmolhao_TipoAjuda o where o.descricaoTipoAjuda is not null group by o.descricaoTipoAjuda]]>
-                </query>
-            </loader>
-        </keyValueCollection>
 
 
 
@@ -49,16 +39,13 @@
                   width="100%">
             <scrollBox spacing="true">
                 <hbox spacing="true">
-                    <lookupField id="desc_equipamento_id"
-                                 optionsContainer="descricao_tipo_ajuda_equipamento_id"
-                                 caption="Descrição de Tipo de Ajuda:"
-                                 inputPrompt="(seleccione a descrição de tipo de ajuda)"
+                    <textField id="desc_equipamento_id"
+                                 property="descricaoTipoAjuda"
+                                 caption="Descrição de Tipo de Apoio:"
+                                 inputPrompt="(introduza o tipo de apoio)"
                                  icon="font-icon:QUESTION_CIRCLE"
                     />
-                    <lookupField id="linhasTipoAjuda"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
+
 
                 </hbox>
 
@@ -68,6 +55,14 @@
                 </hbox>
             </scrollBox>
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasTipoAjuda"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
         <table id="tipoAjudasTable"
                width="100%"
                dataContainer="tipoAjudasDc"
@@ -86,7 +81,7 @@
                 <action id="excel" type="excel"/>
             </actions>
             <columns>
-                <column id="descricaoTipoAjuda" caption="Descrição de Tipo de Ajuda"/>
+                <column id="descricaoTipoAjuda" caption="Descrição de Tipo de Apoio"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

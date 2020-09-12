@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.atendimento">
     <data>
         <instance id="atendimentoDc"
@@ -66,68 +65,148 @@
                 width="800"/>
     <layout expand="scrollBox" spacing="true">
         <scrollBox id="scrollBox" spacing="true">
-            <form id="form" dataContainer="atendimentoDc">
-                <column width="250px">
 
-                    <textField id="idAtendimentoField" property="id" visible="false" />
+            <tabSheet>
+                <tab id="dados_pessoais"
+                     caption="Dados Pessoais"
+                     icon="font-icon:ID_CARD"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_dados_pessoais" dataContainer="atendimentoDc">
+                        <column width="350px">
+
+                            <lookupPickerField
+                                    property="idUtente"
+                                    id="idUtenteField"
+                                    optionsContainer="utentesDc"
+                                    icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                                    width="300px"
+                                    inputPrompt="(Seleccione o utente)">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                            </lookupPickerField>
+
+                            <lookupPickerField
+                                    property="idTipoAtendimento"
+                                    id="idTipoAtendimentoField"
+                                    optionsContainer="tipoAtendimentoesDc"
+                                    width="832px"
+                                    colspan="2"
+                                    icon="font-icon:VOLUME_CONTROL_PHONE" caption="Tipo de Atendimento: "
+                                    inputPrompt="(Seleccione o tipo de atendimento)" >
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                            </lookupPickerField>
+
+                        </column>
+                        <column width="350px">
+
+                            <lookupPickerField
+                                    property="idTecnico"
+                                    id="idTecnicoField"
+                                    optionsContainer="tecnicoesDc"
+                                    icon="font-icon:USER_MD" caption="Nome do Técnico: "
+                                    width="350px"
+
+                                    inputPrompt="(Seleccione o técnico)" >
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+
+                            </lookupPickerField>
+
+                            <textField id="idAtendimentoField" property="id" visible="false" />
+
+                        </column>
+
+                    </form>
+
+                </tab>
+
+                <tab id="contactos_data"
+                     caption="Contactos e Datas"
+                     icon="font-icon:MOBILE_PHONE"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_contactos_data" dataContainer="atendimentoDc">
+                        <column width="200px">
+                            <dateField id="dataAtendimentoField" property="dataAtendimento"
+                                       icon="font-icon:CALENDAR" caption="Data Atendimento: " stylename="data_atendimento"/>
+                        </column>
+                        <column width="200px">
+                            <textField id="contactosEfetuadosField" property="contactosEfetuados"
+                                       caption="Contactos Efectuados: " icon="font-icon:MOBILE_PHONE"/>
+                        </column>
+
+                    </form>
+                </tab>
+
+                <tab id="objectivos_observacoes"
+                     caption="Objectivos e Observações"
+                     icon="font-icon:FILE_TEXT_O"
+                     margin="true"
+                     spacing="true">
+                    <form id="form_objectivos_observacoes" dataContainer="atendimentoDc">
+                        <column width="250px">
+
+                            <lookupPickerField caption="Atendimento de Objectivos: "
+                                         id="idAtendimentoObjetivoField"
+                                         inputPrompt="(seleccione um dos objectivos gerais)"
+                                         icon="font-icon:CERTIFICATE"
+                                         width="811px"
+                                         colspan="2"
+                                         optionsContainer="atendimentoObjetivosesDc"
+                                         property="idAtendimentoObjetivo">
+
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+                            </lookupPickerField>
+
+                            <lookupPickerField caption="Atendimento de Encaminhamento:"
+                                               id="idAtendimentoEncaminhamentoField"
+                                               width="811px"
+                                               colspan="2"
+                                               inputPrompt="(seleccione o atendimento por encaminhamento)"
+                                               icon="font-icon:VOLUME_CONTROL_PHONE"
+                                               optionsContainer="atendimentoEncaminhamentoesDc"
+                                               property="idAtendimentoEncaminhamento">
+
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+                            </lookupPickerField>
 
 
-                    <lookupField
-                            property="idUtente"
-                            id="idUtenteField"
-                            optionsContainer="utentesDc"
-                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
-                            inputPrompt="(Seleccione o nome e a identificação do utente)"/>
 
-                    <lookupField
-                            property="idTecnico"
-                            id="idTecnicoField"
-                            optionsContainer="tecnicoesDc"
-                            icon="font-icon:USER_MD" caption="Nome do Técnico: "
-                            inputPrompt="(Seleccione o nome do técnico)" />
+                            <textArea cols="60" rows="3" id="objetivoOutrosField" property="objetivoOutros"
+                                      caption="Outros Objectivos: " icon="font-icon:FILE_TEXT_O"/>
+                            <textArea cols="60" rows="3" id="obsGeraisField" property="obsGerais"
+                                      caption="Observações Gerais: " icon="font-icon:FILE_TEXT_O"/>
+                        </column>
+                        <column width="250px">
 
-                    <lookupField
-                            property="idTipoAtendimento"
-                            id="idTipoAtendimentoField"
-                            optionsContainer="tipoAtendimentoesDc"
-                            icon="font-icon:VOLUME_CONTROL_PHONE" caption="Tipo de Atendimento: "
-                            inputPrompt="(Seleccione o tipo de atendimento)" />
-
-                    <lookupField
-                            property="idAtendimentoEncaminhamento"
-                            id="idAtendimentoEncaminhamentoField"
-                            optionsContainer="atendimentoEncaminhamentoesDc"
-                            caption="Atendimento por Encaminhamento:"
-                            inputPrompt="(seleccione o atendimento por encaminhamento)"
-                            icon="font-icon:VOLUME_CONTROL_PHONE" />
+                            <textArea cols="60" rows="3" id="obsConfField" property="obsConf"
+                                      caption="Observações de Confirmação: " icon="font-icon:FILE_TEXT_O"/>
+                            <textArea cols="60" rows="3" id="outrosEncaminhamentosField" property="outrosEncaminhamentos"
+                                      caption="Outros Encaminhamentos: " icon="font-icon:FILE_TEXT_O"/>
+                        </column>
+                    </form>
+                </tab>
+            </tabSheet>
 
 
-                    <lookupField
-                            property="idAtendimentoObjetivo"
-                            id="idAtendimentoObjetivoField"
-                            optionsContainer="atendimentoObjetivosesDc"
-                            icon="font-icon:CERTIFICATE" caption="Atendimento por Objectivos Gerais: "
-                            inputPrompt="(seleccione um dos objectivos gerais)"/>
-
-
-                    <dateField id="dataAtendimentoField" property="dataAtendimento"
-                               icon="font-icon:CALENDAR" caption="Data Atendimento: " stylename="data_atendimento"/>
-
-
-                    <textField id="contactosEfetuadosField" property="contactosEfetuados"
-                               caption="Contactos Efectuados: " icon="font-icon:MOBILE_PHONE"/>
-
-
-                    <textArea cols="20" rows="3" id="objetivoOutrosField" property="objetivoOutros"
-                              caption="Outros Objectivos: " icon="font-icon:FILE_TEXT_O"/>
-                    <textArea cols="20" rows="3" id="obsConfField" property="obsConf"
-                              caption="Observações de Confirmação: " icon="font-icon:FILE_TEXT_O"/>
-                    <textArea cols="20" rows="3" id="obsGeraisField" property="obsGerais"
-                              caption="Observações Gerais: " icon="font-icon:FILE_TEXT_O"/>
-                    <textArea cols="20" rows="3" id="outrosEncaminhamentosField" property="outrosEncaminhamentos"
-                              caption="Outros Encaminhamentos: " icon="font-icon:FILE_TEXT_O"/>
-                </column>
-            </form>
         </scrollBox>
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>

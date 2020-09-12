@@ -1,24 +1,88 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.profissao">
     <data>
         <instance id="profissaoDc"
                   class="pt.cmolhao.entity.Profissao"
-                  view="_local">
+                  view="profissao-view">
             <loader/>
+            <collection id="utentesDc" property="utentes" />
         </instance>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="profissaoDc">
-            <column width="250px">
-                <textField id="idProfissaoField" property="id" visible="false" />
-                <textField id="nomeField" property="nome" caption="Nome da Profissão: " icon="USER_MD"/>
-            </column>
-        </form>
+
+        <tabSheet>
+            <tab id="dados_profissao"
+                 caption="Dados Profissão"
+                 icon="font-icon:USERS"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_dados_profissao" dataContainer="profissaoDc">
+                    <column width="300px">
+                        <textField id="nomeField" property="nome" caption="Nome da Profissão: " icon="USER_MD"/>
+                    </column>
+                    <column width="300px">
+                        <textField id="idProfissaoField" property="id" visible="false" />
+                    </column>
+                </form>
+
+            </tab>
+        </tabSheet>
+
+        <tabSheet>
+            <tab id="utentes"
+                 caption="Utentes"
+                 icon="font-icon:USERS"
+                 margin="true"
+                 spacing="true">
+
+                <groupBox id="utentesBox" caption="Utentes">
+                    <table id="utentesTable" dataContainer="utentesDc" width="100%" height="300px">
+                        <actions>
+                            <action id="create" type="create"/>
+                            <action id="edit" type="edit"/>
+                            <action id="remove" type="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="numContribuinte" caption="Numero de Contribuinte"/>
+                            <column id="niss" caption="Numero de Segurança Social"/>
+                            <column id="nome" caption="Nome"/>
+                            <column id="email" caption="Email"/>
+                            <column id="dataNasc" caption="Data de Nascimento"/>
+                            <column id="estadoCivil" caption="Estado Civil" />
+                            <column id="grauEscolaridade" caption="Grau de Escolaridade"/>
+                            <column id="habilitacoes" caption="Habilitações Literárias"/>
+                            <column id="idTipoCivil" caption="Tipo de Civil"/>
+                            <column id="idTipologiaFamiliar" caption="Tipologia Familiar"/>
+                            <column id="telefone" caption="Telefone"/>
+                            <column id="telem_vel" caption="Telemóvel"/>
+                            <column id="paisOrigem" caption="Pais de Origem" />
+                            <column id="certUniaoEuropeia" caption="Certidão da União Europeia"/>
+                            <column id="deficiente" caption="Deficiente"/>
+                            <column id="dependente" caption="Dependente"/>
+                            <column id="numIdCivil" caption="Numero de ID Civil"/>
+                            <column id="obsConf" caption="Observações de Confirmação"/>
+                            <column id="obsGerais" caption="Observações Gerais"/>
+
+
+
+                        </columns>
+                        <buttonsPanel>
+                            <button action="utentesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                            <button action="utentesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                            <button action="utentesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                        </buttonsPanel>
+                    </table>
+                </groupBox>
+
+            </tab>
+        </tabSheet>
+
+
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
             <button caption="Fechar" action="windowClose" icon="CLOSE"/>

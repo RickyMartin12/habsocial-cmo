@@ -38,26 +38,31 @@
 
             <scrollBox spacing="true">
                 <hbox spacing="true">
-
-
-                    <lookupField
-                            inputPrompt="(Seleccione a Tipologia Familiar)"
-                            property="tipologiaFamiliar"
-                            id="tipologiaFamiliarField"
-                            icon="font-icon:GROUP" caption="Tipologia Familiar: " />
-
-                    <lookupField
-                            editable="false"
-                            inputPrompt="(Seleccione a Tipologia Familiar Especifica)"
-                            property="tipologiaFamiliarEspecifica"
-                            id="tipologiaFamiliarEspecificaField"
-                            icon="font-icon:GROUP" caption="Tipologia Familiar Especifica: " />
-
-                    <lookupField id="linhasTipologiaFamiliar"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
-
+                    <grid spacing="true">
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <lookupField
+                                        inputPrompt="(Seleccione a Tipologia Familiar)"
+                                        property="tipologiaFamiliar"
+                                        id="tipologiaFamiliarField"
+                                        width="400px"
+                                        icon="font-icon:GROUP" caption="Tipologia Familiar: " />
+                                <lookupField
+                                        editable="false"
+                                        inputPrompt="(Seleccione a Tipologia Familiar Especifica)"
+                                        property="tipologiaFamiliarEspecifica"
+                                        id="tipologiaFamiliarEspecificaField"
+                                        width="500px"
+                                        icon="font-icon:GROUP" caption="Tipologia Familiar Especifica: " />
+                            </row>
+                        </rows>
+                    </grid>
                 </hbox>
                 <hbox spacing="true">
                     <button id="reset_tipologia_familiar" icon="ERASER" caption="Limpar" />
@@ -65,6 +70,13 @@
                 </hbox>
             </scrollBox>
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasTipologiaFamiliar"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
 
 
         <table id="tipologiaFamiliarsTable"

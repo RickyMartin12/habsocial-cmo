@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        messagesPack="pt.cmolhao.web.claso">
+    <data>
+        <instance id="utentesOutrosConcelhosClasoDc"
+                  class="pt.cmolhao.entity.UtentesOutrosConcelhosClaso"
+                  view="utentesOutrosConcelhosClaso-view">
+            <loader/>
+        </instance>
+
+        <collection id="valenciasClasoDc"
+                    class="pt.cmolhao.entity.ValenciasClaso"
+                    view="valenciasClaso-view">
+            <loader id="customersClasoLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_ValenciasClaso e]]>
+                </query>
+            </loader>
+        </collection>
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
+
+            <tabSheet>
+                <tab id="dados_utentes_concelhos"
+                     caption="Dados do Utente e/ou Outros Concelhos"
+                     icon="font-icon:ADDRESS_CARD"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_dados_utentes_concelhos" dataContainer="utentesOutrosConcelhosClasoDc">
+                        <column width="300px">
+                            <textField id="concelhoField" stylename="concelho_utentes_outros_edit" property="concelho" caption="Concelho: " icon="MAP"/>
+                            <lookupPickerField id="idValenciaField"
+                                               optionsContainer="valenciasClasoDc"
+                                               property="idValencia"
+                                               inputPrompt="(Seleccione a Descrição da Valência)"
+                                               caption="Valencia: "
+                                               width="800px"
+                                               colspan="2"
+                                               stylename="valencias_utentes_outros_edit"
+                                               icon="SIMPLYBUILT">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+                        </column>
+                        <column width="300px">
+                            <textField id="freguesiaField" stylename="freguesia_utentes_outros_edit" property="freguesia" caption="Freguesia: " icon="INSTITUTION"/>
+                            <textField id="idUtenteOutrosConcelhosField" property="id" visible="false" />
+                        </column>
+                    </form>
+
+
+                </tab>
+            </tabSheet>
+
+        </scrollBox>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button caption="Fechar" action="windowClose" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

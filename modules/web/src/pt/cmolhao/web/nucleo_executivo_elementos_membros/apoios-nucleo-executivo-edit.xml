@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        messagesPack="pt.cmolhao.web.nucleo_executivo_elementos_membros">
+    <data>
+        <instance id="apoiosNucleoExecutivoDc"
+                  class="pt.cmolhao.entity.ApoiosNucleoExecutivo"
+                  view="apoiosNucleoExecutivo-view">
+            <loader/>
+        </instance>
+
+        <collection id="InstituicaoNucleoExecutivoDc"
+                    class="pt.cmolhao.entity.InstituicoesNucleoExecutivo"
+                    view="instituicoesNucleoExecutivo-view">
+            <loader id="ins_Loader">
+                <query>
+                    <![CDATA[select e from cmolhao_InstituicoesNucleoExecutivo e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="equipamentoesDc"
+                    class="pt.cmolhao.entity.Equipamento"
+                    view="_local">
+            <loader id="equipamentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Equipamento e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoAjudasDc"
+                    class="pt.cmolhao.entity.TipoAjuda"
+                    view="_local">
+            <loader id="tipoAjudasDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoAjuda e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="UtentesDC"
+                    class="pt.cmolhao.entity.Utente"
+                    view="_local">
+            <loader id="utentesLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Utente e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="estadosesDc"
+                    class="pt.cmolhao.entity.Estados"
+                    view="_local">
+            <loader id="estadosesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Estados e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
+            <tabSheet>
+                <tab id="dados_gerais"
+                     caption="Dados Gerais"
+                     icon="font-icon:ID_CARD"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_dados_gerais" dataContainer="apoiosNucleoExecutivoDc">
+                        <column width="300px">
+                            <lookupPickerField property="idInstituicao" id="idInstituicaoField" optionsContainer="InstituicaoNucleoExecutivoDc"
+                                               caption="Designação da Instituição da valencia: "
+                                               stylename="id_instituicao_apoio"
+                                               width="882px"
+                                               colspan="2"
+                                               inputPrompt="(Seleccione a instituição)"
+                                               icon="font-icon:BUILDING">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+                            <textField id="numProcessoField"
+                                       stylename="num_processo_apoio"
+                                       width="120px"
+                                       property="numProcesso" caption="Numero Processo: " icon="ID_CARD"/>
+
+                            <textField id="valorApoioField"
+                                       stylename="valor_apoio"
+                                       width="120px"
+                                       property="valorApoio" caption="Valor de Apoio: " icon="EURO"/>
+
+                            <lookupPickerField caption="Estado de Ajuda:"
+                                               id="idEstadosField"
+                                               stylename="id_estados_apoio"
+                                               property="idEstado"
+                                               icon="REFRESH_ACTION"
+                                               inputPrompt="(Seleccione o estado)"
+                                               optionsContainer="estadosesDc">
+
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+                            </lookupPickerField>
+
+
+                        </column>
+                        <column width="300px">
+                            <lookupPickerField
+                                    property="idUtente"
+                                    id="utenteField"
+                                    width="280px"
+                                    stylename="id_utente_apoio"
+                                    optionsContainer="UtentesDC"
+                                    icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                                    inputPrompt="(Seleccione o utente)">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                            <lookupPickerField caption="Descrição do tipo de Ajuda:"
+                                               id="idTipoapoioField"
+                                               property="idTipoapoio"
+                                               stylename="id_tipo_apoio"
+                                               width="280px"
+                                               icon="font-icon:QUESTION"
+                                               inputPrompt="(Seleccione o tipo de ajuda)"
+                                               optionsContainer="tipoAjudasDc">
+
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+
+                            </lookupPickerField>
+
+                            <textField id="idApoiosField" visible="false" property="id" />
+
+
+
+                        </column>
+                    </form>
+                </tab>
+                <tab id="datas_apoios"
+                     caption="Datas de Apoio"
+                     icon="font-icon:CALENDAR"
+                     margin="true"
+                     spacing="true">
+                    <form id="form_datas_apoios" dataContainer="apoiosNucleoExecutivoDc">
+                        <column width="300px">
+                            <dateField id="dataAtribuicaoField"
+                                       stylename="data_atribuicao_apoio"
+                                       property="dataAtribuicao" caption="Data de Atribuição: " icon="CALENDAR"/>
+                            <dateField id="dataPedidoField"
+                                       stylename="data_pedido_apoio"
+                                       property="dataPedido" caption="Data do Pedido: " icon="CALENDAR"/>
+
+                        </column>
+                        <column width="300px">
+                            <dateField id="dataFimField"
+                                       stylename="data_fim_apoio"
+                                       property="dataFim" icon="CALENDAR" caption="Data de Fim: "/>
+                            <dateField id="dataRenovacaoField"
+                                       stylename="data_renovacao_apoio"
+                                       property="dataRenovacao" icon="CALENDAR" caption="Data de Renovação: "/>
+                        </column>
+                    </form>
+                </tab>
+
+                <tab id="observacoes_gerais"
+                     caption="Obesrvações Gerais"
+                     icon="font-icon:FILE_TEXT_O"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_observacoes_gerais" dataContainer="apoiosNucleoExecutivoDc">
+                        <column width="300px">
+                            <textArea id="observacaoEstadoField"
+                                      cols="60"
+                                      rows="3"
+                                      stylename="observacoes_estado_apoio"
+                                      property="observacaoEstado" caption="Observações de Estado: " icon="FILE_TEXT_O"/>
+                            <textArea id="observacoesGeraisField"
+                                      cols="60"
+                                      rows="3"
+                                      stylename="observacoes_gerais_apoio"
+                                      property="observacoesGerais" caption="Observações Gerais: " icon="FILE_TEXT_O"/>
+                        </column>
+                        <column width="300px">
+                            <textArea id="observacoesConfField"
+                                      cols="60"
+                                      rows="3"
+                                      stylename="observacoes_conf_apoio"
+                                      property="observacoesConf" caption="Observações Confirmações: " icon="FILE_TEXT_O"/>
+                        </column>
+                    </form>
+                </tab>
+            </tabSheet>
+        </scrollBox>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button caption="Fechar" action="windowClose" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

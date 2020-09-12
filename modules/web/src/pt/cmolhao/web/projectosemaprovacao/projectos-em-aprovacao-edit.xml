@@ -22,29 +22,67 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="projectosEmAprovacaoDc">
-            <column width="250px">
-                <textField id="idProjectosAprovacaoField" visible="false" property="id" />
-                <lookupField id="etapaprocessoField"
-                             caption="Etapa de Processo: "
-                             icon="CHECK_CIRCLE"
-                             property="etapaprocesso"
-                             inputPrompt="(Seleccione uma das Etapas de Processo)"
-                />
-                <lookupField id="idprojectosintervencaoField"
-                             property="idprojectosintervencao"
-                             optionsContainer="ProjectosIntervencaoDc"
-                             inputPrompt="(Seleccione o ID do projecto de intervenção)"
-                             caption="Projecto de Intervenção: "
-                             contextHelpText="Projecto de Intervenção --> (ID do Projecto em Aprovação - Descrição da Instituição)"
-                             required="true"
-                             requiredMessage="Preenche o Projecto de Intervenção"
-                             icon="SIMPLYBUILT"/>
-                <textField id="tipologiaField" property="tipologia"
-                            caption="Tipologia: "
-                            icon="CERTIFICATE"/>
-            </column>
-        </form>
+
+
+        <tabSheet>
+
+            <tab id="dados_projecto"
+                 caption="Dados do Projecto"
+                 icon="font-icon:PASTE"
+                 margin="true"
+                 spacing="true">
+                    <form id="form_dados_pessoais" dataContainer="projectosEmAprovacaoDc">
+
+                        <column width="300px">
+                            <lookupPickerField id="idprojectosintervencaoField"
+                                               property="idprojectosintervencao"
+                                               optionsContainer="ProjectosIntervencaoDc"
+                                               inputPrompt="(Seleccione o ID do projecto de intervenção)"
+                                               caption="Projecto de Intervenção: "
+                                               stylename="projecto_aprovacao_edit"
+                                               required="true"
+                                               colspan="2"
+                                               width="820px"
+                                               requiredMessage="Preenche o Projecto de Intervenção"
+                                               icon="font-icon:PASTE">
+
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+                            </lookupPickerField>
+
+                            <textField id="tipologiaField" property="tipologia"
+                                       caption="Tipologia: "
+                                       stylename="tipologia_projecto_aprovacao_edit"
+                                       icon="CERTIFICATE"/>
+
+
+                        </column>
+                        <column width="300px">
+
+                            <lookupField id="etapaprocessoField"
+                                         caption="Etapa de Processo: "
+                                         icon="CHECK_CIRCLE"
+                                         width="300px"
+                                         property="etapaprocesso"
+                                         stylename="etapa_processo_projecto_aprovacao_edit"
+                                         inputPrompt="(Seleccione uma das Etapas de Processo)"
+                            />
+
+                            <textField id="idProjectosAprovacaoField" visible="false" property="id" />
+
+                        </column>
+
+
+                    </form>
+            </tab>
+
+
+
+        </tabSheet>
+
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
             <button action="windowClose" caption="Fechar" icon="CLOSE"/>

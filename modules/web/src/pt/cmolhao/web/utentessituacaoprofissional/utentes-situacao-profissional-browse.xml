@@ -52,26 +52,43 @@
             <scrollBox spacing="true">
                 <hbox spacing="true">
 
-                    <lookupField
-                            property="utente"
-                            id="utenteField"
-                            optionsContainer="UtentesDC"
-                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
-                            inputPrompt="(Seleccione o nome e a identificação do utente)"/>
+                    <grid spacing="true">
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <lookupPickerField
+                                        property="utente"
+                                        id="utenteField"
+                                        optionsContainer="UtentesDC"
+                                        width="350px"
+                                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                                        inputPrompt="(Seleccione o utente)">
 
-                    <lookupField
-                        property="situacaoProfissional"
-                        id="situacaoProfissionalField"
-                        icon="font-icon:USER_MD"
-                        caption="Situação Profissional:"
-                        inputPrompt="(Selecção a situação profissional)" />
-
-                    <lookupField id="linhasUtentesSituacaoProfissao"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
 
 
+                                </lookupPickerField>
+
+                                <lookupField
+                                        property="situacaoProfissional"
+                                        id="situacaoProfissionalField"
+                                        icon="font-icon:USER_MD"
+                                        width="600px"
+                                        caption="Situação Profissional:"
+                                        inputPrompt="(Selecção a situação profissional)" />
+                            </row>
+                        </rows>
+                    </grid>
                 </hbox>
                 <hbox spacing="true">
                     <button id="reset_utentes_situacao_profissao" icon="ERASER" caption="Limpar" />
@@ -79,6 +96,13 @@
                 </hbox>
             </scrollBox>
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasUtentesSituacaoProfissao"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
 
 
         <groupTable id="utentesSituacaoProfissionalsTable"

@@ -14,7 +14,7 @@
                     <condition>
                         <and>
                             <c:jpql>
-                                <c:where>e.tipoRendimento = :tipoRendimento</c:where>
+                                <c:where>e.tipoRendimento like :tipoRendimento</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -34,14 +34,11 @@
 
             <scrollBox spacing="true">
                 <hbox spacing="true">
-                    <lookupField
-                            inputPrompt="(Seleccione o tipo de rendimento)"
+                    <textField
+                            inputPrompt="(introduza o tipo de rendimento)"
                             id="tipoRendimentoField"
+                            width="600px"
                             icon="font-icon:HOME" caption="Tipo de Rendimento: "/>
-                    <lookupField id="linhastipoRendimento"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
                 </hbox>
 
 
@@ -51,6 +48,15 @@
                 </hbox>
             </scrollBox>
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhastipoRendimento"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
         <table id="tipoRendimentoesTable"
                width="100%"
                dataContainer="tipoRendimentoesDc"

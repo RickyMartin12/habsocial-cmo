@@ -14,10 +14,7 @@
                     <condition>
                         <and>
                             <c:jpql>
-                                <c:where>e.anoDeConstrucao = :anoDeConstrucao</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.designacao = :designacao</c:where>
+                                <c:where>e.designacao like :designacao</c:where>
                             </c:jpql>
                             <c:jpql>
                                 <c:where>extract(year from e.anoDeConstrucao) = :anoCons</c:where>
@@ -29,28 +26,12 @@
         </collection>
 
 
-        <keyValueCollection id="bloco_hab_designacao">
-            <properties>
-                <property name="designacao" datatype="string" />
-            </properties>
-            <loader id="bloco_hab_designacao_loader">
-                <query>
-                    <![CDATA[select o.designacao as designacao from cmolhao_BlocosHabitacaoSocial o where o.designacao is not null group by o.designacao]]>
-                </query>
-            </loader>
-        </keyValueCollection>
-
 
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="blocosHabitacaoSocialsTable"
             spacing="true">
-        <!--<filter id="filter"
-                applyTo="blocosHabitacaoSocialsTable"
-                dataLoader="blocosHabitacaoSocialsDl">
-            <properties include=".*"/>
-        </filter>-->
 
         <groupBox caption="Filtros de Pesquisa"
                   collapsable="true"
@@ -58,25 +39,29 @@
                   icon="font-icon:FILTER"
                   width="100%">
 
+
+
             <scrollBox spacing="true">
-                <hbox spacing="true">
-                    <textField id="anoCons" property="anoCons" maxLength="4" caption="Ano de Construção: " icon="font-icon:CALENDAR" inputPrompt="Insere o ano" stylename="ano_cost_text"/>
-                    <!--<dateField id="anoDeConstrucaoField" property="anoDeConstrucao" datatype="date" dateFormat="dd/MM/yyyy" caption="Ano de Construção: " icon="font-icon:CALENDAR"/>-->
-                    <lookupField id="bloco_hab_designacao_text"
-                                 optionsContainer="bloco_hab_designacao"
-                                 caption="Designação dos Blocos de Habitação Social:"
-                                 inputPrompt="(seleccione os Blocos de Habitação Social)"
-                                 icon="font-icon:HOME"
-                    />
-
-                    <lookupField id="linhasHabSocial"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
-
-                </hbox>
-
-
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <textField id="anoCons" property="anoCons" maxLength="4" caption="Ano de Construção: " icon="font-icon:CALENDAR" inputPrompt="Insere o ano" stylename="ano_cost_text"/>
+                            <textField id="bloco_hab_designacao_text"
+                                       property="designacao"
+                                       width="400px"
+                                       caption="Bloco de Habitação Social:"
+                                       inputPrompt="(introduza o bloco da habitação social)"
+                                       icon="font-icon:HOME"
+                            />
+                        </row>
+                    </rows>
+                </grid>
 
                 <hbox spacing="true">
 
@@ -86,8 +71,15 @@
                 </hbox>
             </scrollBox>
 
-
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasHabSocial"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+
+        </hbox>
 
         <table id="blocosHabitacaoSocialsTable"
                width="100%"

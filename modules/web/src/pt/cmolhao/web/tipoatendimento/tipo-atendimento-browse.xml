@@ -38,12 +38,10 @@
                     <lookupField
                             inputPrompt="(Seleccione o tipo de atendimento)"
                             property="tipoAtendimento"
+                            width="600px"
                             id="tipoAtendimentoField"
                             icon="font-icon:VOLUME_CONTROL_PHONE" caption="Tipo de Atendimento: "/>
-                    <lookupField id="linhasTipoAtendimento"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
+
                 </hbox>
 
 
@@ -53,6 +51,14 @@
                 </hbox>
             </scrollBox>
         </groupBox>
+
+
+        <hbox spacing="true">
+            <lookupField id="linhasTipoAtendimento"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
 
 
 

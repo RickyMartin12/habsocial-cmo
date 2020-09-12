@@ -1,10 +1,15 @@
 package pt.cmolhao.entity;
 
+import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.BaseIntegerIdEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
+import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.core.global.DesignSupport;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @DesignSupport("{'imported':true}")
 @AttributeOverrides({
@@ -14,9 +19,7 @@ import javax.persistence.*;
 @Table(name = "projectos_intervencao")
 @Entity(name = "cmolhao_ProjectosIntervencao")
 public class ProjectosIntervencao extends BaseIntegerIdEntity {
-    private static final long serialVersionUID = 6953221178067886824L;
-
-
+    private static final long serialVersionUID = 5599129493378927616L;
     @Column(name = "adultos")
     protected Boolean adultos;
     @Column(name = "comunidade")
@@ -31,11 +34,12 @@ public class ProjectosIntervencao extends BaseIntegerIdEntity {
     protected Boolean deficientescao;
     @Column(name = "deficienteslarresidencial")
     protected Boolean deficienteslarresidencial;
-
+    @Lob
+    @Column(name = "descricao_projecto")
+    protected String descricaoProjecto;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idinstituicao")
-    protected pt.cmolhao.entity.Instituicoes idinstituicao;
-
+    protected Instituicoes idinstituicao;
     @Column(name = "idosos")
     protected Boolean idosos;
     @Column(name = "idososapoiodomiciliario")
@@ -58,12 +62,28 @@ public class ProjectosIntervencao extends BaseIntegerIdEntity {
     protected Boolean jovenscreche;
     @Column(name = "jovensjardiminfancia")
     protected Boolean jovensjardiminfancia;
+    @Lob
+    @Column(name = "nome_projecto")
+    protected String nomeProjecto;
     @Column(name = "outrosgrupos", length = 250)
     protected String outrosgrupos;
     @Column(name = "pretendealargarservicos")
     protected Boolean pretendealargarservicos;
     @Column(name = "projectosemaprovacao")
     protected Boolean projectosemaprovacao;
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idprojectosintervencao")
+    protected Set<ProjectosEmAprovacao> projectosEmAprovacaos;
+
+    public Set<ProjectosEmAprovacao> getProjectosEmAprovacaos() {
+        return projectosEmAprovacaos;
+    }
+
+    public void setProjectosEmAprovacaos(Set<ProjectosEmAprovacao> projectosEmAprovacaos) {
+        this.projectosEmAprovacaos = projectosEmAprovacaos;
+    }
 
     public Boolean getProjectosemaprovacao() {
         return projectosemaprovacao;
@@ -87,6 +107,14 @@ public class ProjectosIntervencao extends BaseIntegerIdEntity {
 
     public void setOutrosgrupos(String outrosgrupos) {
         this.outrosgrupos = outrosgrupos;
+    }
+
+    public String getNomeProjecto() {
+        return nomeProjecto;
+    }
+
+    public void setNomeProjecto(String nomeProjecto) {
+        this.nomeProjecto = nomeProjecto;
     }
 
     public Boolean getJovensjardiminfancia() {
@@ -177,12 +205,20 @@ public class ProjectosIntervencao extends BaseIntegerIdEntity {
         this.idosos = idosos;
     }
 
-    public pt.cmolhao.entity.Instituicoes getIdinstituicao() {
+    public Instituicoes getIdinstituicao() {
         return idinstituicao;
     }
 
-    public void setIdinstituicao(pt.cmolhao.entity.Instituicoes idinstituicao) {
+    public void setIdinstituicao(Instituicoes idinstituicao) {
         this.idinstituicao = idinstituicao;
+    }
+
+    public String getDescricaoProjecto() {
+        return descricaoProjecto;
+    }
+
+    public void setDescricaoProjecto(String descricaoProjecto) {
+        this.descricaoProjecto = descricaoProjecto;
     }
 
     public Boolean getDeficienteslarresidencial() {

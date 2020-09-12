@@ -1,33 +1,94 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.tiporelacionamentoutentes">
     <data>
         <instance id="tipoRelacionamentoUtentesDc"
                   class="pt.cmolhao.entity.TipoRelacionamentoUtentes"
-                  view="_local">
+                  view="tipoRelacionamentoUtentes-view">
             <loader/>
+            <collection id="utentesRelacionadosDc" property="utentesRelacionados" />
         </instance>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="tipoRelacionamentoUtentesDc">
-            <column width="250px">
-                <textField id="idTipoRelacionamentoUtentes" visible="false" property="id" />
-                <lookupField
-                        inputPrompt="(Seleccione o tipo de relacionamento)"
-                        property="tipoRelacionamento"
-                        id="tipoRelacionamentoField"
-                        icon="font-icon:GROUP" caption="Tipo de Relacionamento: "/>
-                <lookupField
-                        inputPrompt="(Seleccione o tipo de relacionamento secundário)"
-                        property="tipoRelacionamentoInv"
-                        id="tipoRelacionamentoInvField"
-                        icon="font-icon:GROUP" caption="Tipo de Relacionamento Secundário: "/>
-            </column>
-        </form>
+
+        <tabSheet>
+            <tab id="dados_tipo_relacionamento_utentes"
+                 caption="Dados Gerais"
+                 icon="font-icon:GROUP"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_dados_tipo_relacionamento_utentes" dataContainer="tipoRelacionamentoUtentesDc">
+
+                    <column width="300px">
+                        <lookupField
+                                inputPrompt="(Seleccione o tipo de relacionamento)"
+                                property="tipoRelacionamento"
+                                stylename="tipo_relacionamento_utente_edit"
+                                id="tipoRelacionamentoField"
+                                icon="font-icon:GROUP" caption="Tipo de Relacionamento: "/>
+                        <textField id="idTipoRelacionamentoUtentes" visible="false" property="id" />
+                    </column>
+                    <column width="350px">
+                        <lookupField
+                                inputPrompt="(Seleccione o tipo de relacionamento secundário)"
+                                property="tipoRelacionamentoInv"
+                                stylename="tipo_relacionamento_utente_sec_edit"
+                                id="tipoRelacionamentoInvField"
+                                icon="font-icon:GROUP" caption="Tipo de Relacionamento Secundário: "/>
+                    </column>
+
+                </form>
+
+            </tab>
+        </tabSheet>
+
+        <tabSheet>
+            <tab id="utentes_relacionados"
+                 caption="Utentes Relacionados"
+                 icon="font-icon:GROUP"
+                 margin="true"
+                 spacing="true">
+
+                <groupBox id="utentesRelacionadosBox" caption="Utentes Relacionados">
+                    <table id="utentesRelacionadosesTable"
+                                width="100%"
+                                dataContainer="utentesRelacionadosDc"
+                                emptyStateMessage="Não Existe Dados na Tabela"
+                                emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                        <actions>
+                            <action id="create" type="create"/>
+                            <action id="edit" type="edit"/>
+                            <action id="remove" type="remove">
+                                <properties>
+                                    <property name="confirmation" value="true"/>
+                                    <property name="confirmationTitle" value="Remover a linha da tabela dos Utentes Relacionados."/>
+                                    <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha da tabela Utentes Relacionados?"/>
+                                </properties>
+                            </action>
+                        </actions>
+                        <columns>
+                            <column id="idUtenteRel1" caption="Relação do Utente 1"/>
+                            <column id="idUtenteRel2" caption="Relação do Utente 2"/>
+                            <column id="membroAgregado" caption="Membro Agregado"/>
+                            <column id="obsConf" caption="Observações de Confirmação"/>
+                            <column id="obsGerais" caption="Observações Gerais"/>
+                        </columns>
+                        <rowsCount/>
+                        <buttonsPanel id="buttonsPanel"
+                                      alwaysVisible="true">
+                            <button id="createBtn" action="utentesRelacionadosesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                            <button id="editBtn" action="utentesRelacionadosesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                            <button id="removeBtn" action="utentesRelacionadosesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                        </buttonsPanel>
+                    </table>
+                </groupBox>
+
+            </tab>
+        </tabSheet>
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
             <button caption="Fechar" action="windowClose" icon="CLOSE"/>

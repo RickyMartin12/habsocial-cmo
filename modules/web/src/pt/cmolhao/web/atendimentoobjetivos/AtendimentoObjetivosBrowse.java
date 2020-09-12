@@ -3,17 +3,18 @@ package pt.cmolhao.web.atendimentoobjetivos;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.ValueLoadContext;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.Table;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.gui.screen.LookupComponent;
 import pt.cmolhao.entity.AtendimentoObjetivos;
 import pt.cmolhao.web.atendimentoencaminhamento.AtendimentoEncaminhamentoEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,14 +27,20 @@ public class AtendimentoObjetivosBrowse extends StandardLookup<AtendimentoObjeti
     protected Table<AtendimentoObjetivos> atendimentoObjetivosesTable;
     @Inject
     protected LookupField linhasAtendimentoObjectivos;
-    @Inject
-    protected LookupField aten_enca_id;
+
     @Inject
     protected CollectionLoader<AtendimentoObjetivos> atendimentoObjetivosesDl;
+    @Inject
+    protected TextField<String> aten_enca_id;
+    @Named("atendimentoObjetivosesTable.remove")
+    protected RemoveAction<AtendimentoObjetivos> atendimentoObjetivosesTableRemove;
     @Inject
     private DataManager dataManager;
     @Inject
     private ScreenBuilders screenBuilders;
+
+    @Inject
+    private Dialogs dialogs;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -56,7 +63,7 @@ public class AtendimentoObjetivosBrowse extends StandardLookup<AtendimentoObjeti
                         .withInitializer(customer -> {
                             if (aten_enca_id.getValue() != null)
                             {
-                                customer.setAtendimentoObjetivoGeral(aten_enca_id.getValue().toString());
+                                customer.setAtendimentoObjetivoGeral(aten_enca_id.getValue());
                             }
                         })
                         .withScreenClass(AtendimentoObjetivosEdit.class)    // specific editor screen
@@ -69,24 +76,14 @@ public class AtendimentoObjetivosBrowse extends StandardLookup<AtendimentoObjeti
     protected void onAfterShow(AfterShowEvent event) {
 
         getWindow().setCaption("Listar Atendimento Objetivos");
-        // Arrend - Renda
-        List<String> options = new ArrayList<>();
-        String queryString = "select o.atendimentoObjetivoGeral as atendimentoObjetivoGeral from cmolhao_AtendimentoObjetivos o where o.atendimentoObjetivoGeral is not null group by o.atendimentoObjetivoGeral";
-        ValueLoadContext valueLoadContextontext = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString));
-        valueLoadContextontext.addProperty("atendimentoObjetivoGeral");
-        List<KeyValueEntity> resultList = dataManager.loadValues(valueLoadContextontext);
-        for (KeyValueEntity entry : resultList) {
-            options.add(entry.getValue("atendimentoObjetivoGeral"));
-        }
-        aten_enca_id.setOptionsList(options);
+
     }
 
     @Subscribe("search_atendimento_objectivos")
     protected void onSearch_atendimento_objectivosClick(Button.ClickEvent event) {
         if (aten_enca_id.getValue() != null)
         {
-            atendimentoObjetivosesDl.setParameter("atendimentoObjetivoGeral", aten_enca_id.getValue().toString());
+            atendimentoObjetivosesDl.setParameter("atendimentoObjetivoGeral", "(?i)" + aten_enca_id.getValue() + "%");
         }
         else
         {
@@ -99,9 +96,7 @@ public class AtendimentoObjetivosBrowse extends StandardLookup<AtendimentoObjeti
     @Subscribe("reset_atendimento_objectivos")
     protected void onReset_atendimento_objectivosClick(Button.ClickEvent event) {
         aten_enca_id.setValue(null);
-        linhasAtendimentoObjectivos.setValue(null);
         atendimentoObjetivosesDl.removeParameter("atendimentoObjetivoGeral");
-        atendimentoObjetivosesDl.setMaxResults(0);
         atendimentoObjetivosesDl.load();
     }
 
@@ -116,6 +111,37 @@ public class AtendimentoObjetivosBrowse extends StandardLookup<AtendimentoObjeti
             atendimentoObjetivosesDl.setMaxResults(0);
         }
         atendimentoObjetivosesDl.load();
+    }
+
+    @Subscribe("atendimentoObjetivosesTable.remove")
+    protected void onAtendimentoObjetivosesTableRemove(Action.ActionPerformedEvent event) {
+        atendimentoObjetivosesTableRemove.setConfirmation(false);
+        if (atendimentoObjetivosesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção de atendimento por objectivos")
+                    .withMessage("Deve seleccionar pelo um dos atendimentos por objectivos")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            AtendimentoObjetivos user = atendimentoObjetivosesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela de atendimento por objectivos '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do atendimento por objectivos número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        atendimentoObjetivosesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 
 

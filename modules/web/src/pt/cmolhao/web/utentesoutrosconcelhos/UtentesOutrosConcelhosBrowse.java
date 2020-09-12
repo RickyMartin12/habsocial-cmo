@@ -3,19 +3,23 @@ package pt.cmolhao.web.utentesoutrosconcelhos;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.ValueLoadContext;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.screen.LookupComponent;
 import pt.cmolhao.entity.FotosValencia;
+import pt.cmolhao.entity.Tiposvalencia;
 import pt.cmolhao.entity.UtentesOutrosConcelhos;
 import pt.cmolhao.entity.Valencias;
 import pt.cmolhao.web.habitacaosocial.HabitacaoSocialEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -36,21 +40,25 @@ public class UtentesOutrosConcelhosBrowse extends StandardLookup<UtentesOutrosCo
     @Inject
     protected CollectionLoader<UtentesOutrosConcelhos>  utentesOutrosConcelhosesDl;
     @Inject
-    protected LookupField<Valencias> idValenciaField;
+    protected LookupPickerField<Valencias> idValenciaField;
     @Inject
     protected LookupField linhasUtentesOutrosConcelhos;
-    @Inject
-    protected LookupField utentes_conc_freguesia_id;
-    @Inject
-    protected LookupField utentes_conc_concelho_id;
     @Inject
     protected GroupTable<UtentesOutrosConcelhos> utentesOutrosConcelhosesTable;
     @Inject
     protected CollectionContainer<Valencias> valenciasDc;
     @Inject
+    protected TextField<String> utentes_conc_freguesia_id;
+    @Inject
+    protected TextField<String> utentes_conc_concelho_id;
+    @Named("utentesOutrosConcelhosesTable.remove")
+    protected RemoveAction<UtentesOutrosConcelhos> utentesOutrosConcelhosesTableRemove;
+    @Inject
     private DataManager dataManager;
     @Inject
     private ScreenBuilders screenBuilders;
+    @Inject
+    private Dialogs dialogs;
 
     public Component generateValenciasDescricao(UtentesOutrosConcelhos entity) {
         Label label = (Label) uiComponents.create(Label.NAME);
@@ -73,14 +81,14 @@ public class UtentesOutrosConcelhosBrowse extends StandardLookup<UtentesOutrosCo
 
         if (utentes_conc_freguesia_id.getValue() != null)
         {
-            utentesOutrosConcelhosesDl.setParameter("freguesia",  utentes_conc_freguesia_id.getValue().toString());
+            utentesOutrosConcelhosesDl.setParameter("freguesia",  "(?i)" + utentes_conc_freguesia_id.getValue() + "%");
         } else {
             utentesOutrosConcelhosesDl.removeParameter("freguesia");
         }
 
         if (utentes_conc_concelho_id.getValue() != null)
         {
-            utentesOutrosConcelhosesDl.setParameter("concelho",  utentes_conc_concelho_id.getValue().toString());
+            utentesOutrosConcelhosesDl.setParameter("concelho",  "(?i)" + utentes_conc_concelho_id.getValue() + "%");
         } else {
             utentesOutrosConcelhosesDl.removeParameter("concelho");
         }
@@ -92,11 +100,9 @@ public class UtentesOutrosConcelhosBrowse extends StandardLookup<UtentesOutrosCo
         idValenciaField.setValue(null);
         utentes_conc_freguesia_id.setValue(null);
         utentes_conc_concelho_id.setValue(null);
-        linhasUtentesOutrosConcelhos.setValue(null);
         utentesOutrosConcelhosesDl.removeParameter("idValencia");
         utentesOutrosConcelhosesDl.removeParameter("freguesia");
         utentesOutrosConcelhosesDl.removeParameter("concelho");
-        utentesOutrosConcelhosesDl.setMaxResults(0);
         utentesOutrosConcelhosesDl.load();
     }
 
@@ -180,11 +186,11 @@ public class UtentesOutrosConcelhosBrowse extends StandardLookup<UtentesOutrosCo
                             }
                             if(utentes_conc_freguesia_id.getValue() != null)
                             {
-                                customer.setFreguesia(utentes_conc_freguesia_id.getValue().toString());
+                                customer.setFreguesia(utentes_conc_freguesia_id.getValue());
                             }
                             if(utentes_conc_concelho_id.getValue() != null)
                             {
-                                customer.setConcelho(utentes_conc_concelho_id.getValue().toString());
+                                customer.setConcelho(utentes_conc_concelho_id.getValue());
                             }
                         })
                         .withScreenClass(UtentesOutrosConcelhosEdit.class)    // specific editor screen
@@ -205,38 +211,37 @@ public class UtentesOutrosConcelhosBrowse extends StandardLookup<UtentesOutrosCo
         }
         idValenciaField.setOptionsMap(map);
 
-        // Freguesia
+    }
 
-        List<String> optionsFreguesia = new ArrayList<>();
-        String queryString_Freguesia = "select o.freguesia as freguesia from cmolhao_UtentesOutrosConcelhos o where o.freguesia is not null group by o.freguesia";
-        ValueLoadContext valueLoadContextontextFreguesia = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString_Freguesia));
-        valueLoadContextontextFreguesia.addProperty("freguesia");
-        List<KeyValueEntity> resultListFreguesia = dataManager.loadValues(valueLoadContextontextFreguesia);
-
-        for(KeyValueEntity entry : resultListFreguesia){
-            optionsFreguesia.add(entry.getValue("freguesia"));
+    @Subscribe("utentesOutrosConcelhosesTable.remove")
+    protected void onUtentesOutrosConcelhosesTableRemove(Action.ActionPerformedEvent event) {
+        utentesOutrosConcelhosesTableRemove.setConfirmation(false);
+        if (utentesOutrosConcelhosesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção dos utentes e outros concelhos")
+                    .withMessage("Deve seleccionar pelo um dos utentes e/ou outros concelhos")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
         }
-
-        utentes_conc_freguesia_id.setOptionsList(optionsFreguesia);
-
-        // Concelho
-
-        List<String> optionsLocalidade = new ArrayList<>();
-        String queryString_Localidade = "select o.concelho as concelho from cmolhao_UtentesOutrosConcelhos o where o.concelho is not null group by o.concelho";
-        ValueLoadContext valueLoadContextontextLocalidade = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString_Localidade));
-        valueLoadContextontextLocalidade.addProperty("concelho");
-        List<KeyValueEntity> resultListLocalidade = dataManager.loadValues(valueLoadContextontextLocalidade);
-
-        for(KeyValueEntity entry : resultListLocalidade){
-            optionsLocalidade.add(entry.getValue("concelho"));
+        else
+        {
+            UtentesOutrosConcelhos user = utentesOutrosConcelhosesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do utente e/ou outro concelho número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do utente e/ou outro concelho número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        utentesOutrosConcelhosesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
         }
-
-        utentes_conc_concelho_id.setOptionsList(optionsLocalidade);
-
-
-
     }
 
 }

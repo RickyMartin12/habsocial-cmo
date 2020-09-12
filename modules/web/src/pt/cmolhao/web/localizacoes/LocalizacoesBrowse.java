@@ -1,14 +1,18 @@
 package pt.cmolhao.web.localizacoes;
 
+import com.haulmont.charts.gui.components.map.MapViewer;
+import com.haulmont.charts.gui.map.model.Marker;
+import com.haulmont.cuba.gui.Dialogs;
+import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.UiComponents;
-import com.haulmont.cuba.gui.components.GroupTable;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.components.actions.BaseAction;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.gui.screen.LookupComponent;
 import pt.cmolhao.entity.FotosValencia;
 import pt.cmolhao.entity.Localizacoes;
 import pt.cmolhao.entity.ProjectosIntervencao;
@@ -16,6 +20,7 @@ import pt.cmolhao.entity.Valencias;
 import pt.cmolhao.web.fotosvalencia.FotosValenciaEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -33,9 +38,15 @@ import java.util.List;
 @LoadDataBeforeShow
 public class LocalizacoesBrowse extends StandardLookup<Localizacoes> {
     @Inject
+    protected MapViewer map_loc;
+    @Inject
+    protected CollectionContainer<Localizacoes> localizacoesesDc;
+    @Named("localizacoesesTable.remove")
+    protected RemoveAction<Localizacoes> localizacoesesTableRemove;
+    @Inject
     private GroupTable<Localizacoes> localizacoesesTable;
     @Inject
-    private LookupField<Valencias> idvalenciaField;
+    private LookupPickerField<Valencias> idvalenciaField;
     @Inject
     private CollectionContainer<Valencias> valenciasDc;
     @Inject
@@ -47,6 +58,12 @@ public class LocalizacoesBrowse extends StandardLookup<Localizacoes> {
     private ScreenBuilders screenBuilders;
     @Inject
     private LookupField linhasLocalizacoes;
+
+    @Inject
+    private Notifications notifications;
+
+    @Inject
+    private Dialogs dialogs;
 
 
 
@@ -66,6 +83,14 @@ public class LocalizacoesBrowse extends StandardLookup<Localizacoes> {
 
     @Subscribe
     protected void onInit(InitEvent event) {
+
+
+        // Carregar o mapa
+        map_loc.setCenter(map_loc.createGeoPoint(37.03518, -7.83019));
+        map_loc.setZoom(12);
+        map_loc.setScrollWheelEnabled(false);
+
+
         localizacoesesTable.setItemClickAction(new BaseAction("itemClickAction")
                 .withHandler(actionPerformedEvent -> {
                     Localizacoes customer = localizacoesesTable.getSingleSelected();
@@ -145,6 +170,30 @@ public class LocalizacoesBrowse extends StandardLookup<Localizacoes> {
             map.put(item.getDescricaotecnica() + " " , item);
         }
         idvalenciaField.setOptionsMap(map);
+
+
+        Collection<Localizacoes> loc = localizacoesesDc.getItems();
+        for (Localizacoes items : loc) {
+            String coord = items.getCoord();
+            if (coord != null)
+            {
+                String[] arrOfStr = coord.split(";");
+                String longitudade = arrOfStr[0];
+                String latitude = arrOfStr[1];
+
+                addMarker(Double.parseDouble(longitudade), Double.parseDouble(latitude), items.getIdvalencia().getDescricaotecnica());
+
+            }
+        }
+    }
+
+    // Adicionar uma dada localizacao
+    private void addMarker(double latitude, double longitude, String localizacao) {
+        Marker marker = map_loc.createMarker("Localização: " + localizacao, map_loc.createGeoPoint(latitude, longitude), true);
+
+        marker.setClickable(true);
+        marker.setDraggable(false);
+        map_loc.addMarker(marker);
     }
 
     @Subscribe("search_localizacoes")
@@ -180,6 +229,38 @@ public class LocalizacoesBrowse extends StandardLookup<Localizacoes> {
             localizacoesesDl.setMaxResults(0);
         }
         localizacoesesDl.load();
+
+    }
+
+    @Subscribe("localizacoesesTable.remove")
+    protected void onLocalizacoesesTableRemove(Action.ActionPerformedEvent event) {
+        localizacoesesTableRemove.setConfirmation(false);
+        if (localizacoesesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção de localizações")
+                    .withMessage("Deve seleccionar pelo um das localizações")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            Localizacoes user = localizacoesesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela da localização número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela da localização número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        localizacoesesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
 
     }
 

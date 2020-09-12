@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="redeTrabalhoesTable"
+        messagesPack="pt.cmolhao.web.redetrabalho">
+    <data readOnly="true">
+        <collection id="redeTrabalhoesDc"
+                    class="pt.cmolhao.entity.RedeTrabalho"
+                    view="redeTrabalho-view">
+            <loader id="redeTrabalhoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_RedeTrabalho e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.nome like :nome</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="redeTrabalhoesTable"
+            spacing="true">
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <textField id="nomeRedeTrabalho"
+                                       stylename="nome_rede_trabalho_browse"
+                                       caption="Rede de Trabalho:"
+                                       inputPrompt="(Introduza a nome)"
+                                       property="nome"
+                                       width="300px"
+                                       icon="font-icon:WRENCH"
+                            />
+                        </row>
+                    </rows>
+
+                </grid>
+
+                <hbox spacing="true">
+                    <button id="search_rede_trabalho" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                    <button id="reset_search_rede_trabalho" icon="ERASER" caption="Limpar" />
+                </hbox>
+
+            </scrollBox>
+        </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasRedeTrabalho"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
+        <groupTable id="redeTrabalhoesTable"
+                    width="100%"
+                    dataContainer="redeTrabalhoesDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove" />
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="nome" caption="Nome de Rede de Trabalho"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+
+                <button id="createBtn" action="redeTrabalhoesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="redeTrabalhoesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="redeTrabalhoesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button action="redeTrabalhoesTable.excel" stylename="friendly"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

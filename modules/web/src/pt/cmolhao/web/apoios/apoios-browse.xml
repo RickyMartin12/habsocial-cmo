@@ -14,35 +14,15 @@
                     <condition>
                         <and>
                             <c:jpql>
-                                <c:join>join e.idEquipamento i</c:join>
-                                <c:where>i.id = :idEquipamento</c:where>
-                            </c:jpql>
-                            <c:jpql>
                                 <c:join>join e.idInstituicao j</c:join>
                                 <c:where>j.id = :idInstituicao</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:join>join e.idTipoapoio k</c:join>
-                                <c:where>k.id = :idTipoapoio</c:where>
                             </c:jpql>
                             <c:jpql>
                                 <c:join>join e.idUtente l</c:join>
                                 <c:where>l.id = :idUtente</c:where>
                             </c:jpql>
                             <c:jpql>
-                                <c:where>e.numProcesso = :numProcesso</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>extract(year from e.dataAtribuicao) = :dataAtribuicao</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>extract(year from e.dataFim) = :dataFim</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>extract(year from e.dataPedido) = :dataPedido</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>extract(year from e.dataRenovacao) = :dataRenovacao</c:where>
+                                <c:where>cast(e.numProcesso text) like :numProcesso</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -112,56 +92,55 @@
                   width="100%">
 
             <scrollBox spacing="true">
-                <hbox spacing="true">
-                    <lookupField id="idEquipamentoField"
-                                 property="idEquipamento"
-                                 optionsContainer="equipamentoesDc"
-                                 inputPrompt="(Seleccione a descrição do equipamento)"
-                                 caption="Descrição do equipamento: "
-                                 icon="WRENCH"/>
-
-                    <lookupField property="idInstituicao" id="idInstituicaoField" optionsContainer="InstituicaoDc"
-                                 caption="Designação da Instituição da valencia:"
-                                 inputPrompt="(Seleccione a designação da instituição da valência)"
-                                 icon="font-icon:BUILDING"/>
-
-                    <lookupField property="idTipoapoio" id="idTipoapoioField" optionsContainer="tipoAjudasDc"
-                                 caption="Descrição do tipo de Ajuda:"
-                                 inputPrompt="(Seleccione o tipo de ajuda)"
-                                 icon="font-icon:QUESTION"/>
-                </hbox>
-                <hbox spacing="true">
-                    <lookupField
-                            property="idUtente"
-                            id="utenteField"
-                            optionsContainer="UtentesDC"
-                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente"
-                            inputPrompt="(Seleccione o nome e a identificação do utente)"/>
-
-                    <lookupField id="idEstadosField"
-                                 property="idEstado"
-                                 optionsContainer="estadosesDc"
-                                 inputPrompt="(Seleccione os estados dos equipamentos)"
-                                 caption="Estado do Equipamento:"
-                                 icon="REFRESH_ACTION" />
-
-                    
-                    <textField id="numProcessoField" property="numProcesso"
-                               caption="Numero Processo: " icon="ID_CARD"
-                               inputPrompt="(Indica o numero do processo)"/>
 
 
-                </hbox>
-                <hbox spacing="true">
-                    <textField id="dataAtribuicaoField" property="dataAtribuicao" maxLength="4" caption="Data de Atribuição: " inputPrompt="Insere o Ano" icon="CALENDAR_CHECK_O" stylename="data_atribuicao_text"/>
-                    <textField id="dataFimField" property="dataFim" maxLength="4" caption="Data de Fim: " inputPrompt="Insere o Ano" icon="CALENDAR_CHECK_O" stylename="data_fim_text"/>
-                    <textField id="dataPedidoField" property="dataPedido" maxLength="4" caption="Data do Pedido: " inputPrompt="Insere o Ano" icon="CALENDAR_CHECK_O" stylename="data_pedido_text"/>
-                    <textField id="dataRenovacaoField" property="dataRenovacao" maxLength="4" caption="Data de Renovação: " inputPrompt="Insere o Ano" icon="CALENDAR_CHECK_O" stylename="data_renovacao_text"/>
-                    <lookupField id="linhasApoio"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
-                </hbox>
+                <grid spacing="true"
+                      stylename="grid_search_apoios"
+                      id="grid_search_apoios">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField property="idInstituicao" id="idInstituicaoField" optionsContainer="InstituicaoDc"
+                                               caption="Designação da Instituição da valencia:"
+                                               inputPrompt="(Seleccione a instituição)"
+                                               width="500px"
+                                               stylename="id_instituicao_apoio_search"
+                                               icon="font-icon:BUILDING">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                            <lookupPickerField
+                                    property="idUtente"
+                                    id="utenteField"
+                                    optionsContainer="UtentesDC"
+                                    icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente"
+                                    width="280px"
+                                    stylename="id_utente_apoio_search"
+                                    inputPrompt="(Seleccione o utente)">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+
+                            <textField id="numProcessoField" property="numProcesso"
+                                       stylename="num_processo_search"
+                                       caption="Numero Processo: " icon="ID_CARD"
+                                       inputPrompt="(Indica o numero do processo)"/>
+                        </row>
+                    </rows>
+                </grid>
                 <hbox spacing="true">
                     <button id="reset_apoios" icon="ERASER" caption="Limpar" />
                     <button id="search_apoios" caption="Pesquisar" icon="SEARCH" stylename="info" />
@@ -169,6 +148,15 @@
             </scrollBox>
 
         </groupBox>
+
+
+        <hbox spacing="true">
+            <lookupField id="linhasApoio"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
         <groupTable id="apoiosesTable"
                     width="100%"
                     dataContainer="apoiosesDc"
@@ -187,16 +175,19 @@
                 <action id="excel" type="excel"/>
             </actions>
             <columns>
-                <column id="dataAtribuicao" caption="Data de Atribuição"/>
-                <column id="dataFim" caption="Data de Fim"/>
-                <column id="dataPedido" caption="Data de Pedido"/>
-                <column id="dataRenovacao" caption="Data de Renovação"/>
-                <column id="idEstado" caption="Estado" />
-                <column id="idEquipamento" caption="Descrição do Equipamento "/>
                 <column id="idInstituicao" caption="Designação da Instituição"/>
-                <column id="idTipoapoio" caption="Tipo de Ajuda"/>
                 <column id="idUtente" caption="Utente"/>
                 <column id="numProcesso" caption="Número Processo"/>
+
+                <column id="dataAtribuicao" caption="Data de Atribuição"/>
+                <column id="dataPedido" caption="Data de Pedido"/>
+                <column id="dataRenovacao" caption="Data de Renovação"/>
+                <column id="dataFim" caption="Data de Fim"/>
+
+
+                <column id="idEstado" caption="Estado" />
+                <column id="idTipoapoio" caption="Tipo de Ajuda"/>
+
                 <column id="observacaoEstado" caption="Observação Estado"/>
                 <column id="observacoesConf" caption="Observações Confirmações"/>
                 <column id="observacoesGerais" caption="Observações Gerais"/>

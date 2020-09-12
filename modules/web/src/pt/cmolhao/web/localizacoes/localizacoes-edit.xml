@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.localizacoes">
     <data>
         <instance id="localizacoesDc"
@@ -29,21 +28,43 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="localizacoesDc">
-            <column width="250px">
-                <textField id="idLocalizacaoField" property="id" visible="false" />
-                <textField id="coordField" property="coord" caption="Coordenadas: " icon="MAP_MARKER"/>
 
-                <lookupField id="idvalenciaField"
-                             property="idvalencia"
-                             optionsContainer="valenciasDc"
-                             inputPrompt="(Seleccione a Descrição da Valência)"
-                            caption="Valencia: "
-                            icon="SIMPLYBUILT"/>
+        <tabSheet>
+            <tab id="dados_mapa"
+                 caption="Dados Mapa"
+                 icon="font-icon:MAP"
+                 margin="true"
+                 spacing="true">
 
-                <button id="click_map" caption="Localizacao pelo gps" icon="MAP_PIN"/>
-            </column>
-        </form>
+                <form id="form_dados_mapa" dataContainer="localizacoesDc">
+                    <column width="400px">
+                        <lookupPickerField id="idvalenciaField"
+                                           property="idvalencia"
+                                           stylename="id_valencia_localizacoes"
+                                           optionsContainer="valenciasDc"
+                                           inputPrompt="(Seleccione a Descrição da Valência)"
+                                           width="300px"
+                                           caption="Valencia: "
+                                           icon="SIMPLYBUILT">
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+                    </column>
+                    <column width="350px">
+                        <textField id="coordField" stylename="coord_localizacoes" property="coord" caption="Coordenadas: " width="350px" icon="MAP_MARKER"/>
+                    </column>
+                    <column width="200px">
+                        <button id="click_map" caption="Localizacao pelo gps" icon="MAP_PIN"/>
+                        <textField id="idLocalizacaoField" property="id" visible="false" />
+                    </column>
+                </form>
+
+            </tab>
+
+        </tabSheet>
+
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
             <button action="windowClose" caption="Fechar" icon="CLOSE"/>

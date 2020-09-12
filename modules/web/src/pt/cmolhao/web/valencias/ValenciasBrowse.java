@@ -1,18 +1,19 @@
 package pt.cmolhao.web.valencias;
 
+import com.haulmont.cuba.core.entity.FileDescriptor;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.GroupTable;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
-import pt.cmolhao.entity.Instituicoes;
-import pt.cmolhao.entity.Tiposvalencia;
-import pt.cmolhao.entity.Valencias;
+import com.haulmont.cuba.gui.screen.LookupComponent;
+import pt.cmolhao.entity.*;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,10 @@ import java.util.List;
 @LoadDataBeforeShow
 public class ValenciasBrowse extends StandardLookup<Valencias> {
     @Inject
+    protected TextField<String> descricaotecnicaField;
+    @Named("valenciasesTable.remove")
+    protected RemoveAction<Valencias> valenciasesTableRemove;
+    @Inject
     private LookupField<Instituicoes> idinstituicaoField;
 
     @Inject
@@ -29,13 +34,18 @@ public class ValenciasBrowse extends StandardLookup<Valencias> {
     @Inject
     private CollectionLoader<Valencias> valenciasesDl;
     @Inject
-    private LookupField<Tiposvalencia> idtipovalenciaField;
+    private LookupPickerField<Tiposvalencia> idtipovalenciaField;
     @Inject
     private GroupTable<Valencias> valenciasesTable;
     @Inject
     private ScreenBuilders screenBuilders;
     @Inject
     private LookupField linhasValencias;
+
+    @Inject
+    private Dialogs dialogs;
+
+
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -60,12 +70,18 @@ public class ValenciasBrowse extends StandardLookup<Valencias> {
                         .withInitializer(customer -> {
                             customer.setIdinstituicao(idinstituicaoField.getValue());
                             customer.setIdtipovalencia(idtipovalenciaField.getValue());
+                            if (descricaotecnicaField.getValue() != null)
+                            {
+                                customer.setDescricaotecnica(descricaotecnicaField.getValue());
+                            }
+
                         })
                         .withScreenClass(ValenciasEdit.class)    // specific editor screen
                         .build()
                         .show()
         );
     }
+
 
 
 
@@ -87,6 +103,13 @@ public class ValenciasBrowse extends StandardLookup<Valencias> {
             valenciasesDl.removeParameter("idtipovalencia");
         }
 
+        // Descricao
+        if (descricaotecnicaField.getValue() != null) {
+            valenciasesDl.setParameter("descricaotecnica", "(?i)%" + descricaotecnicaField.getValue() + "%");
+        } else {
+            valenciasesDl.removeParameter("descricaotecnica");
+        }
+
 
         valenciasesDl.load();
     }
@@ -95,10 +118,10 @@ public class ValenciasBrowse extends StandardLookup<Valencias> {
     public void onReset_valenciaClick(Button.ClickEvent event) {
         idinstituicaoField.setValue(null);
         idtipovalenciaField.setValue(null);
-        linhasValencias.setValue(null);
+        descricaotecnicaField.setValue(null);
         valenciasesDl.removeParameter("idinstituicao");
         valenciasesDl.removeParameter("idtipovalencia");
-        valenciasesDl.setMaxResults(0);
+        valenciasesDl.removeParameter("descricaotecnica");
         valenciasesDl.load();
 
     }
@@ -119,6 +142,37 @@ public class ValenciasBrowse extends StandardLookup<Valencias> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         getWindow().setCaption("Listar Valências");
+    }
+
+    @Subscribe("valenciasesTable.remove")
+    protected void onValenciasesTableRemove(Action.ActionPerformedEvent event) {
+        valenciasesTableRemove.setConfirmation(false);
+        if (valenciasesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção de valênçias")
+                    .withMessage("Deve seleccionar pelo um das valênçias")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            Valencias user = valenciasesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela da valênçia número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela da valênçias número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        valenciasesTableRemove.execute();
+                                    }),
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 
 

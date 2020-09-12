@@ -1,6 +1,7 @@
 package pt.cmolhao.web.pessoalauxiliar;
 
 import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.components.LookupPickerField;
 import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.screen.*;
@@ -24,7 +25,7 @@ public class PessoalAuxiliarEdit extends StandardEditor<PessoalAuxiliar> {
     @Inject
     private CollectionContainer<Valencias> valenciasDc;
     @Inject
-    private LookupField<Valencias> idValenciaField;
+    private LookupPickerField<Valencias> idValenciaField;
 
     @Subscribe
     protected void onInit(InitEvent event) {

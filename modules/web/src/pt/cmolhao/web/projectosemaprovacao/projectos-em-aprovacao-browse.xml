@@ -50,36 +50,54 @@
                   width="100%">
 
             <scrollBox spacing="true">
-            <hbox spacing="true">
 
-                <lookupField id="idprojectosintervencaoField"
-                             property="idprojectosintervencao"
-                             optionsContainer="projectosIntervencaosDc"
-                             inputPrompt="(Seleccione o Projecto de intervenção)"
-                             caption="Projecto de Intervenção (Com Aprovação): "
-                             contextHelpText="Projecto de Intervenção --> (ID do Projecto em Aprovação - Descrição da Instituição)"
-                             icon="PASTE"/>
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField id="idprojectosintervencaoField"
+                                               property="idprojectosintervencao"
+                                               icon="PASTE"
+                                               optionsContainer="projectosIntervencaosDc"
+                                               width="600px"
+                                               inputPrompt="(Seleccione o Projecto de intervenção aprovado)"
+                                               caption="Projecto de Intervenção Aprovado: ">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
 
-                <lookupField id="etapaprocessoField"
-                             caption="Etapa de Processo: "
-                             icon="CHECK_CIRCLE"
-                             property="etapaprocesso"
-                             inputPrompt="(Seleccione uma das Etapas de Processo)"
-                             />
-
-                <lookupField id="linhasProjectosEmAprovacao"
-                             caption="Mostrar Numero de Linhas"
-                             inputPrompt="(seleccione o numero de linhas)"
-                             icon="ARROWS_V"/>
-
-
-            </hbox>
+                            <lookupField id="etapaprocessoField"
+                                         caption="Etapa de Processo: "
+                                         icon="CHECK_CIRCLE"
+                                         width="300px"
+                                         property="etapaprocesso"
+                                         inputPrompt="(Seleccione uma das Etapas de Processo)"/>
+                        </row>
+                    </rows>
+                </grid>
             <hbox spacing="true">
                 <button id="search_projectos_em_aprovacao" caption="Pesquisar" icon="SEARCH" stylename="info" />
                 <button id="reset_search_projectos_em_aprovacao" icon="ERASER" caption="Limpar" />
             </hbox>
             </scrollBox>
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasProjectosEmAprovacao"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
+
         <groupTable id="projectosEmAprovacaosTable"
                     width="100%"
                     dataContainer="projectosEmAprovacaosDc"

@@ -18,10 +18,10 @@
                                 <c:where>i.id = :idValencia</c:where>
                             </c:jpql>
                             <c:jpql>
-                                <c:where>e.freguesia = :freguesia</c:where>
+                                <c:where>e.freguesia like :freguesia</c:where>
                             </c:jpql>
                             <c:jpql>
-                                <c:where>e.concelho = :concelho</c:where>
+                                <c:where>e.concelho like :concelho</c:where>
                             </c:jpql>
                         </and>
                     </condition>
@@ -39,27 +39,7 @@
             </loader>
         </collection>
 
-        <keyValueCollection id="utentes_outros_concelhos_freguesia_id">
-            <properties>
-                <property name="freguesia" datatype="string" />
-            </properties>
-            <loader id="utentes_outros_concelhos_freguesia_id_loader">
-                <query>
-                    <![CDATA[select o.freguesia as freguesia from cmolhao_UtentesOutrosConcelhos o where o.freguesia is not null group by o.freguesia]]>
-                </query>
-            </loader>
-        </keyValueCollection>
 
-        <keyValueCollection id="utentes_outros_concelhos_localidade_id">
-            <properties>
-                <property name="concelho" datatype="string" />
-            </properties>
-            <loader id="utentes_outros_concelhos_localidade_id_loader">
-                <query>
-                    <![CDATA[select o.concelho as concelho from cmolhao_UtentesOutrosConcelhos o where o.concelho is not null group by o.concelho]]>
-                </query>
-            </loader>
-        </keyValueCollection>
 
     </data>
     <dialogMode height="600"
@@ -76,36 +56,56 @@
             <scrollBox spacing="true">
             <hbox spacing="true">
 
-                <lookupField id="idValenciaField"
-                             optionsContainer="valenciasDc"
-                             property="idValencia"
-                             inputPrompt="(Seleccione a Descrição da Valência)"
-                             caption="Valencia: "
-                             icon="SIMPLYBUILT"/>
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField id="idValenciaField"
+                                         optionsContainer="valenciasDc"
+                                         property="idValencia"
+                                         inputPrompt="(Seleccione a Descrição da Valência)"
+                                         caption="Valencia: "
+                                         width="680px"
+                                         icon="SIMPLYBUILT">
 
-                <lookupField id="utentes_conc_freguesia_id"
-                             optionsContainer="utentes_outros_concelhos_freguesia_id"
-                             caption="Freguesia:"
-                             inputPrompt="(seleccione a freguesia do utente)"
-                             icon="font-icon:INSTITUTION"
-                />
-                <lookupField id="utentes_conc_concelho_id"
-                             optionsContainer="utentes_outros_concelhos_localidade_id"
-                             caption="Concelho:"
-                             inputPrompt="(seleccione o concelho do utente)"
-                             icon="font-icon:MAP"
-                />
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+                            </lookupPickerField>
+                            <textField id="utentes_conc_freguesia_id"
+                                       caption="Freguesia:"
+                                       property="freguesia"
+                                       inputPrompt="(introduza a freguesia)"
+                                       stylename="utentes_conc_freguesia_id_search"
+                                       width="220px"
+                                       icon="font-icon:INSTITUTION"
+                            />
+                            <textField id="utentes_conc_concelho_id"
+                                       caption="Concelho:"
+                                       property="concelho"
+                                       width="220px"
+                                       stylename="utentes_conc_concelho_id_search"
+                                       inputPrompt="(introduza o concelho)"
+                                       icon="font-icon:MAP"
+                            />
+
+                        </row>
+                    </rows>
+                </grid>
+
 
             </hbox>
 
-            <hbox spacing="true">
 
-                <lookupField id="linhasUtentesOutrosConcelhos"
-                             caption="Mostrar Numero de Linhas"
-                             inputPrompt="(seleccione o numero de linhas)"
-                             icon="ARROWS_V"/>
-
-            </hbox>
 
             <hbox spacing="true">
                 <button id="search_utentes_outros_concelhos" caption="Pesquisar" icon="SEARCH" stylename="info" />
@@ -113,6 +113,16 @@
             </hbox>
             </scrollBox>
         </groupBox>
+
+
+        <hbox spacing="true">
+
+            <lookupField id="linhasUtentesOutrosConcelhos"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+
+        </hbox>
 
         <groupTable id="utentesOutrosConcelhosesTable"
                     width="100%"

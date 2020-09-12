@@ -11,6 +11,13 @@
             <loader id="tiposSituacoesUtentesesDl">
                 <query>
                     <![CDATA[select e from cmolhao_TiposSituacoesUtentes e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.descricaoSituacao like :descricaoSituacao</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
@@ -24,20 +31,42 @@
                       spacing="true"
                       icon="font-icon:FILTER"
                       width="100%">
-            <scrollBox spacing="true">
-                <hbox spacing="true">
 
-                    <lookupField id="linhasTiposSituacoesUtentes"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
+            <scrollBox spacing="true">
+
+                <hbox spacing="true">
+                    <textField
+                            inputPrompt="(introduza o tipo de descricao)"
+                            id="tipoSituacaoUtentesField"
+                            property="descricaoSituacao"
+                            width="650px"
+                            icon="font-icon:REFRESH" caption="Tipo de Situação: "/>
+                </hbox>
+
+                <hbox spacing="true">
+                    <button id="reset_tipo_situacao_utentes" icon="ERASER" caption="Limpar" />
+                    <button id="search_tipo_situacao_utentes" caption="Pesquisar" icon="SEARCH" stylename="info" />
                 </hbox>
 
             </scrollBox>
+
+
         </groupBox>
+
+        <hbox spacing="true">
+
+            <lookupField id="linhasTiposSituacoesUtentes"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
         <table id="tiposSituacoesUtentesesTable"
                width="100%"
-               dataContainer="tiposSituacoesUtentesesDc">
+               dataContainer="tiposSituacoesUtentesesDc"
+               emptyStateMessage="Não Existe Dados na Tabela"
+               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>

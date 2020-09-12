@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="subRedeTrabalhoesTable"
+        messagesPack="pt.cmolhao.web.subredetrabalho">
+    <data readOnly="true">
+        <collection id="subRedeTrabalhoesDc"
+                    class="pt.cmolhao.entity.SubRedeTrabalho"
+                    view="subRedeTrabalho-view">
+            <loader id="subRedeTrabalhoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_SubRedeTrabalho e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idRedeTrabalho i</c:join>
+                                <c:where>i.id = :idRedeTrabalho</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.nome like :nome</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+
+
+        <collection id="redeTrabalhoDc"
+                    class="pt.cmolhao.entity.RedeTrabalho"
+                    view="redeTrabalho-view">
+            <loader id="customersRedeTrabalhoLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_RedeTrabalho e]]>
+                </query>
+            </loader>
+        </collection>
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="subRedeTrabalhoesTable"
+            spacing="true">
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+
+                <grid spacing="true" width="100%">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField id="idRedeTrabalhoField"
+                                               property="idRedeTrabalho"
+                                               optionsContainer="redeTrabalhoDc"
+                                               inputPrompt="(Seleccione a rede trabalho)"
+                                               width="400px"
+                                               caption="Rede de Trabalho: "
+                                               icon="WRENCH">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                            <textField id="nomeField" property="nome"
+                                       width="300px"
+                                       inputPrompt="(Introduza a sub rede de trabalho)"
+                                       caption="Nome da Sub Rede de Trabalho: " icon="WRENCH"/>
+                        </row>
+                    </rows>
+
+                </grid>
+
+                <hbox spacing="true">
+                    <button id="reset_sub_rede_trabalho" icon="ERASER" caption="Limpar" />
+                    <button id="search_sub_rede_trabalho" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+
+
+            </scrollBox>
+        </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasSubRedeTrabalho"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
+        <groupTable id="subRedeTrabalhoesTable"
+                    width="100%"
+                    dataContainer="subRedeTrabalhoesDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="idRedeTrabalho" caption="Rede de Trabalho"/>
+                <column id="nome" caption="Nome da Sub Rede de Trabalho"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="subRedeTrabalhoesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="subRedeTrabalhoesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="subRedeTrabalhoesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button action="subRedeTrabalhoesTable.excel" stylename="friendly"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

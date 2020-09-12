@@ -16,6 +16,9 @@
                             <c:jpql>
                                 <c:where>e.tipoRelacionamento = :tipoRelacionamento</c:where>
                             </c:jpql>
+                            <c:jpql>
+                                <c:where>e.tipoRelacionamentoInv = :tipoRelacionamentoInv</c:where>
+                            </c:jpql>
                         </and>
                     </condition>
                 </query>
@@ -35,15 +38,33 @@
 
             <scrollBox spacing="true">
                 <hbox spacing="true">
-                    <lookupField
-                            inputPrompt="(Seleccione o tipo de relacionamento)"
-                            property="tipoRelacionamento"
-                            id="tipoRelacionamentoField"
-                            icon="font-icon:GROUP" caption="Tipo de Relacionamento: "/>
-                    <lookupField id="linhastipoRelacionamento"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
+
+
+                    <grid spacing="true">
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <lookupField
+                                    inputPrompt="(Seleccione o tipo de relacionamento)"
+                                    property="tipoRelacionamento"
+                                    id="tipoRelacionamentoField"
+                                    width="400px"
+                                    icon="font-icon:GROUP" caption="Tipo de Relacionamento: "/>
+                                <lookupField
+                                        inputPrompt="(Seleccione o tipo de relacionamento invertido)"
+                                        property="tipoRelacionamentoInv"
+                                        width="400px"
+                                        editable="false"
+                                        id="tipoRelacionamentoInvField"
+                                        icon="font-icon:GROUP" caption="Tipo de Relacionamento Invertido: "/>
+                            </row>
+                        </rows>
+                    </grid>
                 </hbox>
 
 
@@ -53,6 +74,13 @@
                 </hbox>
             </scrollBox>
         </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhastipoRelacionamento"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
 
         <table id="tipoRelacionamentoUtentesesTable"
                width="100%"

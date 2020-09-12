@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.claso">
+    <data>
+        <instance id="fotosValenciaClasoDc"
+                  class="pt.cmolhao.entity.FotosValenciaClaso"
+                  view="fotosValenciaClaso-view">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="fotosValenciaClasoDc">
+            <column width="250px">
+                <checkBox id="daequipacolaboradoresField" property="daequipacolaboradores"/>
+                <textField id="descricaoField" property="descricao"/>
+                <checkBox id="doequipamentoField" property="doequipamento"/>
+                <pickerField id="idvalenciaField" property="idvalencia">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                        <action id="clear" type="picker_clear"/>
+                    </actions>
+                </pickerField>
+                <upload id="imageField" fileStoragePutMode="IMMEDIATE" property="image" showFileName="true"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button caption="Fechar" action="windowClose" icon="CLOSE"/>
+        </hbox>
+    </layout>
+</window>

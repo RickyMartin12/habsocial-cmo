@@ -5,6 +5,7 @@ import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.components.LookupPickerField;
 import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.DataContext;
@@ -35,7 +36,7 @@ import com.haulmont.cuba.core.entity.Entity;
 @LoadDataBeforeShow
 public class UtentesOutrosConcelhosEdit extends StandardEditor<UtentesOutrosConcelhos> {
     @Inject
-    protected LookupField<Valencias> idValenciaField;
+    protected LookupPickerField<Valencias> idValenciaField;
     @Inject
     protected CollectionContainer<Valencias> valenciasDc;
     @Inject
@@ -113,8 +114,6 @@ public class UtentesOutrosConcelhosEdit extends StandardEditor<UtentesOutrosConc
             freguesiaField.setValue(null);
             concelhoField.setValue(null);
         }
-
-
 
     }
 

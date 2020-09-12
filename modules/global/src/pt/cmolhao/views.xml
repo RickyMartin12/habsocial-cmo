@@ -2,37 +2,28 @@
 <views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
 
 
-    <view entity="cmolhao_Valencias" name="valencias-view" extends="_local">
-        <property name="idtipovalencia" view="_minimal">
-            <property name="nome"/>
-        </property>
-        <property name="idinstituicao" view="_minimal">
-            <property name="descricao"/>
-        </property>
-    </view>
-
-
+    <!-- Fotos de Valencia -->
     <view entity="cmolhao_FotosValencia" name="fotosValencia-view" extends="_local">
-        <property name="image" view="_base" />
+        <property name="image" view="_local" />
         <property name="idvalencia" view="_minimal" >
             <property name="descricaotecnica" />
         </property>
     </view>
+
+    <!-- Ajudas Técnicas -->
     <view entity="cmolhao_AjudasTecnicas" name="ajudasTecnicas-view" extends="_local">
         <property name="idValencia" view="_minimal" >
             <property name="descricaotecnica" />
         </property>
     </view>
+
+    <!-- Localizações -->
     <view entity="cmolhao_Localizacoes" name="localizacoes-view" extends="_local">
         <property name="idvalencia" view="_minimal" >
             <property name="descricaotecnica" />
         </property>
     </view>
-    <view entity="cmolhao_ProjectosIntervencao" name="projectosIntervencao-view" extends="_local">
-        <property name="idinstituicao" view="_minimal">
-            <property name="descricao"/>
-        </property>
-    </view>
+
     <view entity="cmolhao_PessoalAuxiliar" name="pessoalAuxiliar-view" extends="_local">
         <property name="idValencia" view="_minimal" >
             <property name="descricaotecnica" />
@@ -41,11 +32,6 @@
     <view entity="cmolhao_PessoalTecnico" name="pessoalTecnico-view" extends="_local">
         <property name="idValencia" view="_minimal" >
             <property name="descricaotecnica" />
-        </property>
-    </view>
-    <view entity="cmolhao_Login" name="login-view" extends="_local">
-        <property name="instituicao" view="_minimal">
-            <property name="descricao"/>
         </property>
     </view>
     <view entity="cmolhao_ProjectosEmAprovacao" name="projectosEmAprovacao-view" extends="_local">
@@ -69,6 +55,19 @@
     <view entity="cmolhao_Tecnico" name="tecnico-view" extends="_local">
         <property name="idInstituicao" view="_minimal">
             <property name="descricao"/>
+        </property>
+        <property name="atendimentos" view="_minimal">
+            <property name="contactosEfetuados"/>
+            <property name="dataAtendimento"/>
+            <property name="idAtendimentoEncaminhamento" view="_minimal"/>
+            <property name="idAtendimentoObjetivo" view="_minimal"/>
+            <property name="idTecnico" view="_minimal"/>
+            <property name="idTipoAtendimento" view="_minimal"/>
+            <property name="idUtente" view="_minimal"/>
+            <property name="objetivoOutros"/>
+            <property name="obsConf"/>
+            <property name="obsGerais"/>
+            <property name="outrosEncaminhamentos"/>
         </property>
     </view>
     <view entity="cmolhao_UtentesSituacaoProfissional" name="utentesSituacaoProfissional-view" extends="_local">
@@ -145,6 +144,11 @@
         <property name="idEstado" view="_minimal">
             <property name="estadosProcessos" />
         </property>
+
+
+
+
+
     </view>
     <view entity="cmolhao_Moradores" name="moradores-view" extends="_local">
         <property name="habitacaoSocial" view="_minimal">
@@ -161,21 +165,321 @@
         </property>
     </view>
     <view entity="cmolhao_Utente" name="utente-view" extends="_local">
-        <property name="grauEscolaridade" view="_minimal">
-            <property name="descricao" />
+        <property name="grauEscolaridade" view="_minimal"/>
+        <property name="habilitacoes" view="_minimal"/>
+        <property name="idTipoCivil" view="_minimal"/>
+        <property name="idTipologiaFamiliar" view="_minimal"/>
+        <property name="profissao" view="_minimal"/>
+        <property name="apoios" view="_minimal">
+            <property name="dataAtribuicao"/>
+            <property name="dataPedido"/>
+            <property name="idEquipamento" view="_minimal"/>
+            <property name="idEstado" view="_minimal"/>
+            <property name="idTipoapoio" view="_minimal"/>
+            <property name="idUtente" view="_minimal"/>
+            <property name="numProcesso"/>
+            <property name="valorApoio"/>
         </property>
-        <property name="idTipoCivil" view="_minimal">
-            <property name="tipo" />
+        <property name="atendimentos" view="_minimal">
+            <property name="contactosEfetuados"/>
+            <property name="dataAtendimento"/>
+            <property name="idTecnico" view="_minimal"/>
+            <property name="idTipoAtendimento" view="_minimal"/>
+            <property name="objetivoOutros"/>
+            <property name="obsConf"/>
+            <property name="obsGerais"/>
+            <property name="outrosEncaminhamentos"/>
         </property>
-        <property name="idTipologiaFamiliar" view="_minimal">
-            <property name="tipologiaFamiliar" />
-            <property name="tipologiaFamiliarEspecifica" />
+        <property name="moradores" view="_minimal">
+            <property name="dataInicio"/>
+            <property name="dateFim"/>
+            <property name="habitacaoSocial" view="_minimal"/>
+            <property name="moradaSocial"/>
+            <property name="obsConf"/>
+            <property name="obsGerais"/>
         </property>
-        <property name="profissao" view="_minimal">
+        <property name="rendimentosUtentes" view="_minimal">
+            <property name="ano"/>
+            <property name="idTipoRendimento" view="_minimal"/>
+            <property name="valorRendimento"/>
+        </property>
+        <property name="situacaoUtentes" view="_minimal">
+            <property name="dataFim"/>
+            <property name="dataInicio"/>
+            <property name="idTiposSituacaoUtentes" view="_minimal"/>
+            <property name="obsGerais"/>
+            <property name="obserConf"/>
+        </property>
+        <property name="utentesRelacionados" view="_minimal">
+            <property name="idTipoRelUtentes" view="_minimal"/>
+            <property name="idUtenteRel1" view="_minimal"/>
+            <property name="membroAgregado"/>
+        </property>
+        <property name="utentesRelacionados2" view="_minimal">
+            <property name="idTipoRelUtentes" view="_minimal"/>
+            <property name="idUtenteRel2" view="_minimal"/>
+            <property name="membroAgregado"/>
+        </property>
+        <property name="utentesSituacaoProfissionals" view="_minimal">
+            <property name="dataSituacaoProfissional"/>
+            <property name="situacaoProfissional"/>
+            <property name="utente" view="_minimal"/>
+        </property>
+    </view>
+    <view entity="cmolhao_Valencias" name="valencias-view" extends="_local">
+
+        <property name="idResSocial" view="_minimal"/>
+        <property name="idinstituicao" view="_minimal"/>
+        <property name="idtipovalencia" view="_minimal"/>
+        <property name="ajudasTecnicas" view="_minimal">
+            <property name="datadisponivel"/>
+            <property name="idValencia" view="_minimal"/>
+            <property name="localizacao"/>
+            <property name="tipoajuda"/>
+        </property>
+        <property name="fotosValencias" view="_minimal">
+            <property name="daequipacolaboradores"/>
+            <property name="descricao"/>
+            <property name="doequipamento"/>
+            <property name="image" view="_minimal"/>
+        </property>
+        <property name="localizacoes" view="_minimal">
+            <property name="coord"/>
+            <property name="idvalencia" view="_minimal"/>
+        </property>
+        <property name="utentesOutrosConcelhos" view="_minimal">
+            <property name="concelho"/>
+            <property name="freguesia"/>
+            <property name="idValencia" view="_minimal"/>
+        </property>
+    </view>
+
+    <view entity="cmolhao_Tiposvalencia" name="tiposvalencia-view" extends="_local">
+        <property name="resp_social" view="_minimal" >
+            <property name="idTipoValencia" />
             <property name="nome" />
+            <property name="capacidade" />
         </property>
-        <property name="habilitacoes" view="_minimal">
-            <property name="descricao" />
+        <property name="valencias" view="_minimal">
+            <property name="idResSocial" view="_minimal" />
+            <property name="acordocapacidade"/>
+            <property name="acordocomparticipacao"/>
+            <property name="acordodatacelebracao"/>
+            <property name="acordolistaespera"/>
+            <property name="acordoutentesextrafeminino"/>
+            <property name="acordoutentesextramasculino"/>
+            <property name="acordoutentesfeminino"/>
+            <property name="acordoutentesmasculino"/>
+            <property name="acordovagasfeminino"/>
+            <property name="acordovagasmasculino"/>
+            <property name="actividadescultural"/>
+            <property name="actividadesdesportiva"/>
+            <property name="actividadeslazer"/>
+            <property name="actividadesoutras"/>
+            <property name="actividadesrecreativas"/>
+            <property name="actividadessocial"/>
+            <property name="certauditoriaexternacurso"/>
+            <property name="certauditoriasinternascurso"/>
+            <property name="certdatainicio"/>
+            <property name="certdataprevista"/>
+            <property name="certificacaoqualidade"/>
+            <property name="contactodirectortecnico"/>
+            <property name="contratacaoexternajardinagem"/>
+            <property name="contratacaoexternalimpeza"/>
+            <property name="contratacaoexternaoutras"/>
+            <property name="contratacaoexternarefeicoes"/>
+            <property name="coordenadagps"/>
+            <property name="directortecnico"/>
+            <property name="emal"/>
+            <property name="fax"/>
+            <property name="formacaoprevia"/>
+            <property name="horariofimsemanafimmanha"/>
+            <property name="horariofimsemanafimtarde"/>
+            <property name="horariofimsemanainiciomanha"/>
+            <property name="horariofimsemanainiciotarde"/>
+            <property name="horariosemanafimmanha"/>
+            <property name="horariosemanafimtarde"/>
+            <property name="horariosemanainiciomanha"/>
+            <property name="horariosemanainiciotarde"/>
+            <property name="idinstituicao" view="_minimal"/>
+            <property name="idtipovalencia" view="_minimal"/>
+            <property name="nregsegsocial"/>
+            <property name="recursostecnicoscomplementares"/>
+            <property name="servicosespecializados"/>
+            <property name="telefone"/>
+            <property name="tipoacordosegsocial"/>
+            <property name="transporte"/>
+            <property name="transportecapacidade"/>
+            <property name="transporteproprio"/>
+            <property name="url"/>
+            <property name="utentesfuzeta"/>
+            <property name="utentesmoncarapacho"/>
+            <property name="utentesolhao"/>
+            <property name="utentespechao"/>
+            <property name="utentesquelfes"/>
+        </property>
+    </view>
+
+
+    <view entity="cmolhao_BlocosHabitacaoSocial" name="blocosHabitacaoSocial-view" extends="_local">
+        <property name="habitacaoSocials" view="_minimal">
+            <property name="andar"/>
+            <property name="arrend"/>
+            <property name="bl"/>
+            <property name="codPostal"/>
+            <property name="coord"/>
+            <property name="freguesia"/>
+            <property name="idUtente" view="_minimal"/>
+            <property name="localidade"/>
+            <property name="rua"/>
+            <property name="sitoLugar"/>
+            <property name="moradores" view="_minimal">
+                <property name="utente" view="_minimal">
+                    <property name="nome" />
+                    <property name="numContribuinte" />
+                    <property name="paisOrigem" />
+                </property>
+            </property>
+        </property>
+    </view>
+        <view entity="cmolhao_ProjectosIntervencao" name="projectosIntervencao-view" extends="_local">
+        <property name="idinstituicao" view="_minimal"/>
+        <property name="projectosEmAprovacaos" view="_minimal">
+            <property name="etapaprocesso"/>
+            <property name="idprojectosintervencao" view="_minimal"/>
+            <property name="tipologia"/>
+        </property>
+    </view>
+    <view entity="cmolhao_RespostaSocial" name="respostaSocial-view" extends="_local">
+        <property name="idTipoValencia" view="_minimal">
+            <property name="nome"/>
+        </property>
+        <property name="valencias" view="_minimal">
+            <property name="idResSocial" view="_minimal" />
+            <property name="acordocapacidade"/>
+            <property name="acordocomparticipacao"/>
+            <property name="acordodatacelebracao"/>
+            <property name="acordolistaespera"/>
+            <property name="acordoutentesextrafeminino"/>
+            <property name="acordoutentesextramasculino"/>
+            <property name="acordoutentesfeminino"/>
+            <property name="acordoutentesmasculino"/>
+            <property name="acordovagasfeminino"/>
+            <property name="acordovagasmasculino"/>
+            <property name="actividadescultural"/>
+            <property name="actividadesdesportiva"/>
+            <property name="actividadeslazer"/>
+            <property name="actividadesoutras"/>
+            <property name="actividadesrecreativas"/>
+            <property name="actividadessocial"/>
+            <property name="certauditoriaexternacurso"/>
+            <property name="certauditoriasinternascurso"/>
+            <property name="certdatainicio"/>
+            <property name="certdataprevista"/>
+            <property name="certificacaoqualidade"/>
+            <property name="contactodirectortecnico"/>
+            <property name="contratacaoexternajardinagem"/>
+            <property name="contratacaoexternalimpeza"/>
+            <property name="contratacaoexternaoutras"/>
+            <property name="contratacaoexternarefeicoes"/>
+            <property name="coordenadagps"/>
+            <property name="directortecnico"/>
+            <property name="emal"/>
+            <property name="fax"/>
+            <property name="formacaoprevia"/>
+            <property name="horariofimsemanafimmanha"/>
+            <property name="horariofimsemanafimtarde"/>
+            <property name="horariofimsemanainiciomanha"/>
+            <property name="horariofimsemanainiciotarde"/>
+            <property name="horariosemanafimmanha"/>
+            <property name="horariosemanafimtarde"/>
+            <property name="horariosemanainiciomanha"/>
+            <property name="horariosemanainiciotarde"/>
+            <property name="idinstituicao" view="_minimal"/>
+            <property name="idtipovalencia" view="_minimal"/>
+            <property name="nregsegsocial"/>
+            <property name="recursostecnicoscomplementares"/>
+            <property name="servicosespecializados"/>
+            <property name="telefone"/>
+            <property name="tipoacordosegsocial"/>
+            <property name="transporte"/>
+            <property name="transportecapacidade"/>
+            <property name="transporteproprio"/>
+            <property name="url"/>
+            <property name="utentesfuzeta"/>
+            <property name="utentesmoncarapacho"/>
+            <property name="utentesolhao"/>
+            <property name="utentespechao"/>
+            <property name="utentesquelfes"/>
+        </property>
+    </view>
+    <view entity="cmolhao_AtendimentoEncaminhamento" name="atendimentoEncaminhamento-view" extends="_local">
+        <property name="atendimentos" view="_minimal">
+            <property name="contactosEfetuados"/>
+            <property name="dataAtendimento"/>
+            <property name="idTecnico" view="_minimal"/>
+            <property name="idTipoAtendimento" view="_minimal"/>
+            <property name="idUtente" view="_minimal"/>
+        </property>
+    </view>
+    <view entity="cmolhao_Estados" name="estados-view" extends="_local">
+        <property name="apoios" view="_minimal">
+            <property name="dataAtribuicao"/>
+            <property name="dataFim"/>
+            <property name="dataPedido"/>
+            <property name="dataRenovacao"/>
+            <property name="idEquipamento" view="_minimal"/>
+            <property name="idInstituicao" view="_minimal"/>
+            <property name="idTipoapoio" view="_minimal"/>
+            <property name="idUtente" view="_minimal"/>
+            <property name="numProcesso"/>
+            <property name="observacaoEstado"/>
+            <property name="observacoesConf"/>
+            <property name="observacoesGerais"/>
+        </property>
+    </view>
+    <view entity="cmolhao_GrauEscolaridade" name="grauEscolaridade-view" extends="_local">
+
+        <property name="utentes" view="_minimal">
+            <property name="certUniaoEuropeia"/>
+            <property name="dataNasc"/>
+            <property name="deficiente"/>
+            <property name="dependente"/>
+            <property name="email"/>
+            <property name="estadoCivil"/>
+            <property name="habilitacoes" view="_minimal"/>
+            <property name="idTipoCivil" view="_minimal"/>
+            <property name="idTipologiaFamiliar" view="_minimal"/>
+            <property name="niss"/>
+            <property name="numIdCivil"/>
+            <property name="obsConf"/>
+            <property name="obsGerais"/>
+            <property name="paisOrigem"/>
+            <property name="profissao" view="_minimal"/>
+            <property name="telefone"/>
+            <property name="telem_vel"/>
+        </property>
+    </view>
+    <view entity="cmolhao_HabilitacoesLiterarias" name="habilitacoesLiterarias-view" extends="_local">
+
+        <property name="utentes" view="_minimal">
+            <property name="certUniaoEuropeia"/>
+            <property name="dataNasc"/>
+            <property name="deficiente"/>
+            <property name="dependente"/>
+            <property name="email"/>
+            <property name="estadoCivil"/>
+            <property name="grauEscolaridade" view="_minimal"/>
+            <property name="idTipoCivil" view="_minimal"/>
+            <property name="idTipologiaFamiliar" view="_minimal"/>
+            <property name="niss"/>
+            <property name="numIdCivil"/>
+            <property name="obsConf"/>
+            <property name="obsGerais"/>
+            <property name="paisOrigem"/>
+            <property name="profissao" view="_minimal"/>
+            <property name="telefone"/>
+            <property name="telem_vel"/>
         </property>
     </view>
     <view entity="cmolhao_HabitacaoSocial" name="habitacaoSocial-view" extends="_local">
@@ -183,10 +487,767 @@
             <property name="designacao"/>
         </property>
         <property name="idUtente" view="_minimal">
+            <property name="nome"/>
+            <property name="numContribuinte"/>
+        </property>
+        <property name="moradores" view="_minimal">
+            <property name="dataInicio"/>
+            <property name="dateFim"/>
+            <property name="habitacaoSocial" view="_minimal"/>
+            <property name="moradaSocial"/>
+            <property name="obsConf"/>
+            <property name="obsGerais"/>
+            <property name="utente" view="_minimal"/>
+        </property>
+    </view>
+    <view entity="cmolhao_Profissao" name="profissao-view" extends="_local">
+        <property name="utentes" view="_minimal">
+            <property name="certUniaoEuropeia"/>
+            <property name="dataNasc"/>
+            <property name="deficiente"/>
+            <property name="dependente"/>
+            <property name="email"/>
+            <property name="estadoCivil"/>
+            <property name="grauEscolaridade" view="_minimal"/>
+            <property name="habilitacoes" view="_minimal"/>
+            <property name="idTipoCivil" view="_minimal"/>
+            <property name="idTipologiaFamiliar" view="_minimal"/>
+            <property name="niss"/>
+            <property name="numIdCivil"/>
+            <property name="obsConf"/>
+            <property name="obsGerais"/>
+            <property name="paisOrigem"/>
+            <property name="profissao" view="_minimal"/>
+            <property name="telefone"/>
+            <property name="telem_vel"/>
+        </property>
+    </view>
+    <view entity="cmolhao_TipoAjuda" name="tipoAjuda-view" extends="_local">
+
+        <property name="apoios" view="_minimal">
+            <property name="dataAtribuicao"/>
+            <property name="dataFim"/>
+            <property name="dataPedido"/>
+            <property name="dataRenovacao"/>
+            <property name="idEquipamento" view="_minimal"/>
+            <property name="idEstado" view="_minimal"/>
+            <property name="idInstituicao" view="_minimal"/>
+            <property name="idTipoapoio" view="_minimal"/>
+            <property name="idUtente" view="_minimal"/>
+            <property name="numProcesso"/>
+            <property name="observacaoEstado"/>
+            <property name="observacoesConf"/>
+            <property name="observacoesGerais"/>
+            <property name="valorApoio"/>
+        </property>
+    </view>
+    <view entity="cmolhao_TipoAtendimento" name="tipoAtendimento-view" extends="_local">
+        <property name="atendimentos" view="_minimal">
+            <property name="contactosEfetuados"/>
+            <property name="dataAtendimento"/>
+            <property name="idAtendimentoEncaminhamento" view="_minimal"/>
+            <property name="idAtendimentoObjetivo" view="_minimal"/>
+            <property name="idTecnico" view="_minimal"/>
+            <property name="idTipoAtendimento" view="_minimal"/>
+            <property name="idUtente" view="_minimal"/>
+            <property name="objetivoOutros"/>
+            <property name="obsConf"/>
+            <property name="obsGerais"/>
+            <property name="outrosEncaminhamentos"/>
+        </property>
+    </view>
+    <view entity="cmolhao_TipoCivil" name="tipoCivil-view" extends="_local">
+        <property name="utentes" view="_minimal">
+            <property name="certUniaoEuropeia"/>
+            <property name="dataNasc"/>
+            <property name="deficiente"/>
+            <property name="dependente"/>
+            <property name="email"/>
+            <property name="estadoCivil"/>
+            <property name="grauEscolaridade" view="_minimal"/>
+            <property name="habilitacoes" view="_minimal"/>
+            <property name="idTipoCivil" view="_minimal"/>
+            <property name="idTipologiaFamiliar" view="_minimal"/>
+            <property name="niss"/>
+            <property name="numIdCivil"/>
+            <property name="obsConf"/>
+            <property name="obsGerais"/>
+            <property name="paisOrigem"/>
+            <property name="profissao" view="_minimal"/>
+            <property name="telefone"/>
+            <property name="telem_vel"/>
+        </property>
+    </view>
+    <view entity="cmolhao_TipologiaFamiliar" name="tipologiaFamiliar-view" extends="_local">
+        <property name="utentes" view="_minimal">
+            <property name="certUniaoEuropeia"/>
+            <property name="dataNasc"/>
+            <property name="deficiente"/>
+            <property name="dependente"/>
+            <property name="email"/>
+            <property name="estadoCivil"/>
+            <property name="grauEscolaridade" view="_minimal"/>
+            <property name="habilitacoes" view="_minimal"/>
+            <property name="idTipoCivil" view="_minimal"/>
+            <property name="idTipologiaFamiliar" view="_minimal"/>
+            <property name="niss"/>
+            <property name="numIdCivil"/>
+            <property name="obsConf"/>
+            <property name="obsGerais"/>
+            <property name="paisOrigem"/>
+            <property name="profissao" view="_minimal"/>
+            <property name="telefone"/>
+            <property name="telem_vel"/>
+        </property>
+    </view>
+    <view entity="cmolhao_TipoRelacionamentoUtentes" name="tipoRelacionamentoUtentes-view" extends="_local">
+        <property name="utentesRelacionados" view="_minimal">
+            <property name="idUtenteRel1" view="_minimal"/>
+            <property name="idUtenteRel2" view="_minimal"/>
+            <property name="membroAgregado"/>
+            <property name="obsConf"/>
+            <property name="obsGerais"/>
+        </property>
+    </view>
+    <view entity="cmolhao_TipoRendimento" name="tipoRendimento-view" extends="_local">
+
+        <property name="rendimentosUtentes" view="_minimal">
+            <property name="ano"/>
+            <property name="idTipoRendimento" view="_minimal"/>
+            <property name="idUtente" view="_minimal"/>
+            <property name="valorRendimento"/>
+        </property>
+    </view>
+    <view entity="cmolhao_TiposSituacoesUtentes" name="tiposSituacoesUtentes-view" extends="_local">
+        <property name="situacaoUtentes" view="_minimal">
+            <property name="dataFim"/>
+            <property name="dataInicio"/>
+            <property name="idTiposSituacaoUtentes" view="_minimal"/>
+            <property name="idUtente" view="_minimal"/>
+            <property name="obsGerais"/>
+            <property name="obserConf"/>
+        </property>
+    </view>
+    <view entity="cmolhao_AtendimentoObjetivos" name="atendimentoObjetivos-view" extends="_local">
+        <property name="atendimentos" view="_minimal">
+            <property name="contactosEfetuados"/>
+            <property name="dataAtendimento"/>
+            <property name="idAtendimentoEncaminhamento" view="_minimal"/>
+            <property name="idAtendimentoObjetivo" view="_minimal"/>
+            <property name="idTecnico" view="_minimal"/>
+            <property name="idTipoAtendimento" view="_minimal"/>
+            <property name="idUtente" view="_minimal"/>
+            <property name="objetivoOutros"/>
+            <property name="obsConf"/>
+            <property name="obsGerais"/>
+            <property name="outrosEncaminhamentos"/>
+        </property>
+    </view>
+    <view entity="cmolhao_Equipamento" name="equipamento-view" extends="_local">
+
+        <property name="apoios" view="_minimal">
+            <property name="dataAtribuicao"/>
+            <property name="dataFim"/>
+            <property name="dataPedido"/>
+            <property name="dataRenovacao"/>
+            <property name="idEquipamento" view="_minimal"/>
+            <property name="idEstado" view="_minimal"/>
+            <property name="idInstituicao" view="_minimal"/>
+            <property name="idTipoapoio" view="_minimal"/>
+            <property name="idUtente" view="_minimal"/>
+            <property name="numProcesso"/>
+            <property name="observacaoEstado"/>
+            <property name="observacoesConf"/>
+            <property name="observacoesGerais"/>
+            <property name="valorApoio"/>
+        </property>
+    </view>
+    <view entity="cmolhao_Instituicoes" name="instituicoes-view" extends="_local">
+
+
+        <property name="valencias" view="_minimal">
+            <property name="acordocapacidade"/>
+            <property name="acordocomparticipacao"/>
+            <property name="acordodatacelebracao"/>
+            <property name="acordolistaespera"/>
+            <property name="acordoutentesextrafeminino"/>
+            <property name="acordoutentesextramasculino"/>
+            <property name="acordoutentesfeminino"/>
+            <property name="acordoutentesmasculino"/>
+            <property name="acordovagasfeminino"/>
+            <property name="acordovagasmasculino"/>
+            <property name="actividadescultural"/>
+            <property name="actividadesdesportiva"/>
+            <property name="actividadeslazer"/>
+            <property name="actividadesoutras"/>
+            <property name="actividadesrecreativas"/>
+            <property name="actividadessocial"/>
+            <property name="certauditoriaexternacurso"/>
+            <property name="certauditoriasinternascurso"/>
+            <property name="certdatainicio"/>
+            <property name="certdataprevista"/>
+            <property name="certificacaoqualidade"/>
+            <property name="contactodirectortecnico"/>
+            <property name="contratacaoexternajardinagem"/>
+            <property name="contratacaoexternalimpeza"/>
+            <property name="contratacaoexternaoutras"/>
+            <property name="contratacaoexternarefeicoes"/>
+            <property name="coordenadagps"/>
+            <property name="directortecnico"/>
+            <property name="emal"/>
+            <property name="fax"/>
+            <property name="formacaoprevia"/>
+            <property name="horariofimsemanafimmanha"/>
+            <property name="horariofimsemanafimtarde"/>
+            <property name="horariofimsemanainiciomanha"/>
+            <property name="horariofimsemanainiciotarde"/>
+            <property name="horariosemanafimmanha"/>
+            <property name="horariosemanafimtarde"/>
+            <property name="horariosemanainiciomanha"/>
+            <property name="horariosemanainiciotarde"/>
+            <property name="idResSocial" view="_minimal"/>
+            <property name="idinstituicao" view="_minimal"/>
+            <property name="idtipovalencia" view="_minimal"/>
+            <property name="nregsegsocial"/>
+            <property name="recursostecnicoscomplementares"/>
+            <property name="servicosespecializados"/>
+            <property name="telefone"/>
+            <property name="tipoacordosegsocial"/>
+            <property name="transporte"/>
+            <property name="transportecapacidade"/>
+            <property name="transporteproprio"/>
+            <property name="url"/>
+            <property name="utentesfuzeta"/>
+            <property name="utentesmoncarapacho"/>
+            <property name="utentesolhao"/>
+            <property name="utentespechao"/>
+            <property name="utentesquelfes"/>
+        </property>
+        <property name="apoios" view="_minimal">
+            <property name="dataAtribuicao"/>
+            <property name="dataPedido"/>
+            <property name="idEquipamento" view="_minimal"/>
+            <property name="idEstado" view="_minimal"/>
+            <property name="idTipoapoio" view="_minimal"/>
+            <property name="idUtente" view="_minimal"/>
+            <property name="numProcesso"/>
+            <property name="valorApoio"/>
+        </property>
+        <property name="tecnicos" view="_minimal"/>
+        <property name="projectosIntervencaos" view="_minimal">
+            <property name="descricaoProjecto"/>
+            <property name="nomeProjecto"/>
+            <property name="projectosemaprovacao"/>
+        </property>
+        <property name="membrosRedeTrabalhos" view="_minimal">
+            <property name="idInsituicao" view="_minimal"/>
+            <property name="idRedeTrabalho" view="_minimal"/>
+            <property name="dataAdesao" />
+        </property>
+    </view>
+    <view entity="cmolhao_InstituicoesClaso" name="instituicoesClaso-view" extends="_local">
+        <property name="valenciasClasos" view="_minimal">
+            <property name="idResSocial" view="_minimal" />
+            <property name="acordocapacidade"/>
+            <property name="acordocomparticipacao"/>
+            <property name="acordodatacelebracao"/>
+            <property name="acordolistaespera"/>
+            <property name="acordoutentesextrafeminino"/>
+            <property name="acordoutentesextramasculino"/>
+            <property name="acordoutentesfeminino"/>
+            <property name="acordoutentesmasculino"/>
+            <property name="acordovagasfeminino"/>
+            <property name="acordovagasmasculino"/>
+            <property name="actividadescultural"/>
+            <property name="actividadesdesportiva"/>
+            <property name="actividadeslazer"/>
+            <property name="actividadesoutras"/>
+            <property name="actividadesrecreativas"/>
+            <property name="actividadessocial"/>
+            <property name="certauditoriaexternacurso"/>
+            <property name="certauditoriasinternascurso"/>
+            <property name="certdatainicio"/>
+            <property name="certdataprevista"/>
+            <property name="certificacaoqualidade"/>
+            <property name="contactodirectortecnico"/>
+            <property name="contratacaoexternajardinagem"/>
+            <property name="contratacaoexternalimpeza"/>
+            <property name="contratacaoexternaoutras"/>
+            <property name="contratacaoexternarefeicoes"/>
+            <property name="coordenadagps"/>
+            <property name="directortecnico"/>
+            <property name="emal"/>
+            <property name="fax"/>
+            <property name="formacaoprevia"/>
+            <property name="horariofimsemanafimmanha"/>
+            <property name="horariofimsemanafimtarde"/>
+            <property name="horariofimsemanainiciomanha"/>
+            <property name="horariofimsemanainiciotarde"/>
+            <property name="horariosemanafimmanha"/>
+            <property name="horariosemanafimtarde"/>
+            <property name="horariosemanainiciomanha"/>
+            <property name="horariosemanainiciotarde"/>
+            <property name="idinstituicao" view="_minimal"/>
+            <property name="idtipovalencia" view="_minimal"/>
+            <property name="nregsegsocial"/>
+            <property name="recursostecnicoscomplementares"/>
+            <property name="servicosespecializados"/>
+            <property name="telefone"/>
+            <property name="tipoacordosegsocial"/>
+            <property name="transporte"/>
+            <property name="transportecapacidade"/>
+            <property name="transporteproprio"/>
+            <property name="url"/>
+            <property name="utentesfuzeta"/>
+            <property name="utentesmoncarapacho"/>
+            <property name="utentesolhao"/>
+            <property name="utentespechao"/>
+            <property name="utentesquelfes"/>
+        </property>
+
+    </view>
+    <view entity="cmolhao_ValenciasClaso" name="valenciasClaso-view" extends="_local">
+        <property name="idResSocial" view="_minimal"/>
+        <property name="idinstituicao" view="_minimal"/>
+        <property name="idtipovalencia" view="_minimal"/>
+
+        <property name="ajudasTecnicasClasos" view="_minimal">
+            <property name="datadisponivel"/>
+            <property name="idValencia" view="_minimal"/>
+            <property name="localizacao"/>
+            <property name="tipoajuda"/>
+        </property>
+        <property name="fotosValenciaClasos" view="_minimal">
+            <property name="daequipacolaboradores"/>
+            <property name="descricao"/>
+            <property name="doequipamento"/>
+            <property name="image" view="_minimal"/>
+        </property>
+        <property name="localizacoesClasos" view="_minimal">
+            <property name="coord"/>
+            <property name="idvalencia" view="_minimal"/>
+        </property>
+        <property name="utentesOutrosConcelhosClasos" view="_minimal">
+            <property name="concelho"/>
+            <property name="freguesia"/>
+            <property name="idValencia" view="_minimal"/>
+        </property>
+
+    </view>
+    <view entity="cmolhao_AjudasTecnicasClaso" name="ajudasTecnicasClaso-view" extends="_local">
+        <property name="idValencia" view="_minimal"/>
+    </view>
+    <view entity="cmolhao_FotosValenciaClaso" name="fotosValenciaClaso-view" extends="_local">
+        <property name="image" view="_local" />
+        <property name="idvalencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+    <view entity="cmolhao_UtentesOutrosConcelhosClaso" name="utentesOutrosConcelhosClaso-view" extends="_local">
+        <property name="idValencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+    <view entity="cmolhao_LocalizacoesClaso" name="localizacoesClaso-view" extends="_local">
+        <property name="idvalencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+    <view entity="cmolhao_SubRedeTrabalho" name="subRedeTrabalho-view" extends="_local">
+        <property name="idRedeTrabalho" view="_minimal"/>
+        <property name="documentacaos" view="_minimal">
+            <property name="dataDocumento"/>
+            <property name="idRedeTrabalho" view="_minimal"/>
+            <property name="idSubRedeTrabalho" view="_minimal"/>
+            <property name="nomeFicheiro"/>
+            <property name="numeroDocumentacao"/>
+            <property name="file" view="_minimal"/>
+        </property>
+    </view>
+    <view entity="cmolhao_Documentacao" name="documentacao-view" extends="_local">
+
+        <property name="idRedeTrabalho" view="_minimal">
             <property name="nome" />
-            <property name="numContribuinte" />
+        </property>
+        <property name="idSubRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="file" view="_minimal"/>
+    </view>
+    <view entity="cmolhao_RedeTrabalho" name="redeTrabalho-view" extends="_local">
+        <property name="subRedeTrabalhos" view="_minimal">
+            <property name="idRedeTrabalho" view="_minimal"/>
+        </property>
+        <property name="documentacaos" view="_minimal">
+            <property name="dataDocumento"/>
+            <property name="idRedeTrabalho" view="_minimal"/>
+            <property name="idSubRedeTrabalho" view="_minimal"/>
+            <property name="nomeFicheiro"/>
+            <property name="numeroDocumentacao"/>
+            <property name="file" view="_minimal"/>
+        </property>
+        <property name="membrosRedeTrabalhos" view="_minimal">
+            <property name="idInsituicao" view="_minimal"/>
+            <property name="idRedeTrabalho" view="_minimal"/>
+            <property name="dataAdesao" />
+        </property>
+    </view>
+    <view entity="cmolhao_DocumentacaoClasoAtas" name="documentacaoClasoAtas-view" extends="_local">
+        <property name="idRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="idSubRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="file" view="_minimal"/>
+    </view>
+    <view entity="cmolhao_DocumentacaoClasoFichasAdesao" name="documentacaoClasoFichasAdesao-view" extends="_local">
+        <property name="idRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="idSubRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="file" view="_minimal"/>
+    </view>
+    <view entity="cmolhao_DocumentacaoClasoRegulamentos" name="documentacaoClasoRegulamentos-view" extends="_local">
+        <property name="idRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="idSubRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="file" view="_minimal"/>
+    </view>
+    <view entity="cmolhao_ValenciaNucleoExecutivo" name="valenciaNucleoExecutivo-view" extends="_local">
+        <property name="idResSocial" view="_minimal"/>
+        <property name="idinstituicao" view="_minimal"/>
+        <property name="idtipovalencia" view="_minimal"/>
+        <property name="ajudasTecnicasNucleoExecutivos" view="_minimal">
+            <property name="datadisponivel"/>
+            <property name="idValencia" view="_minimal"/>
+            <property name="localizacao"/>
+            <property name="tipoajuda"/>
+        </property>
+        <property name="fotosValenciasNucleoExecutivos" view="_minimal">
+            <property name="daequipacolaboradores"/>
+            <property name="descricao"/>
+            <property name="doequipamento"/>
+            <property name="image" view="_minimal"/>
+        </property>
+        <property name="localizacaoNucleoExecutivos" view="_minimal">
+            <property name="coord"/>
+            <property name="idvalencia" view="_minimal"/>
+        </property>
+        <property name="utentesOutrosConcelhosNucleoExecutivos" view="_minimal">
+            <property name="concelho"/>
+            <property name="freguesia"/>
+            <property name="idValencia" view="_minimal"/>
+        </property>
+        <property name="pessoalAuxiliarNucleoExecutivos" view="_minimal">
+            <property name="anosservicoinstituicao"/>
+            <property name="categoriaprofissional"/>
+            <property name="formacaoprofissional"/>
+            <property name="habilitacoesliterarias"/>
+            <property name="idValencia" view="_minimal"/>
+            <property name="idade"/>
+            <property name="sexomasculino"/>
+            <property name="tipovinculo"/>
+        </property>
+        <property name="pessoalTecnicoNucleoExecutivos" view="_minimal">
+            <property name="anosservicoinstituicao"/>
+            <property name="categoriaprofissional"/>
+            <property name="formacaoprofissional"/>
+            <property name="habilitacoesliterarias"/>
+            <property name="idValencia" view="_minimal"/>
+            <property name="idade"/>
+            <property name="sexomasculino"/>
+            <property name="tipovinculo"/>
+        </property>
+    </view>
+    <view entity="cmolhao_InstituicoesNucleoExecutivo" name="instituicoesNucleoExecutivo-view" extends="_local">
+        <property name="valenciaNucleoExecutivos" view="_minimal">
+            <property name="idResSocial" view="_minimal" />
+            <property name="acordocapacidade"/>
+            <property name="acordocomparticipacao"/>
+            <property name="acordodatacelebracao"/>
+            <property name="acordolistaespera"/>
+            <property name="acordoutentesextrafeminino"/>
+            <property name="acordoutentesextramasculino"/>
+            <property name="acordoutentesfeminino"/>
+            <property name="acordoutentesmasculino"/>
+            <property name="acordovagasfeminino"/>
+            <property name="acordovagasmasculino"/>
+            <property name="actividadescultural"/>
+            <property name="actividadesdesportiva"/>
+            <property name="actividadeslazer"/>
+            <property name="actividadesoutras"/>
+            <property name="actividadesrecreativas"/>
+            <property name="actividadessocial"/>
+            <property name="certauditoriaexternacurso"/>
+            <property name="certauditoriasinternascurso"/>
+            <property name="certdatainicio"/>
+            <property name="certdataprevista"/>
+            <property name="certificacaoqualidade"/>
+            <property name="contactodirectortecnico"/>
+            <property name="contratacaoexternajardinagem"/>
+            <property name="contratacaoexternalimpeza"/>
+            <property name="contratacaoexternaoutras"/>
+            <property name="contratacaoexternarefeicoes"/>
+            <property name="coordenadagps"/>
+            <property name="directortecnico"/>
+            <property name="descricaotecnica" />
+            <property name="emal"/>
+            <property name="fax"/>
+            <property name="formacaoprevia"/>
+            <property name="horariofimsemanafimmanha"/>
+            <property name="horariofimsemanafimtarde"/>
+            <property name="horariofimsemanainiciomanha"/>
+            <property name="horariofimsemanainiciotarde"/>
+            <property name="horariosemanafimmanha"/>
+            <property name="horariosemanafimtarde"/>
+            <property name="horariosemanainiciomanha"/>
+            <property name="horariosemanainiciotarde"/>
+            <property name="idinstituicao" view="_minimal"/>
+            <property name="idtipovalencia" view="_minimal"/>
+            <property name="nregsegsocial"/>
+            <property name="recursostecnicoscomplementares"/>
+            <property name="servicosespecializados"/>
+            <property name="telefone"/>
+            <property name="tipoacordosegsocial"/>
+            <property name="transporte"/>
+            <property name="transportecapacidade"/>
+            <property name="transporteproprio"/>
+            <property name="url"/>
+            <property name="utentesfuzeta"/>
+            <property name="utentesmoncarapacho"/>
+            <property name="utentesolhao"/>
+            <property name="utentespechao"/>
+            <property name="utentesquelfes"/>
+        </property>
+
+        <property name="apoiosNucleoExecutivos" view="_minimal">
+            <property name="dataAtribuicao"/>
+            <property name="dataPedido"/>
+            <property name="dataRenovacao" />
+            <property name="dataFim" />
+            <property name="idEquipamento" view="_minimal"/>
+            <property name="idEstado" view="_minimal"/>
+            <property name="idTipoapoio" view="_minimal"/>
+            <property name="idUtente" view="_minimal"/>
+            <property name="numProcesso"/>
+            <property name="valorApoio"/>
+        </property>
+
+        <property name="projectoIntervencaoNucleoExecutivos" view="_minimal">
+            <property name="projectosemaprovacao"/>
+            <property name="nomeProjecto" />
+            <property name="descricaoProjecto" />
+        </property>
+        <property name="tecnicoNucleoExecutivos" view="_minimal">
+            <property name="nome"/>
+            <property name="email"/>
         </property>
     </view>
 
+    <view entity="cmolhao_AjudasTecnicasNucleoExecutivo" name="ajudasTecnicasNucleoExecutivo-view" extends="_local">
+        <property name="idValencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+    <view entity="cmolhao_ApoiosNucleoExecutivo" name="apoiosNucleoExecutivo-view" extends="_local">
+        <property name="idInstituicao" view="_minimal">
+            <property name="descricao"/>
+        </property>
+        <property name="idUtente" view="_minimal">
+            <property name="nome" />
+            <property name="numContribuinte" />
+        </property>
+        <property name="idTipoapoio" view="_minimal">
+            <property name="descricaoTipoAjuda" />
+        </property>
+        <property name="idEquipamento" view="_minimal">
+            <property name="descricao" />
+        </property>
+        <property name="idEstado" view="_minimal">
+            <property name="estadosProcessos" />
+        </property>
+    </view>
+
+    <view entity="cmolhao_TecnicoNucleoExecutivo" name="tecnicoNucleoExecutivo-view" extends="_local">
+        <property name="idInstituicao" view="_minimal">
+            <property name="descricao"/>
+        </property>
+        <property name="atendimentoNucleoExecutivos" view="_minimal">
+            <property name="contactosEfetuados"/>
+            <property name="dataAtendimento"/>
+            <property name="idAtendimentoEncaminhamento" view="_minimal"/>
+            <property name="idAtendimentoObjetivo" view="_minimal"/>
+            <property name="idTecnico" view="_minimal"/>
+            <property name="idTipoAtendimento" view="_minimal"/>
+            <property name="idUtente" view="_minimal"/>
+            <property name="objetivoOutros"/>
+            <property name="obsConf"/>
+            <property name="obsGerais"/>
+            <property name="outrosEncaminhamentos"/>
+        </property>
+    </view>
+    <view entity="cmolhao_FotosValenciasNucleoExecutivo" name="fotosValenciasNucleoExecutivo-view" extends="_local">
+        <property name="image" view="_local" />
+        <property name="idvalencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+    <view entity="cmolhao_PessoalAuxiliarNucleoExecutivo" name="pessoalAuxiliarNucleoExecutivo-view" extends="_local">
+        <property name="idValencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+    <view entity="cmolhao_PessoalTecnicoNucleoExecutivo" name="pessoalTecnicoNucleoExecutivo-view" extends="_local">
+        <property name="idValencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+
+    <view entity="cmolhao_ProjectoIntervencaoNucleoExecutivo" name="projectoIntervencaoNucleoExecutivo-view" extends="_local">
+        <property name="idinstituicao" view="_minimal"/>
+        <property name="projectosAprovacaoNucleoExecutivos" view="_minimal">
+            <property name="etapaprocesso"/>
+            <property name="idprojectosintervencao" view="_minimal"/>
+            <property name="tipologia"/>
+        </property>
+    </view>
+    <view entity="cmolhao_ProjectosAprovacaoNucleoExecutivo" name="projectosAprovacaoNucleoExecutivo-view" extends="_local">
+        <property name="idprojectosintervencao" view="_minimal">
+            <property name="idinstituicao" view="_minimal">
+                <property name="descricao"/>
+            </property>
+        </property>
+    </view>
+    <view entity="cmolhao_UtentesOutrosConcelhosNucleoExecutivo" name="utentesOutrosConcelhosNucleoExecutivo-view" extends="_local">
+        <property name="idValencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+
+    <view entity="cmolhao_LocalizacaoNucleoExecutivo" name="localizacaoNucleoExecutivo-view" extends="_local">
+        <property name="idvalencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+
+    <view entity="cmolhao_AtendimentoNucleoExecutivo" name="atendimentoNucleoExecutivo-view" extends="_local">
+        <property name="idUtente" view="_minimal">
+            <property name="nome" />
+            <property name="numContribuinte" />
+        </property>
+        <property name="idTecnico" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="idTipoAtendimento" view="_minimal">
+            <property name="tipoAtendimento" />
+        </property>
+        <property name="idAtendimentoObjetivo" view="_minimal">
+            <property name="atendimentoObjetivoGeral" />
+            <property name="atendimemtoObjetivoEspecifico" />
+        </property>
+        <property name="idAtendimentoEncaminhamento" view="_minimal">
+            <property name="atendimentoEncaminhamento" />
+        </property>
+    </view>
+    <view entity="cmolhao_MembrosRedeTrabalho" name="membrosRedeTrabalho-view" extends="_local">
+        <property name="idInsituicao" view="_minimal"/>
+        <property name="idRedeTrabalho" view="_minimal"/>
+    </view>
+    <view entity="cmolhao_MembrosRedesTrabalhoClaso" name="membrosRedesTrabalhoClaso-view" extends="_local">
+        <property name="idInsituicao" view="_minimal"/>
+        <property name="idRedeTrabalho" view="_minimal"/>
+    </view>
+    <view entity="cmolhao_MembrosRedesTrabalhoNuceloExecutivo" name="membrosRedesTrabalhoNuceloExecutivo-view" extends="_local">
+        <property name="idInsituicao" view="_minimal"/>
+        <property name="idRedeTrabalho" view="_minimal"/>
+    </view>
+    <view entity="cmolhao_DocumentacaoNucleoExecutivoAtas" name="documentacaoNucleoExecutivoAtas-view" extends="_local">
+        <property name="idRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="idSubRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="file" view="_minimal"/>
+    </view>
+    <view entity="cmolhao_DocumentacaoInstrumentosPlaneamento" name="documentacaoInstrumentosPlaneamento-view" extends="_local">
+        <property name="idRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="idSubRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="file" view="_minimal"/>
+    </view>
+    <view entity="cmolhao_DocumentacaoLegislacao" name="documentacaoLegislacao-view" extends="_local">
+        <property name="idRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="idSubRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="file" view="_minimal"/>
+    </view>
+    <view entity="cmolhao_DocumentacaoMinutas" name="documentacaoMinutas-view" extends="_local">
+        <property name="idRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="idSubRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="file" view="_minimal"/>
+    </view>
+    <view entity="cmolhao_DocumentacaoRegulamentos" name="documentacaoRegulamentos-view" extends="_local">
+        <property name="idRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="idSubRedeTrabalho" view="_minimal">
+            <property name="nome" />
+        </property>
+        <property name="file" view="_minimal"/>
+    </view>
+
+
+    <!--
+
+
+
+
+    <view entity="cmolhao_ProjectoIntervencaoNucleoExecutivo" name="projectoIntervencaoNucleoExecutivo-view" extends="_local">
+        <property name="idinstituicao" view="_minimal"/>
+    </view>
+    <view entity="cmolhao_ProjectosAprovacaoNucleoExecutivo" name="projectosAprovacaoNucleoExecutivo-view" extends="_local">
+        <property name="idprojectosintervencao" view="_minimal">
+            <property name="idinstituicao" view="_minimal">
+                <property name="descricao"/>
+            </property>
+        </property>
+    </view>
+    <view entity="cmolhao_TecnicoNucleoExecutivo" name="tecnicoNucleoExecutivo-view" extends="_local">
+        <property name="idInstituicao" view="_minimal">
+            <property name="descricao"/>
+        </property>
+    </view>
+    <view entity="cmolhao_UtentesOutrosConcelhosNucleoExecutivo" name="utentesOutrosConcelhosNucleoExecutivo-view" extends="_local">
+        <property name="idValencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+
+    <view entity="cmolhao_FotosValenciasNucleoExecutivo" name="fotosValenciasNucleoExecutivo-view" extends="_local">
+        <property name="image" view="_local" />
+        <property name="idvalencia" view="_minimal" >
+            <property name="descricaotecnica" />
+        </property>
+    </view>
+
+
+    -->
 
 </views>

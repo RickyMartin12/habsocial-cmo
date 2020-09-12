@@ -1,19 +1,17 @@
 package pt.cmolhao.web.tipoajuda;
 
-import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.core.global.ValueLoadContext;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.Table;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.gui.screen.LookupComponent;
 import pt.cmolhao.entity.TipoAjuda;
-import pt.cmolhao.web.equipamento.EquipamentoEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +20,7 @@ import java.util.List;
 @LookupComponent("tipoAjudasTable")
 @LoadDataBeforeShow
 public class TipoAjudaBrowse extends StandardLookup<TipoAjuda> {
-    @Inject
-    protected LookupField desc_equipamento_id;
+
     @Inject
     protected LookupField linhasTipoAjuda;
     @Inject
@@ -31,9 +28,16 @@ public class TipoAjudaBrowse extends StandardLookup<TipoAjuda> {
     @Inject
     protected CollectionLoader<TipoAjuda> tipoAjudasDl;
     @Inject
+    protected TextField<String> desc_equipamento_id;
+    @Named("tipoAjudasTable.remove")
+    protected RemoveAction<TipoAjuda> tipoAjudasTableRemove;
+    @Inject
     private DataManager dataManager;
     @Inject
     private ScreenBuilders screenBuilders;
+    @Inject
+    private Dialogs dialogs;
+
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -56,7 +60,7 @@ public class TipoAjudaBrowse extends StandardLookup<TipoAjuda> {
                         .withInitializer(customer -> {
                             if (desc_equipamento_id.getValue() != null)
                             {
-                                customer.setDescricaoTipoAjuda(desc_equipamento_id.getValue().toString());
+                                customer.setDescricaoTipoAjuda(desc_equipamento_id.getValue());
                             }
                         })
                         .withScreenClass(TipoAjudaEdit.class)    // specific editor screen
@@ -72,18 +76,7 @@ public class TipoAjudaBrowse extends StandardLookup<TipoAjuda> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
 
-        getWindow().setCaption("Listar Tipos de Ajuda");
-        // Arrend - Renda
-        List<String> options = new ArrayList<>();
-        String queryString = "select o.descricaoTipoAjuda as descricaoTipoAjuda from cmolhao_TipoAjuda o where o.descricaoTipoAjuda is not null group by o.descricaoTipoAjuda";
-        ValueLoadContext valueLoadContextontext = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString));
-        valueLoadContextontext.addProperty("descricaoTipoAjuda");
-        List<KeyValueEntity> resultList = dataManager.loadValues(valueLoadContextontext);
-        for (KeyValueEntity entry : resultList) {
-            options.add(entry.getValue("descricaoTipoAjuda"));
-        }
-        desc_equipamento_id.setOptionsList(options);
+        getWindow().setCaption("Listar Tipos de Apoio");
     }
 
     @Subscribe("linhasTipoAjuda")
@@ -102,9 +95,7 @@ public class TipoAjudaBrowse extends StandardLookup<TipoAjuda> {
     @Subscribe("reset_tipo_ajuda")
     protected void onReset_tipo_ajudaClick(Button.ClickEvent event) {
         desc_equipamento_id.setValue(null);
-        linhasTipoAjuda.setValue(null);
         tipoAjudasDl.removeParameter("descricaoTipoAjuda");
-        tipoAjudasDl.setMaxResults(0);
         tipoAjudasDl.load();
     }
 
@@ -113,13 +104,47 @@ public class TipoAjudaBrowse extends StandardLookup<TipoAjuda> {
         // Descrição de Tipo Ajuda
 
         if (desc_equipamento_id.getValue() != null) {
-            tipoAjudasDl.setParameter("descricaoTipoAjuda",  desc_equipamento_id.getValue().toString());
+            tipoAjudasDl.setParameter("descricaoTipoAjuda",  "(?i)%" + desc_equipamento_id.getValue() + "%");
         } else {
             tipoAjudasDl.removeParameter("descricaoTipoAjuda");
         }
 
         tipoAjudasDl.load();
     }
+
+    @Subscribe("tipoAjudasTable.remove")
+    protected void onTipoAjudasTableRemove(Action.ActionPerformedEvent event) {
+        tipoAjudasTableRemove.setConfirmation(false);
+        if (tipoAjudasTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção do tipo de apoio")
+                    .withMessage("Deve seleccionar pelo uns dos tipos de apoio")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            TipoAjuda user = tipoAjudasTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do tipo de apoio número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do tipo de apoio número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        tipoAjudasTableRemove.execute();
+                                    }), // execute action
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
+    }
+
+
+
 
 
 

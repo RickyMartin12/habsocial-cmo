@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.tecnico">
     <data>
         <instance id="tecnicoDc"
                   class="pt.cmolhao.entity.Tecnico"
                   view="tecnico-view">
             <loader/>
+            <collection id="atendimentosDc" property="atendimentos" />
         </instance>
 
         <collection id="InstituicaoDc"
@@ -25,23 +25,79 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="tecnicoDc">
-            <column width="250px">
-                <textField id="idTecnicoField" property="id" visible="false" />
-                <textField id="nomeField" property="nome" caption="Nome: " icon="ID_CARD"/>
-                <textField id="emailField" property="email" caption="Email: " icon="ENVELOPE">
-                    <validator class="com.haulmont.cuba.gui.components.validators.EmailValidator"
-                               message="Email Invalido"/>
-                </textField>
-                <lookupField
-                        inputPrompt="(Seleccione a designação da instituição da valência)"
-                        property="idInstituicao"
-                        id="idInstituicaoField"
-                        optionsContainer="InstituicaoDc"
-                        icon="font-icon:BUILDING" caption="Designação da Instituição da valencia: "/>
 
-            </column>
-        </form>
+        <tabSheet>
+            <tab id="dados_tecnico"
+                 caption="Dados do Técnico"
+                 icon="font-icon:ID_CARD"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_dados_tecnico" dataContainer="tecnicoDc">
+                    <column width="250px">
+                        <lookupPickerField
+                                inputPrompt="(Seleccione a instituição)"
+                                property="idInstituicao"
+                                colspan="2"
+                                width="628px"
+                                id="idInstituicaoField"
+                                optionsContainer="InstituicaoDc"
+                                icon="font-icon:BUILDING" caption="Designação da Instituição: ">
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+                        <textField id="emailField" property="email" caption="Email: " icon="ENVELOPE">
+                            <validator class="com.haulmont.cuba.gui.components.validators.EmailValidator"
+                                       message="Email Invalido"/>
+                        </textField>
+                    </column>
+                    <column width="250px">
+                        <textField id="nomeField" property="nome" caption="Nome: " icon="ID_CARD"/>
+                        <textField id="idTecnicoField" property="id" visible="false" />
+                    </column>
+                </form>
+            </tab>
+        </tabSheet>
+
+        <tabSheet>
+        <tab id="atendimento"
+             caption="Atendimento"
+             icon="font-icon:VOLUME_CONTROL_PHONE"
+             margin="true"
+             spacing="true">
+
+            <groupBox id="atendimentoBox" caption="Atendimento">
+                <table id="atendimentoesTable" dataContainer="atendimentosDc" width="100%" height="500px"
+                       emptyStateMessage="Não Existe Dados na Tabela"
+                       emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                    <actions>
+                        <action id="create" type="create"/>
+                        <action id="edit" type="edit"/>
+                        <action id="remove" type="remove"/>
+                    </actions>
+                    <columns>
+                        <column id="idTecnico" caption="Técnico"/>
+                        <column id="idUtente" caption="Utente"/>
+                        <column id="idTipoAtendimento" caption="Tipo de Atendimento"/>
+                        <column id="contactosEfetuados" caption="Contactos Efectuados"/>
+                        <column id="dataAtendimento" caption="Data de Atendimento"/>
+                        <column id="objetivoOutros" caption="Outros Objectivos"/>
+                        <column id="obsConf" caption="Observações de Confirmação"/>
+                        <column id="obsGerais" caption="Observações Gerais"/>
+                        <column id="outrosEncaminhamentos" caption="Outros Encaminhamentos"/>
+                    </columns>
+                    <buttonsPanel>
+                        <button action="atendimentoesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                        <button action="atendimentoesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                        <button action="atendimentoesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                    </buttonsPanel>
+                </table>
+            </groupBox>
+        </tab>
+        </tabSheet>
+
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
             <button action="windowClose" caption="Fechar" icon="CLOSE"/>

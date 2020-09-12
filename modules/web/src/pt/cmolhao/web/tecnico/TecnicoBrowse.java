@@ -1,9 +1,9 @@
 package pt.cmolhao.web.tecnico;
 
-import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.core.global.ValueLoadContext;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
@@ -12,6 +12,7 @@ import pt.cmolhao.entity.Instituicoes;
 import pt.cmolhao.entity.Tecnico;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,15 +28,20 @@ public class TecnicoBrowse extends StandardLookup<Tecnico> {
     @Inject
     protected LookupField<Instituicoes> idInstituicaoField;
     @Inject
-    protected LookupField email_tec_id;
-    @Inject
     protected TextField<String> nomeField;
     @Inject
     protected LookupField linhasTecnico;
+    @Named("tecnicoesTable.remove")
+    protected RemoveAction<Tecnico> tecnicoesTableRemove;
+    @Inject
+    protected TextField<String> email_tec_id;
     @Inject
     private DataManager dataManager;
     @Inject
     private ScreenBuilders screenBuilders;
+
+    @Inject
+    private Dialogs dialogs;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -61,7 +67,7 @@ public class TecnicoBrowse extends StandardLookup<Tecnico> {
                             customer.setIdInstituicao(idInstituicaoField.getValue());
                             if (email_tec_id.getValue() != null)
                             {
-                                customer.setEmail(email_tec_id.getValue().toString());
+                                customer.setEmail(email_tec_id.getValue());
                             }
                             if(nomeField.getValue() != null)
                             {
@@ -80,26 +86,14 @@ public class TecnicoBrowse extends StandardLookup<Tecnico> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         getWindow().setCaption("Listar Técnicos");
-        // Arrend - Renda
-        List<String> options = new ArrayList<>();
-        String queryString = "select o.email as email from cmolhao_Tecnico o where o.email is not null group by o.email";
-        ValueLoadContext valueLoadContextontext = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString));
-        valueLoadContextontext.addProperty("email");
-        List<KeyValueEntity> resultList = dataManager.loadValues(valueLoadContextontext);
-        for (KeyValueEntity entry : resultList) {
-            options.add(entry.getValue("email"));
-        }
-        email_tec_id.setOptionsList(options);
+
     }
 
     @Subscribe("reset_tecnico")
     protected void onReset_tecnicoClick(Button.ClickEvent event) {
-        linhasTecnico.setValue(null);
         nomeField.setValue(null);
         email_tec_id.setValue(null);
         idInstituicaoField.setValue(null);
-        tecnicoesDl.setMaxResults(0);
         tecnicoesDl.removeParameter("nome");
         tecnicoesDl.removeParameter("email");
         tecnicoesDl.removeParameter("idInstituicao");
@@ -117,7 +111,7 @@ public class TecnicoBrowse extends StandardLookup<Tecnico> {
         }
 
         if (email_tec_id.getValue() != null) {
-            tecnicoesDl.setParameter("email", email_tec_id.getValue().toString());
+            tecnicoesDl.setParameter("email", "(?i)%" + email_tec_id.getValue()+ "%");
         } else {
             tecnicoesDl.removeParameter("email");
         }
@@ -142,5 +136,36 @@ public class TecnicoBrowse extends StandardLookup<Tecnico> {
             tecnicoesDl.setMaxResults(0);
         }
         tecnicoesDl.load();
+    }
+
+    @Subscribe("tecnicoesTable.remove")
+    protected void onTecnicoesTableRemove(Action.ActionPerformedEvent event) {
+        tecnicoesTableRemove.setConfirmation(false);
+        if (tecnicoesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção dos Técnicos")
+                    .withMessage("Deve seleccionar pelo um dos técnicos criados")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            Tecnico user = tecnicoesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do técnico número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do técnico número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        tecnicoesTableRemove.execute();
+                                    }), // execute action
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 }

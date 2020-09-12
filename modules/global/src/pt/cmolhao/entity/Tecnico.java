@@ -1,10 +1,14 @@
 package pt.cmolhao.entity;
 
+import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.BaseIntegerIdEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.core.global.DesignSupport;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @DesignSupport("{'imported':true}")
 @NamePattern("%s (%s)|nome,email")
@@ -19,6 +23,20 @@ public class Tecnico extends BaseIntegerIdEntity {
     protected Instituicoes idInstituicao;
     @Column(name = "nome")
     protected String nome;
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idTecnico")
+    protected Set<Atendimento> atendimentos;
+
+    public Set<Atendimento> getAtendimentos() {
+        return atendimentos;
+    }
+
+    public void setAtendimentos(Set<Atendimento> atendimentos) {
+        this.atendimentos = atendimentos;
+    }
+
 
     public String getNome() {
         return nome;

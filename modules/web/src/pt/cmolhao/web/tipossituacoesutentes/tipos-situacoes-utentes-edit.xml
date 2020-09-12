@@ -6,20 +6,76 @@
     <data>
         <instance id="tiposSituacoesUtentesDc"
                   class="pt.cmolhao.entity.TiposSituacoesUtentes"
-                  view="_local">
+                  view="tiposSituacoesUtentes-view">
             <loader/>
+            <collection id="situacaoUtentesDc" property="situacaoUtentes" />
         </instance>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="tiposSituacoesUtentesDc">
-            <column width="250px">
+            <column width="400px">
                 <textField id="idTipoSituacaoUtenteField" visible="false" property="id" />
-                <textArea cols="20" rows="3" id="descricaoSituacaoField" property="descricaoSituacao"
+                <textArea cols="60" rows="3" id="descricaoSituacaoField" property="descricaoSituacao"
                           caption="Descrição da Situação do Utente: " icon="font-icon:FILE_TEXT"/>
             </column>
         </form>
+
+
+        <tabSheet>
+            <tab id="situacao_utentes"
+                 caption="Situação Utentes"
+                 icon="font-icon:REFRESH"
+                 margin="true"
+                 spacing="true">
+
+                <groupBox id="situacaoUtentesBox" caption="Situação Utentes">
+
+                    <table id="situacaoUtentesTable"
+                                width="100%"
+                                height="500px"
+                                dataContainer="situacaoUtentesDc"
+                                emptyStateMessage="Não Existe Dados na Tabela"
+                                emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                        <actions>
+                            <action id="create" type="create"/>
+                            <action id="edit" type="edit"/>
+                            <action id="remove" type="remove">
+                                <properties>
+                                    <property name="confirmation" value="true"/>
+                                    <property name="confirmationTitle" value="Remover a linha da tabela de Situação do Utente"/>
+                                    <property name="confirmationMessage" value="Tens a certeza que quer remover esta linha de Situação do Utente?"/>
+                                </properties>
+                            </action>
+                            <action id="excel" type="excel"/>
+                        </actions>
+                        <columns>
+
+                            <column id="idUtente" caption="Utente"/>
+
+                            <column id="dataInicio" caption="Data Inicio"/>
+                            <column id="dataFim" caption="Data Fim"/>
+
+                            <column id="obsGerais" caption="Observações Gerais"/>
+                            <column id="obserConf" caption="Observações de confirmação"/>
+                        </columns>
+                        <rowsCount/>
+                        <buttonsPanel id="buttonsPanel"
+                                      alwaysVisible="true">
+                            <button id="createBtn" action="situacaoUtentesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                            <button id="editBtn" action="situacaoUtentesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                            <button id="removeBtn" action="situacaoUtentesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            <button id="excelBtn" action="situacaoUtentesTable.excel" stylename="friendly" />
+                        </buttonsPanel>
+                    </table>
+
+                </groupBox>
+
+            </tab>
+        </tabSheet>
+
+
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
             <button caption="Fechar" action="windowClose" icon="CLOSE"/>

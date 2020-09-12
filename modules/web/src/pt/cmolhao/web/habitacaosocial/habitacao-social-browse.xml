@@ -16,12 +16,6 @@
                     <condition>
                         <and>
                             <c:jpql>
-                                <c:where>e.arrend = :arrend</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.bl = :bl</c:where>
-                            </c:jpql>
-                            <c:jpql>
                                 <c:join>join e.bloc i</c:join>
                                 <c:where>i.id = :bloc</c:where>
                             </c:jpql>
@@ -30,19 +24,10 @@
                                 <c:where>j.id = :idUtente</c:where>
                             </c:jpql>
                             <c:jpql>
-                                <c:where>e.fichaCompleta = :fichaCompleta</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.freguesia = :freguesia</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.localidade = :localidade</c:where>
+                                <c:where>e.localidade like :localidade</c:where>
                             </c:jpql>
                             <c:jpql>
                                 <c:where>e.codPostal like :codPostal</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.tipoArrendamento = :tipoArrendamento</c:where>
                             </c:jpql>
                         </and>
 
@@ -61,28 +46,6 @@
             </loader>
         </collection>
 
-        <keyValueCollection id="hab_arred_id">
-            <properties>
-                <property name="arrend" datatype="string" />
-            </properties>
-            <loader id="hab_arred_id_loader">
-                <query>
-                    <![CDATA[select o.arrend as arrend from cmolhao_HabitacaoSocial o where o.arrend is not null group by o.arrend]]>
-                </query>
-            </loader>
-        </keyValueCollection>
-
-        <keyValueCollection id="hab_bl_id">
-            <properties>
-                <property name="bl" datatype="string" />
-            </properties>
-            <loader id="hab_bl_id_loader">
-                <query>
-                    <![CDATA[select o.bl as bl from cmolhao_HabitacaoSocial o where o.bl is not null group by o.bl]]>
-                </query>
-            </loader>
-        </keyValueCollection>
-
         <collection id="UtentesDC"
                     class="pt.cmolhao.entity.Utente"
                     view="_local">
@@ -92,30 +55,6 @@
                 </query>
             </loader>
         </collection>
-
-        <keyValueCollection id="hab_freguesia_id">
-            <properties>
-                <property name="freguesia" datatype="string" />
-            </properties>
-            <loader id="hab_freguesia_id_loader">
-                <query>
-                    <![CDATA[select o.freguesia as freguesia from cmolhao_HabitacaoSocial o where o.freguesia is not null group by o.freguesia]]>
-                </query>
-            </loader>
-        </keyValueCollection>
-
-        <keyValueCollection id="hab_localidade_id">
-            <properties>
-                <property name="localidade" datatype="string" />
-            </properties>
-            <loader id="hab_localidade_id_loader">
-                <query>
-                    <![CDATA[select o.localidade as localidade from cmolhao_HabitacaoSocial o where o.localidade is not null group by o.localidade]]>
-                </query>
-            </loader>
-        </keyValueCollection>
-
-
 
 
 
@@ -131,80 +70,66 @@
                       icon="font-icon:FILTER"
                       width="100%">
 
-                <scrollBox spacing="true">
+                <scrollBox spacing="true" >
+                    <grid spacing="true">
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <lookupPickerField
+                                        property="bloc"
+                                        id="blocField"
+                                        optionsContainer="customersDc"
+                                        inputPrompt="(Seleccione a morada da habitação social)"
+                                        icon="font-icon:HOME" caption="Morada da Habitacao Social"
+                                        stylename="bloc_field_search"
+                                        width="400px">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
 
-                <hbox spacing="true">
-                    <lookupField
-                            property="bloc"
-                            id="blocField"
-                            optionsContainer="customersDc"
-                            inputPrompt="(Seleccione a morada do bloco de habitação social)"
-                            icon="font-icon:HOME" caption="Morada do Bloco de Habitacao Social"/>
+                                <lookupPickerField
+                                        property="idUtente"
+                                        id="utenteField"
+                                        optionsContainer="UtentesDC"
+                                        icon="font-icon:ID_CARD" caption="Utente Agregado: "
+                                        inputPrompt="(Seleccione o utente agregado)"
+                                        stylename="utente_field_search"
+                                        width="320px">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
 
-                    <lookupField id="luke_hab"
-                                 optionsContainer="hab_arred_id"
-                                 caption="Número de Renda/Andar:"
-                                 inputPrompt="(seleccione o numero de renda)"
-                                 icon="font-icon:SORT_NUMERIC_ASC"
-                                 />
-                    <lookupField id="hab_bloco"
-                                 optionsContainer="hab_bl_id"
-                                 caption="Numero de Bloco:"
-                                 inputPrompt="(seleccione o numero de bloco)"
-                                 icon="font-icon:SORT_NUMERIC_ASC"
-                    />
+                                <textField id="hab_loc_id"
+                                           property="localidade"
+                                           caption="Localidade:"
+                                           inputPrompt="(introduza a localidade)"
+                                           icon="font-icon:MAP"
+                                           width="180px"
+                                           stylename="localidade_field_search"
+                                />
 
-                </hbox>
-
-                <hbox spacing="true">
-
-                    <lookupField
-                            property="idUtente"
-                            id="utenteField"
-                            optionsContainer="UtentesDC"
-                            icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente Agregado: "
-                            inputPrompt="(Seleccione o nome e a identificação do utente agregado)"/>
-
-                    <label id="text_fichaCompleta" icon="FILES_O"/>
-                    <checkBox id="fichaCompletaField" property="fichaCompleta" />
-
-
-                    <lookupField id="hab_freg_id"
-                                 optionsContainer="hab_freguesia_id"
-                                 caption="Freguesia/Concelho da Habitação Social:"
-                                 inputPrompt="(seleccione a freguesia da habitação social)"
-                                 icon="font-icon:INSTITUTION"
-                    />
-
-
-                </hbox>
-
-                <hbox spacing="true">
-
-
-                    <lookupField id="hab_loc_id"
-                                 optionsContainer="hab_localidade_id"
-                                 caption="Localidade da Habitação Social:"
-                                 inputPrompt="(seleccione a localidade da habitação social)"
-                                 icon="font-icon:MAP"
-                    />
-
-                    <textField id="codPostalField" property="codPostal"
-                                 caption="Código Postal: "
-                                 inputPrompt="(Insira o código postal (PT))"
-                                 icon="MAP_SIGNS" maxLength="8"/>
-
-                    <lookupField id="tipoArrendamentoField" property="tipoArrendamento" caption="Tipo de Arrendamento: " icon="font-icon:PAPERCLIP"
-                                 inputPrompt="(Seleccione o tipo de arrendamento)" />
-
-                </hbox>
-
-                <hbox spacing="true">
-                    <lookupField id="linhasHabSocial"
-                                 caption="Mostrar Numero de Linhas"
-                                 inputPrompt="(seleccione o numero de linhas)"
-                                 icon="ARROWS_V"/>
-                </hbox>
+                                <textField id="codPostalField" property="codPostal"
+                                           caption="Código Postal: "
+                                           inputPrompt="(código postal - PT)"
+                                           stylename="cod_postal_field_search"
+                                           width="150px"
+                                           icon="MAP_SIGNS" maxLength="8"/>
+                            </row>
+                        </rows>
+                    </grid>
 
                 <hbox spacing="true">
                     <button id="click" caption="Pesquisar" icon="SEARCH" stylename="info" />
@@ -216,14 +141,19 @@
 
             </groupBox>
 
+            <hbox spacing="true" width="100%">
+                    <lookupField id="linhasHabSocial"
+                                 caption="Numero de Linhas: "
+                                 inputPrompt="(seleccione o numero de linhas)"
+                                 icon="ARROWS_V"/>
+            </hbox>
+
 
         <groupTable id="habitacaoSocialsTable"
                     width="100%"
                     dataContainer="habitacaoSocialsDc"
                     emptyStateMessage="Não Existe Dados na Tabela"
                     emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
-
-
             <actions>
 
                 <action id="create" type="create"/>
@@ -247,10 +177,22 @@
 
                 <column id="andar" caption="Número de Andar" />
 
+                <column id="rua" caption="Rua/Morada" />
+                <column id="numpolicia" caption="Numero de Policia" />
+
+                <column id="freguesia" caption="Freguesia/Concelho" />
+                <column id="codPostal" caption="Código Postal" />
+
+                <column id="localidade" caption="Localidade" />
+                <column id="sitoLugar" caption="Sitio/Lugar" />
+
+                <!--
                 <column id="cod" caption="Codigo de Habitação Social"/>
                 <column id="codbr" caption="Bloco de Habitação Social"/>
-
                 <column id="eqsocial" caption="Eq Social"/>
+                -->
+
+
                 <column id="t0" caption="Apartamento T0"/>
 
                 <column id="t1" caption="Apartamento T1"/>
@@ -260,16 +202,9 @@
                 <column id="t4" caption="Apartamento T4"/>
 
                 <column id="t5" caption="Apartamento T5"/>
-                <column id="vend" caption="Apartamento vendido"/>
+                <!--<column id="vend" caption="Apartamento Vendido"/>-->
 
-                <column id="rua" caption="Rua/Morada" />
-                <column id="numpolicia" caption="Numero de Policia" />
 
-                <column id="freguesia" caption="Freguesia/Concelho" />
-                <column id="codPostal" caption="Código Postal" />
-
-                <column id="localidade" caption="Localidade" />
-                <column id="sitoLugar" caption="Sitio/Lugar" />
 
                 <column id="obsgerais" caption="Observações Gerais" />
                 <column id="obsconf" caption="Observações de Configuração" />

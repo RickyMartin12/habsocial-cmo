@@ -31,6 +31,8 @@ public class FotosValencia extends BaseIntegerIdEntity {
     protected FileDescriptor image;
 
 
+
+
     public FileDescriptor getImage() {
         return image;
     }

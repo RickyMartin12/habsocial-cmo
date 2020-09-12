@@ -5,10 +5,8 @@ import com.haulmont.cuba.core.global.MetadataTools;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.Screens;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
 import pt.cmolhao.entity.Localizacoes;
@@ -22,6 +20,9 @@ import javax.json.JsonReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @UiController("cmolhao_Localizacoes.edit")
@@ -33,6 +34,8 @@ import java.util.UUID;
 public class LocalizacoesEdit extends StandardEditor<Localizacoes> {
     @Inject
     protected TextField<UUID> idLocalizacaoField;
+    @Inject
+    protected CollectionContainer<Valencias> valenciasDc;
     @Inject
     private TextField<String> coordField;
 
@@ -46,7 +49,7 @@ public class LocalizacoesEdit extends StandardEditor<Localizacoes> {
     @Inject
     private Notifications notifications;
     @Inject
-    private LookupField<Valencias> idvalenciaField;
+    private LookupPickerField<Valencias> idvalenciaField;
     @Inject
     private MetadataTools metadataTools;
 
@@ -80,6 +83,12 @@ public class LocalizacoesEdit extends StandardEditor<Localizacoes> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         getWindow().setCaption("Adicionar/Editar Localização - " + idLocalizacaoField.getValue());
+        Map<String, Valencias> map = new HashMap<>();
+        Collection<Valencias> customers = valenciasDc.getItems();
+        for (Valencias item : customers) {
+            map.put(item.getDescricaotecnica() + " " , item);
+        }
+        idvalenciaField.setOptionsMap(map);
     }
 
     @Subscribe("click_map")
@@ -122,19 +131,17 @@ public class LocalizacoesEdit extends StandardEditor<Localizacoes> {
 
     }
 
-
-
-    @Subscribe(id = "localizacoesDc", target = Target.DATA_CONTAINER)
-    public void onLocalizacoesDcItemPropertyChange(InstanceContainer.ItemPropertyChangeEvent<Localizacoes> event) {
+    @Subscribe("idvalenciaField")
+    protected void onIdvalenciaFieldValueChange(HasValue.ValueChangeEvent<Valencias> event) {
         if (event.getValue() != null)
         {
-            Object str = event.getValue() instanceof Entity
-                    ? metadataTools.getInstanceName((Entity) event.getValue())
-                    : event.getValue();
+            if (event.getValue().getMorada() != null)
+            {
+                String idval = event.getValue().getMorada();
+                String[] arrOfStr = idval.split("-", 2);
+                locationData(arrOfStr[1]);
+            }
 
-            String idval = str.toString();
-            String[] arrOfStr = idval.split("-", 2);
-            locationData(arrOfStr[1]);
         }
     }
 }

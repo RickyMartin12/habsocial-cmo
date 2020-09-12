@@ -1,17 +1,19 @@
 package pt.cmolhao.web.tipoatendimento;
 
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.Table;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.gui.screen.LookupComponent;
+import pt.cmolhao.entity.TipoAjuda;
 import pt.cmolhao.entity.TipoAtendimento;
 import pt.cmolhao.web.tipologiafamiliar.TipologiaFamiliarEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +30,14 @@ public class TipoAtendimentoBrowse extends StandardLookup<TipoAtendimento> {
     protected LookupField linhasTipoAtendimento;
     @Inject
     protected LookupField tipoAtendimentoField;
+    @Named("tipoAtendimentoesTable.remove")
+    protected RemoveAction<TipoAtendimento> tipoAtendimentoesTableRemove;
     @Inject
     private DataManager dataManager;
     @Inject
     private ScreenBuilders screenBuilders;
+    @Inject
+    private Dialogs dialogs;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -88,9 +94,7 @@ public class TipoAtendimentoBrowse extends StandardLookup<TipoAtendimento> {
     @Subscribe("reset_tipo_atendimento")
     protected void onReset_tipo_atendimentoClick(Button.ClickEvent event) {
         tipoAtendimentoField.setValue(null);
-        linhasTipoAtendimento.setValue(null);
         tipoAtendimentoesDl.removeParameter("tipoAtendimento");
-        tipoAtendimentoesDl.setMaxResults(0);
         tipoAtendimentoesDl.load();
     }
 
@@ -110,6 +114,37 @@ public class TipoAtendimentoBrowse extends StandardLookup<TipoAtendimento> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         getWindow().setCaption("Listar Tipos de Atendimento");
+    }
+
+    @Subscribe("tipoAtendimentoesTable.remove")
+    protected void onTipoAtendimentoesTableRemove(Action.ActionPerformedEvent event) {
+        tipoAtendimentoesTableRemove.setConfirmation(false);
+        if (tipoAtendimentoesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção do tipo de atendimento")
+                    .withMessage("Deve seleccionar pelo uns dos tipos de atendimento")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            TipoAtendimento user = tipoAtendimentoesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela do tipo de atendimento número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela do tipo de atendimento número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        tipoAtendimentoesTableRemove.execute();
+                                    }), // execute action
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
     }
 
 

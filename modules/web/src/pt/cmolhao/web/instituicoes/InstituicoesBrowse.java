@@ -1,18 +1,17 @@
 package pt.cmolhao.web.instituicoes;
 
-import com.haulmont.cuba.core.entity.KeyValueEntity;
-import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.core.global.ValueLoadContext;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.screen.LookupComponent;
 import pt.cmolhao.entity.Instituicoes;
-import pt.cmolhao.web.fotosvalencia.FotosValenciaEdit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,13 @@ import java.util.List;
 public class InstituicoesBrowse extends StandardLookup<Instituicoes> {
 
     @Inject
-    private LookupField<Instituicoes> desricaoField;
+    protected TextField<String> numRegistoField;
+    @Inject
+    protected TextField<String> nissField;
+    @Named("instituicoesesTable.remove")
+    protected RemoveAction<Instituicoes> instituicoesesTableRemove;
+    @Inject
+    private LookupPickerField<Instituicoes> desricaoField;
     @Inject
     private CollectionLoader<Instituicoes> instituicoesesDl;
 
@@ -31,49 +36,17 @@ public class InstituicoesBrowse extends StandardLookup<Instituicoes> {
     private Notifications notifications;
     @Inject
     private LookupField linhasInstituicoes;
-    @Inject
-    private LookupField caeField;
-    @Inject
-    private DataManager dataManager;
-    @Inject
-    private LookupField naturezajuridcaField;
-    @Inject
-    private Label<String> text_clasolhao;
-    @Inject
-    private CheckBox clasolhaoField;
-    @Inject
-    private Label<String> text_cpcj;
-    @Inject
-    private CheckBox cpcjField;
-    @Inject
-    private CheckBox rsiField;
-    @Inject
-    private Label<String> text_rsi;
-    @Inject
-    private Label<String> text_plataformatematica;
-    @Inject
-    private CheckBox plataformatematicaField;
-    @Inject
-    private Label<String> text_projectoscomunitarios;
-    @Inject
-    private CheckBox projectoscomunitariosField;
-    @Inject
-    private Label<String> text_outraredelocal;
-    @Inject
-    private CheckBox outraredelocalField;
+
     @Inject
     private Table<Instituicoes> instituicoesesTable;
     @Inject
     private ScreenBuilders screenBuilders;
 
+    @Inject
+    private Dialogs dialogs;
+
     @Subscribe
     protected void onInit(InitEvent event) {
-        text_clasolhao.setValue("Olhão Classificado: ");
-        text_cpcj.setValue("Centro de Protecção de Crianças e Jovens: ");
-        text_rsi.setValue("Rendimento Social de Inserção: ");
-        text_plataformatematica.setValue("Plataforma de Informática: ");
-        text_projectoscomunitarios.setValue("Projectos Comunitários: ");
-        text_outraredelocal.setValue("Outra Rede Local: ");
         List<Integer> list = new ArrayList<>();
         list.add(10);
         list.add(20);
@@ -87,19 +60,25 @@ public class InstituicoesBrowse extends StandardLookup<Instituicoes> {
         list.add(10000);
         linhasInstituicoes.setOptionsList(list);
 
+        
+
         instituicoesesTable.setEmptyStateLinkClickHandler(emptyStateClickEvent ->
                 screenBuilders.editor(instituicoesesTable)
                         .newEntity()
                         .withInitializer(customer -> {
-                            customer.setDescricao(desricaoField.getValue().getDescricao());
-                            customer.setCae(caeField.getValue().toString());
-                            customer.setNaturezajuridica(naturezajuridcaField.getValue().toString());
-                            customer.setClasolhao(clasolhaoField.getValue());
-                            customer.setCpcj(cpcjField.getValue());
-                            customer.setRsi(rsiField.getValue());
-                            customer.setPlataformatematica(plataformatematicaField.getValue());
-                            customer.setProjectoscomunitarios(projectoscomunitariosField.getValue());
-                            customer.setOutraredelocal(outraredelocalField.getValue());
+                            if (desricaoField.getValue() != null)
+                            {
+                                customer.setDescricao(desricaoField.getValue().getDescricao());
+                            }
+                            if(numRegistoField.getValue() != null)
+                            {
+                                customer.setNrregistosegsocial(numRegistoField.getValue());
+                            }
+                            if(nissField.getValue() != null)
+                            {
+                                customer.setNiss(nissField.getValue());
+                            }
+
                         })
                         .withScreenClass(InstituicoesEdit.class)    // specific editor screen
                         .build()
@@ -111,29 +90,6 @@ public class InstituicoesBrowse extends StandardLookup<Instituicoes> {
     protected void onAfterShow(AfterShowEvent event) {
 
         getWindow().setCaption("Listar Instituições");
-        List<String> options = new ArrayList<>();
-        String queryString = "select o.cae as cae from cmolhao_Instituicoes o where o.cae is not null group by o.cae";
-        ValueLoadContext valueLoadContextontext = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString));
-        valueLoadContextontext.addProperty("cae");
-        List<KeyValueEntity> resultList = dataManager.loadValues(valueLoadContextontext);
-        for (KeyValueEntity entry : resultList) {
-            options.add(entry.getValue("cae"));
-        }
-        caeField.setOptionsList(options);
-
-        List<String> options_natrureza_juridica = new ArrayList<>();
-        String queryString_natrureza_juridica  = "select o.naturezajuridica as naturezajuridica from cmolhao_Instituicoes o where o.naturezajuridica is not null group by o.naturezajuridica";
-        ValueLoadContext valueLoadContextontextNaturezaJuridica = ValueLoadContext.create()
-                .setQuery(ValueLoadContext.createQuery(queryString_natrureza_juridica));
-        valueLoadContextontextNaturezaJuridica.addProperty("naturezajuridica");
-        List<KeyValueEntity> resultListNaturezaJuridica = dataManager.loadValues(valueLoadContextontextNaturezaJuridica);
-        for (KeyValueEntity entry : resultListNaturezaJuridica) {
-            options_natrureza_juridica.add(entry.getValue("naturezajuridica"));
-        }
-        naturezajuridcaField.setOptionsList(options_natrureza_juridica);
-
-
     }
 
     public static boolean isNumeric(String str) {
@@ -143,28 +99,12 @@ public class InstituicoesBrowse extends StandardLookup<Instituicoes> {
     @Subscribe("reset_search_instituicoes")
     public void onReset_search_instituicoesClick(Button.ClickEvent event) {
         desricaoField.setValue(null);
-        caeField.setValue(null);
-        naturezajuridcaField.setValue(null);
-        linhasInstituicoes.setValue(null);
-        clasolhaoField.setValue(false);
-        cpcjField.setValue(false);
-        rsiField.setValue(false);
-        plataformatematicaField.setValue(false);
-        projectoscomunitariosField.setValue(false);
-        outraredelocalField.setValue(false);
+        numRegistoField.setValue(null);
+        nissField.setValue(null);
         instituicoesesDl.removeParameter("descricao");
-        instituicoesesDl.removeParameter("cae");
-        instituicoesesDl.removeParameter("naturezajuridica");
-        instituicoesesDl.removeParameter("clasolhao");
-        instituicoesesDl.removeParameter("cpcj");
-        instituicoesesDl.removeParameter("rsi");
-        instituicoesesDl.removeParameter("plataformatematica");
-        instituicoesesDl.removeParameter("projectoscomunitarios");
-        instituicoesesDl.removeParameter("outraredelocal");
-        instituicoesesDl.setMaxResults(0);
+        instituicoesesDl.removeParameter("nrregistosegsocial");
+        instituicoesesDl.removeParameter("niss");
         instituicoesesDl.load();
-
-
     }
 
     @Subscribe("search_instituicoes")
@@ -176,79 +116,47 @@ public class InstituicoesBrowse extends StandardLookup<Instituicoes> {
             instituicoesesDl.removeParameter("descricao");
         }
 
-        // Classificação Portuguesa de Actividades Económicas - cae
-        if (caeField.getValue() != null) {
-            if (isNumeric(caeField.getValue().toString()))
+        if (numRegistoField.getValue() != null)
+        {
+            if (isNumeric(numRegistoField.getValue()))
             {
-                instituicoesesDl.setParameter("cae", caeField.getValue().toString() );
+                instituicoesesDl.setParameter("nrregistosegsocial", "(?i)%" + numRegistoField.getValue() + "%");
             }
             else
             {
                 notifications.create()
-                        .withCaption("<code>Erro ao atribuir string do numero de cae</code>")
-                        .withDescription("<u>Devera introduzir um numero inteiro</u>")
+                        .withCaption("<code>Erro ao atribuir o Numero Registo de Segurança Social</code>")
+                        .withDescription("<u>Devera introduzir o número registo da segurança social</u>")
                         .withType(Notifications.NotificationType.ERROR)
                         .withContentMode(ContentMode.HTML)
                         .show();
             }
-
-        } else {
-            instituicoesesDl.removeParameter("cae");
-        }
-
-        // Natureza Juridica
-        if (naturezajuridcaField.getValue() != null) {
-            instituicoesesDl.setParameter("naturezajuridica", naturezajuridcaField.getValue().toString() );
         }
         else
         {
-            instituicoesesDl.removeParameter("naturezajuridica");
+            instituicoesesDl.removeParameter("nrregistosegsocial");
         }
 
-        if (clasolhaoField.getValue())
+        if (nissField.getValue() != null)
         {
-            instituicoesesDl.setParameter("clasolhao",  true);
-        } else {
-            instituicoesesDl.removeParameter("clasolhao");
+            if (isNumeric(nissField.getValue()))
+            {
+                instituicoesesDl.setParameter("niss", "(?i)%" + nissField.getValue() + "%");
+            }
+            else
+            {
+                notifications.create()
+                        .withCaption("<code>Erro ao atribuir o NISS</code>")
+                        .withDescription("<u>Devera introduzir o niss</u>")
+                        .withType(Notifications.NotificationType.ERROR)
+                        .withContentMode(ContentMode.HTML)
+                        .show();
+            }
         }
-
-        if (cpcjField.getValue())
+        else
         {
-            instituicoesesDl.setParameter("cpcj",  true);
-        } else {
-            instituicoesesDl.removeParameter("cpcj");
+            instituicoesesDl.removeParameter("niss");
         }
-
-        if (rsiField.getValue())
-        {
-            instituicoesesDl.setParameter("rsi",  true);
-        } else {
-            instituicoesesDl.removeParameter("rsi");
-        }
-
-
-        if (plataformatematicaField.getValue())
-        {
-            instituicoesesDl.setParameter("plataformatematica",  true);
-        } else {
-            instituicoesesDl.removeParameter("plataformatematica");
-        }
-
-
-        if (projectoscomunitariosField.getValue())
-        {
-            instituicoesesDl.setParameter("projectoscomunitarios",  true);
-        } else {
-            instituicoesesDl.removeParameter("projectoscomunitarios");
-        }
-
-        if (outraredelocalField.getValue())
-        {
-            instituicoesesDl.setParameter("outraredelocal",  true);
-        } else {
-            instituicoesesDl.removeParameter("outraredelocal");
-        }
-
 
         instituicoesesDl.load();
     }
@@ -266,4 +174,36 @@ public class InstituicoesBrowse extends StandardLookup<Instituicoes> {
         instituicoesesDl.load();
 
     }
+
+    @Subscribe("instituicoesesTable.remove")
+    protected void onInstituicoesesTableRemove(Action.ActionPerformedEvent event) {
+        instituicoesesTableRemove.setConfirmation(false);
+        if (instituicoesesTable.getSelected().isEmpty())
+        {
+            dialogs.createOptionDialog()
+                    .withCaption("Selecção da instituições")
+                    .withMessage("Deve seleccionar pelo uma das instituições")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.CLOSE)
+                    )
+                    .show();
+        }
+        else
+        {
+            Instituicoes user = instituicoesesTable.getSingleSelected();
+            dialogs.createOptionDialog()
+                    .withCaption("Remover a linha da tabela da instituição número '"+user.getId()+"' ")
+                    .withMessage("Tens a certeza que quer remover esta linha da tabela da instituição número '"+user.getId()+"'?")
+                    .withActions(
+                            new DialogAction(DialogAction.Type.YES)
+                                    .withHandler(e ->
+                                    {
+                                        instituicoesesTableRemove.execute();
+                                    }), // execute action
+                            new DialogAction(DialogAction.Type.NO)
+                    )
+                    .show();
+        }
+    }
+
 }

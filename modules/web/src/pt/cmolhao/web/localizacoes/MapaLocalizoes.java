@@ -8,6 +8,7 @@ import com.haulmont.cuba.gui.Screens;
 import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.Label;
 import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.gui.icons.CubaIcon;
 import com.haulmont.cuba.gui.screen.*;
 
 import javax.inject.Inject;
@@ -33,11 +34,6 @@ public class MapaLocalizoes extends Screen {
     private TextField<String> latitudeField;
     @Inject
     private TextField<String> longuitudeField;
-
-
-    private static final String HTML_MAPS = "<h1>Localizacao de mapas da morada na habitação social</h1>\n";
-    @Inject
-    private Label<String> htmlMaps;
     @Inject
     private MapViewer map;
 
@@ -70,7 +66,6 @@ public class MapaLocalizoes extends Screen {
 
     @Subscribe
     protected void onInit(InitEvent event) {
-        htmlMaps.setValue(HTML_MAPS);
 
 
         // Carregar o mapa
@@ -114,6 +109,7 @@ public class MapaLocalizoes extends Screen {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
             String coord = messageLabel.getRawValue();
+            getWindow().setIconFromSet(CubaIcon.MAP);
             getWindow().setCaption("Mapa - Coordenada: " + coord);
 
             if (coord != "")
@@ -130,7 +126,7 @@ public class MapaLocalizoes extends Screen {
     // Adicionar uma dada localizacao
     private void addMarker(double latitude, double longitude) {
         map.clearMarkers();
-        Marker marker = map.createMarker("Ponto da Coordenada: ", map.createGeoPoint(latitude, longitude), true);
+        Marker marker = map.createMarker("Ponto da Coordenada: " + latitude + ";" + longitude, map.createGeoPoint(latitude, longitude), true);
         marker.setClickable(true);
         map.addMarker(marker);
         messageLabel.setValue(latitude+";"+longitude);
