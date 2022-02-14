@@ -1,6 +1,5 @@
 package pt.cmolhao.web.equipamento;
 
-import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.actions.list.RemoveAction;
@@ -8,7 +7,6 @@ import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.screen.*;
 import pt.cmolhao.entity.Apoios;
 import pt.cmolhao.entity.Equipamento;
-import pt.cmolhao.entity.HabitacaoSocial;
 
 import javax.inject.Inject;
 import javax.inject.Named;

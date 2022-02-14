@@ -1,40 +1,72 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.tipo_doc_apoio">
     <data>
         <instance id="tipoDocApoioDc"
-                    class="pt.cmolhao.entity.TipoDocApoio"
-                    view="tipoDocApoio-view">
+                  class="pt.cmolhao.entity.TipoDocApoio"
+                  view="tipoDocApoio-view">
             <loader/>
         </instance>
-        
+
+        <collection id="tipoAjudasDc"
+                    class="pt.cmolhao.entity.TipoAjuda"
+                    view="_local">
+            <loader id="tipoAjudasDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoAjuda e]]>
+                </query>
+            </loader>
+        </collection>
+
     </data>
-    
     <dialogMode height="600"
                 width="800"/>
-<layout expand="editActions" spacing="true">
-    
-        
+    <layout expand="editActions" spacing="true">
 
-<form id="form" dataContainer="tipoDocApoioDc">
-<column width="250px">
-	
-	<textArea id="descricaoField" property="descricao" rows="5"/>
-	
-	<pickerField id="idTipoApoioField" property="idTipoApoio">
-		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
-	</pickerField>
-	
-</column>
-</form>
 
-        
-        
+        <tabSheet>
+            <tab id="dados_resposta"
+                 caption="Dados dos Tipos de Apoio do Documento"
+                 icon="font-icon:FILE_O"
+                 margin="true"
+                 spacing="true">
+
+                <form id="form_dados_resposta" dataContainer="tipoDocApoioDc">
+
+                    <column width="500px">
+                        <lookupPickerField caption="Tipo de Apoio:"
+                                           id="idTipoapoioField"
+                                           property="idTipoApoio"
+                                           icon="font-icon:QUESTION"
+                                           inputPrompt="(Seleccione o tipo de apoio)"
+                                           optionsContainer="tipoAjudasDc">
+
+                            <actions>
+                                <action id="lookup" type="picker_lookup"/>
+                                <action id="clear" type="picker_clear"/>
+                            </actions>
+
+
+                        </lookupPickerField>
+
+                        <textField id="idTiposDocApoio" property="id" visible="false"  />
+
+
+                    </column>
+                    <column width="400px">
+                        <textField id="descricaoField" property="descricao" caption="Descrição: " icon="ADDRESS_CARD"/>
+
+                    </column>
+
+                </form>
+
+            </tab>
+        </tabSheet>
+
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>

@@ -15,6 +15,7 @@
             <collection id="utentesRelacionadosDc" property="utentesRelacionados" />
             <collection id="utentesRelacionados2Dc" property="utentesRelacionados2" />
             <collection id="utentesSituacaoProfissionalsDc" property="utentesSituacaoProfissionals" />
+            <collection id="habitacaoSocialsDc" property="habitacaoSocials" />
         </instance>
 
         <collection id="grauEscolaridadesDc"
@@ -67,6 +68,16 @@
             </loader>
         </collection>
 
+        <collection id="tipoCartaoDc"
+                    class="pt.cmolhao.entity.TipoCartao"
+                    view="tipoCartao-view">
+            <loader id="customersTipoCartaoLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoCartao e]]>
+                </query>
+            </loader>
+        </collection>
+
 
 
 
@@ -89,6 +100,12 @@
                             <textField stylename="nome_utente" id="nomeField" property="nome" caption="Nome: " icon="ADDRESS_CARD" required="true"
                                        requiredMessage="O Nome do Utente deve ser preenchido"/>
                             <dateField stylename="data_nasc_utente" id="dataNascField" property="dataNasc" caption="Data de Nascimento: " icon="CALENDAR"/>
+
+                            <textField stylename="data_nasc_utente" id="emailField" property="email" caption="Email: " icon="ENVELOPE">
+                                <validator class="com.haulmont.cuba.gui.components.validators.EmailValidator"
+                                           message="Email Invalido"/>
+                            </textField>
+
                             <textField id="idUtenteField" visible="false" property="id" />
 
                         </column>
@@ -96,10 +113,25 @@
                         <column width="300px">
                             <textField stylename="num_contribuinte_utente" id="numContribuinteField" property="numContribuinte" caption="Numero Contribuinte: "
                                        icon="font-icon:ID_CARD" maxLength="9"/>
-                            <textField stylename="email_utente" id="emailField" property="email" caption="Email: " icon="ENVELOPE">
-                                <validator class="com.haulmont.cuba.gui.components.validators.EmailValidator"
-                                           message="Email Invalido"/>
-                            </textField>
+
+
+                            <dateField stylename="num_contribuinte_utente" id="dataValidadeField" property="dataValidade" caption="Data de Validade: " icon="CALENDAR"/>
+
+
+                            <lookupPickerField id="idTipoCartaoField"
+                                               property="idTipoCartao"
+                                               optionsContainer="tipoCartaoDc"
+                                               stylename="nome_utente"
+                                               inputPrompt="(Seleccione o tipo de cartão)"
+                                               width="400px"
+                                               caption="Tipo de Cartão: "
+                                               icon="font-icon:CREDIT_CARD">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
                         </column>
 
                     </form>
@@ -522,7 +554,45 @@
 
 
                 </tab>
+                <tab id="habitacao_social"
+                     caption="Habitação Social"
+                     icon="font-icon:HOME"
+                     margin="true"
+                     spacing="true">
+                    <groupBox id="habitacaoSociaisDc" caption="Habitação Sociais">
+                        <table id="habitacaoSocialsTable" dataContainer="habitacaoSocialsDc" width="100%" height="500px"
+                               emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="bloc" caption="Zona da Habitação Social" />
+                                <column id="idUtente" caption="Utente"/>
+                                <column id="andar" caption="Numero de Andar"/>
+                                <column id="arrend" caption="renda"/>
+
+                                <column id="bl" caption="Bloco/Lote"/>
+
+                                <column id="codPostal" caption="Cõdigo Postal"/>
+                                <column id="coord" caption="Coordenada"/>
+                                <column id="freguesia" caption="Freguesia"/>
+                                <column id="localidade" caption="Localidade"/>
+                                <column id="rua" caption="Rua"/>
+                                <column id="sitoLugar" caption="Sitio"/>
+                            </columns>
+                            <buttonsPanel>
+                                <button action="habitacaoSocialsTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="habitacaoSocialsTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="habitacaoSocialsTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+                </tab>
             </tabSheet>
+
         </scrollBox>
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>

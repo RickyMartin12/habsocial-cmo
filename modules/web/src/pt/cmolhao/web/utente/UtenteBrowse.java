@@ -40,12 +40,14 @@ public class UtenteBrowse extends StandardLookup<Utente> {
     protected GroupTable<Utente> utentesTable;
     @Inject
     protected LookupField estadoCivilField;
-    @Inject
-    protected LookupField paisOrigemField;
+    /*@Inject
+    protected LookupField paisOrigemField;*/
     @Inject
     protected TextField<String> num_cont_utente_id;
     @Named("utentesTable.remove")
     protected RemoveAction<Utente> utentesTableRemove;
+    @Inject
+    protected LookupPickerField<TipoCartao> idTipoCartaoField;
     @Inject
     private ScreenBuilders screenBuilders;
     @Inject
@@ -73,13 +75,13 @@ public class UtenteBrowse extends StandardLookup<Utente> {
         list_estado_civil.add("Separado(a)");
         estadoCivilField.setOptionsList(list_estado_civil);
 
-        List<String> list_paises = new ArrayList<>();
+        /*List<String> list_paises = new ArrayList<>();
         String[] countryCodes = Locale.getISOCountries();
         for (String countryCode : countryCodes) {
             Locale obj = new Locale("", countryCode);
             list_paises.add(obj.getDisplayCountry());
         }
-        paisOrigemField.setOptionsList(list_paises);
+        paisOrigemField.setOptionsList(list_paises);*/
 
     }
 
@@ -129,10 +131,11 @@ public class UtenteBrowse extends StandardLookup<Utente> {
                             {
                                 customer.setNome(nomeField.getValue());
                             }
-                            if(paisOrigemField.getValue() != null)
+                            customer.setIdTipoCartao(idTipoCartaoField.getValue());
+                            /*if(paisOrigemField.getValue() != null)
                             {
                                 customer.setPaisOrigem(paisOrigemField.getValue().toString());
-                            }
+                            }*/
                         })
                         .withScreenClass(UtenteEdit.class)    // specific editor screen
                         .build()
@@ -198,14 +201,20 @@ public class UtenteBrowse extends StandardLookup<Utente> {
             utentesDl.removeParameter("estadoCivil");
         }
 
-        if (paisOrigemField.getValue() != null)
+        if (idTipoCartaoField.getValue() != null) {
+            utentesDl.setParameter("idTipoCartao",  idTipoCartaoField.getValue().getId());
+        } else {
+            utentesDl.removeParameter("idTipoCartao");
+        }
+
+        /*if (paisOrigemField.getValue() != null)
         {
             utentesDl.setParameter("paisOrigem",  paisOrigemField.getValue().toString());
         }
         else
         {
             utentesDl.removeParameter("paisOrigem");
-        }
+        }*/
 
         utentesDl.load();
     }
@@ -216,12 +225,14 @@ public class UtenteBrowse extends StandardLookup<Utente> {
         num_cont_utente_id.setValue(null);
         nomeField.setValue(null);
         estadoCivilField.setValue(null);
-        paisOrigemField.setValue(null);
+        idTipoCartaoField.setValue(null);
+        //paisOrigemField.setValue(null);
         utentesDl.removeParameter("nome");
         utentesDl.removeParameter("numContribuinte");
         utentesDl.removeParameter("anoNasc");
         utentesDl.removeParameter("estadoCivil");
-        utentesDl.removeParameter("paisOrigem");
+        utentesDl.removeParameter("idTipoCartao");
+        //utentesDl.removeParameter("paisOrigem");
         utentesDl.load();
     }
 

@@ -129,7 +129,7 @@
 
             </vbox>
 
-            <vbox margin="true"
+            <!--<vbox margin="true"
                   spacing="true"
                   stylename="group-panel">
 
@@ -143,7 +143,7 @@
                 </table>
 
 
-            </vbox>
+            </vbox>-->
         </cssLayout>
 
         <hbox spacing="true">

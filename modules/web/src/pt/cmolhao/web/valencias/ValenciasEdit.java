@@ -14,6 +14,7 @@ import com.haulmont.cuba.gui.components.data.value.ContainerValueSource;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.export.ExportFormat;
 import com.haulmont.cuba.gui.model.CollectionContainer;
+import com.haulmont.cuba.gui.model.CollectionPropertyContainer;
 import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
@@ -27,6 +28,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -71,6 +73,10 @@ public class ValenciasEdit extends StandardEditor<Valencias> {
     protected CollectionContainer<Valencias> valencias_dc;
     @Inject
     protected InstanceContainer<Valencias> valenciasDc;
+    @Inject
+    protected TextField<BigDecimal> acordocomparticipacaoField;
+    @Inject
+    protected CollectionPropertyContainer<FotosValencia> fotosValenciasDc;
     @Inject
     private Metadata metadata;
     @Inject
@@ -279,6 +285,7 @@ public class ValenciasEdit extends StandardEditor<Valencias> {
                 this::renderAvatarImageComponent
         );
 
+
         fotosValenciasTable.addGeneratedColumn("download", entity -> {
             Button btn = uiComponents.create(Button.class);
             btn.setCaption("Descarregar");
@@ -287,11 +294,15 @@ public class ValenciasEdit extends StandardEditor<Valencias> {
             btn.setAction(new BaseAction("download") {
                 @Override
                 public void actionPerform(Component component) {
-                    FotosValencia user = fotosValenciasTable.getSingleSelected();
-                    if (user != null)
+                    if (entity.getImage() != null)
                     {
-                        FileDescriptor imageFile = user.getImage();
+                        FileDescriptor imageFile = entity.getImage();
                         exportDisplay.show(imageFile, ExportFormat.OCTET_STREAM);
+                    }
+                    else
+                    {
+                        btn.setEnabled(false);
+
                     }
 
                 }
@@ -344,6 +355,8 @@ public class ValenciasEdit extends StandardEditor<Valencias> {
     @Subscribe(target = Target.DATA_CONTEXT)
     private void onPreCommit(DataContext.PreCommitEvent event) {
 
+        BigDecimal num = acordocomparticipacaoField.getValue();
+
         int ti = 0;
         List<Integer> list = new ArrayList<>();
         List<Integer> list_temp = new ArrayList<>();
@@ -354,6 +367,7 @@ public class ValenciasEdit extends StandardEditor<Valencias> {
         if (idResSocialField.getValue() != null) {
             if (acordocapacidadeField.getValue() != null) {
                 int capacidade = idResSocialField.getValue().getCapacidade();
+
 
                 list.add(acordocapacidadeField.getValue());
                 list_temp.add(acordocapacidadeField.getValue());
@@ -370,9 +384,9 @@ public class ValenciasEdit extends StandardEditor<Valencias> {
                                 String v = "" + idValenciasField.getValue();
 
                                 if (item.getId().toString().equals(v))
-                                        {
-                                            list_temp.remove(item.getAcordocapacidade());
-                                        }
+                                {
+                                    list_temp.remove(item.getAcordocapacidade());
+                                }
 
 
                                 list.add(item.getAcordocapacidade());
@@ -386,12 +400,6 @@ public class ValenciasEdit extends StandardEditor<Valencias> {
 
 
                 }
-
-                /*notifications.create()
-                        .withCaption("Position: " + list_temp.toString())
-                        .show();*/
-
-
 
                 for (int i : list_temp)
                 {
@@ -410,11 +418,27 @@ public class ValenciasEdit extends StandardEditor<Valencias> {
                             .show();
                     event.preventCommit();
                 }
-
-
-
             }
         }
+
+        if (num != null && acordocapacidadeField.getValue() != null)
+        {
+            int num_utentes = num.toBigInteger().intValueExact();
+            if (num_utentes > acordocapacidadeField.getValue())
+            {
+                dialogs.createOptionDialog()
+                        .withCaption("O Numero de pessoas ultrapassou a capacidade das pessoas")
+                        .withMessage("O Numero de pessoas não pode ultrapassar a capacidade de pessoas.")
+                        .withActions(
+                                new DialogAction(DialogAction.Type.CLOSE)
+                        )
+                        .show();
+                event.preventCommit();
+            }
+        }
+
+
+
 
 
 

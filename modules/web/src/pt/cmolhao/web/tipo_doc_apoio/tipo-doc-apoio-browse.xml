@@ -11,52 +11,136 @@
             <loader id="tipoDocApoiosDl">
                 <query>
                     <![CDATA[select e from cmolhao_TipoDocApoio e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idTipoApoio i</c:join>
+                                <c:where>i.id = :idTipoApoio</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.descricao like :descricao</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
+
+        <collection id="tipoAjudasDc"
+                    class="pt.cmolhao.entity.TipoAjuda"
+                    view="_local">
+            <loader id="tipoAjudasDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoAjuda e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="tipoDocApoiosTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="tipoDocApoiosTable"
-                dataLoader="tipoDocApoiosDl">
-            <properties include=".*"/>
-        </filter>
-        
-<groupTable id="tipoDocApoiosTable"
-        width="100%"
-        dataContainer="tipoDocApoiosDc">
-    <actions>
-        <action id="create" type="create"/>
-    
-        <action id="edit" type="edit"/>
-    
-        <action id="remove" type="remove"/>
-    
-    </actions>
-    <columns>
-        <column  id="descricao"/>
-    
-        <column  id="idTipoApoio"/>
-    
-    </columns>
-    <rowsCount/>
-    <buttonsPanel id="buttonsPanel"
-                  alwaysVisible="true">
-        
-            <button id="createBtn" action="tipoDocApoiosTable.create"/>                
-        
-            <button id="editBtn" action="tipoDocApoiosTable.edit"/>                
-        
-            <button id="removeBtn" action="tipoDocApoiosTable.remove"/>                
-        
-    </buttonsPanel>
-</groupTable>
+
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+
+                <grid spacing="true" width="100%">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField caption="Tipo de Apoio:"
+                                               id="idTipoapoioField"
+                                               property="idTipoapoio"
+                                               stylename="id_tipo_apoio"
+                                               width="300px"
+                                               icon="font-icon:QUESTION"
+                                               inputPrompt="(Seleccione o tipo de apoio)"
+                                               optionsContainer="tipoAjudasDc">
+
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+
+                            </lookupPickerField>
+
+                            <textField id="descricaoField" property="descricao"
+                                       width="400px"
+                                       inputPrompt="(Introduza a descricao do documento de apoio)"
+                                       caption="Documento do Tipo de Ajuda: " icon="WRENCH"/>
+                        </row>
+                    </rows>
+
+                </grid>
+
+                <hbox spacing="true">
+                    <button id="reset_tipo_doc_apoio" icon="ERASER" caption="Limpar" />
+                    <button id="search_tipo_doc_apoio" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+
+
+            </scrollBox>
+        </groupBox>
+
+
+
+        <hbox spacing="true">
+            <lookupField id="linhasSubRedeTrabalho"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
+        <groupTable id="tipoDocApoiosTable"
+                    aggregatable="true"
+                    width="100%"
+                    dataContainer="tipoDocApoiosDc"
+                    fixedGrouping="true"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove" />
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+
+                <group>
+                    <column id="idTipoApoio" caption="Tipo de Apoio"/>
+                </group>
+
+                <column id="descricao" caption="Descrição do Tipo de Apoio"/>
+
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="tipoDocApoiosTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="tipoDocApoiosTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="tipoDocApoiosTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button action="tipoDocApoiosTable.excel" stylename="friendly"/>
+            </buttonsPanel>
+        </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
         </hbox>
-    </layout>                
+    </layout>
 </window>

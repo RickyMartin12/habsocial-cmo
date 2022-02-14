@@ -5,31 +5,45 @@
         messagesPack="pt.cmolhao.web.atendimento_objetivos">
     <data>
         <instance id="atendimentoObjetivosDc"
-                    class="pt.cmolhao.entity.AtendimentoObjetivos"
-                    view="_local">
+                  class="pt.cmolhao.entity.AtendimentoObjetivos"
+                  view="atendimentoObjetivos-view">
             <loader/>
+            <collection id="atendimentosDc" property="atendimentos" />
+
         </instance>
-        
     </data>
-    
     <dialogMode height="600"
                 width="800"/>
-<layout expand="editActions" spacing="true">
-    
-        
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="atendimentoObjetivosDc">
+            <column width="250px">
+                <textField id="atendimemtoObjetivoEspecificoField" property="atendimemtoObjetivoEspecifico"/>
+                <textField id="atendimentoObjetivoGeralField" property="atendimentoObjetivoGeral"/>
+            </column>
+        </form>
 
-<form id="form" dataContainer="atendimentoObjetivosDc">
-<column width="250px">
-	
-	<textField id="atendimemtoObjetivoEspecificoField" property="atendimemtoObjetivoEspecifico"/>
-	
-	<textField id="atendimentoObjetivoGeralField" property="atendimentoObjetivoGeral"/>
-	
-</column>
-</form>
+        <groupBox id="atendBox" caption="Objectivos de Atendimento">
+            <table id="atendTable" dataContainer="atendimentosDc" width="100%" height="200px">
+                <actions>
+                    <action id="add" type="add"/>
+                    <action id="exclude" type="exclude"/>
+                </actions>
+                <columns>
+                    <column id="contactosEfetuados"/>
+                    <column id="dataAtendimento"/>
+                    <column id="idAtendimentoEncaminhamento" />
+                    <column id="idUtente" />
+                    <column id="idTecnico" />
+                    <column id="idTipoAtendimento" />
+                </columns>
+                <buttonsPanel>
+                    <button action="atendTable.add"/>
+                    <button action="atendTable.exclude"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
 
-        
-        
+
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose"/>
             <button action="windowClose"/>

@@ -12,74 +12,75 @@
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="editActions" spacing="true">
+    <layout expand="scrollBox" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
+            <tabSheet>
+                <tab id="dados_tipo_apoio"
+                     caption="Dados do Tipo de Apoio"
+                     icon="font-icon:ADDRESS_CARD"
+                     margin="true"
+                     spacing="true">
 
-        <tabSheet>
-            <tab id="dados_tipo_apoio"
-                 caption="Dados do Tipo de Apoio"
-                 icon="font-icon:ADDRESS_CARD"
-                 margin="true"
-                 spacing="true">
+                    <form id="form_dados_tipo_apoio" dataContainer="tipoAjudaDc">
+                        <column width="300px">
+                            <textField id="descricaoTipoAjudaField" property="descricaoTipoAjuda"
+                                       caption="Descrição de Tipo de Ajuda: "
+                                       icon="ADDRESS_CARD"/>
+                        </column>
+                        <column width="300px">
+                            <textField id="idTipoAjudaField" property="id" visible="false" />
+                        </column>
+                    </form>
+                </tab>
 
-                <form id="form_dados_tipo_apoio" dataContainer="tipoAjudaDc">
-                    <column width="300px">
-                        <textField id="descricaoTipoAjudaField" property="descricaoTipoAjuda"
-                                   caption="Descrição de Tipo de Ajuda: "
-                                   icon="ADDRESS_CARD"/>
-                    </column>
-                    <column width="300px">
-                        <textField id="idTipoAjudaField" property="id" visible="false" />
-                    </column>
-                </form>
-            </tab>
+            </tabSheet>
 
-        </tabSheet>
+            <tabSheet>
+                <tab id="apoios"
+                     caption="Apoios"
+                     icon="font-icon:CODE_FORK"
+                     margin="true"
+                     spacing="true">
+                    <groupBox id="apoiosBox" caption="Apoios">
+                        <table id="apoiosesTable" dataContainer="apoiosDc" width="100%" height="500px"
+                               emptyStateMessage="Não Existe Dados na Tabela"
+                               emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="idInstituicao" caption="Designação da Instituição"/>
+                                <column id="idUtente" caption="Utente"/>
+                                <column id="numProcesso" caption="Número Processo"/>
 
-        <tabSheet>
-            <tab id="apoios"
-                 caption="Apoios"
-                 icon="font-icon:CODE_FORK"
-                 margin="true"
-                 spacing="true">
-                <groupBox id="apoiosBox" caption="Apoios">
-                    <table id="apoiosesTable" dataContainer="apoiosDc" width="100%" height="500px"
-                           emptyStateMessage="Não Existe Dados na Tabela"
-                           emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
-                        <actions>
-                            <action id="create" type="create"/>
-                            <action id="edit" type="edit"/>
-                            <action id="remove" type="remove"/>
-                        </actions>
-                        <columns>
-                            <column id="idInstituicao" caption="Designação da Instituição"/>
-                            <column id="idUtente" caption="Utente"/>
-                            <column id="numProcesso" caption="Número Processo"/>
-
-                            <column id="dataAtribuicao" caption="Data de Atribuição"/>
-                            <column id="dataPedido" caption="Data de Pedido"/>
-                            <column id="dataRenovacao" caption="Data de Renovação"/>
-                            <column id="dataFim" caption="Data de Fim"/>
+                                <column id="dataAtribuicao" caption="Data de Atribuição"/>
+                                <column id="dataPedido" caption="Data de Pedido"/>
+                                <column id="dataRenovacao" caption="Data de Renovação"/>
+                                <column id="dataFim" caption="Data de Fim"/>
 
 
-                            <column id="idEstado" caption="Estado" />
-                            <column id="idTipoapoio" caption="Tipo de Ajuda"/>
+                                <column id="idEstado" caption="Estado" />
+                                <column id="idTipoapoio" caption="Tipo de Ajuda"/>
 
-                            <column id="observacaoEstado" caption="Observação Estado"/>
-                            <column id="observacoesConf" caption="Observações Confirmações"/>
-                            <column id="observacoesGerais" caption="Observações Gerais"/>
-                            <column id="valorApoio" caption="Valor de Apoio" generator="generateValorApoio"/>
-                        </columns>
-                        <buttonsPanel>
-                            <button action="apoiosesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
-                            <button action="apoiosesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
-                            <button action="apoiosesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
-                        </buttonsPanel>
-                    </table>
-                </groupBox>
+                                <column id="observacaoEstado" caption="Observação Estado"/>
+                                <column id="observacoesConf" caption="Observações Confirmações"/>
+                                <column id="observacoesGerais" caption="Observações Gerais"/>
+                                <column id="valorApoio" caption="Valor de Apoio" generator="generateValorApoio"/>
+                            </columns>
+                            <buttonsPanel>
+                                <button action="apoiosesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="apoiosesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="apoiosesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
 
-            </tab>
+                </tab>
 
-        </tabSheet>
+            </tabSheet>
+        </scrollBox>
 
 
         <hbox id="editActions" spacing="true">

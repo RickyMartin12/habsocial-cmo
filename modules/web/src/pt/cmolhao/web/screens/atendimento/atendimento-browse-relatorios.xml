@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="atendimentoesTable"
+        messagesPack="pt.cmolhao.web.screens.atendimento">
+    <data readOnly="true">
+        <collection id="atendimentoesDc"
+                    class="pt.cmolhao.entity.Atendimento"
+                    view="atendimento-view_1">
+            <loader id="atendimentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Atendimento e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.atendimentoObjetivos i</c:join>
+                                <c:where>i.id = :atendimentoObjetivos</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idAtendimentoEncaminhamento j</c:join>
+                                <c:where>j.id = :idAtendimentoEncaminhamento</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idTecnico k</c:join>
+                                <c:where>k.id = :idTecnico</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idUtente m</c:join>
+                                <c:where>m.id = :idUtente</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>extract(year from e.dataAtendimento) = :ano</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>extract(month from e.dataAtendimento) = :mes</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idUtente.habilitacoes l</c:join>
+                                <c:where>l.id = :habilitacoes</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idTipoAtendimento n</c:join>
+                                <c:where>n.id = :idTipoAtendimento</c:where>
+                            </c:jpql>
+
+                            <c:jpql>
+                                <c:join>join e.idUtente.idTipoCartao x</c:join>
+                                <c:where>x.id = :idTipoCartao</c:where>
+                            </c:jpql>
+
+                            <c:jpql>
+                                <c:join>join e.idUtente.idTipoCivil y</c:join>
+                                <c:where>y.id = :idTipoCivil</c:where>
+                            </c:jpql>
+
+
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="atendimentoObjetivosDc"
+                    class="pt.cmolhao.entity.AtendimentoObjetivos"
+                    view="atendimentoObjetivos-view">
+            <loader id="atendimentoObjectivosDl">
+                <query>
+                    <![CDATA[select e from cmolhao_AtendimentoObjetivos e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="atendimentoEncaminhamentoesDc"
+                    class="pt.cmolhao.entity.AtendimentoEncaminhamento"
+                    view="_local">
+            <loader id="atendimentoEncaminhamentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_AtendimentoEncaminhamento e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tecnicoesDc"
+                    class="pt.cmolhao.entity.Tecnico"
+                    view="tecnico-view">
+            <loader id="tecnicoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Tecnico e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoAtendimentoesDc"
+                    class="pt.cmolhao.entity.TipoAtendimento"
+                    view="_local">
+            <loader id="tipoAtendimentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoAtendimento e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="utentesDc"
+                    class="pt.cmolhao.entity.Utente"
+                    view="utente-view">
+            <loader id="utentesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Utente e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+        <collection id="habilitacoesLiterariasesDc"
+                    class="pt.cmolhao.entity.HabilitacoesLiterarias"
+                    view="_local">
+            <loader id="habilitacoesLiterariasesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_HabilitacoesLiterarias e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoCartaoDc"
+                    class="pt.cmolhao.entity.TipoCartao"
+                    view="tipoCartao-view">
+            <loader id="customersTipoCartaoLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoCartao e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoCivilsDc"
+                    class="pt.cmolhao.entity.TipoCivil"
+                    view="_local">
+            <loader id="tipoCivilsDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoCivil e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="atendimentoesTable"
+            spacing="true">
+        <!--<filter id="filter"
+                caption="Filtros de Pesquisa"
+                icon="font-icon:FILTER"
+                applyTo="atendimentoesTable"
+                dataLoader="atendimentoesDl">
+
+
+            <property name="dataAtendimento" caption="Data de Atendimento"/>
+            <custom name="atendimentoObjetivos"
+                    caption="Atendimento Objectivos"
+                    paramClass="pt.cmolhao.entity.AtendimentoObjetivos"
+                    join="join e.atendimentoObjetivos ae">
+                ae.id = ?
+            </custom>
+
+        </filter>-->
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField id="atendimentoObjectivosField"
+                                               property="atendimentoObjetivos"
+                                               optionsContainer="atendimentoObjetivosDc"
+                                               inputPrompt="(Seleccione os atendimentos objectivos)"
+                                               caption="Atendimentos Objectivos: "
+                                               width="500px"
+                                               stylename="hab_social_search_morador"
+                                               icon="font-icon:BUILDING">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+
+                            <dateField id="dataInicioField" property="dataInicio" datatype="date" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data de Atendimento de inicio: " stylename="data_atendimento_inicio"/>
+                            <dateField id="dataFimField" enable="false" property="dateFim" datatype="date" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data de Atendimento de fim: " stylename="data_atendimento_fim"/>
+
+                            <textField id="anoField" visible="false" />
+                            <textField id="mesField" visible="false" />
+
+                        </row>
+                    </rows>
+                </grid>
+                <grid spacing="true">
+                <columns>
+                    <column/>
+                    <column flex="1"/>
+                    <column/>
+                    <column flex="1"/>
+                    <column/>
+                    <column flex="1"/>
+                </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField caption="Atendimento de Encaminhamento:"
+                                               id="idAtendimentoEncaminhamentoField"
+                                               width="320px"
+                                               colspan="2"
+                                               inputPrompt="(seleccione o encaminhamento)"
+                                               icon="font-icon:VOLUME_CONTROL_PHONE"
+                                               optionsContainer="atendimentoEncaminhamentoesDc"
+                                               property="idAtendimentoEncaminhamento">
+
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+                            </lookupPickerField>
+
+                            <lookupPickerField
+                                    property="idTecnico"
+                                    id="idTecnicoField"
+                                    stylename="id_tecnico_atendimento_search"
+                                    optionsContainer="tecnicoesDc"
+                                    width="370px"
+                                    icon="font-icon:USER_MD" caption="Nome do Técnico: "
+                                    inputPrompt="(Seleccione o técnico)" >
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                            <lookupPickerField
+                                    property="idUtente"
+                                    id="utenteField"
+                                    stylename="id_utente_atendimento_search"
+                                    optionsContainer="utentesDc"
+                                    width="370px"
+                                    icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                                    inputPrompt="(Seleccione o utente)">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                        </row>
+                    </rows>
+                </grid>
+
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+
+                            <lookupPickerField
+                                    property="idTipoAtendimento"
+                                    id="idTipoAtendimentoField"
+                                    stylename="id_tipo_atendimento_search"
+                                    optionsContainer="tipoAtendimentoesDc"
+                                    width="550px"
+                                    icon="font-icon:VOLUME_CONTROL_PHONE" caption="Tipo de Atendimento: "
+                                    inputPrompt="(Seleccione o tipo de atendimento)" >
+
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+
+                            </lookupPickerField>
+
+
+                            <lookupPickerField
+                                    stylename="habilitacoes_literarias"
+                                    inputPrompt="(Seleccione a habilitação literária)"
+                                    property="habilitacoes"
+                                    id="habilitacoesField"
+                                    width="540px"
+                                    optionsContainer="habilitacoesLiterariasesDc"
+                                    icon="font-icon:BOOK" caption="Habilitações Literarias: ">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+
+                        </row>
+                    </rows>
+                </grid>
+
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+
+                            <lookupPickerField id="idTipoCartaoField"
+                                               property="idTipoCartao"
+                                               optionsContainer="tipoCartaoDc"
+                                               stylename="nome_utente"
+                                               inputPrompt="(Seleccione o tipo de cartão)"
+                                               width="550px"
+                                               caption="Tipo de Cartão: "
+                                               icon="font-icon:CREDIT_CARD">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                            <lookupPickerField
+                                    stylename="tipo_civil"
+                                    inputPrompt="(Seleccione o tipo de civil)"
+                                    property="idTipoCivil"
+                                    id="idTipoCivilField"
+                                    width="540px"
+                                    optionsContainer="tipoCivilsDc"
+                                    icon="font-icon:ADDRESS_CARD_O" caption="Tipo de Civil: ">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                        </row>
+                    </rows>
+                </grid>
+
+
+
+
+
+                <hbox spacing="true">
+                    <button id="reset_atendimentos_relatorios" icon="ERASER" caption="Limpar" />
+                    <button id="search_atendimentos_relatorios" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+            </scrollBox>
+        </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasAtendimentoRelatorios"
+                         caption="Mostrar Numero de Linhas"
+                         width="260px"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+        <groupTable id="atendimentoesTable"
+                    width="100%"
+                    dataContainer="atendimentoesDc"
+                    multiselect="true">
+            <actions>
+                <!--<action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>-->
+            </actions>
+            <columns>
+                <column id="atendimentoObjetivos" />
+                <column id="dataAtendimento"/>
+                <column id="idAtendimentoEncaminhamento"/>
+                <column id="idTecnico"/>
+                <column id="idTipoAtendimento"/>
+                <column id="idUtente"/>
+                <column id="idUtente.habilitacoes"/>
+                <column id="idUtente.idTipoCartao"/>
+                <column id="idUtente.idTipoCivil"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="report" caption="Exportar dados do Atendimento" icon="font-icon:FILE_EXCEL_O" />
+                <popupButton id="popupButton1"
+                             caption="Estatistica de Atendimentos" icon="font-icon:CALCULATOR">
+                    <actions>
+                        <action id="popupAction1" caption="Por ano" icon="font-icon:CALENDAR"/>
+                        <action id="popupAction2" caption="Por mês" icon="font-icon:CALENDAR"/>
+                    </actions>
+                </popupButton>
+            <!--<button id="createBtn" action="atendimentoesTable.create"/>
+            <button id="editBtn" action="atendimentoesTable.edit"/>
+            <button id="removeBtn" action="atendimentoesTable.remove"/>-->
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

@@ -264,4 +264,5 @@ public class DocumentacaoMinutasEdit extends StandardEditor<DocumentacaoMinutas>
         if (getEditedEntity().getFile() != null)
             exportDisplay.show(getEditedEntity().getFile(), ExportFormat.OCTET_STREAM);
     }
+
 }

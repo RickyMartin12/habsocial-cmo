@@ -22,55 +22,55 @@
         <class>pt.cmolhao.entity.AtendimentoEncaminhamento</class>
         <class>pt.cmolhao.entity.GrauEscolaridade</class>
         <class>pt.cmolhao.entity.Profissao</class>
-        <class>pt.cmolhao.entity.Atendimento</class>
         <class>pt.cmolhao.entity.Tecnico</class>
-        <class>pt.cmolhao.entity.AtendimentoObjetivos</class>
         <class>pt.cmolhao.entity.Estados</class>
         <class>pt.cmolhao.entity.SituacaoUtente</class>
         <class>pt.cmolhao.entity.Equipamento</class>
         <class>pt.cmolhao.entity.UtentesRelacionados</class>
         <class>pt.cmolhao.entity.TipologiaFamiliar</class>
         <class>pt.cmolhao.entity.HabilitacoesLiterarias</class>
-        <class>pt.cmolhao.entity.Apoios</class>
         <class>pt.cmolhao.entity.Moradores</class>
-        <class>pt.cmolhao.entity.Utente</class>
         <class>pt.cmolhao.entity.Valencias</class>
         <class>pt.cmolhao.entity.ProjectosIntervencao</class>
         <class>pt.cmolhao.entity.RespostaSocial</class>
         <class>pt.cmolhao.entity.HabitacaoSocial</class>
         <class>pt.cmolhao.entity.Instituicoes</class>
-        <class>pt.cmolhao.entity.InstituicoesClaso</class>
-        <class>pt.cmolhao.entity.ValenciasClaso</class>
-        <class>pt.cmolhao.entity.LocalizacoesClaso</class>
-        <class>pt.cmolhao.entity.FotosValenciaClaso</class>
-        <class>pt.cmolhao.entity.AjudasTecnicasClaso</class>
-        <class>pt.cmolhao.entity.UtentesOutrosConcelhosClaso</class>
         <class>pt.cmolhao.entity.SubRedeTrabalho</class>
         <class>pt.cmolhao.entity.RedeTrabalho</class>
         <class>pt.cmolhao.entity.Documentacao</class>
         <class>pt.cmolhao.entity.DocumentacaoClasoAtas</class>
         <class>pt.cmolhao.entity.DocumentacaoClasoFichasAdesao</class>
         <class>pt.cmolhao.entity.DocumentacaoClasoRegulamentos</class>
-        <class>pt.cmolhao.entity.InstituicoesNucleoExecutivo</class>
-        <class>pt.cmolhao.entity.ValenciaNucleoExecutivo</class>
-        <class>pt.cmolhao.entity.LocalizacaoNucleoExecutivo</class>
-        <class>pt.cmolhao.entity.FotosValenciasNucleoExecutivo</class>
-        <class>pt.cmolhao.entity.AjudasTecnicasNucleoExecutivo</class>
-        <class>pt.cmolhao.entity.ProjectoIntervencaoNucleoExecutivo</class>
-        <class>pt.cmolhao.entity.PessoalTecnicoNucleoExecutivo</class>
-        <class>pt.cmolhao.entity.ProjectosAprovacaoNucleoExecutivo</class>
-        <class>pt.cmolhao.entity.PessoalAuxiliarNucleoExecutivo</class>
-        <class>pt.cmolhao.entity.ApoiosNucleoExecutivo</class>
-        <class>pt.cmolhao.entity.TecnicoNucleoExecutivo</class>
-        <class>pt.cmolhao.entity.UtentesOutrosConcelhosNucleoExecutivo</class>
-        <class>pt.cmolhao.entity.AtendimentoNucleoExecutivo</class>
         <class>pt.cmolhao.entity.MembrosRedeTrabalho</class>
         <class>pt.cmolhao.entity.MembrosRedesTrabalhoClaso</class>
         <class>pt.cmolhao.entity.MembrosRedesTrabalhoNuceloExecutivo</class>
         <class>pt.cmolhao.entity.DocumentacaoNucleoExecutivoAtas</class>
-        <class>pt.cmolhao.entity.DocumentacaoInstrumentosPlaneamento</class>
         <class>pt.cmolhao.entity.DocumentacaoLegislacao</class>
         <class>pt.cmolhao.entity.DocumentacaoMinutas</class>
         <class>pt.cmolhao.entity.DocumentacaoRegulamentos</class>
+        <class>pt.cmolhao.entity.key.HabitacaoUtentePorAtendimentoCompKey</class>
+        <class>pt.cmolhao.entity.key.HabitacaoAtendimentoPorUtenteCompKey</class>
+        <class>pt.cmolhao.entity.DocumentacaoInstrumentosPlaneamentoDiagnosticoSocial</class>
+        <class>pt.cmolhao.entity.DocumentacaoInstrumentosPlaneamentoPlanoDesenvolvimento</class>
+        <class>pt.cmolhao.entity.DocumentosApoioTeleassistencia</class>
+        <class>pt.cmolhao.entity.DocumentosApoioFinanciamentoRegulamentos</class>
+        <class>pt.cmolhao.entity.DocumentacaoHabitacaoSocial</class>
+        <class>pt.cmolhao.entity.Atendimento</class>
+        <class>pt.cmolhao.entity.AtendimentoObjetivos</class>
+        <class>pt.cmolhao.entity.ObjetivosAtendimento</class>
+        <class>pt.cmolhao.entity.TipoCartao</class>
+        <class>pt.cmolhao.entity.Apoios</class>
+        <class>pt.cmolhao.entity.TipoDocApoio</class>
+        <class>pt.cmolhao.entity.Utente</class>
+        <class>pt.cmolhao.entity.DocumentacaoHabSocialProgramaApoioArrendamento1Fase</class>
+        <class>pt.cmolhao.entity.PareceresInstituicoes</class>
+        <class>pt.cmolhao.entity.Pareceres</class>
+        <class>pt.cmolhao.entity.TipoPareceres</class>
+        <class>pt.cmolhao.entity.DocumentacaoHabSocialProgramaApoioArrendamento2Fase</class>
+        <class>pt.cmolhao.entity.DocumentacaoHabSocialProgramaApoioArrendamento3Fase</class>
+        <class>pt.cmolhao.entity.DocumentacaoHabSocialDocumentacao</class>
+        <class>pt.cmolhao.entity.DocumentacaoCasosSociais</class>
+        <class>pt.cmolhao.entity.DocumentacaoPlataformaSupraconcelhia</class>
+        <class>pt.cmolhao.entity.DocumentacaoGruposTrabalho</class>
     </persistence-unit>
 </persistence>

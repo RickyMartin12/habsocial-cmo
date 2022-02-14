@@ -11,6 +11,13 @@
             <loader id="tipoCartaosDl">
                 <query>
                     <![CDATA[select e from cmolhao_TipoCartao e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.tipo like :tipo</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
@@ -19,42 +26,70 @@
                 width="800"/>
     <layout expand="tipoCartaosTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="tipoCartaosTable"
-                dataLoader="tipoCartaosDl">
-            <properties include=".*"/>
-        </filter>
-        
-<groupTable id="tipoCartaosTable"
-        width="100%"
-        dataContainer="tipoCartaosDc">
-    <actions>
-        <action id="create" type="create"/>
-    
-        <action id="edit" type="edit"/>
-    
-        <action id="remove" type="remove"/>
-    
-    </actions>
-    <columns>
-        <column  id="tipo"/>
-    
-    </columns>
-    <rowsCount/>
-    <buttonsPanel id="buttonsPanel"
-                  alwaysVisible="true">
-        
-            <button id="createBtn" action="tipoCartaosTable.create"/>                
-        
-            <button id="editBtn" action="tipoCartaosTable.edit"/>                
-        
-            <button id="removeBtn" action="tipoCartaosTable.remove"/>                
-        
-    </buttonsPanel>
-</groupTable>
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+
+                <grid spacing="true"
+                      width="100%">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+
+                    </columns>
+                    <rows>
+                        <row>
+                            <textField id="tipoField" property="tipo" caption="Tipo de Cartão: "
+                                       icon="font-icon:CREDIT_CARD"
+                                       stylename="nome_utente_search"
+                                       inputPrompt="(Indique o tipo de cartão)" />
+
+                        </row>
+                    </rows>
+                </grid>
+                <hbox spacing="true">
+                    <button id="reset_tipo_cartao" icon="ERASER" caption="Limpar" />
+                    <button id="search_tipo_cartao" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+            </scrollBox>
+        </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasTipoCartao"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+        <groupTable id="tipoCartaosTable"
+                    width="100%"
+                    dataContainer="tipoCartaosDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="tipo" caption="Tipo de Cartão"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="tipoCartaosTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="tipoCartaosTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="tipoCartaosTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="tipoCartaosTable.excel" stylename="friendly" />
+            </buttonsPanel>
+        </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
         </hbox>
-    </layout>                
+    </layout>
 </window>

@@ -179,19 +179,30 @@
                 <column id="idUtente" caption="Utente"/>
                 <column id="numProcesso" caption="Número Processo"/>
 
-                <column id="dataAtribuicao" caption="Data de Atribuição"/>
+                <column id="idTipoapoio" caption="Tipo de Apoio"/>
+
+                <column id="idTipoDocApoio" caption="Tipo de Documento de Apoio" />
+
+                <column id="idEstado" caption="Estado" />
+
+                <column id="file" caption="Ficheiro"/>
+
+                <!--<column id="dataAtribuicao" caption="Data de Atribuição"/>
                 <column id="dataPedido" caption="Data de Pedido"/>
                 <column id="dataRenovacao" caption="Data de Renovação"/>
                 <column id="dataFim" caption="Data de Fim"/>
 
 
-                <column id="idEstado" caption="Estado" />
-                <column id="idTipoapoio" caption="Tipo de Ajuda"/>
+
+
 
                 <column id="observacaoEstado" caption="Observação Estado"/>
                 <column id="observacoesConf" caption="Observações Confirmações"/>
-                <column id="observacoesGerais" caption="Observações Gerais"/>
+                <column id="observacoesGerais" caption="Observações Gerais"/>-->
                 <column id="valorApoio" caption="Valor de Apoio" generator="generateValorApoio"/>
+
+
+
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

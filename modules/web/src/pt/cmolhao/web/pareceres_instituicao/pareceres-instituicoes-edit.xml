@@ -5,42 +5,122 @@
         messagesPack="pt.cmolhao.web.pareceres_instituicao">
     <data>
         <instance id="pareceresInstituicoesDc"
-                    class="pt.cmolhao.entity.PareceresInstituicoes"
-                    view="pareceresInstituicoes-view">
+                  class="pt.cmolhao.entity.PareceresInstituicoes"
+                  view="pareceresInstituicoes-view">
             <loader/>
         </instance>
-        
+
+        <collection id="pareceresesDc"
+                    class="pt.cmolhao.entity.Pareceres"
+                    view="pareceres-view">
+            <loader id="pareceresesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Pareceres e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoPareceresesDc"
+                    class="pt.cmolhao.entity.TipoPareceres"
+                    view="tipoPareceres-view">
+            <loader id="tipoPareceresesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoPareceres e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="InstituicaoDc"
+                    class="pt.cmolhao.entity.Instituicoes"
+                    view="_local">
+            <loader id="ins_Loader">
+                <query>
+                    <![CDATA[select e from cmolhao_Instituicoes e]]>
+                </query>
+            </loader>
+        </collection>
+
+
     </data>
-    
     <dialogMode height="600"
                 width="800"/>
-<layout expand="editActions" spacing="true">
-    
-        
+    <layout expand="scrollBox" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
 
-<form id="form" dataContainer="pareceresInstituicoesDc">
-<column width="250px">
-	
-	<pickerField id="idInstituicaoField" property="idInstituicao">
-		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
-	</pickerField>
-	
-	<pickerField id="idParecerField" property="idParecer">
-		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
-	</pickerField>
-	
-	<pickerField id="idTipoParecerField" property="idTipoParecer">
-		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
-	</pickerField>
-	
-</column>
-</form>
+            <tabSheet>
+                <tab id="instituicao"
+                     caption="Instituição"
+                     icon="font-icon:ADDRESS_CARD"
+                     margin="true"
+                     spacing="true">
+                        <form id="form_dados_instituicao" dataContainer="pareceresInstituicoesDc">
+                                <lookupPickerField property="idInstituicao" id="idInstituicaoField" optionsContainer="InstituicaoDc"
+                                                   caption="Designação da Instituição da valencia:"
+                                                   inputPrompt="(Seleccione a instituição)"
+                                                   width="600px"
+                                                   icon="font-icon:BUILDING">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
 
-        
-        
+                            <textField id="idParaceresInstituicoesField" property="id" visible="false" />
+                        </form>
+                </tab>
+                <tab id="paraceres"
+                     caption="Pareceres"
+                     icon="font-icon:LEAF"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_dados_parceres" dataContainer="pareceresInstituicoesDc">
+
+                        <column width="400px">
+
+
+                            <lookupPickerField id="idParecerField"
+                                               property="idParecer"
+                                               optionsContainer="pareceresesDc"
+                                               inputPrompt="(Seleccione o nome do parecer)"
+                                               caption="Parecer: "
+                                               stylename=""
+                                               icon="LEAF">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+
+                        </column>
+
+                        <column width="400px">
+                            <lookupPickerField id="idTipoParecerField"
+                                               property="idTipoParecer"
+                                               optionsContainer="tipoPareceresesDc"
+                                               inputPrompt="(Seleccione o tipo de parecer)"
+                                               caption="Tipo de Parecer: "
+                                               icon="LEAF">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+                        </column>
+
+
+
+                    </form>
+
+                </tab>
+
+            </tabSheet>
+
+        </scrollBox>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>

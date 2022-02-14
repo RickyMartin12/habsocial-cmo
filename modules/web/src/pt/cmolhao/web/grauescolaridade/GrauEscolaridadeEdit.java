@@ -4,7 +4,6 @@ import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.screen.*;
-import pt.cmolhao.entity.Apoios;
 import pt.cmolhao.entity.GrauEscolaridade;
 import pt.cmolhao.entity.Utente;
 

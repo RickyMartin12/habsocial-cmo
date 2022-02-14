@@ -14,11 +14,9 @@ import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.screen.LookupComponent;
-import pt.cmolhao.entity.Apoios;
 import pt.cmolhao.entity.Documentacao;
 import pt.cmolhao.entity.RedeTrabalho;
 import pt.cmolhao.entity.SubRedeTrabalho;
-import pt.cmolhao.web.atendimento.AtendimentoEdit;
 
 import javax.inject.Inject;
 import javax.inject.Named;

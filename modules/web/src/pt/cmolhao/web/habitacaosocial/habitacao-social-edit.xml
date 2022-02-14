@@ -189,7 +189,7 @@
                         </column>
                         <column width="300px">
                             <textField id="valorPatrimonioField" width="100px" property="valorPatrimonio" caption="Valor do Património: " icon="MONEY" inputPrompt="(valor em euros(€))" />
-                            <textField id="tipoArrendamentoField" width="200px" property="tipoArrendamento" caption="Tipo de Arrendamento: " icon="font-icon:PAPERCLIP" inputPrompt="(valor em euros(€))" />
+                            <textField id="tipoArrendamentoField" width="200px" property="tipoArrendamento" caption="Tipo de Arrendamento: " icon="font-icon:PAPERCLIP" />
                             <checkBox id="fichaCompletaField" property="fichaCompleta" caption="Ficha Completa: " icon="FILES_O" />
                         </column>
                     </form>

@@ -1,20 +1,14 @@
 package pt.cmolhao.web.habitacaosocial;
 
-import com.haulmont.charts.gui.components.map.MapViewer;
-import com.haulmont.charts.gui.map.model.InfoWindow;
-import com.haulmont.charts.gui.map.model.Marker;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.core.global.MetadataTools;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
-import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.actions.list.RemoveAction;
-import com.haulmont.cuba.gui.app.core.inputdialog.DialogActions;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
-import org.springframework.transaction.annotation.Transactional;
 import pt.cmolhao.entity.BlocosHabitacaoSocial;
 import pt.cmolhao.entity.HabitacaoSocial;
 
@@ -26,11 +20,9 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.net.URL;
 import java.util.*;
 
-import com.haulmont.cuba.core.entity.Entity;
 import pt.cmolhao.entity.Moradores;
 import pt.cmolhao.entity.Utente;
 

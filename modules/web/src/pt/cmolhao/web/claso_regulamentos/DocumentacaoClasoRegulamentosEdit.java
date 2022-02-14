@@ -268,6 +268,10 @@ public class DocumentacaoClasoRegulamentosEdit extends StandardEditor<Documentac
     protected void onIdRedeTrabalhoFieldValueChange(HasValue.ValueChangeEvent<RedeTrabalho> event) {
         if (event.isUserOriginated()) {
             if (event.getValue() != null) {
+
+
+
+
                 Map<String, SubRedeTrabalho> map = new HashMap<>();
                 Collection<SubRedeTrabalho> customers = subRedeTrabalhoDc.getItems();
                 for (SubRedeTrabalho item : customers) {

@@ -15,7 +15,6 @@ import pt.cmolhao.entity.UtentesRelacionados;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 

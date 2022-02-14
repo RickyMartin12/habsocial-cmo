@@ -33,7 +33,7 @@
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="editActions" spacing="true" width="100%">
+    <layout expand="scrollBox" spacing="true" width="100%">
 
         <scrollBox id="scrollBox" spacing="true">
 

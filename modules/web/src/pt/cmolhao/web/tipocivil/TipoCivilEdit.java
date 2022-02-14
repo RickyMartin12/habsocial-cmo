@@ -9,8 +9,6 @@ import pt.cmolhao.entity.Utente;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @UiController("cmolhao_TipoCivil.edit")

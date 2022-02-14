@@ -12,6 +12,7 @@
             <collection id="projectosIntervencaoDc" property="projectosIntervencaos" />
             <collection id="tecnicosDc" property="tecnicos" />
             <collection id="membrosRedeTrabalhosDc" property="membrosRedeTrabalhos" />
+            <collection id="pareceresInstituicoesDc" property="pareceresInstituicoes" />
 
         </instance>
 
@@ -257,6 +258,7 @@
                     <groupBox id="membrosRedeTrabalhoBox" caption="Membros da Rede de Trabalho">
                         <groupTable id="membrosRedeTrabalhoesTable"
                                     width="100%"
+                                    height="500px"
                                     dataContainer="membrosRedeTrabalhosDc"
                                     emptyStateMessage="Não Existe Dados na Tabela"
                                     emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
@@ -276,6 +278,40 @@
                                 <button id="createBtn" action="membrosRedeTrabalhoesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
                                 <button id="editBtn" action="membrosRedeTrabalhoesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
                                 <button id="removeBtn" action="membrosRedeTrabalhoesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                            </buttonsPanel>
+                        </groupTable>
+                    </groupBox>
+
+                </tab>
+
+                <tab id="pareceres_instituicoes"
+                     caption="Pareceres Instituições"
+                     icon="font-icon:LEAF"
+                     margin="true"
+                     spacing="true">
+
+                    <groupBox id="pareceresInstituicoeBox" caption="Pareceres Instituições">
+                        <groupTable id="pareceresInstituicoeTable"
+                                    width="100%"
+                                    height="500px"
+                                    dataContainer="pareceresInstituicoesDc"
+                                    emptyStateMessage="Não Existe Dados na Tabela"
+                                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+                            <actions>
+                                <action id="create" type="create"/>
+                                <action id="edit" type="edit"/>
+                                <action id="remove" type="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="idInstituicao" caption="Parecere da Instituição"/>
+                                <column id="idParecer" caption="Parecer"/>
+                                <column id="idTipoParecer" caption="Tipo de Parecer"/>
+                            </columns>
+                            <rowsCount/>
+                            <buttonsPanel>
+                                <button action="pareceresInstituicoeTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                                <button action="pareceresInstituicoeTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                                <button action="pareceresInstituicoeTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
                             </buttonsPanel>
                         </groupTable>
                     </groupBox>

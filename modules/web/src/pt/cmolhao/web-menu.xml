@@ -187,6 +187,27 @@
     </menu>
     -->
 
+    <menu id="dashboard" caption="Dashboard" icon="DASHBOARD">
+        <item screen="cmolhao_DashboardValencia" id="dashboard_valencia" stylename="dashboard_valencia"
+              shortcut="dashboard_valencia" icon="SIMPLYBUILT" caption="Valência" description="Dashboard - Valência"/>
+        <item screen="cmolhao_DashboardAtendimentoSocial" id="dashboard_atendimento_social" stylename="dashboard_atendimento_social"
+              shortcut="dashboard_atendimento_social" icon="BELL" caption="Atendimento Social" description="Dashboard - Atendimento Social"/>
+    </menu>
+
+    <menu id="atendimento" caption="Atendimento" icon="font-icon:VOLUME_CONTROL_PHONE" >
+        <item icon="font-icon:VOLUME_CONTROL_PHONE" caption="Registo de Atendimento" id="registo_atendimento" screen="cmolhao_Atendimento.browse" description="Registo de Atendimento" shortcut="registo_atendimento" stylename="registo_atendimento"/>
+        <item icon="font-icon:PHONE" caption="Atendimentos Objectivos" id="atendimentos_objectivos" screen="cmolhao_AtendimentoObjetivos.browse"/>
+        <item icon="font-icon:FILE_TEXT_O" caption="Relatorios de Atendimento" id="relatorios_atendimentos" screen="cmolhao_Atendimento.browseRelatorios"/>
+
+
+
+    </menu>
+
+    <item id="Utentes" caption="Utentes" description="Utentes" icon="font-icon:USER_CIRCLE" screen="cmolhao_Utente.browse" />
+
+
+
+
     <menu id="instituicoes" caption="Programa Rede Social" icon="font-icon:INSTITUTION">
 
         <menu id="carta_social" caption="Carta Social" icon="font-icon:ID_CARD">
@@ -226,15 +247,18 @@
         </menu>
 
 
-    <menu id="grupos_trabalho" caption="Grupos de Trabalho" icon="font-icon:GROUP">
-        <item id="grupos_trabalho_nucleo" stylename="grupos_trabalho_nucleo"
-              shortcut="grupos_trabalho_nucleo" icon="font-icon:GROUP" caption="Membros"
-              description="Membros" />
-
-    </menu>
+        <item id="grupos_trabalho" caption="Grupos de Trabalho" icon="font-icon:GROUP" screen="cmolhao_DocumentacaoGruposTrabalho.browse" />
+        <item id="plataforma_supraconcelhia" caption="Plataforma Supraconcelhia" icon="font-icon:DESKTOP" screen="cmolhao_DocumentacaoPlataformaSupraconcelhia.browse" />
 
 
-        <item id="instrumentos_planeamento" caption="Instrumentos de Planeamento" icon="font-icon:WRENCH" screen="cmolhao_DocumentacaoInstrumentosPlaneamento.browse" />
+        <menu id="instrumentos_planeamento" caption="Instrumentos de Planeamento" icon="font-icon:WRENCH">
+            <item id="diagnostico_social" stylename="diagnostico_social"
+                  shortcut="diagnostico_social" icon="font-icon:TASKS" caption="Diagnóstico Social"
+                  description="Diagnóstico Social" screen="cmolhao_DocumentacaoInstrumentosPlaneamentoDiagnosticoSocial.browse" />
+            <item id="plano_desenvolvimento" stylename="plano_desenvolvimento"
+                  shortcut="plano_desenvolvimento" icon="font-icon:PASTE" caption="Plano de Desenvolvimento"
+                  description="Plano de Desenvolvimento" screen="cmolhao_DocumentacaoInstrumentosPlaneamentoPlanoDesenvolvimento.browse" />
+        </menu>
 
         <menu id="documentacao" caption="Documentação" icon="font-icon:FILES_O">
             <item id="documentacao_legislacao" stylename="documentacao_legislacao"
@@ -249,51 +273,104 @@
         </menu>
 
 
+
+
     </menu>
 
-    <menu id="atendimento" caption="Atendimento" icon="font-icon:VOLUME_CONTROL_PHONE" >
-        <item id="registo_atendimento" stylename="registo_atendimento"
-              shortcut="registo_atendimento" icon="font-icon:VOLUME_CONTROL_PHONE" caption="Registo de Atendimento"
-              description="Registo de Atendimento" screen="cmolhao_Atendimento.browse"/>
+    <menu id="hab_social" caption="Habitação Social" description="Habitação Social" icon="HOME">
+        <item id="atribuicao" caption="Atribuição" description="Atribuição" icon="ADDRESS_CARD"
+              screen="cmolhao_HabitacaoSocial.browse"/>
+        <item id="plataforma_eaa" caption="Plataforma EAA" description="Plataforma EAA" icon="DESKTOP"
+              screen="cmolhao_HabitacaoSocial.browsePlataformaEaa"/>
+        <item id="pedidos_habitacao" caption="Pedidos de Habitação" description="Pedidos de Habitação" icon="TICKET"
+              screen="cmolhao_HabitacaoSocial.browseRelatorios"/>
+
+        <item id="documentacao_habitacao_social" caption="Documentação na Habitação Social"
+              icon="font-icon:FILE_ARCHIVE_O"
+              description="Documentação na Habitação Social"  screen="cmolhao_DocumentacaoHabitacaoSocial.browse"/>
+
+
+
+
+        <menu id="programa_apoio_arrendamento" caption="Programa de Apoio ao Arrendamento" icon="font-icon:ID_CARD">
+
+            <item id="1_fase" caption="1ª Fase" description="1ª Fase" icon="font-icon:ID_CARD_O" screen="cmolhao_DocumentacaoHabSocialProgramaApoioArrendamento1Fase.browse"/>
+            <item id="2_fase" caption="2ª Fase" description="2ª Fase" icon="font-icon:ID_CARD_O" screen="cmolhao_DocumentacaoHabSocialProgramaApoioArrendamento2Fase.browse"/>
+            <item id="3_fase" caption="3ª Fase" description="3ª Fase" icon="font-icon:ID_CARD_O" screen="cmolhao_DocumentacaoHabSocialProgramaApoioArrendamento3Fase.browse"/>
+            <item id="documentacao_programa" caption="Documentação" description="Documentação" icon="font-icon:FILE_TEXT_O" screen="cmolhao_DocumentacaoHabSocialDocumentacao.browse" />
+        </menu>
     </menu>
 
-    <item id="Utentes" caption="Utentes" description="Utentes" icon="font-icon:USER_CIRCLE" screen="cmolhao_Utente.browse" />
 
     <menu id="apoios" caption="Apoios" icon="font-icon:CODE_FORK" >
         <item id="registo_apoio" stylename="registo_apoio"
-              shortcut="registo_apoio" icon="font-icon:CODE_FORK" caption="Registo de Apoio"
-              description="Registo de Apoio" screen="cmolhao_Apoios.browse"/>
+              shortcut="registo_apoio" icon="font-icon:LIST" caption="Listagem de Apoios"
+              description="Listagem de Apoios" screen="cmolhao_Apoios.browse"/>
+
+        <item id="relatorios_apoio" stylename="relatorios_apoio"
+              shortcut="relatorios_apoio" icon="LIST_ALT" caption="Relatorio de Apoios"
+              description="Relatorio de Apoios" screen="cmolhao_Apoios.browseRelatorios"  />
+
+        <item id="bolsas_estudo" stylename="bolsas_estudo"
+              shortcut="bolsas_estudo" icon="font-icon:UNIVERSITY" caption="Bolsas de Estudo"
+              description="Bolsas de Estudo" screen="cmolhao_Apoios.browseRelatoriosBolsasEstudos" />
+
+        <menu id="apoio_financeiros_regulamento" caption="Apoios Financeiros ás entidades" description="Apoios Financeiros às entidades"
+              icon="MONEY">
+
+            <item id="apoio_regulamentos" stylename="apoio_regulamentos"
+                  shortcut="apoio_regulamentos"  icon="font-icon:BOOK" caption="Regulamentos"
+                  description="Regulamentos" screen="cmolhao_Apoios.browseApoiosFinanceirosRegulamentos"/>
+
+
+            <item id="candidaturas" stylename="candidaturas"
+                  shortcut="candidaturas" icon="font-icon:FILE_TEXT" caption="Candidaturas"
+                  description="Candidaturas" screen="cmolhao_Apoios.browseFinanceirosCandidaturas"  />
+
+        </menu>
+
+
+        <item id="teleassistencia" stylename="teleassistencia"
+              shortcut="teleassistencia" icon="font-icon:USER_CIRCLE" caption="Teleassistência"
+              description="Teleassistência" screen="cmolhao_Apoios.browseRelatoriosTeleassistencia" />
+
+
     </menu>
 
 
-    <menu id="administration" caption="Administração" icon="USER_CIRCLE_O">
-        <item id="sec$User.browse" caption="Utilizadores" icon="USERS"/>
-        <item id="sec$Group.browse" caption="Grupos" icon="GROUP"/>
-        <item id="sec$Role.browse" caption="Pápeis" icon="HAND_PAPER_O"/>
-        <!--<separator/>
-        <item id="sys$Category.browse"/>
-        <item id="sec$UserSessionEntity.browse"/>
-        <item id="sys$LockInfo.browse"/>
-        <item id="sys$FileDescriptor.browse"/>
-        <item id="sys$ScheduledTask.browse"/>
-        <item id="entityRestore"/>
-        <item id="entityInspector.browse"/>
-        <item id="appProperties"/>
-        <item id="jmxConsole"/>
-        <separator/>
-        <item id="entityLog"/>
-        <item id="sec$SessionLogEntry.browse"/>
-        <item id="sys$SendingMessage.browse"/>
-        <item id="serverLog"/>
-        <item id="performanceStatistics"/>-->
+    <menu id="populacao_especifica" caption="População Especifica" description="Intervenção em População Específica" icon="font-icon:GROUP">
+        <item id="populacao_listagem" caption="Relatorios da População de Intervenção" description="Relatorios da População de Intervenção" icon="font-icon:LIST_ALT" screen="cmolhao_Valencias.browseRelatoriosIntervencao" />
+        <item id="populacao_sem_abrigo" caption="População Sem Abrigo" description="População Sem Abrigo" icon="font-icon:MALE" screen="cmolhao_Valencias.browseRelatoriosPessoasSemAbrigo" />
+        <item id="populacao_idosa" caption="População Idosa" description="População Idosa" icon="font-icon:BLIND" screen="cmolhao_Valencias.browseRelatoriosPessoasIdosas" />
     </menu>
 
 
-    <menu id="parametrizacao" caption="Parametrização" icon="font-icon:TABLE" insertAfter="administration">
+
+
+
+    <item id="casos_sociais" caption="Casos Sociais" description="Casos Sociais" icon="font-icon:REFRESH" screen="cmolhao_DocumentacaoCasosSociais.browse" />
+
+
+    <menu id="assecoria_tecnica" caption="Assessoria Técnica" description="Assessoria Técnica" icon="font-icon:TASKS">
+        <item id="tarifario_social_ambiolhao" caption="Tarifário Social Ambiolhão" description="Tarifário Social Ambiolhão" icon="font-icon:LEAF" screen="cmolhao_PareceresInstituicoes.browseAssessoriaTecnicaAmboiOlhao" />
+        <item id="rsi" caption="RSI" description="RSI" icon="font-icon:ID_CARD" screen="cmolhao_PareceresInstituicoes.browseAssessoriaTecnicaRSI"/>
+        <item id="cpcj" caption="CPCJ" description="CPCJ" icon="font-icon:ID_CARD" screen="cmolhao_PareceresInstituicoes.browseAssessoriaTecnicaCPCJ" />
+    </menu>
+
+
+
+    <menu id="parametrizacao" caption="Parametrização" icon="font-icon:TABLE" insertBefore="administration">
+
+        <item id="tipo_cartao" stylename="tipo_cartao"
+              shortcut="tipo_cartao" icon="font-icon:CREDIT_CARD" caption="Tipo de Cartão"
+              description="Tipo de Cartão" screen="cmolhao_TipoCartao.browse"/>
+
+
+
 
         <item id="docuemntos_rede_trabalho" stylename="docuemntos_rede_trabalho"
-              shortcut="docuemntos_rede_trabalho" icon="font-icon:FILES_O" caption="Documentos"
-              description="Documentos" screen="cmolhao_Documentacao.browse" />
+              shortcut="docuemntos_rede_trabalho" icon="font-icon:FILES_O" caption="Documentos de Rede Social"
+              description="Documentos de Rede Social" screen="cmolhao_Documentacao.browse" />
 
         <menu id="redes_trabalho" caption="Redes de Trabalho" icon="font-icon:WRENCH">
             <item id="rede_trabalho" stylename="rede_trabalho"
@@ -321,12 +398,56 @@
             <item id="apoios_tipos" stylename="apoios_tipos"
                   shortcut="apoios_tipos" icon="font-icon:CODE_FORK" caption="Tipos de Apoio"
                   description="Tipos de Apoio" screen="cmolhao_TipoAjuda.browse"/>
+            <item id="tipos_doc_apoios" stylename="tipos_doc_apoios"
+                  shortcut="tipos_doc_apoios" icon="font-icon:FILE_O" caption="Documento de tipo de Apoio"
+                  description="Tipos de Apoio" screen="cmolhao_TipoDocApoio.browse"/>
+
             <item id="apoios_estados" stylename="apoios_estados"
                   shortcut="apoios_estados" icon="font-icon:REFRESH" caption="Estados de Apoio"
-                  description="Estados de Apoio" screen="cmolhao_Estados.browse"/>
+                  description="Documento de tipo de Apoio" screen="cmolhao_Estados.browse"/>
+        </menu>
+
+
+        <menu id="pareceres_isntituicoes" caption="Paraceres das Instituições" icon="font-icon:INSTITUTION" >
+            <item id="paraceres" stylename="paraceres"
+                  shortcut="paraceres" icon="font-icon:LEAF" caption="Paraceres"
+                  description="Paraceres" screen="cmolhao_Pareceres.browse"/>
+            <item id="tipos_pareceres" stylename="tipos_pareceres"
+                  shortcut="tipos_pareceres" icon="font-icon:LEAF" caption="Tipos de Pareceres"
+                  description="Tipos de Pareceres" screen="cmolhao_TipoPareceres.browse"/>
+            <item id="paraceres_instituicoes" stylename="paraceres_instituicoes"
+                  shortcut="paraceres_instituicoes" icon="font-icon:INSTITUTION" caption="Paraceres das Instituições"
+                  description="Paraceres das Instituições" screen="cmolhao_PareceresInstituicoes.browse"/>
         </menu>
 
     </menu>
+
+
+
+
+    <menu id="administration" caption="Administração" icon="USER_CIRCLE_O">
+        <item id="sec$User.browse" caption="Utilizadores" icon="USERS"/>
+        <item id="sec$Group.browse" caption="Grupos" icon="GROUP"/>
+        <item id="sec$Role.browse" caption="Pápeis" icon="HAND_PAPER_O"/>
+        <!--<separator/>
+        <item id="sys$Category.browse"/>
+        <item id="sec$UserSessionEntity.browse"/>
+        <item id="sys$LockInfo.browse"/>
+        <item id="sys$FileDescriptor.browse"/>
+        <item id="sys$ScheduledTask.browse"/>
+        <item id="entityRestore"/>
+        <item id="entityInspector.browse"/>
+        <item id="appProperties"/>
+        <item id="jmxConsole"/>
+        <separator/>
+        <item id="entityLog"/>
+        <item id="sec$SessionLogEntry.browse"/>
+        <item id="sys$SendingMessage.browse"/>
+        <item id="serverLog"/>
+        <item id="performanceStatistics"/>-->
+    </menu>
+
+    <item screen="report$Report.browse" caption="Gestão de Relatórios" icon="FILES_O" />
 
     <!--
     <menu icon="USERS" id="utilizadores_geral" caption="Utilizadores / Passwords">

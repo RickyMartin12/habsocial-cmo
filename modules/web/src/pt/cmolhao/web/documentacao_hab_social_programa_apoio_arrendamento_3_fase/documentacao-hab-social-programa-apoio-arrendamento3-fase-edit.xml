@@ -1,50 +1,179 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://editorCaption"
-        focusComponent="form"
         messagesPack="pt.cmolhao.web.documentacao_hab_social_programa_apoio_arrendamento_3_fase">
     <data>
         <instance id="documentacaoHabSocialProgramaApoioArrendamento3FaseDc"
-                    class="pt.cmolhao.entity.DocumentacaoHabSocialProgramaApoioArrendamento3Fase"
-                    view="documentacaoHabSocialProgramaApoioArrendamento3Fase-view">
+                  class="pt.cmolhao.entity.DocumentacaoHabSocialProgramaApoioArrendamento3Fase"
+                  view="documentacaoHabSocialProgramaApoioArrendamento3Fase-view">
             <loader/>
         </instance>
-        
+
+        <collection id="redeTrabalhoDc"
+                    class="pt.cmolhao.entity.RedeTrabalho"
+                    view="redeTrabalho-view">
+            <loader id="customersRedeTrabalhoLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_RedeTrabalho e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="subRedeTrabalhoDc"
+                    class="pt.cmolhao.entity.SubRedeTrabalho"
+                    view="subRedeTrabalho-view">
+            <loader id="customersSubRedeTrabalhoLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_SubRedeTrabalho e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="habitacaoSocialsDc"
+                    class="pt.cmolhao.entity.HabitacaoSocial"
+                    view="habitacaoSocial-view">
+            <loader id="habitacaoSocialsDl">
+                <query>
+                    <![CDATA[select e from cmolhao_HabitacaoSocial e]]>
+                </query>
+            </loader>
+        </collection>
+
+
     </data>
-    
     <dialogMode height="600"
                 width="800"/>
-<layout expand="editActions" spacing="true">
-    
-        
+    <layout expand="editActions" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
 
-<form id="form" dataContainer="documentacaoHabSocialProgramaApoioArrendamento3FaseDc">
-<column width="250px">
-	
-	<upload id="fileField" fileStoragePutMode="IMMEDIATE" property="file" showFileName="true"/>
-	
-	<pickerField id="idHabitacaoSocialField" property="idHabitacaoSocial">
-		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
-	</pickerField>
-	
-	<pickerField id="idRedeTrabalhoField" property="idRedeTrabalho">
-		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
-	</pickerField>
-	
-	<pickerField id="idSubRedeTrabalhoField" property="idSubRedeTrabalho">
-		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
-	</pickerField>
-	
-	<textArea id="numDocumentoField" property="numDocumento" rows="5"/>
-	
-</column>
-</form>
+            <tabSheet>
+                <tab id="dados_pessoais"
+                     caption="Dados Pessoais"
+                     icon="font-icon:ID_CARD"
+                     margin="true"
+                     spacing="true">
 
-        
-        
+                    <form id="form_dados_pessoais">
+                        <column width="350px">
+
+
+
+
+                            <lookupPickerField id="idRedeTrabalhoField"
+                                               property="idRedeTrabalho"
+                                               dataContainer="documentacaoHabSocialProgramaApoioArrendamento3FaseDc"
+                                               optionsContainer="redeTrabalhoDc"
+                                               stylename="id_rede_trabalho"
+                                               inputPrompt="(Seleccione a rede trabalho)"
+                                               caption="Rede de Trabalho: "
+                                               icon="WRENCH">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                            <lookupPickerField id="habitacaoSocialField"
+                                               property="idHabitacaoSocial"
+                                               optionsContainer="habitacaoSocialsDc"
+                                               inputPrompt="(Seleccione a Habitação Social)"
+                                               caption="Habitação Social: "
+                                               dataContainer="documentacaoHabSocialProgramaApoioArrendamento3FaseDc"
+                                               width="903px"
+                                               colspan="2"
+                                               stylename="id_rede_trabalho"
+                                               icon="font-icon:BUILDING">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+
+
+
+                            <textField id="numeroDocumentacaoField" stylename="num_doc" property="numDocumento" dataContainer="documentacaoHabSocialProgramaApoioArrendamento3FaseDc" caption="Número do Documento: " icon="font-icon:SORT_NUMERIC_ASC"/>
+
+
+
+                        </column>
+                        <column width="350px">
+
+                            <lookupPickerField id="idSubRedeTrabalhoField"
+                                               property="idSubRedeTrabalho"
+                                               dataContainer="documentacaoHabSocialProgramaApoioArrendamento3FaseDc"
+                                               optionsContainer="subRedeTrabalhoDc"
+                                               stylename="id_sub_rede_trabalho"
+                                               inputPrompt="(Seleccione a sub-rede trabalho)"
+                                               caption="Sub Rede de Trabalho: "
+                                               icon="WRENCH">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                            <textField id="idDocumentacao" property="id" visible="false" dataContainer="documentacaoHabSocialProgramaApoioArrendamento3FaseDc" />
+
+
+                        </column>
+                    </form>
+
+                </tab>
+                <tab id="ficheiro"
+                     caption="Ficheiro"
+                     icon="font-icon:FILE"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_ficheiro">
+                        <column width="450px">
+                            <groupBox caption="Ficheiro/Documento" spacing="true" icon="font-icon:FILE" expand="file_documento">
+                                <image id="file_documento"
+                                       width="150px"
+                                       align="MIDDLE_LEFT"
+                                       scaleMode="CONTAIN"/>
+
+                                <linkButton id="file_name_text" visible="false" />
+
+
+                                <grid spacing="true">
+                                    <columns>
+                                        <column/>
+                                        <column flex="1"/>
+                                        <column/>
+                                        <column flex="1"/>
+                                    </columns>
+                                    <rows>
+                                        <row>
+                                            <upload id="fileField" dropZone="dropZone" fileSizeLimit="20000000000" />
+                                            <button id="clearImageBtn"
+                                                    icon="font-icon:ERASER"
+                                                    caption="Limpar"
+                                                    invoke="onClearImageBtnClick"/>
+                                        </row>
+                                    </rows>
+                                </grid>
+
+                                <vbox id="dropZone"
+                                      height="150px"
+                                      spacing="true"
+                                      stylename="dropzone-container">
+                                    <label stylename="dropzone-description"
+                                           value="Arraste o ficheiro aqui"
+                                           icon="font-icon:UPLOAD"
+                                           align="MIDDLE_CENTER"/>
+                                </vbox>
+                            </groupBox>
+                        </column>
+                    </form>
+                </tab>
+            </tabSheet>
+
+        </scrollBox>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>

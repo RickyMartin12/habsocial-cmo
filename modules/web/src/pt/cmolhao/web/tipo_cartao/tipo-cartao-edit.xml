@@ -5,96 +5,56 @@
         messagesPack="pt.cmolhao.web.tipo_cartao">
     <data>
         <instance id="tipoCartaoDc"
-                    class="pt.cmolhao.entity.TipoCartao"
-                    view="tipoCartao-view">
+                  class="pt.cmolhao.entity.TipoCartao"
+                  view="tipoCartao-view">
             <loader/>
-        
             <collection id="utentesDc" property="utentes"/>
         </instance>
-        
     </data>
-    
     <dialogMode height="600"
                 width="800"/>
-<layout expand="editActions" spacing="true">
-    
-        
-
-<form id="form" dataContainer="tipoCartaoDc">
-<column width="250px">
-	
-	<textArea id="tipoField" property="tipo" rows="5"/>
-	
-</column>
-</form>
-
-        
-            
-<groupBox id="utentesBox" caption="msg://pt.cmolhao.entity/TipoCartao.utentes">
-<table id="utentesTable" dataContainer="utentesDc" width="100%" height="200px">
-    
-    <actions>
-        <action id="create" type="create"/>
-        <action id="edit" type="edit"/>
-        <action id="remove" type="remove"/>
-    </actions>
-    
-    <columns>
-        
-            <column id="numContribuinte"/>
-        
-            <column id="nome"/>
-        
-            <column id="certUniaoEuropeia"/>
-        
-            <column id="dataNasc"/>
-        
-            <column id="deficiente"/>
-        
-            <column id="dependente"/>
-        
-            <column id="email"/>
-        
-            <column id="estadoCivil"/>
-        
-            <column id="grauEscolaridade"/>
-        
-            <column id="habilitacoes"/>
-        
-            <column id="idTipoCivil"/>
-        
-            <column id="idTipologiaFamiliar"/>
-        
-            <column id="niss"/>
-        
-            <column id="numIdCivil"/>
-        
-            <column id="obsConf"/>
-        
-            <column id="obsGerais"/>
-        
-            <column id="paisOrigem"/>
-        
-            <column id="profissao"/>
-        
-            <column id="telefone"/>
-        
-            <column id="telem_vel"/>
-        
-    </columns>
-    
-    <buttonsPanel>
-        <button action="utentesTable.create"/>
-        
-        <button action="utentesTable.edit"/>
-        
-        <button action="utentesTable.remove"/>
-    </buttonsPanel>
-    
-</table>
-</groupBox>
-        
-        
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="tipoCartaoDc">
+            <column width="250px">
+                <textField id="tipoField" property="tipo" />
+            </column>
+        </form>
+        <groupBox id="utentesBox" caption="msg://pt.cmolhao.entity/TipoCartao.utentes">
+            <table id="utentesTable" dataContainer="utentesDc" width="100%" height="200px">
+                <actions>
+                    <action id="create" type="create"/>
+                    <action id="edit" type="edit"/>
+                    <action id="remove" type="remove"/>
+                </actions>
+                <columns>
+                    <column id="numContribuinte"/>
+                    <column id="nome"/>
+                    <column id="certUniaoEuropeia"/>
+                    <column id="dataNasc"/>
+                    <column id="deficiente"/>
+                    <column id="dependente"/>
+                    <column id="email"/>
+                    <column id="estadoCivil"/>
+                    <column id="grauEscolaridade"/>
+                    <column id="habilitacoes"/>
+                    <column id="idTipoCivil"/>
+                    <column id="idTipologiaFamiliar"/>
+                    <column id="niss"/>
+                    <column id="numIdCivil"/>
+                    <column id="obsConf"/>
+                    <column id="obsGerais"/>
+                    <column id="paisOrigem"/>
+                    <column id="profissao"/>
+                    <column id="telefone"/>
+                    <column id="telem_vel"/>
+                </columns>
+                <buttonsPanel>
+                    <button action="utentesTable.create"/>
+                    <button action="utentesTable.edit"/>
+                    <button action="utentesTable.remove"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose"/>
             <button action="windowClose"/>

@@ -11,6 +11,13 @@
             <loader id="pareceresesDl">
                 <query>
                     <![CDATA[select e from cmolhao_Pareceres e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.nome like :nome</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
@@ -19,42 +26,74 @@
                 width="800"/>
     <layout expand="pareceresesTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="pareceresesTable"
-                dataLoader="pareceresesDl">
-            <properties include=".*"/>
-        </filter>
-        
-<groupTable id="pareceresesTable"
-        width="100%"
-        dataContainer="pareceresesDc">
-    <actions>
-        <action id="create" type="create"/>
-    
-        <action id="edit" type="edit"/>
-    
-        <action id="remove" type="remove"/>
-    
-    </actions>
-    <columns>
-        <column  id="nome"/>
-    
-    </columns>
-    <rowsCount/>
-    <buttonsPanel id="buttonsPanel"
-                  alwaysVisible="true">
-        
-            <button id="createBtn" action="pareceresesTable.create"/>                
-        
-            <button id="editBtn" action="pareceresesTable.edit"/>                
-        
-            <button id="removeBtn" action="pareceresesTable.remove"/>                
-        
-    </buttonsPanel>
-</groupTable>
+
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+
+                <grid spacing="true" width="100%">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+
+                            <textField id="nomeField" property="nome"
+                                       width="300px"
+                                       inputPrompt="(Introduza a sub rede de trabalho)"
+                                       caption="Nome da Sub Rede de Trabalho: " icon="WRENCH"/>
+                        </row>
+                    </rows>
+
+                </grid>
+
+                <hbox spacing="true">
+                    <button id="reset_tipo_pareceres" icon="ERASER" caption="Limpar" />
+                    <button id="search_tipo_pareceres" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+
+
+            </scrollBox>
+        </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasTipoParaceres"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+        <groupTable id="pareceresesTable"
+                    width="100%"
+                    dataContainer="pareceresesDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="nome" caption="Nome do Parecer"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="pareceresesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="pareceresesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="pareceresesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button action="pareceresesTable.excel" stylename="friendly"/>
+            </buttonsPanel>
+        </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
         </hbox>
-    </layout>                
+    </layout>
 </window>

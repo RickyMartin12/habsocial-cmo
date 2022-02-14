@@ -11,52 +11,130 @@
             <loader id="tipoPareceresesDl">
                 <query>
                     <![CDATA[select e from cmolhao_TipoPareceres e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idTipoPareceres i</c:join>
+                                <c:where>i.id = :idTipoPareceres</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.nome like :nome</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
+
+        <collection id="pareceresesDc"
+                    class="pt.cmolhao.entity.Pareceres"
+                    view="pareceres-view">
+            <loader id="pareceresesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Pareceres e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+
+
+
+
+
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="tipoPareceresesTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="tipoPareceresesTable"
-                dataLoader="tipoPareceresesDl">
-            <properties include=".*"/>
-        </filter>
-        
-<groupTable id="tipoPareceresesTable"
-        width="100%"
-        dataContainer="tipoPareceresesDc">
-    <actions>
-        <action id="create" type="create"/>
-    
-        <action id="edit" type="edit"/>
-    
-        <action id="remove" type="remove"/>
-    
-    </actions>
-    <columns>
-        <column  id="idTipoPareceres"/>
-    
-        <column  id="nome"/>
-    
-    </columns>
-    <rowsCount/>
-    <buttonsPanel id="buttonsPanel"
-                  alwaysVisible="true">
-        
-            <button id="createBtn" action="tipoPareceresesTable.create"/>                
-        
-            <button id="editBtn" action="tipoPareceresesTable.edit"/>                
-        
-            <button id="removeBtn" action="tipoPareceresesTable.remove"/>                
-        
-    </buttonsPanel>
-</groupTable>
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+
+                <grid spacing="true" width="100%">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField id="idParaceresField"
+                                               property="idTipoPareceres"
+                                               optionsContainer="pareceresesDc"
+                                               inputPrompt="(Seleccione o nome do parecer)"
+                                               width="400px"
+                                               caption="Parecer: "
+                                               icon="LEAF">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                            <textField id="nomeField" property="nome"
+                                       width="300px"
+                                       inputPrompt="(Introduza a sub rede de trabalho)"
+                                       caption="Nome da Sub Rede de Trabalho: " icon="WRENCH"/>
+                        </row>
+                    </rows>
+
+                </grid>
+
+                <hbox spacing="true">
+                    <button id="reset_tipo_pareceres" icon="ERASER" caption="Limpar" />
+                    <button id="search_tipo_pareceres" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+
+
+            </scrollBox>
+        </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasTipoParaceres"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
+        <groupTable id="tipoPareceresesTable"
+                    width="100%"
+                    dataContainer="tipoPareceresesDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
+
+            </actions>
+            <columns>
+                <group>
+                    <column id="idTipoPareceres" caption="Paracer"/>
+                </group>
+                <column id="nome" caption="Nome do Tipo de Paracer"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="tipoPareceresesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="tipoPareceresesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="tipoPareceresesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button action="tipoPareceresesTable.excel" stylename="friendly"/>
+
+            </buttonsPanel>
+        </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
         </hbox>
-    </layout>                
+    </layout>
 </window>

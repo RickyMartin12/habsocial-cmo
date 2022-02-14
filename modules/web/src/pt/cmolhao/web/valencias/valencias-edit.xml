@@ -81,6 +81,8 @@
                         <lookupPickerField property="idinstituicao" id="idinstituicaoField" optionsContainer="InstituicaoDc"
                                      caption="Instituição:"
                                      width="600px"
+                                           required="true"
+                                           requiredMessage="Deve inserir a instituição"
                                      inputPrompt="(Seleccione a instituição)"
                                      icon="font-icon:BUILDING">
 

@@ -11,58 +11,194 @@
             <loader id="documentacaoHabSocialProgramaApoioArrendamento2FasesDl">
                 <query>
                     <![CDATA[select e from cmolhao_DocumentacaoHabSocialProgramaApoioArrendamento2Fase e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idRedeTrabalho i</c:join>
+                                <c:where>i.id = :idRedeTrabalho</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idSubRedeTrabalho j</c:join>
+                                <c:where>j.id = :idSubRedeTrabalho</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idHabitacaoSocial k</c:join>
+                                <c:where>k.id = :idHabitacaoSocial</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.numDocumento like :numDocumento</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
+
+        <collection id="redeTrabalhoDc"
+                    class="pt.cmolhao.entity.RedeTrabalho"
+                    view="redeTrabalho-view">
+            <loader id="customersRedeTrabalhoLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_RedeTrabalho e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="subRedeTrabalhoDc"
+                    class="pt.cmolhao.entity.SubRedeTrabalho"
+                    view="subRedeTrabalho-view">
+            <loader id="customersSubRedeTrabalhoLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_SubRedeTrabalho e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="habitacaoSocialsDc"
+                    class="pt.cmolhao.entity.HabitacaoSocial"
+                    view="habitacaoSocial-view">
+            <loader id="habitacaoSocialsDl">
+                <query>
+                    <![CDATA[select e from cmolhao_HabitacaoSocial e]]>
+                </query>
+            </loader>
+        </collection>
+
+
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="documentacaoHabSocialProgramaApoioArrendamento2FasesTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="documentacaoHabSocialProgramaApoioArrendamento2FasesTable"
-                dataLoader="documentacaoHabSocialProgramaApoioArrendamento2FasesDl">
-            <properties include=".*"/>
-        </filter>
-        
-<groupTable id="documentacaoHabSocialProgramaApoioArrendamento2FasesTable"
-        width="100%"
-        dataContainer="documentacaoHabSocialProgramaApoioArrendamento2FasesDc">
-    <actions>
-        <action id="create" type="create"/>
-    
-        <action id="edit" type="edit"/>
-    
-        <action id="remove" type="remove"/>
-    
-    </actions>
-    <columns>
-        <column  id="file"/>
-    
-        <column  id="idHabitacaoSocial"/>
-    
-        <column  id="idRedeTrabalho"/>
-    
-        <column  id="idSubRedeTrabalho"/>
-    
-        <column  id="numDocumento"/>
-    
-    </columns>
-    <rowsCount/>
-    <buttonsPanel id="buttonsPanel"
-                  alwaysVisible="true">
-        
-            <button id="createBtn" action="documentacaoHabSocialProgramaApoioArrendamento2FasesTable.create"/>                
-        
-            <button id="editBtn" action="documentacaoHabSocialProgramaApoioArrendamento2FasesTable.edit"/>                
-        
-            <button id="removeBtn" action="documentacaoHabSocialProgramaApoioArrendamento2FasesTable.remove"/>                
-        
-    </buttonsPanel>
-</groupTable>
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+
+
+
+
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField id="habitacaoSocialField"
+                                               property="idHabitacaoSocial"
+                                               optionsContainer="habitacaoSocialsDc"
+                                               inputPrompt="(Seleccione a Habitação Social)"
+                                               caption="Habitação Social (Designacao): "
+                                               width="1078px"
+                                               stylename="hab_social_search_morador"
+                                               icon="font-icon:BUILDING">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+                        </row>
+                    </rows>
+                </grid>
+
+                <grid spacing="true">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField id="idRedeTrabalhoField"
+                                               property="idRedeTrabalho"
+                                               optionsContainer="redeTrabalhoDc"
+                                               inputPrompt="(Seleccione a rede trabalho)"
+                                               width="400px"
+                                               caption="Rede de Trabalho: "
+                                               icon="WRENCH">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+
+                            <lookupPickerField id="idSubRedeTrabalhoField"
+                                               property="idSubRedeTrabalho"
+                                               optionsContainer="subRedeTrabalhoDc"
+                                               inputPrompt="(Seleccione a sub-rede trabalho)"
+                                               width="400px"
+                                               caption="Sub Rede de Trabalho: "
+                                               icon="WRENCH">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                            <textField id="numeroDocumentacaoField"
+                                       property="numDocumento"
+                                       width="250px"
+                                       icon="font-icon:FILE"
+                                       inputPrompt="(Introduza o numero documento)"
+                                       caption="Número do Documento: "/>
+                        </row>
+                    </rows>
+                </grid>
+
+
+                <hbox spacing="true">
+                    <button id="reset_documentacao" icon="ERASER" caption="Limpar" />
+                    <button id="search_documentacao" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+
+            </scrollBox>
+        </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasDocumentacao"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+        <groupTable id="documentacaoHabSocialProgramaApoioArrendamento2FasesTable"
+                    width="100%"
+                    dataContainer="documentacaoHabSocialProgramaApoioArrendamento2FasesDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="idHabitacaoSocial" caption="Habitação Social"/>
+                <column id="idRedeTrabalho" caption="Rede de Trabalho"/>
+                <column id="idSubRedeTrabalho" caption="Sub Rede de Trabalho"/>
+                <column id="numDocumento" caption="Número do Documento"/>
+
+                <column id="file" caption="Ficheiro"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="documentacaoHabSocialProgramaApoioArrendamento2FasesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="documentacaoHabSocialProgramaApoioArrendamento2FasesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="documentacaoHabSocialProgramaApoioArrendamento2FasesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="documentacaoHabSocialProgramaApoioArrendamento2FasesTable.excel" stylename="friendly" />
+            </buttonsPanel>
+        </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
         </hbox>
-    </layout>                
+    </layout>
 </window>

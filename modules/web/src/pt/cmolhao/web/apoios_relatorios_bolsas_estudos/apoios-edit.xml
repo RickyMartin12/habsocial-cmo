@@ -5,70 +5,65 @@
         messagesPack="pt.cmolhao.web.apoios_relatorios_bolsas_estudos">
     <data>
         <instance id="apoiosDc"
-                    class="pt.cmolhao.entity.Apoios"
-                    view="apoios-viewRelatorios">
+                  class="pt.cmolhao.entity.Apoios"
+                  view="apoios-viewRelatorios">
             <loader/>
         </instance>
-        
     </data>
-    
     <dialogMode height="600"
                 width="800"/>
-<layout expand="scrollBox" spacing="true">
-    <scrollBox id="scrollBox" spacing="true">
-        
-
-<form id="form" dataContainer="apoiosDc">
-<column width="250px">
-	
-	<dateField id="dataAtribuicaoField" property="dataAtribuicao"/>
-	
-	<dateField id="dataFimField" property="dataFim"/>
-	
-	<dateField id="dataPedidoField" property="dataPedido"/>
-	
-	<dateField id="dataRenovacaoField" property="dataRenovacao"/>
-	
-	<pickerField id="idEquipamentoField" property="idEquipamento">
-		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
-	</pickerField>
-	
-	<pickerField id="idEstadoField" property="idEstado">
-		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
-	</pickerField>
-	
-	<pickerField id="idInstituicaoField" property="idInstituicao">
-		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
-	</pickerField>
-	
-	<pickerField id="idTipoDocApoioField" property="idTipoDocApoio">
-		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
-	</pickerField>
-	
-	<pickerField id="idTipoapoioField" property="idTipoapoio">
-		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
-	</pickerField>
-	
-	<pickerField id="idUtenteField" property="idUtente">
-		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
-	</pickerField>
-	
-	<textField id="numProcessoField" property="numProcesso"/>
-	
-	<textField id="observacaoEstadoField" property="observacaoEstado"/>
-	
-	<textField id="observacoesConfField" property="observacoesConf"/>
-	
-	<textField id="observacoesGeraisField" property="observacoesGerais"/>
-	
-	<textField id="valorApoioField" property="valorApoio"/>
-	
-	<upload id="fileField" fileStoragePutMode="IMMEDIATE" property="file" showFileName="true"/>
-	
-</column>
-</form>
-
-        
+    <layout expand="scrollBox" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
+            <form id="form" dataContainer="apoiosDc">
+                <column width="250px">
+                    <dateField id="dataAtribuicaoField" property="dataAtribuicao"/>
+                    <dateField id="dataFimField" property="dataFim"/>
+                    <dateField id="dataPedidoField" property="dataPedido"/>
+                    <dateField id="dataRenovacaoField" property="dataRenovacao"/>
+                    <pickerField id="idEquipamentoField" property="idEquipamento">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                            <action id="clear" type="picker_clear"/>
+                        </actions>
+                    </pickerField>
+                    <pickerField id="idEstadoField" property="idEstado">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                            <action id="clear" type="picker_clear"/>
+                        </actions>
+                    </pickerField>
+                    <pickerField id="idInstituicaoField" property="idInstituicao">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                            <action id="clear" type="picker_clear"/>
+                        </actions>
+                    </pickerField>
+                    <pickerField id="idTipoDocApoioField" property="idTipoDocApoio">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                            <action id="clear" type="picker_clear"/>
+                        </actions>
+                    </pickerField>
+                    <pickerField id="idTipoapoioField" property="idTipoapoio">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                            <action id="clear" type="picker_clear"/>
+                        </actions>
+                    </pickerField>
+                    <pickerField id="idUtenteField" property="idUtente">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                            <action id="clear" type="picker_clear"/>
+                        </actions>
+                    </pickerField>
+                    <textField id="numProcessoField" property="numProcesso"/>
+                    <textField id="observacaoEstadoField" property="observacaoEstado"/>
+                    <textField id="observacoesConfField" property="observacoesConf"/>
+                    <textField id="observacoesGeraisField" property="observacoesGerais"/>
+                    <textField id="valorApoioField" property="valorApoio"/>
+                    <upload id="fileField" fileStoragePutMode="IMMEDIATE" property="file" showFileName="true"/>
+                </column>
+            </form>
         </scrollBox>
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose"/>

@@ -8,105 +8,498 @@
         <collection id="habitacaoSocialsDc"
                     class="pt.cmolhao.entity.HabitacaoSocial"
                     view="habitacaoSocial-viewRelatoriosDados">
-            <loader id="habitacaoSocialsDl">
+            <loader id="habitacaoSocialsDl" >
                 <query>
                     <![CDATA[select e from cmolhao_HabitacaoSocial e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idUtente.atendimentos a join a.idTipoAtendimento b</c:join>
+                                <c:where>b.id = :idTipoAtendimento</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idUtente.atendimentos c join c.idAtendimentoEncaminhamento d</c:join>
+                                <c:where>d.id = :idAtendimentoEncaminhamento</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.bloc f</c:join>
+                                <c:where>f.id = :bloc</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.localidade like :localidade</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.tipoArrendamento = :tipoArrendamento</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idUtente g</c:join>
+                                <c:where>g.id = :idUtente</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idUtente h join h.habilitacoes i</c:join>
+                                <c:where>i.id = :habilitacoes</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idUtente p join p.idTipoCartao q</c:join>
+                                <c:where>q.id = :idTipoCartao</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idUtente.atendimentos j join j.idTecnico l</c:join>
+                                <c:where>l.id = :idTecnico</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idUtente.atendimentos m join m.idTecnico n join n.idInstituicao o</c:join>
+                                <c:where>o.id = :idInstituicao</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idUtente.atendimentos p join p.atendimentoObjetivos r</c:join>
+                                <c:where>r.id = :atendimentoObjetivos</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idUtente.atendimentos s</c:join>
+                                <c:where>extract(year from s.dataAtendimento) = :ano</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idUtente.atendimentos t</c:join>
+                                <c:where>extract(month from t.dataAtendimento) = :mes</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
+
+        <collection id="tipoAtendimentoesDc"
+                    class="pt.cmolhao.entity.TipoAtendimento"
+                    view="_local">
+            <loader id="tipoAtendimentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoAtendimento e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="atendimentoObjetivosDc"
+                    class="pt.cmolhao.entity.AtendimentoObjetivos"
+                    view="atendimentoObjetivos-view">
+            <loader id="atendimentoObjectivosDl">
+                <query>
+                    <![CDATA[select e from cmolhao_AtendimentoObjetivos e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="atendimentoEncaminhamentoesDc"
+                    class="pt.cmolhao.entity.AtendimentoEncaminhamento"
+                    view="_local">
+            <loader id="atendimentoEncaminhamentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_AtendimentoEncaminhamento e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="habitacaoSocialDc"
+                    class="pt.cmolhao.entity.BlocosHabitacaoSocial"
+                    view="_local">
+            <loader id="habitacaoSociaisLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_BlocosHabitacaoSocial e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="UtentesDC"
+                    class="pt.cmolhao.entity.Utente"
+                    view="_local">
+            <loader id="utentesLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Utente e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="habilitacoesLiterariasesDc"
+                    class="pt.cmolhao.entity.HabilitacoesLiterarias"
+                    view="_local">
+            <loader id="habilitacoesLiterariasesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_HabilitacoesLiterarias e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoCartaoDc"
+                    class="pt.cmolhao.entity.TipoCartao"
+                    view="tipoCartao-view">
+            <loader id="customersTipoCartaoLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoCartao e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="InstituicaoDc"
+                    class="pt.cmolhao.entity.Instituicoes"
+                    view="_local">
+            <loader id="ins_Loader">
+                <query>
+                    <![CDATA[select e from cmolhao_Instituicoes e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tecnicoesDc"
+                    class="pt.cmolhao.entity.Tecnico"
+                    view="tecnico-view">
+            <loader id="tecnicoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Tecnico e]]>
+                </query>
+            </loader>
+        </collection>
+
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="habitacaoSocialsTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="habitacaoSocialsTable"
-                dataLoader="habitacaoSocialsDl">
-            <properties include=".*"/>
-        </filter>
-        
-<groupTable id="habitacaoSocialsTable"
-        width="100%"
-        dataContainer="habitacaoSocialsDc">
-    <actions>
-        <action id="create" type="create"/>
-    
-        <action id="edit" type="edit"/>
-    
-        <action id="remove" type="remove"/>
-    
-    </actions>
-    <columns>
-        <column  id="andar"/>
-    
-        <column  id="arrend"/>
-    
-        <column  id="bl"/>
-    
-        <column  id="cod"/>
-    
-        <column  id="codPostal"/>
-    
-        <column  id="codbr"/>
-    
-        <column  id="coord"/>
-    
-        <column  id="eqsocial"/>
-    
-        <column  id="fichaCompleta"/>
-    
-        <column  id="freguesia"/>
-    
-        <column  id="idUtente"/>
-    
-        <column  id="localidade"/>
-    
-        <column  id="numpolicia"/>
-    
-        <column  id="obsconf"/>
-    
-        <column  id="obsgerais"/>
-    
-        <column  id="rendimentoAnual"/>
-    
-        <column  id="rua"/>
-    
-        <column  id="sitoLugar"/>
-    
-        <column  id="t0"/>
-    
-        <column  id="t1"/>
-    
-        <column  id="t2"/>
-    
-        <column  id="t3"/>
-    
-        <column  id="t4"/>
-    
-        <column  id="t5"/>
-    
-        <column  id="tipoArrendamento"/>
-    
-        <column  id="valorPatrimonio"/>
-    
-        <column  id="vend"/>
-    
-    </columns>
-    <rowsCount/>
-    <buttonsPanel id="buttonsPanel"
-                  alwaysVisible="true">
-        
-            <button id="createBtn" action="habitacaoSocialsTable.create"/>                
-        
-            <button id="editBtn" action="habitacaoSocialsTable.edit"/>                
-        
-            <button id="removeBtn" action="habitacaoSocialsTable.remove"/>                
-        
-    </buttonsPanel>
-</groupTable>
+
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+
+
+                <groupBox caption="Habitação Social"
+                          icon="font-icon:HOME"
+                          collapsable="true"
+                          spacing="true">
+
+                    <grid spacing="true">
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+
+                                <lookupPickerField
+                                        property="bloc"
+                                        id="blocField"
+                                        optionsContainer="habitacaoSocialDc"
+                                        inputPrompt="(Seleccione a morada da habitação social)"
+                                        icon="font-icon:HOME" caption="Morada da Habitacao Social"
+                                        width="420px">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+
+
+                                <textField id="localidadeField"
+                                           property="localidade"
+                                           caption="Localidade:"
+                                           inputPrompt="(introduza a localidade)"
+                                           icon="font-icon:MAP"
+                                           width="380px"
+                                />
+
+                                <lookupField
+                                    id="tipoArrendamentoField"
+                                    width="320px"
+                                    property="tipoArrendamento"
+                                    caption="Tipo de Arrendamento: "
+                                    inputPrompt="(Tipo de Arrendamento)"
+                                    icon="font-icon:PAPERCLIP"
+                                    />
+
+
+                            </row>
+                        </rows>
+                    </grid>
+
+                </groupBox>
+
+                <groupBox caption="Utente"
+                          icon="font-icon:USER_O"
+                          collapsable="true"
+                          spacing="true">
+
+                    <grid spacing="true">
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <lookupPickerField
+                                        property="idUtente"
+                                        id="utenteField"
+                                        width="350px"
+                                        optionsContainer="UtentesDC"
+                                        icon="font-icon:ID_CARD" caption="Utente Agregado: "
+                                        inputPrompt="(Seleccione o utente)">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+
+                                <lookupPickerField
+                                        stylename="habilitacoes_literarias"
+                                        inputPrompt="(Seleccione a habilitação literária)"
+                                        property="habilitacoes"
+                                        id="habilitacoesField"
+                                        width="430px"
+                                        optionsContainer="habilitacoesLiterariasesDc"
+                                        icon="font-icon:BOOK" caption="Habilitações Literarias: ">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+
+                                <lookupPickerField id="idTipoCartaoField"
+                                                   property="idTipoCartao"
+                                                   optionsContainer="tipoCartaoDc"
+                                                   stylename="nome_utente"
+                                                   inputPrompt="(Seleccione o tipo de cartão)"
+                                                   width="350px"
+                                                   caption="Tipo de Cartão: "
+                                                   icon="font-icon:CREDIT_CARD">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+                            </row>
+                        </rows>
+                    </grid>
+                </groupBox>
+
+                <groupBox caption="Técnico"
+                          icon="font-icon:USER_MD"
+                          collapsable="true"
+                          spacing="true">
+
+                    <grid spacing="true">
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+
+                                <lookupPickerField
+                                        property="idTecnico"
+                                        id="idTecnicoField"
+                                        stylename="id_tecnico_atendimento_search"
+                                        optionsContainer="tecnicoesDc"
+                                        width="370px"
+                                        icon="font-icon:USER_MD" caption="Nome do Técnico: "
+                                        inputPrompt="(Seleccione o técnico)" >
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+
+                                <lookupPickerField
+                                        inputPrompt="(Seleccione a instituição)"
+                                        property="idInstituicao"
+                                        width="628px"
+                                        id="idInstituicaoField"
+                                        optionsContainer="InstituicaoDc"
+                                        icon="font-icon:BUILDING" caption="Designação da Instituição: ">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+
+                            </row>
+                        </rows>
+                    </grid>
+
+                </groupBox>
+
+                <groupBox caption="Atendimento"
+                          icon="font-icon:PHONE"
+                          collapsable="true"
+                          spacing="true">
+
+                    <grid spacing="true">
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <lookupPickerField
+                                        property="idTipoAtendimento"
+                                        id="idTipoAtendimentoField"
+                                        optionsContainer="tipoAtendimentoesDc"
+                                        width="420px"
+                                        icon="font-icon:VOLUME_CONTROL_PHONE" caption="Tipo de Atendimento: "
+                                        inputPrompt="(Seleccione o tipo de atendimento)" >
+
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+
+
+                                </lookupPickerField>
+
+                                <lookupPickerField id="atendimentoObjectivosField"
+                                                   property="atendimentoObjetivos"
+                                                   optionsContainer="atendimentoObjetivosDc"
+                                                   inputPrompt="(Seleccione os atendimentos objectivos)"
+                                                   caption="Atendimentos Objectivos: "
+                                                   width="380px"
+                                                   icon="font-icon:BUILDING">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+
+                                <lookupPickerField caption="Atendimento de Encaminhamento:"
+                                                   id="idAtendimentoEncaminhamentoField"
+                                                   width="320px"
+                                                   colspan="2"
+                                                   inputPrompt="(seleccione o encaminhamento)"
+                                                   icon="font-icon:VOLUME_CONTROL_PHONE"
+                                                   optionsContainer="atendimentoEncaminhamentoesDc"
+                                                   property="idAtendimentoEncaminhamento">
+
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+
+                                </lookupPickerField>
+
+
+
+                            </row>
+                        </rows>
+                    </grid>
+
+                    <grid spacing="true">
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <dateField id="dataInicioField" property="dataInicio" datatype="date" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data Atendimento Inicio: " stylename="data_atendimento_inicio_hab"/>
+                                <dateField id="dataFimField" enable="false" property="dateFim" datatype="date" dateFormat="dd/MM/yyyy" icon="font-icon:CALENDAR" caption="Data Atendimento Fim: " stylename="data_atendimento_fim_hab"/>
+
+                                <textField id="anoField" visible="false" />
+                                <textField id="mesField" visible="false" />
+                            </row>
+                        </rows>
+                    </grid>
+
+
+                </groupBox>
+
+
+                <hbox spacing="true">
+                    <button id="reset_habitacao_social" icon="ERASER" caption="Limpar" />
+                    <button id="search_habitacao_social" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+
+            </scrollBox>
+        </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasHabSocial"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+
+        </hbox>
+
+        <groupTable id="habitacaoSocialsTable"
+                    width="100%"
+                    stylename="habitacao_social_relatorios"
+                    dataContainer="habitacaoSocialsDc">
+            <actions>
+                <!--<action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>-->
+
+            </actions>
+            <columns>
+                <!--  Habitacao Social -->
+                <group>
+                    <column id="bloc" caption="Bloco da Habitação Social"/>
+                </group>
+                <column id="localidade" caption="Localidade"/>
+                <column id="tipoArrendamento" width="300px" caption="Tipo de Arrendamento"/>
+                <!-- Utente -->
+                <column id="idUtente" width="400px" caption="Nome do Utente"/>
+                <column id="idUtente.habilitacoes" width="500px" caption="Habilitações Literárias"/>
+                <column id="idUtente.idTipoCartao" width="500px" caption="Tipo de Cartão"/>
+                <!-- Tecnico -->
+                <column id="idUtente.atendimentos.idTecnico.nome" width="250px" generator="generateAtendimentosTecnicoNome" />
+                <column id="idUtente.atendimentos.idTecnico.idInstituicao" caption="Nome da Instituição" width="600px" generator="generateAtendimentoTecnicos"/>
+                <!-- Atendimento -->
+                <column id="idUtente.atendimentos.dataAtendimento" generator="generateDataAtendimento" />
+                <column id="idUtente.atendimentos.idTipoAtendimento" generator="generateTiposAtendimentos" caption="Tipos de Atendimentos" width="500px" />
+                <column id="idUtente.atendimentos.idAtendimentoEncaminhamento" caption="Atendimento de Encamnhamento" generator="generateAtendimentosEncaminhamentos"/>
+                <column id="idUtente.atendimentos.atendimentoObjetivos" generator="generateTiposAtendimentosObjectivos" width="600px" />
+                <column id="imprimir_pedido_habitacao" caption="Imprimir Pedido de Habitação"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <!--<button id="createBtn" action="habitacaoSocialsTable.create"/>
+                <button id="editBtn" action="habitacaoSocialsTable.edit"/>
+                <button id="removeBtn" action="habitacaoSocialsTable.remove"/>-->
+
+                <button id="report" caption="Exportar dados da Habitação Social" icon="font-icon:FILE_EXCEL_O" />
+
+                <popupButton id="popupButton1"
+                             caption="Estatistica de Habitação Social" icon="font-icon:CALCULATOR">
+                    <actions>
+                        <action id="popupAction1" caption="Por ano/mês" icon="font-icon:CALENDAR"/>
+                        <action id="popupAction2" caption="Pela Designação da Habitação Social" icon="font-icon:HOME"/>
+                    </actions>
+                </popupButton>
+
+
+
+
+            </buttonsPanel>
+        </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
         </hbox>
-    </layout>                
+    </layout>
 </window>

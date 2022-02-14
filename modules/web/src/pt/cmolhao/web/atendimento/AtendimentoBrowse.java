@@ -72,12 +72,16 @@ public class AtendimentoBrowse extends StandardLookup<Atendimento> {
         Map<String, Object> reportParams = new HashMap<>();
         reportParams.put("Atendimento", atendimentoesTable.getSingleSelected());
         LoadContext<Report> lContext = new LoadContext<>(Report.class);
-        lContext.setQueryString("select r from report$Report r where r.id = '77f0f2de-cbe2-0490-0d12-ca427e4b2a4b' ");
+        //lContext.setQueryString("select r from report$Report r where r.id = '77f0f2de-cbe2-0490-0d12-ca427e4b2a4b' ");
+        lContext.setQueryString("select r from report$Report r where r.id = 'af8784f2-b78f-396e-b80d-cd03478a45ee' ");
         Report report = dataService.load(lContext);
 
         String templateCode = "DEFAULT";
 
         reportGuiManager.printReport(report, reportParams, templateCode, null);
+
+
+
     }
 
     @Subscribe
@@ -117,7 +121,9 @@ public class AtendimentoBrowse extends StandardLookup<Atendimento> {
         atendimentoesTable.addGeneratedColumn("imprimir", entity -> {
 
                 Button btn = uiComponents.create(Button.class);
-                btn.setCaption("imprimir");
+                //btn.setCaption("imprimir");
+                btn.setDescription("Imprimir Atendimento: " + entity.getId());
+                btn.setIcon("font-icon:PRINT");
                 btn.setAction(new BaseAction("imprimir") {
                     @Override
                     public void actionPerform(Component component) {

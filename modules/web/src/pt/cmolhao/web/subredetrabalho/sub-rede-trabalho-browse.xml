@@ -110,7 +110,9 @@
                 <action id="excel" type="excel"/>
             </actions>
             <columns>
-                <column id="idRedeTrabalho" caption="Rede de Trabalho"/>
+                <group>
+                    <column id="idRedeTrabalho" caption="Rede de Trabalho"/>
+                </group>
                 <column id="nome" caption="Nome da Sub Rede de Trabalho"/>
             </columns>
             <rowsCount/>

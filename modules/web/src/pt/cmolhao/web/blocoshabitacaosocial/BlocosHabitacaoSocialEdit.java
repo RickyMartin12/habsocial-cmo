@@ -11,7 +11,6 @@ import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.components.actions.BaseAction;
 import com.haulmont.cuba.gui.screen.*;
-import pt.cmolhao.entity.Atendimento;
 import pt.cmolhao.entity.BlocosHabitacaoSocial;
 import pt.cmolhao.entity.HabitacaoSocial;
 import pt.cmolhao.web.habitacaosocial.HabitacaoSocialEdit;

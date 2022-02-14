@@ -7,6 +7,7 @@
                   class="pt.cmolhao.entity.Atendimento"
                   view="atendimento-view">
             <loader/>
+            <collection id="objectivosDc" property="atendimentoObjetivos" />
         </instance>
 
         <collection id="utentesDc"
@@ -39,15 +40,6 @@
             </loader>
         </collection>
 
-        <collection id="atendimentoObjetivosesDc"
-                    class="pt.cmolhao.entity.AtendimentoObjetivos"
-                    view="_local">
-            <loader id="atendimentoObjetivosesDl">
-                <query>
-                    <![CDATA[select e from cmolhao_AtendimentoObjetivos e]]>
-                </query>
-            </loader>
-        </collection>
 
         <collection id="atendimentoEncaminhamentoesDc"
                     class="pt.cmolhao.entity.AtendimentoEncaminhamento"
@@ -137,7 +129,8 @@
 
                     <form id="form_contactos_data" dataContainer="atendimentoDc">
                         <column width="200px">
-                            <dateField id="dataAtendimentoField" property="dataAtendimento"
+                            <dateField id="dataAtendimentoField" property="dataAtendimento" required="true"
+                                       requiredMessage="Data de Atendimento é obrigatório"
                                        icon="font-icon:CALENDAR" caption="Data Atendimento: " stylename="data_atendimento"/>
                         </column>
                         <column width="200px">
@@ -154,23 +147,8 @@
                      margin="true"
                      spacing="true">
                     <form id="form_objectivos_observacoes" dataContainer="atendimentoDc">
-                        <column width="250px">
+                        <column width="811px">
 
-                            <lookupPickerField caption="Atendimento de Objectivos: "
-                                         id="idAtendimentoObjetivoField"
-                                         inputPrompt="(seleccione um dos objectivos gerais)"
-                                         icon="font-icon:CERTIFICATE"
-                                         width="811px"
-                                         colspan="2"
-                                         optionsContainer="atendimentoObjetivosesDc"
-                                         property="idAtendimentoObjetivo">
-
-                                <actions>
-                                    <action id="lookup" type="picker_lookup"/>
-                                    <action id="clear" type="picker_clear"/>
-                                </actions>
-
-                            </lookupPickerField>
 
                             <lookupPickerField caption="Atendimento de Encaminhamento:"
                                                id="idAtendimentoEncaminhamentoField"
@@ -191,20 +169,40 @@
 
 
                             <textArea cols="60" rows="3" id="objetivoOutrosField" property="objetivoOutros"
-                                      caption="Outros Objectivos: " icon="font-icon:FILE_TEXT_O"/>
-                            <textArea cols="60" rows="3" id="obsGeraisField" property="obsGerais"
+                                      caption="Outros Objectivos: " icon="font-icon:FILE_TEXT_O" visible="false"/>
+                            <textArea cols="60" rows="10" id="obsGeraisField" property="obsGerais"
                                       caption="Observações Gerais: " icon="font-icon:FILE_TEXT_O"/>
                         </column>
                         <column width="250px">
 
                             <textArea cols="60" rows="3" id="obsConfField" property="obsConf"
-                                      caption="Observações de Confirmação: " icon="font-icon:FILE_TEXT_O"/>
+                                      caption="Observações de Confirmação: " icon="font-icon:FILE_TEXT_O" visible="false"/>
                             <textArea cols="60" rows="3" id="outrosEncaminhamentosField" property="outrosEncaminhamentos"
-                                      caption="Outros Encaminhamentos: " icon="font-icon:FILE_TEXT_O"/>
+                                      caption="Outros Encaminhamentos: " icon="font-icon:FILE_TEXT_O" visible="false"/>
                         </column>
                     </form>
+
+                    <groupBox id="atendBox" caption="Objectivos de Atendimento">
+                        <table id="atendTable" dataContainer="objectivosDc" width="100%" height="200px">
+                            <actions>
+                                <action id="add" type="add"/>
+                                <action id="exclude" type="exclude"/>
+                            </actions>
+                            <columns>
+                                <column id="atendimentoObjetivoGeral" caption="Objectivo"/>
+                            </columns>
+                            <buttonsPanel>
+                                <button action="atendTable.add"/>
+                                <button action="atendTable.exclude"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+
+
                 </tab>
             </tabSheet>
+
+
 
 
         </scrollBox>

@@ -3,6 +3,19 @@
 
     @include halo;
 
+
+    .v-slot-c-login-submit-button {
+        width: 100%!important;
+    }
+
+    .button_middle_pedido_habitacao
+    {
+        display: block;
+        position: relative;
+        width: 50px;
+        margin: 10px auto 10px auto!important;
+    }
+
     .v-slot-position-logo {
         text-align: center;
         margin-bottom: 20px;
@@ -719,6 +732,15 @@
                                         {
                                             width: 182px!important;
                                         }
+
+                                        .v-caption-data_atendimento_inicio, .v-caption-data_atendimento_fim
+                                        {
+                                            width: 215px!important;
+                                        }
+                                        .v-caption-data_atendimento_inicio_hab, .v-caption-data_atendimento_fim_hab
+                                          {
+                                               width: 180px!important;
+                                           }
 
 
 

@@ -1,11 +1,15 @@
 package pt.cmolhao.web.apoios;
 
+import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.components.actions.BaseAction;
+import com.haulmont.cuba.gui.export.ExportDisplay;
+import com.haulmont.cuba.gui.export.ExportFormat;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.screen.LookupComponent;
@@ -48,6 +52,11 @@ public class ApoiosBrowse extends StandardLookup<Apoios> {
 
     @Inject
     private Dialogs dialogs;
+
+    @Inject
+    private ExportDisplay exportDisplay;
+
+
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
@@ -96,6 +105,56 @@ public class ApoiosBrowse extends StandardLookup<Apoios> {
                         .build()
                         .show()
         );
+
+        apoiosesTable.addGeneratedColumn("file", entity -> {
+            if(entity.getFile() != null) {
+                Button btn = uiComponents.create(Button.class);
+                btn.setCaption(entity.getFile().getName());
+                btn.addStyleName("download_documentos");
+                String ext = entity.getFile().getExtension();
+                btn.setIcon("font-icon:FILE_O");
+
+                if (ext.equals("pdf")) {
+                    btn.setIcon("font-icon:FILE_PDF_O");
+                }
+                if (ext.equals("docx") || ext.equals("doc")) {
+                    btn.setIcon("font-icon:FILE_WORD_O");
+                }
+                if (ext.equals("webm") || ext.equals("mp4") || ext.equals("mpg") || ext.equals("ogg") || ext.equals("avi") || ext.equals("mov")) {
+                    btn.setIcon("font-icon:FILE_VIDEO_O");
+                }
+                if (ext.equals("wav") || ext.equals("mp3")) {
+                    btn.setIcon("font-icon:FILE_SOUND_O");
+                }
+                if (ext.equals("jpg") || ext.equals("jpeg") || ext.equals("png") || ext.equals("gif")) {
+                    btn.setIcon("font-icon:FILE_PICTURE_O");
+                }
+                if (ext.equals("rar") || ext.equals("zip")) {
+                    btn.setIcon("font-icon:FILE_ZIP_O");
+                }
+                if (ext.equals("xlsx") || ext.equals("xls") || ext.equals("csv")) {
+                    btn.setIcon("font-icon:FILE_EXCEL_O");
+                }
+                if (ext.equals("pptx") || ext.equals("ppt")) {
+                    btn.setIcon("font-icon:FILE_POWERPOINT_O");
+                }
+                btn.setAction(new BaseAction("download") {
+                    @Override
+                    public void actionPerform(Component component) {
+                        FileDescriptor imageFile = entity.getFile();
+                        exportDisplay.show(imageFile, ExportFormat.OCTET_STREAM);
+
+                    }
+                });
+                return btn;
+            }
+            else
+            {
+                return null;
+            }
+        });
+
+
     }
 
     @Subscribe("reset_apoios")

@@ -11,6 +11,13 @@
             <loader id="documentacaoPlataformaSupraconcelhiasDl">
                 <query>
                     <![CDATA[select e from cmolhao_DocumentacaoPlataformaSupraconcelhia e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.numeroDocumentacao like :numeroDocumentacao</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
@@ -19,52 +26,81 @@
                 width="800"/>
     <layout expand="documentacaoPlataformaSupraconcelhiasTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="documentacaoPlataformaSupraconcelhiasTable"
-                dataLoader="documentacaoPlataformaSupraconcelhiasDl">
-            <properties include=".*"/>
-        </filter>
-        
-<groupTable id="documentacaoPlataformaSupraconcelhiasTable"
-        width="100%"
-        dataContainer="documentacaoPlataformaSupraconcelhiasDc">
-    <actions>
-        <action id="create" type="create"/>
-    
-        <action id="edit" type="edit"/>
-    
-        <action id="remove" type="remove"/>
-    
-    </actions>
-    <columns>
-        <column  id="dataDocumento"/>
-    
-        <column  id="idRedeTrabalho"/>
-    
-        <column  id="idSubRedeTrabalho"/>
-    
-        <column  id="nomeFicheiro"/>
-    
-        <column  id="numeroDocumentacao"/>
-    
-        <column  id="file"/>
-    
-    </columns>
-    <rowsCount/>
-    <buttonsPanel id="buttonsPanel"
-                  alwaysVisible="true">
-        
-            <button id="createBtn" action="documentacaoPlataformaSupraconcelhiasTable.create"/>                
-        
-            <button id="editBtn" action="documentacaoPlataformaSupraconcelhiasTable.edit"/>                
-        
-            <button id="removeBtn" action="documentacaoPlataformaSupraconcelhiasTable.remove"/>                
-        
-    </buttonsPanel>
-</groupTable>
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+
+
+                <grid spacing="true" width="100%">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+
+                            <textField id="numeroDocumentacaoField"
+                                       property="numeroDocumentacao"
+                                       width="250px"
+                                       icon="font-icon:FILE"
+                                       inputPrompt="(Introduza o numero documento)"
+                                       caption="Número do Documento: "/>
+                        </row>
+                    </rows>
+                </grid>
+
+                <hbox spacing="true">
+                    <button id="reset_documentacao_plataforma_supraconcelharia" icon="ERASER" caption="Limpar" />
+                    <button id="search_documentacao_plataforma_supraconcelharia" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+
+            </scrollBox>
+        </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasDocumentacao"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+        <groupTable id="documentacaoPlataformaSupraconcelhiasTable"
+                    width="100%"
+                    dataContainer="documentacaoPlataformaSupraconcelhiasDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
+
+            </actions>
+            <columns>
+                <column id="idRedeTrabalho" caption="Rede de Trabalho"/>
+                <column id="idSubRedeTrabalho" caption="Sub Rede de Trabalho"/>
+                <column id="numeroDocumentacao" caption="Número do Documentação"/>
+                <column id="dataDocumento" caption="Data do Ficheiro"/>
+
+                <column id="nomeFicheiro" caption="Nome do Ficheiro"/>
+
+                <column id="file" caption="Ficheiro"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="documentacaoPlataformaSupraconcelhiasTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="documentacaoPlataformaSupraconcelhiasTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="documentacaoPlataformaSupraconcelhiasTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button id="excelBtn" action="documentacaoPlataformaSupraconcelhiasTable.excel" stylename="friendly" />
+            </buttonsPanel>
+        </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
         </hbox>
-    </layout>                
+    </layout>
 </window>

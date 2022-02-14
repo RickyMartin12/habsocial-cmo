@@ -7,7 +7,7 @@
     <data readOnly="true">
         <collection id="atendimentoObjetivosesDc"
                     class="pt.cmolhao.entity.AtendimentoObjetivos"
-                    view="_local">
+                    view="atendimentoObjetivos-view">
             <loader id="atendimentoObjetivosesDl">
                 <query>
                     <![CDATA[select e from cmolhao_AtendimentoObjetivos e]]>
@@ -24,39 +24,29 @@
                 dataLoader="atendimentoObjetivosesDl">
             <properties include=".*"/>
         </filter>
-        
-<groupTable id="atendimentoObjetivosesTable"
-        width="100%"
-        dataContainer="atendimentoObjetivosesDc">
-    <actions>
-        <action id="create" type="create"/>
-    
-        <action id="edit" type="edit"/>
-    
-        <action id="remove" type="remove"/>
-    
-    </actions>
-    <columns>
-        <column  id="atendimemtoObjetivoEspecifico"/>
-    
-        <column  id="atendimentoObjetivoGeral"/>
-    
-    </columns>
-    <rowsCount/>
-    <buttonsPanel id="buttonsPanel"
-                  alwaysVisible="true">
-        
-            <button id="createBtn" action="atendimentoObjetivosesTable.create"/>                
-        
-            <button id="editBtn" action="atendimentoObjetivosesTable.edit"/>                
-        
-            <button id="removeBtn" action="atendimentoObjetivosesTable.remove"/>                
-        
-    </buttonsPanel>
-</groupTable>
+        <groupTable id="atendimentoObjetivosesTable"
+                    width="100%"
+                    dataContainer="atendimentoObjetivosesDc" multiselect="true">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="atendimemtoObjetivoEspecifico"/>
+                <column id="atendimentoObjetivoGeral"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="atendimentoObjetivosesTable.create"/>
+                <button id="editBtn" action="atendimentoObjetivosesTable.edit"/>
+                <button id="removeBtn" action="atendimentoObjetivosesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
         </hbox>
-    </layout>                
+    </layout>
 </window>

@@ -11,54 +11,187 @@
             <loader id="pareceresInstituicoesesDl">
                 <query>
                     <![CDATA[select e from cmolhao_PareceresInstituicoes e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:join>join e.idTipoParecer a</c:join>
+                                <c:where>a.id = :idTipoParecer</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idParecer b</c:join>
+                                <c:where>b.id = :idParecer</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idInstituicao c</c:join>
+                                <c:where>c.id = :idInstituicao</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
+
+        <collection id="pareceresesDc"
+                    class="pt.cmolhao.entity.Pareceres"
+                    view="pareceres-view">
+            <loader id="pareceresesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Pareceres e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoPareceresesDc"
+                    class="pt.cmolhao.entity.TipoPareceres"
+                    view="tipoPareceres-view">
+            <loader id="tipoPareceresesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoPareceres e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="InstituicaoDc"
+                    class="pt.cmolhao.entity.Instituicoes"
+                    view="_local">
+            <loader id="ins_Loader">
+                <query>
+                    <![CDATA[select e from cmolhao_Instituicoes e]]>
+                </query>
+            </loader>
+        </collection>
+
+
+
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="pareceresInstituicoesesTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="pareceresInstituicoesesTable"
-                dataLoader="pareceresInstituicoesesDl">
-            <properties include=".*"/>
-        </filter>
-        
-<groupTable id="pareceresInstituicoesesTable"
-        width="100%"
-        dataContainer="pareceresInstituicoesesDc">
-    <actions>
-        <action id="create" type="create"/>
-    
-        <action id="edit" type="edit"/>
-    
-        <action id="remove" type="remove"/>
-    
-    </actions>
-    <columns>
-        <column  id="idInstituicao"/>
-    
-        <column  id="idParecer"/>
-    
-        <column  id="idTipoParecer"/>
-    
-    </columns>
-    <rowsCount/>
-    <buttonsPanel id="buttonsPanel"
-                  alwaysVisible="true">
-        
-            <button id="createBtn" action="pareceresInstituicoesesTable.create"/>                
-        
-            <button id="editBtn" action="pareceresInstituicoesesTable.edit"/>                
-        
-            <button id="removeBtn" action="pareceresInstituicoesesTable.remove"/>                
-        
-    </buttonsPanel>
-</groupTable>
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+
+            <scrollBox spacing="true">
+
+                <grid spacing="true" width="100%">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+
+                            <lookupPickerField property="idInstituicao" id="idInstituicaoField" optionsContainer="InstituicaoDc"
+                                               caption="Designação da Instituição da valencia:"
+                                               inputPrompt="(Seleccione a instituição)"
+                                               width="1150px"
+                                               stylename="id_instituicao_apoio_search"
+                                               icon="font-icon:BUILDING">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+                        </row>
+                    </rows>
+
+                </grid>
+
+                <grid spacing="true" width="100%">
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <lookupPickerField id="idParecerField"
+                                               property="idParecer"
+                                               optionsContainer="pareceresesDc"
+                                               inputPrompt="(Seleccione o nome do parecer)"
+                                               width="500px"
+                                               caption="Parecer: "
+                                               icon="LEAF">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                            <lookupPickerField id="idTipoParecerField"
+                                               property="idTipoParecer"
+                                               optionsContainer="tipoPareceresesDc"
+                                               inputPrompt="(Seleccione o tipo de parecer)"
+                                               width="635px"
+                                               caption="Tipo de Parecer: "
+                                               editable="false"
+                                               icon="LEAF">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+                            </lookupPickerField>
+
+                        </row>
+                    </rows>
+
+                </grid>
+
+                <hbox spacing="true">
+                    <button id="reset_tipo_pareceres" icon="ERASER" caption="Limpar" />
+                    <button id="search_tipo_pareceres" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+
+
+            </scrollBox>
+        </groupBox>
+
+        <hbox spacing="true">
+            <lookupField id="linhasTipoParaceres"
+                         caption="Mostrar Numero de Linhas"
+                         inputPrompt="(seleccione o numero de linhas)"
+                         icon="ARROWS_V"/>
+        </hbox>
+
+
+
+        <groupTable id="pareceresInstituicoesesTable"
+                    width="100%"
+                    dataContainer="pareceresInstituicoesesDc"
+                    emptyStateMessage="Não Existe Dados na Tabela"
+                    emptyStateLinkMessage="Adicione Dados na Tabela(Ctrl+\)">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <group>
+                    <column id="idParecer" caption="Parecer"/>
+                </group>
+                <column id="idTipoParecer" caption="Tipo de Parecer" width="350px"/>
+                <column id="idInstituicao" caption="Instituição" width="900px"/>
+
+
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="pareceresInstituicoesesTable.create" caption="Criar" icon="font-icon:PLUS" stylename="primary"/>
+                <button id="editBtn" action="pareceresInstituicoesesTable.edit" caption="Editar" icon="font-icon:PENCIL" stylename="info"/>
+                <button id="removeBtn" action="pareceresInstituicoesesTable.remove" caption="Remover" icon="font-icon:TRASH" stylename="danger"/>
+                <button action="pareceresInstituicoesesTable.excel" stylename="friendly"/>
+            </buttonsPanel>
+        </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
         </hbox>
-    </layout>                
+    </layout>
 </window>

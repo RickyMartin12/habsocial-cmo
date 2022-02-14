@@ -136,6 +136,20 @@ public class Instituicoes extends BaseIntegerIdEntity {
         this.membrosRedeTrabalhos = membrosRedeTrabalhos;
     }
 
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "idInstituicao")
+    protected Set<PareceresInstituicoes> pareceresInstituicoes;
+
+    public Set<PareceresInstituicoes> getPareceresInstituicoes() {
+        return pareceresInstituicoes;
+    }
+
+    public void setPareceresInstituicoes(Set<PareceresInstituicoes> pareceresInstituicoes) {
+        this.pareceresInstituicoes = pareceresInstituicoes;
+    }
+
     public String getUrl() {
         return url;
     }

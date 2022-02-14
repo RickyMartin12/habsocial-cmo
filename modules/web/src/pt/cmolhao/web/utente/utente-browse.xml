@@ -26,10 +26,21 @@
                                 <c:where>e.estadoCivil = :estadoCivil</c:where>
                             </c:jpql>
                             <c:jpql>
-                                <c:where>e.paisOrigem = :paisOrigem</c:where>
+                                <c:join>join e.idTipoCartao i</c:join>
+                                <c:where>i.id = :idTipoCartao</c:where>
                             </c:jpql>
                         </and>
                     </condition>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoCartaoDc"
+                    class="pt.cmolhao.entity.TipoCartao"
+                    view="tipoCartao-view">
+            <loader id="customersTipoCartaoLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoCartao e]]>
                 </query>
             </loader>
         </collection>
@@ -85,12 +96,32 @@
                                         property="estadoCivil"
                                         stylename="estado_civil_search"
                                         id="estadoCivilField"
+                                        width="250px"
                                         icon="font-icon:REFRESH" caption="Estado Civil: " />
-                                <lookupField id="paisOrigemField"
+
+                                <lookupPickerField id="idTipoCartaoField"
+                                                   property="idTipoCartao"
+                                                   optionsContainer="tipoCartaoDc"
+                                                   inputPrompt="(Seleccione o tipo de cartão)"
+                                                   width="300px"
+                                                   caption="Tipo de Cartão: "
+                                                   icon="font-icon:CREDIT_CARD">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+
+
+
+
+
+
+                                <!--<lookupField id="paisOrigemField"
                                              stylename="pais_origem_search"
                                              property="paisOrigem"
                                              caption="Pais de Origem: "
-                                             icon="FLAG" inputPrompt="(Introduza o país de origem)"/>
+                                             icon="FLAG" inputPrompt="(Introduza o país de origem)"/>-->
                             </row>
                         </rows>
                     </grid>
@@ -125,20 +156,26 @@
                 <action id="excel" type="excel"/>
             </actions>
             <columns>
+                <column id="nome" caption="Nome"/>
+                <column id="email" caption="Email"/>
+                <column id="idTipoCartao" caption="Tipo de Cartão" />
+                <column id="niss" caption="Numero de Segurança Social"/>
+                <column id="numContribuinte" caption="Numero de Contribuinte"/>
+                <column id="numIdCivil" caption="Numero de ID Civil"/>
+
                 <column id="certUniaoEuropeia" caption="Número do Documento"/>
                 <column id="dataNasc" caption="Data de Nascimento"/>
+                <column id="dataValidade" caption="Data de Validade" />
+
+
                 <column id="deficiente" caption="Deficiente"/>
                 <column id="dependente" caption="Dependente"/>
-                <column id="email" caption="Email"/>
-                <column id="estadoCivil" caption="Estado Civil" />
+
                 <column id="grauEscolaridade" caption="Grau de Escolaridade"/>
                 <column id="habilitacoes" caption="Habilitações"/>
                 <column id="idTipoCivil" caption="Tipo de Civil"/>
                 <column id="idTipologiaFamiliar" caption="Tipologia Familiar"/>
-                <column id="niss" caption="Numero de Segurança Social"/>
-                <column id="nome" caption="Nome"/>
-                <column id="numContribuinte" caption="Numero de Contribuinte"/>
-                <column id="numIdCivil" caption="Numero de ID Civil"/>
+
                 <column id="obsConf" caption="Observaçõees de Confirmação"/>
                 <column id="obsGerais" caption="Observações Gerais"/>
                 <column id="profissao" caption="Profissão"/>

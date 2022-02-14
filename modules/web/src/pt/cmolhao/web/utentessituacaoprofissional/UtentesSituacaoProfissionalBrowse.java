@@ -8,7 +8,6 @@ import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.screen.LookupComponent;
 import pt.cmolhao.entity.Utente;
-import pt.cmolhao.entity.UtentesRelacionados;
 import pt.cmolhao.entity.UtentesSituacaoProfissional;
 
 import javax.inject.Inject;

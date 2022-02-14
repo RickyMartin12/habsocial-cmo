@@ -10,61 +10,601 @@
                     view="valencias-viewRelatoriosPessoasSemAbrigo">
             <loader id="valenciasesDl">
                 <query>
-                    <![CDATA[select e from cmolhao_Valencias e]]>
+                    <![CDATA[select e from cmolhao_Valencias e join e.idtipovalencia a where a.id = 6]]>
+                    <condition>
+                        <and>
+                            <!-- Valencia -->
+                            <c:jpql>
+                                <c:join>join e.idinstituicao z</c:join>
+                                <c:where>z.id = :idinstituicao</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.descricaotecnica like :descricaotecnica</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.morada like :morada</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idtipovalencia b</c:join>
+                                <c:where>b.id = :idtipovalencia</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idResSocial c</c:join>
+                                <c:where>c.id = :idResSocial</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idinstituicao d join d.membrosRedeTrabalhos f join f.idRedeTrabalho g</c:join>
+                                <c:where>g.id = :idRedeTrabalho</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idinstituicao h join h.tecnicos i</c:join>
+                                <c:where>i.id = :idTecnico</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idinstituicao j join j.apoios k</c:join>
+                                <c:where>cast(k.numProcesso text) like :numProcesso</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idinstituicao l join l.apoios m join m.idTipoapoio n</c:join>
+                                <c:where>n.id = :idTipoapoio</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:join>join e.idinstituicao o join o.apoios p join p.idTipoDocApoio q</c:join>
+                                <c:where>q.id = :idTipoDocApoio</c:where>
+                            </c:jpql>
+
+                            <c:jpql>
+                                <c:join>join e.idinstituicao r join r.apoios s join s.idUtente t</c:join>
+                                <c:where>t.id = :idUtente</c:where>
+                            </c:jpql>
+
+                            <c:jpql>
+                                <c:join>join e.idinstituicao v join v.projectosIntervencaos x</c:join>
+                                <c:where>x.id = :idprojectosintervencao</c:where>
+                            </c:jpql>
+
+
+                        </and>
+                    </condition>
                 </query>
             </loader>
         </collection>
+
+        <!-- valencia -->
+
+        <collection id="InstituicaoDc"
+                    class="pt.cmolhao.entity.Instituicoes"
+                    view="_local">
+            <loader id="ins_Loader">
+                <query>
+                    <![CDATA[select e from cmolhao_Instituicoes e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="TipoValenciaDc"
+                    class="pt.cmolhao.entity.Tiposvalencia"
+                    view="_local">
+            <loader id="tipo_valencia_Loader">
+                <query>
+                    <![CDATA[select e from cmolhao_Tiposvalencia e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="respostaSocialsDc"
+                    class="pt.cmolhao.entity.RespostaSocial"
+                    view="respostaSocial-view">
+            <loader id="respostaSocialsDl">
+                <query>
+                    <![CDATA[select e from cmolhao_RespostaSocial e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <!-- membros de rede de trabalho -->
+
+        <collection id="redeTrabalhoDc"
+                    class="pt.cmolhao.entity.RedeTrabalho"
+                    view="redeTrabalho-view">
+            <loader id="customersRedeTrabalhoLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_RedeTrabalho e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <!-- apoios -->
+
+        <collection id="UtentesDC"
+                    class="pt.cmolhao.entity.Utente"
+                    view="_local">
+            <loader id="utentesLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_Utente e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoAjudasDc"
+                    class="pt.cmolhao.entity.TipoAjuda"
+                    view="_local">
+            <loader id="tipoAjudasDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoAjuda e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="tipoDocApoioDc"
+                    class="pt.cmolhao.entity.TipoDocApoio"
+                    view="tipoDocApoio-view">
+            <loader id="tipoDocApoioDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoDocApoio e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <!-- tecnicos -->
+
+        <collection id="tecnicoesDc"
+                    class="pt.cmolhao.entity.Tecnico"
+                    view="tecnico-view">
+            <loader id="tecnicoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Tecnico e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <!-- projectos de intervencao -->
+
+        <collection id="ProjectosIntervencaoDc"
+                    class="pt.cmolhao.entity.ProjectosIntervencao"
+                    view="projectosIntervencao-view">
+            <loader id="customersLoader">
+                <query>
+                    <![CDATA[select e from cmolhao_ProjectosIntervencao e]]>
+                </query>
+            </loader>
+        </collection>
+
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="valenciasesTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="valenciasesTable"
-                dataLoader="valenciasesDl">
-            <properties include=".*"/>
-        </filter>
-        
-<groupTable id="valenciasesTable"
-        width="100%"
-        dataContainer="valenciasesDc">
-    <actions>
-        <action id="create" type="create"/>
-    
-        <action id="edit" type="edit"/>
-    
-        <action id="remove" type="remove"/>
-    
-    </actions>
-    <columns>
-        <column  id="acordocapacidade"/>
-    
-        <column  id="descricaotecnica"/>
-    
-        <column  id="idResSocial"/>
-    
-        <column  id="idinstituicao"/>
-    
-        <column  id="idtipovalencia"/>
-    
-        <column  id="morada"/>
-    
-    </columns>
-    <rowsCount/>
-    <buttonsPanel id="buttonsPanel"
-                  alwaysVisible="true">
-        
-            <button id="createBtn" action="valenciasesTable.create"/>                
-        
-            <button id="editBtn" action="valenciasesTable.edit"/>                
-        
-            <button id="removeBtn" action="valenciasesTable.remove"/>                
-        
-    </buttonsPanel>
-</groupTable>
+
+        <groupBox caption="Filtros de Pesquisa"
+                  collapsable="true"
+                  spacing="true"
+                  icon="font-icon:FILTER"
+                  width="100%">
+            <scrollBox spacing="true">
+
+                <groupBox caption="Valência"
+                          icon="SIMPLYBUILT"
+                          collapsable="true">
+
+                    <grid spacing="true"
+                          stylename="grid_search_apoios">
+
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <lookupPickerField property="idinstituicao" id="idInstituicaoField" optionsContainer="InstituicaoDc"
+                                                   caption="Designação da Instituição da valencia:"
+                                                   inputPrompt="(Seleccione a instituição)"
+                                                   width="1150px"
+                                                   stylename="id_instituicao_apoio_search"
+                                                   icon="font-icon:BUILDING">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+                            </row>
+                        </rows>
+                    </grid>
+
+                    <grid spacing="true"
+                          stylename="grid_search_apoios">
+
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+
+                                <textField id="descricaotecnicaField"
+                                           caption="Descrição:"
+                                           property="descricaotecnica"
+                                           inputPrompt="(introduza a descricao técnica)"
+                                           width="600px"
+                                           icon="font-icon:ADDRESS_CARD"/>
+
+                                <textField id="moradaField"
+                                           caption="Morada:"
+                                           property="morada"
+                                           inputPrompt="(introduza a morada)"
+                                           width="535px"
+                                           icon="font-icon:MAP_O"/>
+
+                            </row>
+                        </rows>
+
+
+
+                    </grid>
+
+
+                    <grid spacing="true"
+                          stylename="grid_search_apoios">
+
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+
+
+
+                                <lookupPickerField property="idtipovalencia" id="idtipovalenciaField" optionsContainer="TipoValenciaDc"
+                                                   caption="Área de Intervenção: "
+                                                   inputPrompt="(Seleccione o tipo de valência)"
+                                                   width="600px"
+                                                   icon="SIMPLYBUILT">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+
+                                <lookupPickerField property="idResSocial" id="idResSocialField" optionsContainer="respostaSocialsDc"
+                                                   caption="Resposta Social: "
+                                                   width="535px"
+                                                   editable="false"
+                                                   inputPrompt="(Seleccione a resposta social)"
+                                                   icon="SIMPLYBUILT">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+
+                            </row>
+                        </rows>
+
+
+                    </grid>
+
+
+
+
+                </groupBox>
+
+                <grid spacing="true">
+
+                    <columns>
+                        <column/>
+                        <column flex="1"/>
+                        <column/>
+                        <column flex="1"/>
+                    </columns>
+
+                    <rows>
+                        <row>
+                            <groupBox caption="Membros de Rede"
+                                      icon="font-icon:INSTITUTION"
+                                      collapsable="true">
+                                <grid spacing="true"
+                                      stylename="grid_search_apoios">
+
+                                    <columns>
+                                        <column/>
+                                        <column flex="1"/>
+                                    </columns>
+                                    <rows>
+                                        <row>
+                                            <lookupPickerField id="idRedeTrabalhoField"
+                                                               property="idRedeTrabalho"
+                                                               optionsContainer="redeTrabalhoDc"
+                                                               inputPrompt="(Seleccione a rede trabalho)"
+                                                               width="580px"
+                                                               caption="Rede de Trabalho: "
+                                                               icon="WRENCH">
+                                                <actions>
+                                                    <action id="lookup" type="picker_lookup"/>
+                                                    <action id="clear" type="picker_clear"/>
+                                                </actions>
+                                            </lookupPickerField>
+                                        </row>
+                                    </rows>
+
+                                </grid>
+
+
+                            </groupBox>
+
+                            <groupBox caption="Tecnicos"
+                                      icon="font-icon:USER"
+                                      collapsable="true">
+                                <grid spacing="true"
+                                      stylename="grid_search_apoios">
+
+                                    <columns>
+                                        <column/>
+                                        <column flex="1"/>
+                                    </columns>
+                                    <rows>
+                                        <row>
+                                            <lookupPickerField
+                                                    property="idTecnico"
+                                                    id="idTecnicoField"
+                                                    stylename="id_tecnico_atendimento_search"
+                                                    optionsContainer="tecnicoesDc"
+                                                    width="535px"
+                                                    icon="font-icon:USER_MD" caption="Nome do Técnico: "
+                                                    inputPrompt="(Seleccione o técnico)" >
+                                                <actions>
+                                                    <action id="lookup" type="picker_lookup"/>
+                                                    <action id="clear" type="picker_clear"/>
+                                                </actions>
+                                            </lookupPickerField>
+                                        </row>
+                                    </rows>
+
+                                </grid>
+
+
+                            </groupBox>
+                        </row>
+                    </rows>
+
+                </grid>
+
+                <groupBox caption="Apoios"
+                          icon="images/apoio-suporte.png"
+                          collapsable="true">
+
+                    <grid spacing="true"
+                          stylename="grid_search_apoios"
+                          id="grid_search_apoios">
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+
+
+
+                                <textField id="numProcessoField" property="numProcesso"
+                                           stylename="num_processo_search"
+                                           width="350px"
+                                           caption="Numero Processo: " icon="ID_CARD"
+                                           inputPrompt="(Indica o numero do processo)"/>
+
+                                <lookupPickerField caption="Tipo de Apoio:"
+                                                   id="idTipoapoioField"
+                                                   property="idTipoapoio"
+                                                   stylename="id_tipo_apoio"
+                                                   width="400px"
+                                                   icon="font-icon:QUESTION"
+                                                   inputPrompt="(Seleccione o tipo de apoio)"
+                                                   optionsContainer="tipoAjudasDc">
+
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+
+
+                                </lookupPickerField>
+
+                                <lookupPickerField caption="Tipo de Documento de Apoio:"
+                                                   id="idTipoDocApoioField"
+                                                   editable="false"
+                                                   stylename="id_estados_apoio"
+                                                   width="370px"
+                                                   property="idTipoDocApoio"
+                                                   icon="FILE"
+                                                   inputPrompt="(Seleccione o doc de Apoio)"
+                                                   optionsContainer="tipoDocApoioDc">
+
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+
+                                </lookupPickerField>
+
+
+                            </row>
+                        </rows>
+                    </grid>
+
+
+
+
+
+                </groupBox>
+
+                <groupBox caption="Utentes"
+                          icon="font-icon:USER"
+                          collapsable="true">
+
+                    <grid spacing="true"
+                          stylename="grid_search_apoios">
+
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+
+                        <rows>
+                            <row>
+                                <lookupPickerField
+                                        property="idUtente"
+                                        id="utenteField"
+                                        width="1150px"
+                                        stylename="id_utente_apoio"
+                                        optionsContainer="UtentesDC"
+                                        icon="font-icon:ID_CARD" caption="Nome e Identificação do Utente: "
+                                        inputPrompt="(Seleccione o utente)">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </lookupPickerField>
+                            </row>
+                        </rows>
+                    </grid>
+
+                </groupBox>
+
+                <groupBox caption="Projectos"
+                          icon="font-icon:PASTE"
+                          collapsable="true">
+
+                    <grid spacing="true"
+                          stylename="grid_search_apoios">
+
+                        <columns>
+                            <column/>
+                            <column flex="1"/>
+                        </columns>
+
+                        <rows>
+                            <row>
+                                <lookupPickerField id="idprojectosintervencaoField"
+                                                   property="idprojectosintervencao"
+                                                   optionsContainer="ProjectosIntervencaoDc"
+                                                   inputPrompt="(Seleccione o ID do projecto de intervenção)"
+                                                   caption="Projecto de Intervenção: "
+                                                   stylename="projecto_aprovacao_edit"
+                                                   width="1150px"
+                                                   requiredMessage="Preenche o Projecto de Intervenção"
+                                                   icon="font-icon:PASTE">
+
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+
+                                </lookupPickerField>
+                            </row>
+                        </rows>
+
+
+
+                    </grid>
+                </groupBox>
+
+                <hbox spacing="true">
+                    <button id="reset_valencia" icon="ERASER" caption="Limpar" />
+                    <button id="search_valencia" caption="Pesquisar" icon="SEARCH" stylename="info" />
+                </hbox>
+
+
+                <textField id="inst" visible="false"  />
+                <textField id="rede_trabalho" visible="false" />
+
+                <textField id="tipoApoio" visible="false"  />
+                <textField id="tipoDocumentoApoio" visible="false"  />
+
+                <textField id="utenteId" visible="false" />
+
+                <textField id="projectosId" visible="false" />
+
+                <textField id="tecnicoId" visible="false" />
+
+
+
+
+
+
+
+
+            </scrollBox>
+        </groupBox>
+
+
+        <groupTable id="valenciasesTable"
+                    width="100%"
+                    dataContainer="valenciasesDc">
+            <!--<actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>-->
+            <columns>
+                <!-- Valencia -->
+                <column id="descricaotecnica" caption="Descrição Técnica" width="700px"/>
+                <column id="idinstituicao" caption="Instituição" width="700px"/>
+                <column id="morada" caption="Morada" width="800px"/>
+                <column id="idtipovalencia" caption="Área de Intervenção" width="600px"/>
+                <column id="idResSocial" caption="Resposta Social" width="600px"/>
+                <column id="acordocapacidade" caption="Capacidade Máxima" width="600px"/>
+                <!-- Membros de Rede -->
+                <column id="idinstituicao.membrosRedeTrabalhos.idRedeTrabalho" generator="generateNomeMembrosdeRede" caption="Membros de Rede de Trabalho" />
+                <!-- Tecnicos -->
+                <column id="idinstituicao.tecnicos" generator="generateNomesTecnicos" caption="Tecnico" width="300px"/>
+                <!-- Apoios -->
+                <column id="idinstituicao.apoios.numProcesso" generator="generateApoiosNumProcesso" caption="Número de Processo" width="400px" />
+                <column id="idinstituicao.apoios.file" generator="generateApoiosFicheiros" caption="Ficheiros de Apoio" width="700px"/>
+
+                <column id="idinstituicao.apoios.idTipoapoio" generator="generateTiposApoios" width="600px" caption="Tipo de Apoio" />
+                <column id="idinstituicao.apoios.idTipoDocApoio" generator="generateTiposDocumentosApoios" width="600px" caption="Tipo de Documento de Apoio" />
+
+                <column id="idinstituicao.apoios.idUtente" generator="generateUtentes" width="600px" caption="Utentes" />
+
+                <!-- Projectos -->
+
+                <column id="idinstituicao.projectosIntervencaos" generator="generateProjectos" caption="Nome do Projecto" width="800px" />
+                <column id="imprimir_dados" caption="Imprimir dados da valência"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <!--<button id="createBtn" action="valenciasesTable.create"/>
+                <button id="editBtn" action="valenciasesTable.edit"/>
+                <button id="removeBtn" action="valenciasesTable.remove"/>-->
+                <button id="report" caption="Exportar dados da Valênçia das Pessoas Sem Abrigo" icon="font-icon:FILE_EXCEL_O" />
+                <popupButton id="popupButton1"
+                             caption="Estatistica de Valências das Pessoas Sem Abrigo" icon="font-icon:CALCULATOR">
+                    <actions>
+                        <action id="popupAction1" caption="Dados da capacidade de pessoas de uma instituicao" icon="font-icon:CODE_FORK"/>
+                        <action id="popupAction2" caption="Dados da capacidade de pessoas de uma resposta social na área de uma dada instituição" icon="font-icon:SIMPLYBUILT" />
+                        <action id="popupAction3" caption="Dados das redes de trabalho em relação a capacidade de pessoas" icon="font-icon:INSTITUTION" />
+                        <action id="popupAction4" caption="Dados dos tipos de apoios em relacao ao numero de utentes" icon="font-icon:USER" />
+                        <action id="popupAction5" caption="Dados dos utentes em relacao a quantidade de apoios" icon="font-icon:USER" />
+                        <action id="popupAction6" caption="Dados dos projectos em relacao as instituições" icon="font-icon:INSTITUTION" />
+                        <action id="popupAction7" caption="Dados dos tecnicos em relacao ás valênçias" icon="font-icon:USER_MD" />
+
+                    </actions>
+                </popupButton>
+            </buttonsPanel>
+        </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
         </hbox>
-    </layout>                
+    </layout>
 </window>

@@ -62,15 +62,6 @@
             </loader>
         </collection>
 
-        <collection id="atendimentoObjetivosesDc"
-                    class="pt.cmolhao.entity.AtendimentoObjetivos"
-                    view="_local">
-            <loader id="atendimentoObjetivosesDl">
-                <query>
-                    <![CDATA[select e from cmolhao_AtendimentoObjetivos e]]>
-                </query>
-            </loader>
-        </collection>
 
         <collection id="atendimentoEncaminhamentoesDc"
                     class="pt.cmolhao.entity.AtendimentoEncaminhamento"
@@ -190,17 +181,17 @@
                 <column id="idTecnico" caption="Técnico"/>
                 <column id="idUtente" caption="Utente"/>
                 <column id="idTipoAtendimento" caption="Tipo de Atendimento"/>
+                <column id="atendimentoObjetivos" caption="Atendimentos Objectivos" />
 
-                <column id="contactosEfetuados" caption="Contactos Efectuados"/>
-                <column id="dataAtendimento" caption="Data de Atendimento"/>
+                <column id="contactosEfetuados" caption="Contactos Efectuados" visible="false"/>
+                <column id="dataAtendimento" caption="Data de Atendimento" />
 
-                <column caption="Atendimento de Objectivo" id="idAtendimentoObjetivo"/>
-                <column id="objetivoOutros" caption="Outros Objectivos"/>
-                <column id="obsConf" caption="Observações de Confirmação"/>
-                <column id="obsGerais" caption="Observações Gerais"/>
-                <column caption="Atendimento de Encaminhamento" id="idAtendimentoEncaminhamento"/>
-                <column id="outrosEncaminhamentos" caption="Outros Encaminhamentos"/>
-                <column id="imprimir" />
+                <column id="objetivoOutros" caption="Outros Objectivos" visible="false"/>
+                <column id="obsConf" caption="Observações de Confirmação" visible="false"/>
+                <column id="obsGerais" caption="Observações Gerais" visible="false"/>
+                <column caption="Atendimento de Encaminhamento" id="idAtendimentoEncaminhamento" visible="false"/>
+                <column id="outrosEncaminhamentos" caption="Outros Encaminhamentos" visible="false"/>
+                <column id="imprimir" caption="Imprimir" />
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

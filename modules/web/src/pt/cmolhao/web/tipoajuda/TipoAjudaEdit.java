@@ -1,6 +1,5 @@
 package pt.cmolhao.web.tipoajuda;
 
-import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.actions.list.RemoveAction;

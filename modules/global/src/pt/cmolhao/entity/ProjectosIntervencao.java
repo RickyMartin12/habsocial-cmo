@@ -15,7 +15,7 @@ import java.util.Set;
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "idprojectosintervencao"))
 })
-@NamePattern("%s|idinstituicao")
+@NamePattern("%s - %s|idinstituicao,nomeProjecto")
 @Table(name = "projectos_intervencao")
 @Entity(name = "cmolhao_ProjectosIntervencao")
 public class ProjectosIntervencao extends BaseIntegerIdEntity {

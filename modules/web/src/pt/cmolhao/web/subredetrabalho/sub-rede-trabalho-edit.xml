@@ -24,7 +24,7 @@
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="editActions" spacing="true">
+    <layout expand="scrollBox" spacing="true">
         <scrollBox id="scrollBox" spacing="true">
             <tabSheet>
                 <tab id="dados"
@@ -93,8 +93,8 @@
             </tabSheet>
         </scrollBox>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowClose"/>
+            <button action="windowCommitAndClose" caption="Salvar" icon="SAVE" stylename="friendly"/>
+            <button action="windowClose" caption="Fechar" icon="CLOSE"/>
         </hbox>
     </layout>
 </window>

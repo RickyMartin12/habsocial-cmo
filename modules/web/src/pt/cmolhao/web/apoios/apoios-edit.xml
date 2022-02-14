@@ -59,6 +59,16 @@
             </loader>
         </collection>
 
+        <collection id="tipoDocApoioDc"
+                    class="pt.cmolhao.entity.TipoDocApoio"
+                    view="tipoDocApoio-view">
+            <loader id="tipoDocApoioDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoDocApoio e]]>
+                </query>
+            </loader>
+        </collection>
+
 
     </data>
     <dialogMode height="600"
@@ -80,6 +90,8 @@
                                          stylename="id_instituicao_apoio"
                                          width="882px"
                                          colspan="2"
+                                               requiredMessage="A instituição é preenchida obrigatóriamente"
+                                               required="true"
                                          inputPrompt="(Seleccione a instituição)"
                                          icon="font-icon:BUILDING">
                                         <actions>
@@ -92,18 +104,31 @@
                                        width="120px"
                                        property="numProcesso" caption="Numero Processo: " icon="ID_CARD"/>
 
-                            <textField id="valorApoioField"
-                                       stylename="valor_apoio"
-                                       width="120px"
-                                       property="valorApoio" caption="Valor de Apoio: " icon="EURO"/>
+                            <lookupPickerField caption="Tipo de Apoio:"
+                                               id="idTipoapoioField"
+                                               property="idTipoapoio"
+                                               stylename="id_tipo_apoio"
+                                               width="300px"
+                                               icon="font-icon:QUESTION"
+                                               inputPrompt="(Seleccione o tipo de apoio)"
+                                               optionsContainer="tipoAjudasDc">
+
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                    <action id="clear" type="picker_clear"/>
+                                </actions>
+
+
+                            </lookupPickerField>
+
 
                             <lookupPickerField caption="Estado de Ajuda:"
-                                         id="idEstadosField"
-                                         stylename="id_estados_apoio"
-                                         property="idEstado"
-                                         icon="REFRESH_ACTION"
-                                         inputPrompt="(Seleccione o estado)"
-                                         optionsContainer="estadosesDc">
+                                               id="idEstadosField"
+                                               stylename="id_estados_apoio"
+                                               property="idEstado"
+                                               icon="REFRESH_ACTION"
+                                               inputPrompt="(Seleccione o estado)"
+                                               optionsContainer="estadosesDc">
 
                                 <actions>
                                     <action id="lookup" type="picker_lookup"/>
@@ -111,6 +136,7 @@
                                 </actions>
 
                             </lookupPickerField>
+
 
 
                         </column>
@@ -129,22 +155,29 @@
                                     </actions>
                             </lookupPickerField>
 
-                            <lookupPickerField caption="Descrição do tipo de Ajuda:"
-                                         id="idTipoapoioField"
-                                         property="idTipoapoio"
-                                         stylename="id_tipo_apoio"
-                                         width="280px"
-                                         icon="font-icon:QUESTION"
-                                         inputPrompt="(Seleccione o tipo de ajuda)"
-                                         optionsContainer="tipoAjudasDc">
+                            <lookupPickerField caption="Tipo de Documento de Apoio:"
+                                               id="idTipoDocApoioField"
+                                               editable="false"
+                                               stylename="id_estados_apoio"
+                                               width="280px"
+                                               property="idTipoDocApoio"
+                                               icon="FILE"
+                                               inputPrompt="(Seleccione o doc de Apoio)"
+                                               optionsContainer="tipoDocApoioDc">
 
                                 <actions>
                                     <action id="lookup" type="picker_lookup"/>
                                     <action id="clear" type="picker_clear"/>
                                 </actions>
 
-
                             </lookupPickerField>
+
+
+
+                            <textField id="valorApoioField"
+                                       stylename="valor_apoio"
+                                       width="120px"
+                                       property="valorApoio" caption="Valor de Apoio: " icon="EURO"/>
 
                             <textField id="idApoiosField" visible="false" property="id" />
 
@@ -153,6 +186,57 @@
                         </column>
                     </form>
                 </tab>
+
+                <tab id="ficheiro"
+                     caption="Ficheiro"
+                     icon="font-icon:FILE"
+                     margin="true"
+                     spacing="true">
+
+                    <form id="form_ficheiro">
+                        <column width="450px">
+                            <groupBox caption="Ficheiro/Documento" spacing="true" icon="font-icon:FILE" expand="file_documento">
+                                <image id="file_documento"
+                                       width="150px"
+                                       align="MIDDLE_LEFT"
+                                       scaleMode="CONTAIN"/>
+
+                                <linkButton id="file_name_text" visible="false" />
+
+
+                                <grid spacing="true">
+                                    <columns>
+                                        <column/>
+                                        <column flex="1"/>
+                                        <column/>
+                                        <column flex="1"/>
+                                    </columns>
+                                    <rows>
+                                        <row>
+                                            <upload id="fileField" dropZone="dropZone" fileSizeLimit="20000000000" />
+                                            <button id="clearImageBtn"
+                                                    icon="font-icon:ERASER"
+                                                    caption="Limpar"
+                                                    invoke="onClearImageBtnClick"/>
+                                        </row>
+                                    </rows>
+                                </grid>
+
+                                <vbox id="dropZone"
+                                      height="150px"
+                                      spacing="true"
+                                      stylename="dropzone-container">
+                                    <label stylename="dropzone-description"
+                                           value="Arraste o ficheiro aqui"
+                                           icon="font-icon:UPLOAD"
+                                           align="MIDDLE_CENTER"/>
+                                </vbox>
+                            </groupBox>
+                        </column>
+                    </form>
+                </tab>
+
+
                 <tab id="datas_apoios"
                      caption="Datas de Apoio"
                      icon="font-icon:CALENDAR"
