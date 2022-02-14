@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="tipoDocApoiosTable"
+        messagesPack="pt.cmolhao.web.tipo_doc_apoio">
+    <data readOnly="true">
+        <collection id="tipoDocApoiosDc"
+                    class="pt.cmolhao.entity.TipoDocApoio"
+                    view="tipoDocApoio-view">
+            <loader id="tipoDocApoiosDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoDocApoio e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="tipoDocApoiosTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="tipoDocApoiosTable"
+                dataLoader="tipoDocApoiosDl">
+            <properties include=".*"/>
+        </filter>
+        
+<groupTable id="tipoDocApoiosTable"
+        width="100%"
+        dataContainer="tipoDocApoiosDc">
+    <actions>
+        <action id="create" type="create"/>
+    
+        <action id="edit" type="edit"/>
+    
+        <action id="remove" type="remove"/>
+    
+    </actions>
+    <columns>
+        <column  id="descricao"/>
+    
+        <column  id="idTipoApoio"/>
+    
+    </columns>
+    <rowsCount/>
+    <buttonsPanel id="buttonsPanel"
+                  alwaysVisible="true">
+        
+            <button id="createBtn" action="tipoDocApoiosTable.create"/>                
+        
+            <button id="editBtn" action="tipoDocApoiosTable.edit"/>                
+        
+            <button id="removeBtn" action="tipoDocApoiosTable.remove"/>                
+        
+    </buttonsPanel>
+</groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>                
+</window>

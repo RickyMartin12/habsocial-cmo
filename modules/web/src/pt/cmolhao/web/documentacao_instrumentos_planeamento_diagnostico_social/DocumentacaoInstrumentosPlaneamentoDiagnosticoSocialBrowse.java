@@ -1,0 +1,11 @@
+package pt.cmolhao.web.documentacao_instrumentos_planeamento_diagnostico_social;
+
+import com.haulmont.cuba.gui.screen.*;
+import pt.cmolhao.entity.DocumentacaoInstrumentosPlaneamentoDiagnosticoSocial;
+
+@UiController("cmolhao_DocumentacaoInstrumentosPlaneamentoDiagnosticoSocial.browse")
+@UiDescriptor("documentacao-instrumentos-planeamento-diagnostico-social-browse.xml")
+@LookupComponent("documentacaoInstrumentosPlaneamentoDiagnosticoSocialsTable")
+@LoadDataBeforeShow
+public class DocumentacaoInstrumentosPlaneamentoDiagnosticoSocialBrowse extends StandardLookup<DocumentacaoInstrumentosPlaneamentoDiagnosticoSocial> {
+}

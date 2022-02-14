@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="pareceresInstituicoesesTable"
+        messagesPack="pt.cmolhao.web.assessoria_tecnica_rsi">
+    <data readOnly="true">
+        <collection id="pareceresInstituicoesesDc"
+                    class="pt.cmolhao.entity.PareceresInstituicoes"
+                    view="pareceresInstituicoes-Assessoriatecia-RSI">
+            <loader id="pareceresInstituicoesesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_PareceresInstituicoes e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="pareceresInstituicoesesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="pareceresInstituicoesesTable"
+                dataLoader="pareceresInstituicoesesDl">
+            <properties include=".*"/>
+        </filter>
+        
+<groupTable id="pareceresInstituicoesesTable"
+        width="100%"
+        dataContainer="pareceresInstituicoesesDc">
+    <actions>
+        <action id="create" type="create"/>
+    
+        <action id="edit" type="edit"/>
+    
+        <action id="remove" type="remove"/>
+    
+    </actions>
+    <columns>
+        <column  id="idInstituicao"/>
+    
+        <column  id="idParecer"/>
+    
+        <column  id="idTipoParecer"/>
+    
+    </columns>
+    <rowsCount/>
+    <buttonsPanel id="buttonsPanel"
+                  alwaysVisible="true">
+        
+            <button id="createBtn" action="pareceresInstituicoesesTable.create"/>                
+        
+            <button id="editBtn" action="pareceresInstituicoesesTable.edit"/>                
+        
+            <button id="removeBtn" action="pareceresInstituicoesesTable.remove"/>                
+        
+    </buttonsPanel>
+</groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>                
+</window>

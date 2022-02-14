@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.pareceres">
+    <data>
+        <instance id="pareceresDc"
+                    class="pt.cmolhao.entity.Pareceres"
+                    view="pareceres-view">
+            <loader/>
+        
+            <collection id="tipoPareceresDc" property="tipoPareceres"/>
+        
+            <collection id="pareceresInstituicoesDc" property="pareceresInstituicoes"/>
+        </instance>
+        
+    </data>
+    
+    <dialogMode height="600"
+                width="800"/>
+<layout expand="editActions" spacing="true">
+    
+        
+
+<form id="form" dataContainer="pareceresDc">
+<column width="250px">
+	
+	<textArea id="nomeField" property="nome" rows="5"/>
+	
+</column>
+</form>
+
+        
+            
+<groupBox id="tipoPareceresBox" caption="msg://pt.cmolhao.entity/Pareceres.tipoPareceres">
+<table id="tipoPareceresTable" dataContainer="tipoPareceresDc" width="100%" height="200px">
+    
+    <actions>
+        <action id="create" type="create"/>
+        <action id="edit" type="edit"/>
+        <action id="remove" type="remove"/>
+    </actions>
+    
+    <columns>
+        
+            <column id="nome"/>
+        
+    </columns>
+    
+    <buttonsPanel>
+        <button action="tipoPareceresTable.create"/>
+        
+        <button action="tipoPareceresTable.edit"/>
+        
+        <button action="tipoPareceresTable.remove"/>
+    </buttonsPanel>
+    
+</table>
+</groupBox>
+        
+            
+<groupBox id="pareceresInstituicoesBox" caption="msg://pt.cmolhao.entity/Pareceres.pareceresInstituicoes">
+<table id="pareceresInstituicoesTable" dataContainer="pareceresInstituicoesDc" width="100%" height="200px">
+    
+    <actions>
+        <action id="create" type="create"/>
+        <action id="edit" type="edit"/>
+        <action id="remove" type="remove"/>
+    </actions>
+    
+    <columns>
+        
+            <column id="idInstituicao"/>
+        
+            <column id="idParecer"/>
+        
+            <column id="idTipoParecer"/>
+        
+    </columns>
+    
+    <buttonsPanel>
+        <button action="pareceresInstituicoesTable.create"/>
+        
+        <button action="pareceresInstituicoesTable.edit"/>
+        
+        <button action="pareceresInstituicoesTable.remove"/>
+    </buttonsPanel>
+    
+</table>
+</groupBox>
+        
+        
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

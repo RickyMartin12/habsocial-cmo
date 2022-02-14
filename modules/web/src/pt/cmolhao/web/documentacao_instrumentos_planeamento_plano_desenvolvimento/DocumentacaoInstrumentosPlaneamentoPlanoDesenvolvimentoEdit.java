@@ -1,0 +1,11 @@
+package pt.cmolhao.web.documentacao_instrumentos_planeamento_plano_desenvolvimento;
+
+import com.haulmont.cuba.gui.screen.*;
+import pt.cmolhao.entity.DocumentacaoInstrumentosPlaneamentoPlanoDesenvolvimento;
+
+@UiController("cmolhao_DocumentacaoInstrumentosPlaneamentoPlanoDesenvolvimento.edit")
+@UiDescriptor("documentacao-instrumentos-planeamento-plano-desenvolvimento-edit.xml")
+@EditedEntityContainer("documentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoDc")
+@LoadDataBeforeShow
+public class DocumentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoEdit extends StandardEditor<DocumentacaoInstrumentosPlaneamentoPlanoDesenvolvimento> {
+}

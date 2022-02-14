@@ -1,0 +1,11 @@
+package pt.cmolhao.web.documentacao_instrumentos_planeamento_plano_desenvolvimento;
+
+import com.haulmont.cuba.gui.screen.*;
+import pt.cmolhao.entity.DocumentacaoInstrumentosPlaneamentoPlanoDesenvolvimento;
+
+@UiController("cmolhao_DocumentacaoInstrumentosPlaneamentoPlanoDesenvolvimento.browse")
+@UiDescriptor("documentacao-instrumentos-planeamento-plano-desenvolvimento-browse.xml")
+@LookupComponent("documentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoesTable")
+@LoadDataBeforeShow
+public class DocumentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoBrowse extends StandardLookup<DocumentacaoInstrumentosPlaneamentoPlanoDesenvolvimento> {
+}

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="documentacaoPlataformaSupraconcelhiasTable"
+        messagesPack="pt.cmolhao.web.plataforma_supraconcelhia">
+    <data readOnly="true">
+        <collection id="documentacaoPlataformaSupraconcelhiasDc"
+                    class="pt.cmolhao.entity.DocumentacaoPlataformaSupraconcelhia"
+                    view="documentacaoPlataformaSupraconcelhia-view">
+            <loader id="documentacaoPlataformaSupraconcelhiasDl">
+                <query>
+                    <![CDATA[select e from cmolhao_DocumentacaoPlataformaSupraconcelhia e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="documentacaoPlataformaSupraconcelhiasTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="documentacaoPlataformaSupraconcelhiasTable"
+                dataLoader="documentacaoPlataformaSupraconcelhiasDl">
+            <properties include=".*"/>
+        </filter>
+        
+<groupTable id="documentacaoPlataformaSupraconcelhiasTable"
+        width="100%"
+        dataContainer="documentacaoPlataformaSupraconcelhiasDc">
+    <actions>
+        <action id="create" type="create"/>
+    
+        <action id="edit" type="edit"/>
+    
+        <action id="remove" type="remove"/>
+    
+    </actions>
+    <columns>
+        <column  id="dataDocumento"/>
+    
+        <column  id="idRedeTrabalho"/>
+    
+        <column  id="idSubRedeTrabalho"/>
+    
+        <column  id="nomeFicheiro"/>
+    
+        <column  id="numeroDocumentacao"/>
+    
+        <column  id="file"/>
+    
+    </columns>
+    <rowsCount/>
+    <buttonsPanel id="buttonsPanel"
+                  alwaysVisible="true">
+        
+            <button id="createBtn" action="documentacaoPlataformaSupraconcelhiasTable.create"/>                
+        
+            <button id="editBtn" action="documentacaoPlataformaSupraconcelhiasTable.edit"/>                
+        
+            <button id="removeBtn" action="documentacaoPlataformaSupraconcelhiasTable.remove"/>                
+        
+    </buttonsPanel>
+</groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>                
+</window>

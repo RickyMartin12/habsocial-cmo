@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="documentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoesTable"
+        messagesPack="pt.cmolhao.web.documentacao_instrumentos_planeamento_plano_desenvolvimento">
+    <data readOnly="true">
+        <collection id="documentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoesDc"
+                    class="pt.cmolhao.entity.DocumentacaoInstrumentosPlaneamentoPlanoDesenvolvimento"
+                    view="documentacaoInstrumentosPlaneamentoPlanoDesenvolvimento-view">
+            <loader id="documentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_DocumentacaoInstrumentosPlaneamentoPlanoDesenvolvimento e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="documentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="documentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoesTable"
+                dataLoader="documentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoesDl">
+            <properties include=".*"/>
+        </filter>
+        
+<groupTable id="documentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoesTable"
+        width="100%"
+        dataContainer="documentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoesDc">
+    <actions>
+        <action id="create" type="create"/>
+    
+        <action id="edit" type="edit"/>
+    
+        <action id="remove" type="remove"/>
+    
+    </actions>
+    <columns>
+        <column  id="dataDocumento"/>
+    
+        <column  id="file"/>
+    
+        <column  id="idRedeTrabalho"/>
+    
+        <column  id="idSubRedeTrabalho"/>
+    
+        <column  id="nomeFicheiro"/>
+    
+        <column  id="numeroDocumentacao"/>
+    
+    </columns>
+    <rowsCount/>
+    <buttonsPanel id="buttonsPanel"
+                  alwaysVisible="true">
+        
+            <button id="createBtn" action="documentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoesTable.create"/>                
+        
+            <button id="editBtn" action="documentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoesTable.edit"/>                
+        
+            <button id="removeBtn" action="documentacaoInstrumentosPlaneamentoPlanoDesenvolvimentoesTable.remove"/>                
+        
+    </buttonsPanel>
+</groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>                
+</window>

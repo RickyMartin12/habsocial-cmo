@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="valenciasesTable"
+        messagesPack="pt.cmolhao.web.valencia_intervencao_relatorios">
+    <data readOnly="true">
+        <collection id="valenciasesDc"
+                    class="pt.cmolhao.entity.Valencias"
+                    view="valencias-viewRelatoriosIntervencao">
+            <loader id="valenciasesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Valencias e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="valenciasesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="valenciasesTable"
+                dataLoader="valenciasesDl">
+            <properties include=".*"/>
+        </filter>
+        
+<groupTable id="valenciasesTable"
+        width="100%"
+        dataContainer="valenciasesDc">
+    <actions>
+        <action id="create" type="create"/>
+    
+        <action id="edit" type="edit"/>
+    
+        <action id="remove" type="remove"/>
+    
+    </actions>
+    <columns>
+        <column  id="acordocapacidade"/>
+    
+        <column  id="descricaotecnica"/>
+    
+        <column  id="idResSocial"/>
+    
+        <column  id="idinstituicao"/>
+    
+        <column  id="idtipovalencia"/>
+    
+        <column  id="morada"/>
+    
+    </columns>
+    <rowsCount/>
+    <buttonsPanel id="buttonsPanel"
+                  alwaysVisible="true">
+        
+            <button id="createBtn" action="valenciasesTable.create"/>                
+        
+            <button id="editBtn" action="valenciasesTable.edit"/>                
+        
+            <button id="removeBtn" action="valenciasesTable.remove"/>                
+        
+    </buttonsPanel>
+</groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>                
+</window>

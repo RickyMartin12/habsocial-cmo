@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="habitacaoSocialsTable"
+        messagesPack="pt.cmolhao.web.hab_social_plataforma_eaa">
+    <data readOnly="true">
+        <collection id="habitacaoSocialsDc"
+                    class="pt.cmolhao.entity.HabitacaoSocial"
+                    view="habitacaoSocial-viewPlataformaEaa">
+            <loader id="habitacaoSocialsDl">
+                <query>
+                    <![CDATA[select e from cmolhao_HabitacaoSocial e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="habitacaoSocialsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="habitacaoSocialsTable"
+                dataLoader="habitacaoSocialsDl">
+            <properties include=".*"/>
+        </filter>
+        
+<groupTable id="habitacaoSocialsTable"
+        width="100%"
+        dataContainer="habitacaoSocialsDc">
+    <actions>
+        <action id="create" type="create"/>
+    
+        <action id="edit" type="edit"/>
+    
+        <action id="remove" type="remove"/>
+    
+    </actions>
+    <columns>
+        <column  id="andar"/>
+    
+        <column  id="arrend"/>
+    
+        <column  id="bl"/>
+    
+        <column  id="cod"/>
+    
+        <column  id="codPostal"/>
+    
+        <column  id="codbr"/>
+    
+        <column  id="coord"/>
+    
+        <column  id="eqsocial"/>
+    
+        <column  id="fichaCompleta"/>
+    
+        <column  id="freguesia"/>
+    
+        <column  id="idUtente"/>
+    
+        <column  id="localidade"/>
+    
+        <column  id="numpolicia"/>
+    
+        <column  id="obsconf"/>
+    
+        <column  id="obsgerais"/>
+    
+        <column  id="rendimentoAnual"/>
+    
+        <column  id="rua"/>
+    
+        <column  id="sitoLugar"/>
+    
+        <column  id="t0"/>
+    
+        <column  id="t1"/>
+    
+        <column  id="t2"/>
+    
+        <column  id="t3"/>
+    
+        <column  id="t4"/>
+    
+        <column  id="t5"/>
+    
+        <column  id="tipoArrendamento"/>
+    
+        <column  id="valorPatrimonio"/>
+    
+        <column  id="vend"/>
+    
+    </columns>
+    <rowsCount/>
+    <buttonsPanel id="buttonsPanel"
+                  alwaysVisible="true">
+        
+            <button id="createBtn" action="habitacaoSocialsTable.create"/>                
+        
+            <button id="editBtn" action="habitacaoSocialsTable.edit"/>                
+        
+            <button id="removeBtn" action="habitacaoSocialsTable.remove"/>                
+        
+    </buttonsPanel>
+</groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>                
+</window>

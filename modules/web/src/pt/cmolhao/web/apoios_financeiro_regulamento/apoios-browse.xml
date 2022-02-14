@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="apoiosesTable"
+        messagesPack="pt.cmolhao.web.apoios_financeiro_regulamento">
+    <data readOnly="true">
+        <collection id="apoiosesDc"
+                    class="pt.cmolhao.entity.Apoios"
+                    view="apoios-viewRelatorios">
+            <loader id="apoiosesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_Apoios e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="apoiosesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="apoiosesTable"
+                dataLoader="apoiosesDl">
+            <properties include=".*"/>
+        </filter>
+        
+<groupTable id="apoiosesTable"
+        width="100%"
+        dataContainer="apoiosesDc">
+    <actions>
+        <action id="create" type="create"/>
+    
+        <action id="edit" type="edit"/>
+    
+        <action id="remove" type="remove"/>
+    
+    </actions>
+    <columns>
+        <column  id="dataAtribuicao"/>
+    
+        <column  id="dataFim"/>
+    
+        <column  id="dataPedido"/>
+    
+        <column  id="dataRenovacao"/>
+    
+        <column  id="idEquipamento"/>
+    
+        <column  id="idEstado"/>
+    
+        <column  id="idInstituicao"/>
+    
+        <column  id="idTipoDocApoio"/>
+    
+        <column  id="idTipoapoio"/>
+    
+        <column  id="idUtente"/>
+    
+        <column  id="numProcesso"/>
+    
+        <column  id="observacaoEstado"/>
+    
+        <column  id="observacoesConf"/>
+    
+        <column  id="observacoesGerais"/>
+    
+        <column  id="valorApoio"/>
+    
+        <column  id="file"/>
+    
+    </columns>
+    <rowsCount/>
+    <buttonsPanel id="buttonsPanel"
+                  alwaysVisible="true">
+        
+            <button id="createBtn" action="apoiosesTable.create"/>                
+        
+            <button id="editBtn" action="apoiosesTable.edit"/>                
+        
+            <button id="removeBtn" action="apoiosesTable.remove"/>                
+        
+    </buttonsPanel>
+</groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>                
+</window>

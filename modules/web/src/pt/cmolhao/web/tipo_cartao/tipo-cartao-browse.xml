@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="tipoCartaosTable"
+        messagesPack="pt.cmolhao.web.tipo_cartao">
+    <data readOnly="true">
+        <collection id="tipoCartaosDc"
+                    class="pt.cmolhao.entity.TipoCartao"
+                    view="tipoCartao-view">
+            <loader id="tipoCartaosDl">
+                <query>
+                    <![CDATA[select e from cmolhao_TipoCartao e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="tipoCartaosTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="tipoCartaosTable"
+                dataLoader="tipoCartaosDl">
+            <properties include=".*"/>
+        </filter>
+        
+<groupTable id="tipoCartaosTable"
+        width="100%"
+        dataContainer="tipoCartaosDc">
+    <actions>
+        <action id="create" type="create"/>
+    
+        <action id="edit" type="edit"/>
+    
+        <action id="remove" type="remove"/>
+    
+    </actions>
+    <columns>
+        <column  id="tipo"/>
+    
+    </columns>
+    <rowsCount/>
+    <buttonsPanel id="buttonsPanel"
+                  alwaysVisible="true">
+        
+            <button id="createBtn" action="tipoCartaosTable.create"/>                
+        
+            <button id="editBtn" action="tipoCartaosTable.edit"/>                
+        
+            <button id="removeBtn" action="tipoCartaosTable.remove"/>                
+        
+    </buttonsPanel>
+</groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>                
+</window>

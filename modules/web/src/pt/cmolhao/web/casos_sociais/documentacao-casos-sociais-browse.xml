@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="documentacaoCasosSociaisesTable"
+        messagesPack="pt.cmolhao.web.casos_sociais">
+    <data readOnly="true">
+        <collection id="documentacaoCasosSociaisesDc"
+                    class="pt.cmolhao.entity.DocumentacaoCasosSociais"
+                    view="documentacaoCasosSociais-view">
+            <loader id="documentacaoCasosSociaisesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_DocumentacaoCasosSociais e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="documentacaoCasosSociaisesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="documentacaoCasosSociaisesTable"
+                dataLoader="documentacaoCasosSociaisesDl">
+            <properties include=".*"/>
+        </filter>
+        
+<groupTable id="documentacaoCasosSociaisesTable"
+        width="100%"
+        dataContainer="documentacaoCasosSociaisesDc">
+    <actions>
+        <action id="create" type="create"/>
+    
+        <action id="edit" type="edit"/>
+    
+        <action id="remove" type="remove"/>
+    
+    </actions>
+    <columns>
+        <column  id="dataDocumento"/>
+    
+        <column  id="idRedeTrabalho"/>
+    
+        <column  id="idSubRedeTrabalho"/>
+    
+        <column  id="nomeFicheiro"/>
+    
+        <column  id="numeroDocumentacao"/>
+    
+        <column  id="file"/>
+    
+    </columns>
+    <rowsCount/>
+    <buttonsPanel id="buttonsPanel"
+                  alwaysVisible="true">
+        
+            <button id="createBtn" action="documentacaoCasosSociaisesTable.create"/>                
+        
+            <button id="editBtn" action="documentacaoCasosSociaisesTable.edit"/>                
+        
+            <button id="removeBtn" action="documentacaoCasosSociaisesTable.remove"/>                
+        
+    </buttonsPanel>
+</groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>                
+</window>

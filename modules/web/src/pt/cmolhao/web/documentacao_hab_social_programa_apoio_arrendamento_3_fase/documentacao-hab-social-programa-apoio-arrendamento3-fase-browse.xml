@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="documentacaoHabSocialProgramaApoioArrendamento3FasesTable"
+        messagesPack="pt.cmolhao.web.documentacao_hab_social_programa_apoio_arrendamento_3_fase">
+    <data readOnly="true">
+        <collection id="documentacaoHabSocialProgramaApoioArrendamento3FasesDc"
+                    class="pt.cmolhao.entity.DocumentacaoHabSocialProgramaApoioArrendamento3Fase"
+                    view="documentacaoHabSocialProgramaApoioArrendamento3Fase-view">
+            <loader id="documentacaoHabSocialProgramaApoioArrendamento3FasesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_DocumentacaoHabSocialProgramaApoioArrendamento3Fase e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="documentacaoHabSocialProgramaApoioArrendamento3FasesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="documentacaoHabSocialProgramaApoioArrendamento3FasesTable"
+                dataLoader="documentacaoHabSocialProgramaApoioArrendamento3FasesDl">
+            <properties include=".*"/>
+        </filter>
+        
+<groupTable id="documentacaoHabSocialProgramaApoioArrendamento3FasesTable"
+        width="100%"
+        dataContainer="documentacaoHabSocialProgramaApoioArrendamento3FasesDc">
+    <actions>
+        <action id="create" type="create"/>
+    
+        <action id="edit" type="edit"/>
+    
+        <action id="remove" type="remove"/>
+    
+    </actions>
+    <columns>
+        <column  id="file"/>
+    
+        <column  id="idHabitacaoSocial"/>
+    
+        <column  id="idRedeTrabalho"/>
+    
+        <column  id="idSubRedeTrabalho"/>
+    
+        <column  id="numDocumento"/>
+    
+    </columns>
+    <rowsCount/>
+    <buttonsPanel id="buttonsPanel"
+                  alwaysVisible="true">
+        
+            <button id="createBtn" action="documentacaoHabSocialProgramaApoioArrendamento3FasesTable.create"/>                
+        
+            <button id="editBtn" action="documentacaoHabSocialProgramaApoioArrendamento3FasesTable.edit"/>                
+        
+            <button id="removeBtn" action="documentacaoHabSocialProgramaApoioArrendamento3FasesTable.remove"/>                
+        
+    </buttonsPanel>
+</groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>                
+</window>

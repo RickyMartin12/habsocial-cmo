@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.atendimento_objetivos">
+    <data>
+        <instance id="atendimentoObjetivosDc"
+                    class="pt.cmolhao.entity.AtendimentoObjetivos"
+                    view="_local">
+            <loader/>
+        </instance>
+        
+    </data>
+    
+    <dialogMode height="600"
+                width="800"/>
+<layout expand="editActions" spacing="true">
+    
+        
+
+<form id="form" dataContainer="atendimentoObjetivosDc">
+<column width="250px">
+	
+	<textField id="atendimemtoObjetivoEspecificoField" property="atendimemtoObjetivoEspecifico"/>
+	
+	<textField id="atendimentoObjetivoGeralField" property="atendimentoObjetivoGeral"/>
+	
+</column>
+</form>
+
+        
+        
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="documentacaoGruposTrabalhoesTable"
+        messagesPack="pt.cmolhao.web.grupos_trabalho">
+    <data readOnly="true">
+        <collection id="documentacaoGruposTrabalhoesDc"
+                    class="pt.cmolhao.entity.DocumentacaoGruposTrabalho"
+                    view="documentacaoGruposTrabalho-view">
+            <loader id="documentacaoGruposTrabalhoesDl">
+                <query>
+                    <![CDATA[select e from cmolhao_DocumentacaoGruposTrabalho e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="documentacaoGruposTrabalhoesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="documentacaoGruposTrabalhoesTable"
+                dataLoader="documentacaoGruposTrabalhoesDl">
+            <properties include=".*"/>
+        </filter>
+        
+<groupTable id="documentacaoGruposTrabalhoesTable"
+        width="100%"
+        dataContainer="documentacaoGruposTrabalhoesDc">
+    <actions>
+        <action id="create" type="create"/>
+    
+        <action id="edit" type="edit"/>
+    
+        <action id="remove" type="remove"/>
+    
+    </actions>
+    <columns>
+        <column  id="dataDocumento"/>
+    
+        <column  id="idRedeTrabalho"/>
+    
+        <column  id="idSubRedeTrabalho"/>
+    
+        <column  id="nomeFicheiro"/>
+    
+        <column  id="numeroDocumentacao"/>
+    
+        <column  id="file"/>
+    
+    </columns>
+    <rowsCount/>
+    <buttonsPanel id="buttonsPanel"
+                  alwaysVisible="true">
+        
+            <button id="createBtn" action="documentacaoGruposTrabalhoesTable.create"/>                
+        
+            <button id="editBtn" action="documentacaoGruposTrabalhoesTable.edit"/>                
+        
+            <button id="removeBtn" action="documentacaoGruposTrabalhoesTable.remove"/>                
+        
+    </buttonsPanel>
+</groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>                
+</window>

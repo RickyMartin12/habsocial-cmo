@@ -1,12 +1,21 @@
 package pt.cmolhao.web.atendimento;
 
+import com.haulmont.cuba.core.app.DataService;
+import com.haulmont.cuba.core.entity.FileDescriptor;
+import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
+import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.components.actions.BaseAction;
+import com.haulmont.cuba.gui.export.ExportFormat;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.screen.LookupComponent;
+import com.haulmont.reports.entity.Report;
+import com.haulmont.reports.gui.ReportGuiManager;
 import pt.cmolhao.entity.*;
 import pt.cmolhao.web.moradores.MoradoresEdit;
 
@@ -14,7 +23,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @UiController("cmolhao_Atendimento.browse")
 @UiDescriptor("atendimento-browse.xml")
@@ -23,6 +34,10 @@ import java.util.List;
 public class AtendimentoBrowse extends StandardLookup<Atendimento> {
     @Inject
     protected CollectionLoader<Atendimento> atendimentoesDl;
+
+    @Inject
+    protected ReportGuiManager reportGuiManager = AppBeans.get(ReportGuiManager.class);
+
     @Inject
     protected GroupTable<Atendimento> atendimentoesTable;
     @Inject
@@ -41,9 +56,28 @@ public class AtendimentoBrowse extends StandardLookup<Atendimento> {
     @Inject
     private Dialogs dialogs;
 
+    @Inject
+    protected UiComponents uiComponents;
+
+    @Inject
+    private DataService dataService;
+
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         getWindow().setCaption("Listar Atendimento");
+    }
+
+    private void runReport(Component component)
+    {
+        Map<String, Object> reportParams = new HashMap<>();
+        reportParams.put("Atendimento", atendimentoesTable.getSingleSelected());
+        LoadContext<Report> lContext = new LoadContext<>(Report.class);
+        lContext.setQueryString("select r from report$Report r where r.id = '77f0f2de-cbe2-0490-0d12-ca427e4b2a4b' ");
+        Report report = dataService.load(lContext);
+
+        String templateCode = "DEFAULT";
+
+        reportGuiManager.printReport(report, reportParams, templateCode, null);
     }
 
     @Subscribe
@@ -76,6 +110,23 @@ public class AtendimentoBrowse extends StandardLookup<Atendimento> {
                         .build()
                         .show()
         );
+
+
+
+
+        atendimentoesTable.addGeneratedColumn("imprimir", entity -> {
+
+                Button btn = uiComponents.create(Button.class);
+                btn.setCaption("imprimir");
+                btn.setAction(new BaseAction("imprimir") {
+                    @Override
+                    public void actionPerform(Component component) {
+                        runReport(component);
+
+                    }
+                });
+                return btn;
+        });
     }
 
     @Subscribe("linhasAtendimento")

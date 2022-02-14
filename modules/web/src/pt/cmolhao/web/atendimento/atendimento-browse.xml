@@ -200,6 +200,7 @@
                 <column id="obsGerais" caption="Observações Gerais"/>
                 <column caption="Atendimento de Encaminhamento" id="idAtendimentoEncaminhamento"/>
                 <column id="outrosEncaminhamentos" caption="Outros Encaminhamentos"/>
+                <column id="imprimir" />
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="pt.cmolhao.web.documentacao_hab_social_programa_apoio_arrendamento_2_fase">
+    <data>
+        <instance id="documentacaoHabSocialProgramaApoioArrendamento2FaseDc"
+                    class="pt.cmolhao.entity.DocumentacaoHabSocialProgramaApoioArrendamento2Fase"
+                    view="documentacaoHabSocialProgramaApoioArrendamento2Fase-view">
+            <loader/>
+        </instance>
+        
+    </data>
+    
+    <dialogMode height="600"
+                width="800"/>
+<layout expand="editActions" spacing="true">
+    
+        
+
+<form id="form" dataContainer="documentacaoHabSocialProgramaApoioArrendamento2FaseDc">
+<column width="250px">
+	
+	<upload id="fileField" fileStoragePutMode="IMMEDIATE" property="file" showFileName="true"/>
+	
+	<pickerField id="idHabitacaoSocialField" property="idHabitacaoSocial">
+		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
+	</pickerField>
+	
+	<pickerField id="idRedeTrabalhoField" property="idRedeTrabalho">
+		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
+	</pickerField>
+	
+	<pickerField id="idSubRedeTrabalhoField" property="idSubRedeTrabalho">
+		<actions><action id="lookup" type="picker_lookup"/><action id="clear" type="picker_clear"/></actions>
+	</pickerField>
+	
+	<textArea id="numDocumentoField" property="numDocumento" rows="5"/>
+	
+</column>
+</form>
+
+        
+        
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

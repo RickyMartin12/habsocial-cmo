@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="documentacaoInstrumentosPlaneamentoDiagnosticoSocialsTable"
+        messagesPack="pt.cmolhao.web.documentacao_instrumentos_planeamento_diagnostico_social">
+    <data readOnly="true">
+        <collection id="documentacaoInstrumentosPlaneamentoDiagnosticoSocialsDc"
+                    class="pt.cmolhao.entity.DocumentacaoInstrumentosPlaneamentoDiagnosticoSocial"
+                    view="documentacaoInstrumentosPlaneamentoDiagnosticoSocial-view">
+            <loader id="documentacaoInstrumentosPlaneamentoDiagnosticoSocialsDl">
+                <query>
+                    <![CDATA[select e from cmolhao_DocumentacaoInstrumentosPlaneamentoDiagnosticoSocial e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="documentacaoInstrumentosPlaneamentoDiagnosticoSocialsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="documentacaoInstrumentosPlaneamentoDiagnosticoSocialsTable"
+                dataLoader="documentacaoInstrumentosPlaneamentoDiagnosticoSocialsDl">
+            <properties include=".*"/>
+        </filter>
+        
+<groupTable id="documentacaoInstrumentosPlaneamentoDiagnosticoSocialsTable"
+        width="100%"
+        dataContainer="documentacaoInstrumentosPlaneamentoDiagnosticoSocialsDc">
+    <actions>
+        <action id="create" type="create"/>
+    
+        <action id="edit" type="edit"/>
+    
+        <action id="remove" type="remove"/>
+    
+    </actions>
+    <columns>
+        <column  id="dataDocumento"/>
+    
+        <column  id="file"/>
+    
+        <column  id="idRedeTrabalho"/>
+    
+        <column  id="idSubRedeTrabalho"/>
+    
+        <column  id="nomeFicheiro"/>
+    
+        <column  id="numeroDocumentacao"/>
+    
+    </columns>
+    <rowsCount/>
+    <buttonsPanel id="buttonsPanel"
+                  alwaysVisible="true">
+        
+            <button id="createBtn" action="documentacaoInstrumentosPlaneamentoDiagnosticoSocialsTable.create"/>                
+        
+            <button id="editBtn" action="documentacaoInstrumentosPlaneamentoDiagnosticoSocialsTable.edit"/>                
+        
+            <button id="removeBtn" action="documentacaoInstrumentosPlaneamentoDiagnosticoSocialsTable.remove"/>                
+        
+    </buttonsPanel>
+</groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>                
+</window>
